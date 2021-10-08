@@ -5,7 +5,7 @@ namespace Gameplay
     public enum RoomType
     {
         Empty,
-        Simple,
+        Normal,
         Start,
         End,
         Healing,
@@ -18,7 +18,7 @@ namespace Gameplay
         public static string FastToString(this RoomType type) => type switch
         {
             Empty => nameof(Empty),
-            Simple => nameof(Simple),
+            Normal => nameof(Normal),
             Start => nameof(Start),
             End => nameof(End),
             Healing => nameof(Healing),

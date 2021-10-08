@@ -47,5 +47,17 @@ namespace Gameplay
 
         public List<Room>.Enumerator GetEnumerator()
             => _neighbours.GetEnumerator();
+
+        public override string ToString()
+        {
+            string str = $"Room: dir({_direction.ToString()}), neighbours({_neighbours.Count.ToString()})\n";
+
+            foreach (Room room in _neighbours)
+            {
+                str += $"Neighbour: dir({room._direction.ToString()}), neighbours({room._neighbours.Count.ToString()})\n";
+            }
+
+            return str;
+        }
     }
 }

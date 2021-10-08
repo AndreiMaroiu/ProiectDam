@@ -77,7 +77,7 @@ namespace Gameplay.Generation
 
                 if (numberOfNeighbours <= _maxRoomNeighbours)
                 {
-                    currentRoom.AddNeighbour(currentRoom.Pos + neighbour, dir);
+                    currentRoom.AddNeighbour(currentRoom.Pos + neighbour, dir, RoomType.Normal);
                     return 1;
                 }
             }
