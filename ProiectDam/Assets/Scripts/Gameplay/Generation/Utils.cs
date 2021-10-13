@@ -4,10 +4,10 @@ namespace Gameplay
 {
     internal static class Utils
     {
-        public static Vector2 GetDirectionRounded(float angle)
+        public static Vector2Int GetDirectionRounded(float angle)
         {
             angle *= Mathf.Deg2Rad;
-            return new Vector2(Mathf.Round(Mathf.Cos(angle)), Mathf.Round(Mathf.Sin(angle)));
+            return new Vector2Int(Mathf.RoundToInt(Mathf.Cos(angle)), Mathf.RoundToInt(Mathf.Sin(angle)));
         }
 
         public static Vector2 GetDirection(float angle)

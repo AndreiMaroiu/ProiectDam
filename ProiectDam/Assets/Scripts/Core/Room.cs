@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Gameplay
+namespace Core
 {
     public class Room
     {
-        private readonly Vector2 _pos;
+        private readonly Vector2Int _pos;
         private readonly int _direction;
         private readonly Room _lastRoom;
         private readonly List<Room> _neighbours;
 
         public RoomType Type { get; set; }
         public int Direction => _direction;
-        public Vector2 Pos => _pos;
+        public Vector2Int Pos => _pos;
 
-        public Room(Vector2 pos, Room lastRoom, RoomType type = RoomType.Empty, int direction = 0)
+        public Room(Vector2Int pos, Room lastRoom, RoomType type = RoomType.Empty, int direction = 0)
         {
             Type = type;
             _pos = pos;
@@ -24,7 +24,7 @@ namespace Gameplay
             _neighbours = new List<Room>();
         }
 
-        public Room(Vector2 pos, Room lastRoom, int direction)
+        public Room(Vector2Int pos, Room lastRoom, int direction)
         {
             _direction = direction;
             _pos = pos;
@@ -42,7 +42,7 @@ namespace Gameplay
         public void AddNeighbour(Room neighbour)
             => _neighbours.Add(neighbour);
 
-        public void AddNeighbour(Vector2 offset, int angle, RoomType type = RoomType.Empty)
+        public void AddNeighbour(Vector2Int offset, int angle, RoomType type = RoomType.Empty)
             => _neighbours.Add(new Room(offset, this, type, angle));
 
         public List<Room>.Enumerator GetEnumerator()

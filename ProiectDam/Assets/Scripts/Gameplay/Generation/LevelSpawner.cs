@@ -1,3 +1,4 @@
+using Core;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace Gameplay.Generation
         [SerializeField] private int _length;
         [SerializeField] private int _maxRoomCount;
 
-        private readonly HashSet<(int x, int y)> _spawnedCoordonates = new HashSet<(int x, int y)>();
+        private readonly HashSet<Vector2Int> _spawnedCoordonates = new HashSet<Vector2Int>();
 
         private void Start()
         {
@@ -37,18 +38,15 @@ namespace Gameplay.Generation
             }
         }
 
-        private GameObject SpawnRoom(Room room, Vector3 pos)
+        private GameObject SpawnRoom(Room room, Vector3 where)
         {
-            int x = (int)room.Pos.x;
-            int y = (int)room.Pos.y;
+            Vector2Int pos = room.Pos;
 
-            var pair = (x, y);
-
-            if (!_spawnedCoordonates.Contains(pair))
+            if (!_spawnedCoordonates.Contains(pos))
             {
-                GameObject result = Instantiate(this._room, pos, Quaternion.identity);
+                GameObject result = Instantiate(_room, where, Quaternion.identity);
 
-                _spawnedCoordonates.Add(pair);
+                _spawnedCoordonates.Add(pos);
 
                 Color color = room.Type switch
                 {
@@ -100,10 +98,7 @@ namespace Gameplay.Generation
                 }
             }
 
-            if (!ReferenceEquals(lastRoom, null))
-            {
-                lastRoom.GetComponent<SpriteRenderer>().color = Color.yellow;
-            }
+            lastRoom.GetComponent<SpriteRenderer>().color = Color.yellow;
         }
 
         private static void WriteMatrix(RoomType[,] matrix, string path, bool append)

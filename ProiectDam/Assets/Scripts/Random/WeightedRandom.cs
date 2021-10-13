@@ -20,7 +20,7 @@ public class WeightedRandom<T>
         }
     }
 
-    public T RandomWeighted()
+    public T Take()
     {
         int sum = 0;
         int target = _random.Next(0, _totalWeight + 1);

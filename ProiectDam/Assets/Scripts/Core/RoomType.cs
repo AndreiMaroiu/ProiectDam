@@ -1,6 +1,6 @@
-using static Gameplay.RoomType;
+using static Core.RoomType;
 
-namespace Gameplay
+namespace Core
 {
     public enum RoomType
     {
