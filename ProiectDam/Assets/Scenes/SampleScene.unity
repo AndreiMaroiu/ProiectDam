@@ -237,7 +237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxRoomNeighbours: 2
   _distance: 1.3
-  _room: {fileID: 250494410690101528, guid: 832ba3f17f6eb0349b812fe006b76bf1, type: 3}
+  _room: {fileID: 7429537751118044895, guid: 832ba3f17f6eb0349b812fe006b76bf1, type: 3}
   _door: {fileID: 1725855024066428965, guid: 23baa168f78607b4fbacbb6a8476ffc5, type: 3}
   _length: 11
   _maxRoomCount: 20

@@ -11,7 +11,7 @@ namespace Gameplay.Generation
         [SerializeField] private int _maxRoomNeighbours;
         [SerializeField] private float _distance;
         [Space]
-        [SerializeField] private GameObject _room;
+        [SerializeField] private RoomBehaviour _room;
         [SerializeField] private GameObject _door;
         [Tooltip("lenght should be odd")]
         [SerializeField] private int _length;
@@ -44,7 +44,7 @@ namespace Gameplay.Generation
 
             if (!_spawnedCoordonates.Contains(pos))
             {
-                GameObject result = Instantiate(_room, where, Quaternion.identity);
+                RoomBehaviour result = Instantiate(_room, where, Quaternion.identity);
 
                 _spawnedCoordonates.Add(pos);
 
@@ -57,7 +57,7 @@ namespace Gameplay.Generation
 
                 result.GetComponent<SpriteRenderer>().color = color;
 
-                return result;
+                return result.gameObject;
             }
 
             return null;
@@ -84,12 +84,13 @@ namespace Gameplay.Generation
             while (queue.Count > 0)
             {
                 var top = queue.Dequeue();
-                GameObject temp = SpawnRoom(top.room, top.pos);
+
+                GameObject spawnedRoom = SpawnRoom(top.room, top.pos);
                 SpawnDoor(top.room, top.pos);
 
-                if (!ReferenceEquals(temp, null))
+                if (!ReferenceEquals(spawnedRoom, null))
                 {
-                    lastRoom = temp;
+                    lastRoom = spawnedRoom;
                 }
 
                 foreach (Room room in top.room)
