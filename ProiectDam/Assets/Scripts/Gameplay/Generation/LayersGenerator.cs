@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Core;
 
 namespace Gameplay.Generation
 {
@@ -27,9 +28,9 @@ namespace Gameplay.Generation
             _random = new WeightedRandom<TileType>(ObjectsTypes, Changes);
         }
 
-        public Layers Generate()
+        public Layers Generate(Room room)
         {
-            Layers layers = new Layers(_layerSize);
+            Layers layers = new Layers(_layerSize, 3);
 
             GenerateSimple(layers.GetTiles(1));
 

@@ -13,21 +13,25 @@ namespace Gameplay.Generation
         [Space]
         [SerializeField] private RoomBehaviour _room;
         [SerializeField] private GameObject _door;
+        [SerializeField] private TileSettings _tileSettings;
+        [SerializeField] private float _cellSize;
         [Tooltip("lenght should be odd")]
         [SerializeField] private int _length;
         [SerializeField] private int _maxRoomCount;
 
-        private readonly HashSet<Vector2Int> _spawnedCoordonates = new HashSet<Vector2Int>();
+        private RoomTraverser<RoomBehaviour> _traverser;
 
         private void Start()
         {
             DungeonGenerator generator = new DungeonGenerator(_maxRoomNeighbours, _maxRoomCount, _length);
             Room start = generator.GenerateDungeon();
 
-            //WriteMatrix(generator.Matrix, "Assets/MatrixFile.txt", append: false);
-            //WriteMatrix(generator.Matrix, "Assets/FinalDungeons.txt", append: true);
+            _traverser = new RoomTraverser<RoomBehaviour>(start, generator.Matrix.GetLength(0));
 
             GenerateGameAssests(start);
+            GenereteLayers();
+            SetDoorPositions();
+            SpawnLayers();
         }
 
         private void Update()
@@ -42,11 +46,11 @@ namespace Gameplay.Generation
         {
             Vector2Int pos = room.Pos;
 
-            if (!_spawnedCoordonates.Contains(pos))
+            if (ReferenceEquals(_traverser[pos], null))
             {
                 RoomBehaviour result = Instantiate(_room, where, Quaternion.identity);
 
-                _spawnedCoordonates.Add(pos);
+                _traverser[room.Pos] = result;
 
                 Color color = room.Type switch
                 {
@@ -63,17 +67,6 @@ namespace Gameplay.Generation
             return null;
         }
 
-        private void SpawnDoor(Room room, Vector3 where)
-        {
-            if (room.LastRoom is null)
-            {
-                return;
-            }
-
-            Vector3 pos = where - (Utils.GetWorldDirection(room.Direction) * _distance / 2);
-            Instantiate(_door, pos, Quaternion.identity);
-        }
-
         private void GenerateGameAssests(Room start)
         {
             Queue<(Room room, Vector3 pos)> queue = new Queue<(Room, Vector3)>();
@@ -86,7 +79,6 @@ namespace Gameplay.Generation
                 var top = queue.Dequeue();
 
                 GameObject spawnedRoom = SpawnRoom(top.room, top.pos);
-                SpawnDoor(top.room, top.pos);
 
                 if (!ReferenceEquals(spawnedRoom, null))
                 {
@@ -102,21 +94,62 @@ namespace Gameplay.Generation
             lastRoom.GetComponent<SpriteRenderer>().color = Color.yellow;
         }
 
-        private static void WriteMatrix(RoomType[,] matrix, string path, bool append)
+        private void GenereteLayers()
         {
-            using StreamWriter file = new StreamWriter(path, append);
-
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            LayersGenerator generator = new LayersGenerator(5);
+            
+            _traverser.Traverse(room =>
             {
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                RoomBehaviour behaviour = _traverser[room.Pos];
+
+                if (behaviour.Layers == null)
                 {
-                    file.Write(matrix[i, j].FastToString()[0] + " ");
+                    behaviour.Set(room, generator.Generate(room));
+                }
+            });
+        }
+
+        private void SpawnLayers()
+        {
+            LayersSpawner spawner = new LayersSpawner(_cellSize, _tileSettings);
+
+            _traverser.Traverse(pos =>
+            {
+                RoomBehaviour behaviour = _traverser[pos];
+
+                if (!behaviour.AreLayersSpawned)
+                {
+                    spawner.GenerateLayers(behaviour);
+                    behaviour.AreLayersSpawned = true;
+                }
+            });
+        }
+
+        private void SetDoorPositions()
+        {
+            _traverser.Traverse(room =>
+            {
+                if (room.LastRoom is null)
+                {
+                    return;
                 }
 
-                file.WriteLine();
-            }
+                RoomBehaviour current = _traverser[room.Pos];
+                RoomBehaviour previous = _traverser[room.LastRoom.Pos];
 
-            file.WriteLine();
+                SetDoor(room.Pos - room.LastRoom.Pos, current.Layers.Middle);
+                SetDoor(room.LastRoom.Pos - room.Pos, previous.Layers.Middle);
+            });
+        }
+
+        private void SetDoor(Vector2Int direction, TileType[,] layer)
+        {
+            int size = layer.GetLength(0);
+            int middle = size / 2;
+            Vector2Int middlePos = new Vector2Int(middle, middle);
+            Vector2Int where = middlePos + (direction * middle);
+
+            layer[where.x, where.y] = TileType.None;
         }
     }
 }

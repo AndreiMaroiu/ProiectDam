@@ -1,3 +1,4 @@
+using Core;
 using Gameplay.Enemies;
 using UnityEngine;
 
@@ -5,36 +6,50 @@ namespace Gameplay.Generation
 {
     public sealed class RoomBehaviour : MonoBehaviour
     {
-        private GameObject _baseLayer;
-        private GameObject _currentLayer;
-        private GameObject _frontLayer;
-
+        private GameObject[] _layersObjects;
         private BaseEnemy[] _enemies;
         private DoorBehaviour[] _doors;
 
         private int _enemiesCount;
+        private Room _room;
+        private Layers _layers;
 
-        private void Awake()
-        {
-            _baseLayer = CreateEmptyObject("Base Layer");
-            _currentLayer = CreateEmptyObject("Current Layer");
-            _frontLayer = CreateEmptyObject("Front Layer");
-        }
+        public Room Room => _room;
+        public Layers Layers => _layers;
+
+        public bool AreLayersSpawned { get; set; } = false;
 
         private GameObject CreateEmptyObject(string name)
         {
             GameObject result = new GameObject(name);
             result.transform.parent = transform;
+            result.transform.localPosition = Vector3.zero;
             return result;
         }
 
-        public Transform GetTransform(int index) => index switch
+        public void Set(Room room, Layers layers)
         {
-            0 => _baseLayer.transform,
-            1 => _currentLayer.transform,
-            2 => _frontLayer.transform,
-            _ => null,
-        };
+            _room = room;
+            _layers = layers;
+            _layersObjects = new GameObject[layers.Count];
+
+            for(int i = 0; i < layers.Count; i++)
+            {
+                _layersObjects[i] = CreateEmptyObject($"Layer {i.ToString()}");
+                _layersObjects[i].SetActive(false);
+            }
+
+            int middle = _layers.Count / 2;
+            _layersObjects[middle].SetActive(true);
+        }
+
+        public void OnRoomEnter()
+        {
+            // trigger event for current room behaviour
+        }
+
+        public Transform GetTransform(int index) 
+            => _layersObjects[index].transform;
 
         public void Scan()
         {

@@ -1,7 +1,9 @@
 {
     "name": "Events",
     "rootNamespace": "Events",
-    "references": [],
+    "references": [
+        "GUID:b07b71b68acc3d049afcfa865a0bb59b"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

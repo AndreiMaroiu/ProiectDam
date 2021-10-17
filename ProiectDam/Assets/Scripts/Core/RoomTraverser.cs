@@ -42,6 +42,8 @@ namespace Core
 
         public T[,] Matrix => _matrix;
 
+        public int Size => _matrix.GetLength(0);
+
         public ref T this[Vector2Int where] => ref _matrix[where.x, where.y];
 
         public ref T this[int x, int y] => ref _matrix[x, y];
