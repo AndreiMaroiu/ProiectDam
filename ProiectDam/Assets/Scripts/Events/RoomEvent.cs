@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Events
 {
+    [CreateAssetMenu(fileName = "New Room Event", menuName = "Scriptables/Events/Room Event")]
     public class RoomEvent : ScriptableObject
     {
         public event Action OnValueChanged;
