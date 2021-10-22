@@ -8,9 +8,11 @@ namespace Core
     {
         private readonly T[,] _matrix;
         private readonly Room _start;
+        private readonly int _matrixSize;
 
         public RoomTraverser(Room start, int matrixSize)
         {
+            _matrixSize = matrixSize;
             _matrix = new T[matrixSize, matrixSize];
             _start = start;
         }
@@ -34,6 +36,30 @@ namespace Core
             }
         }
 
+        public void TraverseUnique(Action<Room> action)
+        {
+            Queue<Room> queue = new Queue<Room>();
+            bool[,] wasTraversed = new bool[_matrixSize, _matrixSize];
+
+            queue.Enqueue(_start);
+
+            while (queue.Count > 0)
+            {
+                Room top = queue.Dequeue();
+
+                if (!wasTraversed[top.Pos.x, top.Pos.y])
+                {
+                    action(top);
+                    wasTraversed[top.Pos.x, top.Pos.y] = true;
+                }
+                
+                foreach (Room room in top)
+                {
+                    queue.Enqueue(room);
+                }
+            }
+        }
+
         public void Traverse(Action<Vector2Int> action) 
             => Traverse(room => action(room.Pos));
 
@@ -43,6 +69,8 @@ namespace Core
         public T[,] Matrix => _matrix;
 
         public int Size => _matrix.GetLength(0);
+
+        public T Start => this[_start.Pos];
 
         public ref T this[Vector2Int where] => ref _matrix[where.x, where.y];
 

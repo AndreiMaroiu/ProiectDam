@@ -1,8 +1,10 @@
 using Core;
+using Gameplay.Events;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Utilities;
 
 namespace Gameplay.Generation
 {
@@ -10,14 +12,18 @@ namespace Gameplay.Generation
     {
         [SerializeField] private int _maxRoomNeighbours;
         [SerializeField] private float _distance;
-        [Space]
+        [Header("Prefabs")]
         [SerializeField] private RoomBehaviour _room;
-        [SerializeField] private GameObject _door;
+        [SerializeField] private DoorBehaviour _door;
         [SerializeField] private TileSettings _tileSettings;
+        [Header("Settings")]
         [SerializeField] private float _cellSize;
         [Tooltip("lenght should be odd")]
         [SerializeField] private int _length;
         [SerializeField] private int _maxRoomCount;
+        [SerializeField] private int _cellCount;
+        [Header("Events")]
+        [SerializeField] private RoomBehaviourEvent _roomBehaviourEvent;
 
         private RoomTraverser<RoomBehaviour> _traverser;
 
@@ -32,6 +38,9 @@ namespace Gameplay.Generation
             GenereteLayers();
             SetDoorPositions();
             SpawnLayers();
+            SpawnDoors();
+
+            _roomBehaviourEvent.Value = _traverser.Start;
         }
 
         private void Update()
@@ -46,7 +55,7 @@ namespace Gameplay.Generation
         {
             Vector2Int pos = room.Pos;
 
-            if (ReferenceEquals(_traverser[pos], null))
+            if (_traverser[pos].IsNull())
             {
                 RoomBehaviour result = Instantiate(_room, where, Quaternion.identity);
 
@@ -80,7 +89,7 @@ namespace Gameplay.Generation
 
                 GameObject spawnedRoom = SpawnRoom(top.room, top.pos);
 
-                if (!ReferenceEquals(spawnedRoom, null))
+                if (!spawnedRoom.IsNull())
                 {
                     lastRoom = spawnedRoom;
                 }
@@ -96,13 +105,13 @@ namespace Gameplay.Generation
 
         private void GenereteLayers()
         {
-            LayersGenerator generator = new LayersGenerator(5);
+            LayersGenerator generator = new LayersGenerator(_cellCount);
             
             _traverser.Traverse(room =>
             {
                 RoomBehaviour behaviour = _traverser[room.Pos];
 
-                if (behaviour.Layers == null)
+                if (behaviour.Layers is null)
                 {
                     behaviour.Set(room, generator.Generate(room));
                 }
@@ -113,15 +122,12 @@ namespace Gameplay.Generation
         {
             LayersSpawner spawner = new LayersSpawner(_cellSize, _tileSettings);
 
-            _traverser.Traverse(pos =>
+            _traverser.TraverseUnique(room =>
             {
-                RoomBehaviour behaviour = _traverser[pos];
+                RoomBehaviour behaviour = _traverser[room.Pos];
 
-                if (!behaviour.AreLayersSpawned)
-                {
-                    spawner.GenerateLayers(behaviour);
-                    behaviour.AreLayersSpawned = true;
-                }
+                spawner.GenerateLayers(behaviour);
+                behaviour.AreLayersSpawned = true;
             });
         }
 
@@ -137,12 +143,12 @@ namespace Gameplay.Generation
                 RoomBehaviour current = _traverser[room.Pos];
                 RoomBehaviour previous = _traverser[room.LastRoom.Pos];
 
-                SetDoor(room.Pos - room.LastRoom.Pos, current.Layers.Middle);
-                SetDoor(room.LastRoom.Pos - room.Pos, previous.Layers.Middle);
+                SetDoorPosition(room.Pos - room.LastRoom.Pos, current.Layers.Middle);
+                SetDoorPosition(room.LastRoom.Pos - room.Pos, previous.Layers.Middle);
             });
         }
 
-        private void SetDoor(Vector2Int direction, TileType[,] layer)
+        private void SetDoorPosition(Vector2Int direction, TileType[,] layer)
         {
             int size = layer.GetLength(0);
             int middle = size / 2;
@@ -150,6 +156,36 @@ namespace Gameplay.Generation
             Vector2Int where = middlePos + (direction * middle);
 
             layer[where.x, where.y] = TileType.None;
+        }
+
+        private void SpawnDoors()
+        {
+            _traverser.Traverse(room =>
+            {
+                if (room.LastRoom is null)
+                {
+                    return;
+                }
+
+                RoomBehaviour currentRoom = _traverser[room.Pos];
+                RoomBehaviour previousRoom = _traverser[room.LastRoom.Pos];
+
+                DoorBehaviour currentDoor = Instantiate(_door, currentRoom.transform);
+                DoorBehaviour previousDoor = Instantiate(_door, previousRoom.transform);
+
+                SetDoor(currentDoor, previousDoor, room.Pos - room.LastRoom.Pos, currentRoom);
+                SetDoor(previousDoor, currentDoor, room.LastRoom.Pos - room.Pos, previousRoom);
+            });
+        }
+
+        private void SetDoor(DoorBehaviour door, DoorBehaviour other, Vector2 direction, RoomBehaviour room)
+        {
+            Vector3 movePoint = new Vector3(-direction.y, direction.x) * (_cellCount / 2 - 1);
+            movePoint += room.transform.position;
+
+            door.transform.localPosition = new Vector3(-direction.y, direction.x) * (_cellCount / 2);
+
+            door.Set(movePoint, other, room);
         }
     }
 }

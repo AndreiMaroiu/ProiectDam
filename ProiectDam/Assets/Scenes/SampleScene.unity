@@ -238,11 +238,13 @@ MonoBehaviour:
   _maxRoomNeighbours: 2
   _distance: 10
   _room: {fileID: 7429537751118044895, guid: 832ba3f17f6eb0349b812fe006b76bf1, type: 3}
-  _door: {fileID: 1725855024066428965, guid: 23baa168f78607b4fbacbb6a8476ffc5, type: 3}
+  _door: {fileID: 3210617777619663753, guid: 23baa168f78607b4fbacbb6a8476ffc5, type: 3}
   _tileSettings: {fileID: 11400000, guid: b4cff7305604cf743a72a5a99d07769d, type: 2}
   _cellSize: 1
   _length: 11
   _maxRoomCount: 20
+  _cellCount: 9
+  _roomBehaviourEvent: {fileID: 11400000, guid: c546f3029682b1f46a1a1d15a38817fc, type: 2}
 --- !u!4 &760259612
 Transform:
   m_ObjectHideFlags: 0
@@ -322,4 +324,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1577360186
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1577360188}
+  - component: {fileID: 1577360187}
+  m_Layer: 0
+  m_Name: DungeonManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1577360187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577360186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98017f3d043d7d4f83281746dda9fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _roomEvent: {fileID: 11400000, guid: d1d78b254926b314d84ce8c10c8375c0, type: 2}
+  _roomBehaviourEvent: {fileID: 11400000, guid: c546f3029682b1f46a1a1d15a38817fc, type: 2}
+  _layersNumberEvent: {fileID: 11400000, guid: 330704b39e3231044b034c8de1f16651, type: 2}
+--- !u!4 &1577360188
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577360186}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21.878508, y: -6.032375, z: -53.128315}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

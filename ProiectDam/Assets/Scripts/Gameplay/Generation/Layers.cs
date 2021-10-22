@@ -9,12 +9,11 @@ namespace Gameplay.Generation
 
         public Layers(int layerSize, int numberOfLayers)
         {
-            int size = layerSize + 4;
             _layers = new List<TileType[,]>();
 
             for (int i = 0; i < numberOfLayers; i++)
             {
-                _layers.Add(new TileType[size, size]);
+                _layers.Add(new TileType[layerSize, layerSize]);
             }
         }
 
