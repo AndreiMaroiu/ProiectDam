@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7791148502529748655, guid: 25fe8643e6acbd3408d6981bcd21ddc9, type: 3}
       propertyPath: m_Name
-      value: Enemy-Tile
+      value: Enemy-Tile Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8762963385515959101, guid: 25fe8643e6acbd3408d6981bcd21ddc9, type: 3}
       propertyPath: m_RootOrder
@@ -67,5 +67,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7617264217521753339, guid: 25fe8643e6acbd3408d6981bcd21ddc9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 25fe8643e6acbd3408d6981bcd21ddc9, type: 3}

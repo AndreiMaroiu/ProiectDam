@@ -1,10 +1,9 @@
-using Core;
-using Gameplay.Events;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Core;
 using Utilities;
+using Gameplay.Events;
 
 namespace Gameplay.Generation
 {
@@ -61,15 +60,6 @@ namespace Gameplay.Generation
 
                 _traverser[room.Pos] = result;
 
-                Color color = room.Type switch
-                {
-                    RoomType.End => Color.blue,
-                    RoomType.Start => Color.green,
-                    _ => Color.white,
-                };
-
-                result.GetComponent<SpriteRenderer>().color = color;
-
                 return result.gameObject;
             }
 
@@ -87,26 +77,19 @@ namespace Gameplay.Generation
             {
                 var top = queue.Dequeue();
 
-                GameObject spawnedRoom = SpawnRoom(top.room, top.pos);
-
-                if (!spawnedRoom.IsNull())
-                {
-                    lastRoom = spawnedRoom;
-                }
+                SpawnRoom(top.room, top.pos);
 
                 foreach (Room room in top.room)
                 {
                     queue.Enqueue((room, top.pos + (Utils.GetWorldDirection(room.Direction) * _distance)));
                 }
             }
-
-            lastRoom.GetComponent<SpriteRenderer>().color = Color.yellow;
         }
 
         private void GenereteLayers()
         {
             LayersGenerator generator = new LayersGenerator(_cellCount);
-            
+
             _traverser.Traverse(room =>
             {
                 RoomBehaviour behaviour = _traverser[room.Pos];
@@ -125,9 +108,7 @@ namespace Gameplay.Generation
             _traverser.TraverseUnique(room =>
             {
                 RoomBehaviour behaviour = _traverser[room.Pos];
-
                 spawner.GenerateLayers(behaviour);
-                behaviour.AreLayersSpawned = true;
             });
         }
 
@@ -180,11 +161,11 @@ namespace Gameplay.Generation
 
         private void SetDoor(DoorBehaviour door, DoorBehaviour other, Vector2 direction, RoomBehaviour room)
         {
-            Vector3 movePoint = new Vector3(-direction.y, direction.x) * (_cellCount / 2 - 1);
+            Vector3 spawnDirection = new Vector3(-direction.y, direction.x) * _cellSize;
+            Vector3 movePoint = spawnDirection * (_cellCount / 2 - 1);
             movePoint += room.transform.position;
 
-            door.transform.localPosition = new Vector3(-direction.y, direction.x) * (_cellCount / 2);
-
+            door.transform.localPosition = spawnDirection * (_cellCount / 2);
             door.Set(movePoint, other, room);
         }
     }

@@ -65,7 +65,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6300368228489013616, guid: b9f9962775564384793ea37e74690334, type: 3}
       propertyPath: m_Name
-      value: Obstacle-Tile
+      value: Obstacle-Tile Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9f9962775564384793ea37e74690334, type: 3}

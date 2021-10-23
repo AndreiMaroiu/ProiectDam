@@ -29,7 +29,7 @@ namespace Gameplay.Generation
 
         private void OnDrawGizmos()
         {
-            Gizmos.DrawCube(_movePoint, new Vector3(1, 1, 1));
+            Gizmos.DrawCube(_movePoint, transform.localScale);
         }
 
         void IInteractable.Interact(PlayerController controller)

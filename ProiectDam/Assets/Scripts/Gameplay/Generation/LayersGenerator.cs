@@ -28,7 +28,24 @@ namespace Gameplay.Generation
             _random = new WeightedRandom<TileType>(ObjectsTypes, Changes);
         }
 
-        public Layers Generate(Room room)
+        public Layers Generate(Room room) => room.Type switch
+        {
+            RoomType.Normal => GenerateNormal(),
+            RoomType.Start => GenerateEmpty(),
+            RoomType.End => GenerateEmpty(),
+            _ => GenerateNormal(),
+        };
+
+        private Layers GenerateEmpty()
+        {
+            Layers layers = new Layers(_layerSize, 1);
+
+            GenerateBorder(layers.GetTiles(0));
+
+            return layers;
+        }
+
+        private Layers GenerateNormal()
         {
             Layers layers = new Layers(_layerSize, 3);
 

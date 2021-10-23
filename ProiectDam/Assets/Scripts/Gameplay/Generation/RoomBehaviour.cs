@@ -13,11 +13,11 @@ namespace Gameplay.Generation
         private int _enemiesCount;
         private Room _room;
         private Layers _layers;
+        private int _currentLayer;
 
         public Room Room => _room;
         public Layers Layers => _layers;
-
-        public bool AreLayersSpawned { get; set; } = false;
+        public int CurrentLayer => _currentLayer;
 
         private GameObject CreateEmptyObject(string name)
         {
@@ -39,8 +39,15 @@ namespace Gameplay.Generation
                 _layersObjects[i].SetActive(false);
             }
 
-            int middle = _layers.Count / 2;
-            _layersObjects[middle].SetActive(true);
+            _currentLayer = _layers.Count / 2;
+            _layersObjects[_currentLayer].SetActive(true);
+        }
+
+        public void ChangedLayer(int layer)
+        {
+            _layersObjects[_currentLayer].SetActive(false);
+            _currentLayer = layer;
+            _layersObjects[layer].SetActive(true);
         }
 
         public void OnRoomEnter()
