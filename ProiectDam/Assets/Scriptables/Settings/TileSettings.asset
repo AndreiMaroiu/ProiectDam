@@ -16,10 +16,16 @@ MonoBehaviour:
   - {fileID: 316828150326576697, guid: 83b4cccc23675f943b12eb544902e0a4, type: 3}
   _wall:
   - {fileID: 3574291531621317988, guid: 25a025f880713fd439925123dd0730f2, type: 3}
+  - {fileID: 4334884864325911320, guid: a26133ff344572b49ae12f9bbd1e3d42, type: 3}
   _grass:
   - {fileID: 7791148502529748655, guid: 25fe8643e6acbd3408d6981bcd21ddc9, type: 3}
   _enemy:
   - {fileID: 8494387582444560171, guid: f95e4f6a9df7b8d4d9c3abca90f47a4b, type: 3}
+  _door: []
+  _chest: []
+  _heal:
+  - {fileID: 1337655539291230482, guid: dbff91d7cf19bc34daf9256a9637d2df, type: 3}
+  _trap: []
   _pickUp:
   - {fileID: 6300368228489013616, guid: b9f9962775564384793ea37e74690334, type: 3}
   _obstacle:

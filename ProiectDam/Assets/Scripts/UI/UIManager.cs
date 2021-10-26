@@ -31,5 +31,11 @@ namespace UI
         {
             _currentLayer.text = _currentLayerEvent.Value.ToString();
         }
+
+        private void OnDestroy()
+        {
+            _layersCountEvent.OnValueChanged -= OnLayersCountChanged;
+            _currentLayerEvent.OnValueChanged -= OnCurrentLayerChanged;
+        }
     }
 }

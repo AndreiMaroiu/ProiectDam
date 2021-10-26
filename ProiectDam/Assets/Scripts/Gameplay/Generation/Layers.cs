@@ -6,10 +6,12 @@ namespace Gameplay.Generation
     public class Layers: IEnumerable<TileType[,]>
     {
         private readonly List<TileType[,]> _layers;
+        private readonly int _layerSize;
 
         public Layers(int layerSize, int numberOfLayers)
         {
             _layers = new List<TileType[,]>();
+            _layerSize = layerSize;
 
             for (int i = 0; i < numberOfLayers; i++)
             {
@@ -17,7 +19,9 @@ namespace Gameplay.Generation
             }
         }
 
+        public int LayerSize => _layerSize;
         public int Count => _layers.Count;
+        public int MiddleIndex => _layerSize / 2;
 
         public TileType[,] this[int index] => _layers[index];
 

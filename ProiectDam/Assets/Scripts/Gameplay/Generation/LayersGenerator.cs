@@ -32,8 +32,11 @@ namespace Gameplay.Generation
         {
             RoomType.Normal => GenerateNormal(),
             RoomType.Start => GenerateEmpty(),
-            RoomType.End => GenerateEmpty(),
-            _ => GenerateNormal(),
+            RoomType.End => GenerateEnd(),
+            RoomType.Empty => GenerateEmpty(),
+            RoomType.Healing => GenerateHeal(),
+            RoomType.Chest => GenerateChest(),
+            _ => GenerateEmpty(),
         };
 
         private Layers GenerateEmpty()
@@ -41,6 +44,36 @@ namespace Gameplay.Generation
             Layers layers = new Layers(_layerSize, 1);
 
             GenerateBorder(layers.GetTiles(0));
+
+            return layers;
+        }
+
+        private Layers GenerateEnd()
+        {
+            Layers layers = GenerateEmpty();
+            int middle = layers.MiddleIndex;
+            layers.GetTiles(0)[middle, middle] = TileType.Portal;
+
+            return layers;
+        }
+
+        private Layers GenerateChest()
+        {
+            Layers layers = GenerateEmpty();
+
+            int x = Random.Range(2, layers.LayerSize - 2);
+            int y = Random.Range(2, layers.LayerSize - 2);
+
+            layers.GetTiles(0)[x, y] = TileType.Chest;
+
+            return layers;
+        }
+
+        private Layers GenerateHeal()
+        {
+            Layers layers = GenerateEmpty();
+            int middle = layers.MiddleIndex;
+            layers.GetTiles(0)[middle, middle] = TileType.Heal;
 
             return layers;
         }

@@ -45,6 +45,11 @@ namespace Gameplay.Generation
 
         public void ChangedLayer(int layer)
         {
+            if (layer >= _layers.Count)
+            {
+                return;
+            }
+
             _layersObjects[_currentLayer].SetActive(false);
             _currentLayer = layer;
             _layersObjects[layer].SetActive(true);

@@ -25,14 +25,15 @@ namespace Gameplay.Generation
         [SerializeField] private RoomBehaviourEvent _roomBehaviourEvent;
 
         private RoomTraverser<RoomBehaviour> _traverser;
+        private DungeonGenerator _generator;
 
         private void Start()
         {
-            DungeonGenerator generator = new DungeonGenerator(_maxRoomNeighbours, _maxRoomCount, _length);
-            Room start = generator.GenerateDungeon();
+            _generator = new DungeonGenerator(_maxRoomNeighbours, _maxRoomCount, _length);
+            Room start = _generator.GenerateDungeon();
+            _traverser = new RoomTraverser<RoomBehaviour>(start, _generator.Matrix.GetLength(0));
 
-            _traverser = new RoomTraverser<RoomBehaviour>(start, generator.Matrix.GetLength(0));
-
+            GenerateRoomTypes();
             GenerateGameAssests(start);
             GenereteLayers();
             SetDoorPositions();
@@ -47,6 +48,28 @@ namespace Gameplay.Generation
             if (Input.GetKeyDown(KeyCode.R))
             {
                 SceneManager.LoadScene(0);
+            }
+        }
+
+        private void GenerateRoomTypes()
+        {
+            _generator.CalculateDistances();
+            var distances = _generator.Distances;
+            distances[distances.Count - 1].room.Type = RoomType.End;
+
+            ChooseRoomRandom(RoomType.Healing);
+            ChooseRoomRandom(RoomType.Chest);
+
+            void ChooseRoomRandom(RoomType type)
+            {
+                Room room;
+
+                do
+                {
+                    room = distances[Random.Range(1, distances.Count - 1)].room;
+                } while (room.Type != RoomType.Normal);
+
+                room.Type = type;
             }
         }
 

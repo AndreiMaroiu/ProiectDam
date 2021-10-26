@@ -17,6 +17,13 @@ namespace Core
             _start = start;
         }
 
+        public RoomTraverser(Room start, T[,] matrix)
+        {
+            _matrix = matrix;
+            _start = start;
+            _matrixSize = matrix.GetLength(0);
+        }
+
         public void Traverse(Action<Room> action)
         {
             Queue<Room> queue = new Queue<Room>();

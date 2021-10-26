@@ -1,5 +1,5 @@
-using Core;
 using UnityEngine;
+using Utilities;
 
 namespace Gameplay.Generation
 {
@@ -42,7 +42,7 @@ namespace Gameplay.Generation
                     Vector3 pos = new Vector3(_cellSize * -j, _cellSize * i) - offset;
                     GameObject tile = _tileSettings.GetTile(layer[i, j]);
 
-                    if (!ReferenceEquals(tile, null))
+                    if (!tile.IsNull())
                     {
                         GameObject spawnedTile = GameObject.Instantiate(tile, where);
                         spawnedTile.transform.localPosition = pos;

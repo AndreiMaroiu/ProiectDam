@@ -6,13 +6,24 @@ namespace Gameplay.Generation
 {
     internal class DungeonGenerator
     {
+        public struct RoomDistance
+        {
+            public Room room;
+            public int distance;
+
+            public RoomDistance(Room room, int distance)
+                => (this.room, this.distance) = (room, distance);
+        }
+
         private readonly int _maxRoomNeighbours;
         private readonly RoomType[,] _matrix;
         private readonly int _maxRoomCount;
+        private readonly List<RoomDistance> _distances;
         private readonly WeightedRandom<int> _weightedRandom;
         private readonly RandomPicker<int> _picker;
 
         private int _numberOfRooms = 0;
+        private Room _start;
 
         public DungeonGenerator(int maxRoomNeighbours, int maxRoomCount, int matrixSize)
         {
@@ -20,12 +31,14 @@ namespace Gameplay.Generation
             _maxRoomNeighbours = maxRoomNeighbours;
             _matrix = new RoomType[matrixSize + 2, matrixSize + 2];
 
+            _distances = new List<RoomDistance>();
             _weightedRandom = new WeightedRandom<int>(new int[] { 1, 2, 3 }, new int[] { 60, 30, 10 });
             _picker = new RandomPicker<int>(new int[] { 0, 90, 270 }); // se considera mereu ca o camera vine din stanga
         }
 
         public RoomType[,] Matrix => _matrix;
         public int NumberOfRooms => _numberOfRooms;
+        public List<RoomDistance> Distances => _distances;
 
         private void ClearMatrix()
         {
@@ -115,10 +128,10 @@ namespace Gameplay.Generation
 
             int middle = _matrix.GetLength(0) / 2;
             Vector2Int startPosition = new Vector2Int(middle, middle);
-            Room start = new Room(startPosition, null, RoomType.Start, Random.Range(0, 4) * 90);
+            _start = new Room(startPosition, null, RoomType.Start, Random.Range(0, 4) * 90);
             Queue<Room> queue = new Queue<Room>();
 
-            queue.Enqueue(start);
+            queue.Enqueue(_start);
             _numberOfRooms = 0;
 
             while (queue.Count > 0)
@@ -132,7 +145,28 @@ namespace Gameplay.Generation
                 }
             }
 
-            return start;
+            return _start;
+        }
+
+        public void CalculateDistances()
+        {
+            RoomTraverser<int> traverser = new RoomTraverser<int>(_start, _matrix.GetLength(0));
+
+            traverser.Traverse(room =>
+            {
+                if (room.LastRoom is null)
+                {
+                    traverser[room.Pos] = 0;
+                }
+                else
+                {
+                    traverser[room.Pos] = traverser[room.LastRoom.Pos] + 1;
+                }
+
+                _distances.Add(new RoomDistance(room, traverser[room.Pos]));
+            });
+
+            _distances.Sort((a, b) => a.distance - b.distance);
         }
 
         private void Reset()
@@ -140,6 +174,7 @@ namespace Gameplay.Generation
             ClearMatrix();
             _numberOfRooms = 0;
             _picker.Reset();
+            _distances.Clear();
         }
     }
 }

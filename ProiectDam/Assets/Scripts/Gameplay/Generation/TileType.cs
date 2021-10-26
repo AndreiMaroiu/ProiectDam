@@ -11,6 +11,7 @@ namespace Gameplay.Generation
         Heal,
         Trap,
         PickUp,
-        Obstacle
+        Obstacle,
+        Portal
     }
 }
