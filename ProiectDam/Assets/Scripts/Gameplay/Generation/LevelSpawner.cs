@@ -56,6 +56,7 @@ namespace Gameplay.Generation
             _generator.CalculateDistances();
             var distances = _generator.Distances;
             distances[distances.Count - 1].room.Type = RoomType.End;
+            distances[0].room.Type = RoomType.Start;
 
             ChooseRoomRandom(RoomType.Healing);
             ChooseRoomRandom(RoomType.Chest);
@@ -92,7 +93,6 @@ namespace Gameplay.Generation
         private void GenerateGameAssests(Room start)
         {
             Queue<(Room room, Vector3 pos)> queue = new Queue<(Room, Vector3)>();
-            GameObject lastRoom = null;
 
             queue.Enqueue((start, Vector3.zero));
 

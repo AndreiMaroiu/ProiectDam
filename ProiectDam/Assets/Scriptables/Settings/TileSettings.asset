@@ -30,3 +30,5 @@ MonoBehaviour:
   - {fileID: 6300368228489013616, guid: b9f9962775564384793ea37e74690334, type: 3}
   _obstacle:
   - {fileID: 5194763308062737505, guid: 38393981b36e5364694d0199dad04f28, type: 3}
+  _portal:
+  - {fileID: 4134641528661897864, guid: 96ecabd6f084bb349be0a59350b227b2, type: 3}
