@@ -174,8 +174,8 @@ namespace Gameplay.Generation
                 RoomBehaviour currentRoom = _traverser[room.Pos];
                 RoomBehaviour previousRoom = _traverser[room.LastRoom.Pos];
 
-                DoorBehaviour currentDoor = Instantiate(_door, currentRoom.transform);
-                DoorBehaviour previousDoor = Instantiate(_door, previousRoom.transform);
+                DoorBehaviour currentDoor = Instantiate(_door, currentRoom.GetTransform(currentRoom.Layers.MiddleLayerIndex));
+                DoorBehaviour previousDoor = Instantiate(_door, previousRoom.GetTransform(previousRoom.Layers.MiddleLayerIndex));
 
                 SetDoor(currentDoor, previousDoor, room.Pos - room.LastRoom.Pos, currentRoom);
                 SetDoor(previousDoor, currentDoor, room.LastRoom.Pos - room.Pos, previousRoom);

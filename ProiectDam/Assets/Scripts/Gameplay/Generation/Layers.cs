@@ -22,6 +22,7 @@ namespace Gameplay.Generation
         public int LayerSize => _layerSize;
         public int Count => _layers.Count;
         public int MiddleIndex => _layerSize / 2;
+        public int MiddleLayerIndex => _layers.Count / 2;
 
         public TileType[,] this[int index] => _layers[index];
 
