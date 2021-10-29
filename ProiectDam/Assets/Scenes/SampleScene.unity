@@ -319,7 +319,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e0276bae73368c4a95b814c36245a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerController: {fileID: 291062794}
+  _roomEvent: {fileID: 11400000, guid: c546f3029682b1f46a1a1d15a38817fc, type: 2}
+  _smoothTime: 0.2
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -783,7 +784,7 @@ SpriteRenderer:
   m_Size: {x: 0.5, y: 0.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1577360186
