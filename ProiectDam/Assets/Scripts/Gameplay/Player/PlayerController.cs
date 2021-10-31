@@ -29,15 +29,6 @@ namespace Gameplay.Player
             AnimatePlayer();
            
         }
-        //void PlayerMoveKeyboard()
-        //{
-        //    for (int i = 1; i < transformsToRotate.Length; i++)
-        //    {
-        //        transformsToRotate[i].position += new Vector3(_direction.x, 0f, 0f) * Time.deltaTime * _direction.x;
-        //    }
-            
-        //}
-
         void AnimatePlayer()
         {
             if (_direction.x > 0)
