@@ -4,57 +4,40 @@ namespace Gameplay.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        private const string WALK_ANIMATION = "Walk";
+
         [SerializeField] private float _speed;
 
         private Vector2 _direction;
         private Rigidbody2D _rigidbody;
-        private Transform[] transformsToRotate;
-        private Animator anim;
-        private SpriteRenderer[] sr;
-
-        private string WALK_ANIMATION = "Walk";
+        private Animator _animator;
+        private SpriteRenderer[] _renderers;
 
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
-            anim = GetComponent<Animator>();
-            sr = GetComponentsInChildren<SpriteRenderer>();
-            transformsToRotate = GetComponentsInChildren<Transform>();
+            _animator = GetComponent<Animator>();
+            _renderers = GetComponentsInChildren<SpriteRenderer>();
         }
 
         private void Update()
         {
             _direction.x = Input.GetAxis("Horizontal");
             _direction.y = Input.GetAxis("Vertical");
+
             AnimatePlayer();
-           
         }
+
         void AnimatePlayer()
         {
-            if (_direction.x > 0)
-            {
-                anim.SetBool(WALK_ANIMATION, true);
-                for (int i = 1; i < transformsToRotate.Length; i++)
-                {
-                    sr[i].flipX = false;
-                }
-                
-            }
-            else if (_direction.x < 0)
-            {
-                anim.SetBool(WALK_ANIMATION, true);
-                for (int i = 1; i < transformsToRotate.Length; i++)
-                {
-                    sr[i].flipX = true;
-                }
-            }
-            else if(_direction.y < 0 || _direction.y>0)
-            { anim.SetBool(WALK_ANIMATION, true); }
-            else
-            {
-                anim.SetBool(WALK_ANIMATION, false);
-            }
+            bool isMoving = _direction.sqrMagnitude > 0;
+            _animator.SetBool(WALK_ANIMATION, isMoving);
 
+            bool isFlipped = _direction.x < 0;
+            foreach (SpriteRenderer sprite in _renderers)
+            {
+                sprite.flipX = isFlipped;
+            }
         }
 
         private void FixedUpdate()
