@@ -34,7 +34,7 @@ namespace Gameplay.Generation
             _traverser = new RoomTraverser<RoomBehaviour>(start, _generator.Matrix.GetLength(0));
 
             GenerateRoomTypes();
-            GenerateGameAssests(start);
+            GenerateGameAssests();
             GenereteLayers();
             SetDoorPositions();
             SpawnLayers();
@@ -90,23 +90,22 @@ namespace Gameplay.Generation
             return null;
         }
 
-        private void GenerateGameAssests(Room start)
+        private void GenerateGameAssests()
         {
-            Queue<(Room room, Vector3 pos)> queue = new Queue<(Room, Vector3)>();
-
-            queue.Enqueue((start, Vector3.zero));
-
-            while (queue.Count > 0)
+            _traverser.Traverse(room =>
             {
-                var top = queue.Dequeue();
+                RoomBehaviour behavior = _traverser[room.Pos];
 
-                SpawnRoom(top.room, top.pos);
+                Vector3 where = Vector3.zero;
 
-                foreach (Room room in top.room)
+                if (room.LastRoom != null)
                 {
-                    queue.Enqueue((room, top.pos + (Utils.GetWorldDirection(room.Direction) * _distance)));
+                    Vector3 direction = Utils.GetWorldDirection(room.Direction) * _distance;
+                    where = _traverser[room.LastRoom.Pos].transform.position + direction;
                 }
-            }
+
+                SpawnRoom(room, where);
+            });
         }
 
         private void GenereteLayers()

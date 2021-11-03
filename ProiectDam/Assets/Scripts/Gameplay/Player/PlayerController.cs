@@ -11,13 +11,11 @@ namespace Gameplay.Player
         private Vector2 _direction;
         private Rigidbody2D _rigidbody;
         private Animator _animator;
-        private SpriteRenderer[] _renderers;
 
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
-            _renderers = GetComponentsInChildren<SpriteRenderer>();
         }
 
         private void Update()
@@ -28,15 +26,18 @@ namespace Gameplay.Player
             AnimatePlayer();
         }
 
-        void AnimatePlayer()
+        private void AnimatePlayer()
         {
             bool isMoving = _direction.sqrMagnitude > 0;
             _animator.SetBool(WALK_ANIMATION, isMoving);
 
-            bool isFlipped = _direction.x < 0;
-            foreach (SpriteRenderer sprite in _renderers)
+            float xScale = transform.localScale.x;
+            bool shouldFlip = _direction.x > 0 && xScale < 0 || _direction.x < 0 && xScale > 0;
+
+            if (shouldFlip)
             {
-                sprite.flipX = isFlipped;
+                transform.localScale = new Vector3(transform.localScale.x * -1, 
+                    transform.localScale.y, transform.localScale.z);
             }
         }
 
