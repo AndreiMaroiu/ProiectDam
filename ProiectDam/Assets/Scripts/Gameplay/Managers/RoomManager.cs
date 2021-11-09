@@ -23,31 +23,13 @@ namespace Gameplay.Managers
             RoomBehaviour room = _roomBehaviourEvent;
 
             _roomEvent.Value = room.Room;
-            _layersNumberEvent.Value = room.Layers.Count;
             _currentLayerEvent.Value = room.CurrentLayer;
+            _layersNumberEvent.Value = room.Layers.Count;
         }
 
         private void OnLayerChanged()
         {
             _roomBehaviourEvent.Value.ChangedLayer(_currentLayerEvent.Value);
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                _currentLayerEvent.Value = 0;
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                _currentLayerEvent.Value = 1;
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                _currentLayerEvent.Value = 2;
-            }
         }
     }
 }

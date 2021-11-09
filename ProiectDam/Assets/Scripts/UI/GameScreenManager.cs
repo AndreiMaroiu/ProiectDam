@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class UIManager : MonoBehaviour
+    public class GameScreenManager : MonoBehaviour
     {
         [Header("Objects")]
-        [SerializeField] private Text _layerCount;
         [SerializeField] private Text _currentLayer;
+        [SerializeField] private Slider _layerSlider;
         [Header("Events")]
         [SerializeField] private IntEvent _layersCountEvent;
         [SerializeField] private IntEvent _currentLayerEvent;
@@ -17,6 +17,7 @@ namespace UI
         {
             _layersCountEvent.OnValueChanged += OnLayersCountChanged;
             _currentLayerEvent.OnValueChanged += OnCurrentLayerChanged;
+            _layerSlider.onValueChanged.AddListener(OnSliderChanged);
 
             OnLayersCountChanged();
             OnCurrentLayerChanged();
@@ -24,7 +25,9 @@ namespace UI
 
         private void OnLayersCountChanged()
         {
-            _layerCount.text = _layersCountEvent.Value.ToString();
+            _layerSlider.interactable = _layersCountEvent.Value > 1;
+            _layerSlider.maxValue = _layersCountEvent.Value - 1;
+            _layerSlider.value = _currentLayerEvent.Value;
         }
 
         private void OnCurrentLayerChanged()
@@ -32,10 +35,17 @@ namespace UI
             _currentLayer.text = _currentLayerEvent.Value.ToString();
         }
 
+        private void OnSliderChanged(float value)
+        {
+            _currentLayerEvent.Value = Mathf.RoundToInt(value);
+            _layerSlider.value = Mathf.RoundToInt(value);
+        }
+
         private void OnDestroy()
         {
             _layersCountEvent.OnValueChanged -= OnLayersCountChanged;
             _currentLayerEvent.OnValueChanged -= OnCurrentLayerChanged;
+            _layerSlider.onValueChanged.RemoveListener(OnSliderChanged);
         }
     }
 }
