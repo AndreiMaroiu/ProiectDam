@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Core;
+using System.IO;
 
 namespace Gameplay.Generation
 {
@@ -145,6 +146,7 @@ namespace Gameplay.Generation
                 }
             }
 
+            //WriteToFile(Matrix);
             return _start;
         }
 
@@ -176,5 +178,23 @@ namespace Gameplay.Generation
             _picker.Reset();
             _distances.Clear();
         }
+
+        //private void WriteToFile(RoomType[,] matrix)
+        //{
+        //    const string path = "./Matrix.txt";
+
+        //    using StreamWriter writer = new StreamWriter(path);
+
+        //    int length = matrix.GetLength(0);
+        //    for (int i = 0; i < length; i++)
+        //    {
+        //        for (int j = 0; j < length; j++)
+        //        {
+        //            writer.Write(matrix[i, j].ToString() + " ");
+        //        }
+
+        //        writer.WriteLine();
+        //    }
+        //}
     }
 }

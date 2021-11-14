@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using Core;
 using Utilities;
 using Gameplay.Events;
+using Values;
 
 namespace Gameplay.Generation
 {
@@ -16,7 +17,7 @@ namespace Gameplay.Generation
         [SerializeField] private DoorBehaviour _door;
         [SerializeField] private TileSettings _tileSettings;
         [Header("Settings")]
-        [SerializeField] private float _cellSize;
+        [SerializeField] private FloatValue _cellSize;
         [Tooltip("lenght should be odd")]
         [SerializeField] private int _length;
         [SerializeField] private int _maxRoomCount;
@@ -27,7 +28,7 @@ namespace Gameplay.Generation
         private RoomTraverser<RoomBehaviour> _traverser;
         private DungeonGenerator _generator;
 
-        private void Start()
+        public void Spawn()
         {
             _generator = new DungeonGenerator(_maxRoomNeighbours, _maxRoomCount, _length);
             Room start = _generator.GenerateDungeon();
@@ -41,14 +42,6 @@ namespace Gameplay.Generation
             SpawnDoors();
 
             _roomBehaviourEvent.Value = _traverser.Start;
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                SceneManager.LoadScene(0);
-            }
         }
 
         private void GenerateRoomTypes()
@@ -125,7 +118,7 @@ namespace Gameplay.Generation
 
         private void SpawnLayers()
         {
-            LayersSpawner spawner = new LayersSpawner(_cellSize, _tileSettings);
+            LayersSpawner spawner = new LayersSpawner(_cellSize.Value, _tileSettings);
 
             _traverser.TraverseUnique(room =>
             {
@@ -153,12 +146,16 @@ namespace Gameplay.Generation
 
         private void SetDoorPosition(Vector2Int direction, TileType[,] layer)
         {
+            Vector2Int where = GetLayerPosition(direction, layer);
+            layer[where.x, where.y] = TileType.None;
+        }
+
+        private Vector2Int GetLayerPosition(Vector2Int direction, TileType[,] layer)
+        {
             int size = layer.GetLength(0);
             int middle = size / 2;
             Vector2Int middlePos = new Vector2Int(middle, middle);
-            Vector2Int where = middlePos + (direction * middle);
-
-            layer[where.x, where.y] = TileType.None;
+            return middlePos + (direction * middle);
         }
 
         private void SpawnDoors()
@@ -181,14 +178,18 @@ namespace Gameplay.Generation
             });
         }
 
-        private void SetDoor(DoorBehaviour door, DoorBehaviour other, Vector2 direction, RoomBehaviour room)
+        private void SetDoor(DoorBehaviour door, DoorBehaviour other, Vector2Int direction, RoomBehaviour room)
         {
-            Vector3 spawnDirection = new Vector3(-direction.y, direction.x) * _cellSize;
+            Vector3 spawnDirection = new Vector3(-direction.y, direction.x) * _cellSize.Value;
             Vector3 movePoint = spawnDirection * (_cellCount / 2 - 1);
-            movePoint += room.transform.position;
 
+            movePoint += room.transform.position;
             door.transform.localPosition = spawnDirection * (_cellCount / 2);
-            door.Set(movePoint, other, room);
+
+            TileType[,] layer = room.Layers[room.CurrentLayer];
+            LayerPosition layerPosition = new LayerPosition(GetLayerPosition(direction, layer) - direction, layer);
+
+            door.Set(movePoint, other, room, layerPosition);
         }
     }
 }

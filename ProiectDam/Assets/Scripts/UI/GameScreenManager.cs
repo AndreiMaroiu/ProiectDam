@@ -25,7 +25,7 @@ namespace UI
 
         private void OnLayersCountChanged()
         {
-            _layerSlider.interactable = _layersCountEvent.Value > 1;
+            _layerSlider.gameObject.SetActive(_layersCountEvent.Value > 1);
             _layerSlider.maxValue = _layersCountEvent.Value - 1;
             _layerSlider.value = _currentLayerEvent.Value;
         }

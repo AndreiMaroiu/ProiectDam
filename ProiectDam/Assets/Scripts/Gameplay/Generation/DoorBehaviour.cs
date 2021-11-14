@@ -13,12 +13,14 @@ namespace Gameplay.Generation
         private DoorBehaviour _other;
         private RoomBehaviour _room;
         private Vector3 _movePoint;
+        private LayerPosition _moveLayerPosition;
 
-        public void Set(Vector3 movePoint, DoorBehaviour other, RoomBehaviour room)
+        public void Set(Vector3 movePoint, DoorBehaviour other, RoomBehaviour room, LayerPosition layerPos)
         {
             _room = room;
             _other = other;
             _movePoint = movePoint;
+            _moveLayerPosition = layerPos;
         }
 
         private void Move(Transform transform)
@@ -35,6 +37,7 @@ namespace Gameplay.Generation
         void IInteractable.Interact(PlayerController controller)
         {
             Move(controller.transform);
+            controller.LayerPosition = _other._moveLayerPosition;
         }
     }
 }

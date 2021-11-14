@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Gameplay.Generation
 {
-    public class Layers: IEnumerable<TileType[,]>
+    public class Layers : IEnumerable<TileType[,]>
     {
         private readonly List<TileType[,]> _layers;
         private readonly int _layerSize;
@@ -28,7 +28,7 @@ namespace Gameplay.Generation
 
         public TileType[,] Middle => _layers[_layers.Count / 2];
 
-        public TileType[,] GetTiles(int layer) 
+        public TileType[,] GetTiles(int layer)
             => _layers[layer];
 
         public List<TileType[,]>.Enumerator GetEnumerator()

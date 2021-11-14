@@ -426,7 +426,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215fcffe80509a8458d545cdad434bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 10
+  _cellSize: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
+  _moveTime: 0.1
 --- !u!212 &291062795
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -486,13 +487,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291062791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 0.06, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
   - {fileID: 935166697}
   - {fileID: 1489121524}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &291062797
 Animator:
@@ -845,7 +846,7 @@ GameObject:
   - component: {fileID: 760259612}
   - component: {fileID: 760259611}
   m_Layer: 0
-  m_Name: Generator
+  m_Name: Dungeon Generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -868,7 +869,7 @@ MonoBehaviour:
   _room: {fileID: 7429537751118044895, guid: 832ba3f17f6eb0349b812fe006b76bf1, type: 3}
   _door: {fileID: 3210617777619663753, guid: 23baa168f78607b4fbacbb6a8476ffc5, type: 3}
   _tileSettings: {fileID: 11400000, guid: b4cff7305604cf743a72a5a99d07769d, type: 2}
-  _cellSize: 2.25
+  _cellSize: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
   _length: 11
   _maxRoomCount: 20
   _cellCount: 9
@@ -885,7 +886,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &916200425
 GameObject:
@@ -1158,7 +1159,7 @@ GameObject:
   - component: {fileID: 1112440789}
   - component: {fileID: 1112440791}
   m_Layer: 0
-  m_Name: UIManager
+  m_Name: UI Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1494,7 +1495,7 @@ GameObject:
   - component: {fileID: 1577360188}
   - component: {fileID: 1577360187}
   m_Layer: 0
-  m_Name: DungeonManager
+  m_Name: Dungeon Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1512,6 +1513,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a98017f3d043d7d4f83281746dda9fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawner: {fileID: 760259611}
+  _player: {fileID: 291062794}
   _roomEvent: {fileID: 11400000, guid: d1d78b254926b314d84ce8c10c8375c0, type: 2}
   _roomBehaviourEvent: {fileID: 11400000, guid: c546f3029682b1f46a1a1d15a38817fc, type: 2}
   _layersNumberEvent: {fileID: 11400000, guid: 330704b39e3231044b034c8de1f16651, type: 2}
@@ -1691,7 +1694,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1755558740
 GameObject:
@@ -1781,7 +1784,7 @@ GameObject:
   - component: {fileID: 1779272004}
   - component: {fileID: 1779272003}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: MainCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1863,7 +1866,7 @@ RectTransform:
   - {fileID: 1701460316}
   - {fileID: 381897648}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2040,7 +2043,7 @@ RectTransform:
   - {fileID: 98332685}
   - {fileID: 611105234}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

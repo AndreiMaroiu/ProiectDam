@@ -1,4 +1,7 @@
+using Gameplay.Generation;
+using System.Collections;
 using UnityEngine;
+using Values;
 
 namespace Gameplay.Player
 {
@@ -6,24 +9,86 @@ namespace Gameplay.Player
     {
         private const string WALK_ANIMATION = "Walk";
 
-        [SerializeField] private float _speed;
+        [SerializeField] private FloatValue _cellSize;
+        [SerializeField] private float _moveTime = 1.0f;
 
         private Vector2 _direction;
-        private Rigidbody2D _rigidbody;
         private Animator _animator;
+
+        private bool _canMove = true;
+        private float _inverseMoveTime;
+
+        public LayerPosition LayerPosition { get; set; }
 
         private void Start()
         {
-            _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
+
+            _inverseMoveTime = 1 / _moveTime;
+        }
+
+        public void Set(LayerPosition layerPosition)
+        {
+            LayerPosition = layerPosition;
+        }
+
+        private Vector2Int GetMoveDirection()
+        {
+            Vector2Int dir = Vector2Int.zero;
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                dir.x = -1;
+            }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                dir.x = 1;
+            }
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                dir.y = 1;
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                dir.y = -1;
+            }
+
+            return dir;
         }
 
         private void Update()
         {
-            _direction.x = Input.GetAxis("Horizontal");
-            _direction.y = Input.GetAxis("Vertical");
+            if (_canMove)
+            {
+                Vector2Int dir = GetMoveDirection();
+                if (dir.sqrMagnitude > Vector3.kEpsilon)
+                {  
+                    StartCoroutine(Move(dir));
+                }
+            }
 
             AnimatePlayer();
+        }
+
+        private IEnumerator Move(Vector2Int dir)
+        {
+            _canMove = false;
+            Vector3 endPosition = transform.position + (new Vector3(dir.x, dir.y) * _cellSize.Value);
+            _direction = dir;
+
+            if (!LayerPosition.TryMove(new Vector2Int(dir.y, -dir.x)))
+            {
+                _canMove = true;
+            }
+
+            while (transform.position != endPosition && !_canMove)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, endPosition, _inverseMoveTime * Time.deltaTime);
+                yield return null;
+            }
+
+            _direction = Vector2.zero;
+            _canMove = true;
         }
 
         private void AnimatePlayer()
@@ -41,16 +106,12 @@ namespace Gameplay.Player
             }
         }
 
-        private void FixedUpdate()
-        {
-            _rigidbody.MovePosition(_rigidbody.position + (_direction * (Time.fixedDeltaTime * _speed)));
-        }
-
         private void OnTriggerEnter2D(Collider2D collision)
         {
             IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
 
             interactable?.Interact(this);
+            _canMove = true;
         }
     }
 }
