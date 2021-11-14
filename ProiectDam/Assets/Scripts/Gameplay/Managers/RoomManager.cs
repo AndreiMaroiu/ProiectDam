@@ -24,7 +24,7 @@ namespace Gameplay.Managers
 
             TileType[,] layer = behaviour.Layers[behaviour.CurrentLayer];
             int middle = layer.GetLength(0) / 2;
-            _player.Set(new LayerPosition(new Vector2Int(middle, middle), layer));
+            _player.LayerPosition = new LayerPosition(new Vector2Int(middle, middle), layer);
 
             _roomBehaviourEvent.OnValueChanged += OnRoomChanged;
             _currentLayerEvent.OnValueChanged += OnLayerChanged;

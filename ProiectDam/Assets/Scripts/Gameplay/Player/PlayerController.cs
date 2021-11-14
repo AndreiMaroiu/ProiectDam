@@ -20,16 +20,43 @@ namespace Gameplay.Player
 
         public LayerPosition LayerPosition { get; set; }
 
+        #region Unity Events
+
         private void Start()
         {
             _animator = GetComponent<Animator>();
-
             _inverseMoveTime = 1 / _moveTime;
         }
 
-        public void Set(LayerPosition layerPosition)
+        private void Update()
         {
-            LayerPosition = layerPosition;
+            if (_canMove)
+            {
+                Vector2Int dir = GetMoveDirection();
+                if (dir.sqrMagnitude > Vector3.kEpsilon)
+                {
+                    StartCoroutine(Move(dir));
+                }
+            }
+
+            AnimatePlayer();
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
+
+            interactable?.Interact(this);
+        }
+
+        #endregion
+
+        public void StopMoving() 
+            => _canMove = true;
+
+        private void OnMove()
+        {
+            // manage food
         }
 
         private Vector2Int GetMoveDirection()
@@ -40,15 +67,15 @@ namespace Gameplay.Player
             {
                 dir.x = -1;
             }
-            if (Input.GetKeyDown(KeyCode.D))
+            else if (Input.GetKeyDown(KeyCode.D))
             {
                 dir.x = 1;
             }
-            if (Input.GetKeyDown(KeyCode.W))
+            else if (Input.GetKeyDown(KeyCode.W))
             {
                 dir.y = 1;
             }
-            if (Input.GetKeyDown(KeyCode.S))
+            else if (Input.GetKeyDown(KeyCode.S))
             {
                 dir.y = -1;
             }
@@ -56,30 +83,17 @@ namespace Gameplay.Player
             return dir;
         }
 
-        private void Update()
-        {
-            if (_canMove)
-            {
-                Vector2Int dir = GetMoveDirection();
-                if (dir.sqrMagnitude > Vector3.kEpsilon)
-                {  
-                    StartCoroutine(Move(dir));
-                }
-            }
-
-            AnimatePlayer();
-        }
-
         private IEnumerator Move(Vector2Int dir)
         {
-            _canMove = false;
-            Vector3 endPosition = transform.position + (new Vector3(dir.x, dir.y) * _cellSize.Value);
-            _direction = dir;
-
             if (!LayerPosition.TryMove(new Vector2Int(dir.y, -dir.x)))
             {
-                _canMove = true;
+                yield break;
             }
+
+            Vector3 endPosition = transform.position + (new Vector3(dir.x, dir.y) * _cellSize.Value);
+            _canMove = false;
+            _direction = dir;
+            OnMove();
 
             while (transform.position != endPosition && !_canMove)
             {
@@ -104,14 +118,6 @@ namespace Gameplay.Player
                 transform.localScale = new Vector3(transform.localScale.x * -1, 
                     transform.localScale.y, transform.localScale.z);
             }
-        }
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
-
-            interactable?.Interact(this);
-            _canMove = true;
         }
     }
 }

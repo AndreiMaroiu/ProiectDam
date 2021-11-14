@@ -38,6 +38,7 @@ namespace Gameplay.Generation
         {
             Move(controller.transform);
             controller.LayerPosition = _other._moveLayerPosition;
+            controller.StopMoving();
         }
     }
 }
