@@ -12,7 +12,7 @@ namespace Gameplay.Player
 
         [SerializeField] private FloatValue _cellSize;
         [SerializeField] private float _moveTime = 1.0f;
-        [SerializeField] private HealthEvent _healthEvent;
+        [SerializeField] private CappedIntEvent _healthEvent;
 
         private Vector2 _direction;
         private Animator _animator;
@@ -22,14 +22,14 @@ namespace Gameplay.Player
 
         public override int Health 
         { 
-            get => _healthEvent.Health; 
-            set => _healthEvent.Health = value; 
+            get => _healthEvent.Value; 
+            set => _healthEvent.Value = value; 
         }
 
         public override int MaxHealth 
         { 
-            get => _healthEvent.MaxHealth; 
-            set => _healthEvent.MaxHealth = value; 
+            get => _healthEvent.MaxValue; 
+            set => _healthEvent.MaxValue = value; 
         }
 
         public LayerPosition LayerPosition { get; set; }

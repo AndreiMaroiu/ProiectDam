@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Events;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +6,7 @@ namespace UI
 {
     public class EnergyManager : MonoBehaviour
     {
-        [SerializeField] private HealthEvent _energy;
+        [SerializeField] private CappedIntEvent _energy;
         [SerializeField] private Slider _energySlider;
         [SerializeField] private Text _energyText;
 
@@ -28,19 +26,19 @@ namespace UI
 
         private void OnEnergyChange()
         {
-            _energySlider.value = _energy.Health;
+            _energySlider.value = _energy.Value;
             UpdateText();
         }
 
         private void OnMaxEnergyChange()
         {
-            _energySlider.maxValue = _energy.MaxHealth;
+            _energySlider.maxValue = _energy.MaxValue;
             UpdateText();
         }
 
         private void UpdateText()
         {
-            _energyText.text = $"{_energy.Health.ToString()}/{_energy.MaxHealth.ToString()}";
+            _energyText.text = $"{_energy.Value.ToString()}/{_energy.MaxValue.ToString()}";
         }
     }
 }
