@@ -19,6 +19,12 @@ namespace Events
             set
             {
                 _value = value;
+
+                if (_value > _maxValue)
+                {
+                    _value = _maxValue;
+                }
+
                 OnHealthChanged?.Invoke();
             }
         }
