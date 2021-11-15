@@ -428,6 +428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cellSize: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
   _moveTime: 0.1
+  _healthEvent: {fileID: 0}
 --- !u!212 &291062795
 SpriteRenderer:
   m_ObjectHideFlags: 0

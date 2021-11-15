@@ -2,21 +2,35 @@ using Gameplay.Generation;
 using System.Collections;
 using UnityEngine;
 using Values;
+using Events;
 
 namespace Gameplay.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : KillableObject
     {
         private const string WALK_ANIMATION = "Walk";
 
         [SerializeField] private FloatValue _cellSize;
         [SerializeField] private float _moveTime = 1.0f;
+        [SerializeField] private HealthEvent _healthEvent;
 
         private Vector2 _direction;
         private Animator _animator;
 
         private bool _canMove = true;
         private float _inverseMoveTime;
+
+        public override int Health 
+        { 
+            get => _healthEvent.Health; 
+            set => _healthEvent.Health = value; 
+        }
+
+        public override int MaxHealth 
+        { 
+            get => _healthEvent.MaxHealth; 
+            set => _healthEvent.MaxHealth = value; 
+        }
 
         public LayerPosition LayerPosition { get; set; }
 
@@ -56,7 +70,7 @@ namespace Gameplay.Player
 
         private void OnMove()
         {
-            // manage food
+            // manage energy
         }
 
         private Vector2Int GetMoveDirection()
@@ -118,6 +132,16 @@ namespace Gameplay.Player
                 transform.localScale = new Vector3(transform.localScale.x * -1, 
                     transform.localScale.y, transform.localScale.z);
             }
+        }
+
+        protected override void OnDamage()
+        {
+            
+        }
+
+        protected override void OnDeath()
+        {
+            
         }
     }
 }
