@@ -3,11 +3,14 @@ using UnityEngine;
 
 namespace Events
 {
+    /// <summary>
+    /// Can be used to represent int values with a maximum value
+    /// </summary>
     [CreateAssetMenu(fileName = "New Capped Int Event", menuName = "Scriptables/Events/Capped Int Event")]
     public class CappedIntEvent : ScriptableObject
     {
-        public event Action OnHealthChanged;
-        public event Action OnMaxHealthChanged;
+        public event Action OnValueChanged;
+        public event Action OnMaxValueChanged;
 
         private int _value;
         private int _maxValue;
@@ -25,7 +28,7 @@ namespace Events
                     _value = _maxValue;
                 }
 
-                OnHealthChanged?.Invoke();
+                OnValueChanged?.Invoke();
             }
         }
 
@@ -36,7 +39,7 @@ namespace Events
             set
             {
                 _maxValue = value;
-                OnMaxHealthChanged?.Invoke();
+                OnMaxValueChanged?.Invoke();
             }
         }
     }

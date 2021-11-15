@@ -14,14 +14,14 @@ namespace UI
         {
             OnEnergyChange();
             OnMaxEnergyChange();
-            _energy.OnHealthChanged += OnEnergyChange;
-            _energy.OnMaxHealthChanged += OnMaxEnergyChange;
+            _energy.OnValueChanged += OnEnergyChange;
+            _energy.OnMaxValueChanged += OnMaxEnergyChange;
         }
 
         private void OnDestroy()
         {
-            _energy.OnHealthChanged -= OnEnergyChange;
-            _energy.OnMaxHealthChanged -= OnMaxEnergyChange;
+            _energy.OnValueChanged -= OnEnergyChange;
+            _energy.OnMaxValueChanged -= OnMaxEnergyChange;
         }
 
         private void OnEnergyChange()
