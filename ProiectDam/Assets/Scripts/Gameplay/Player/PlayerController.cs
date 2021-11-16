@@ -12,7 +12,12 @@ namespace Gameplay.Player
 
         [SerializeField] private FloatValue _cellSize;
         [SerializeField] private float _moveTime = 1.0f;
+        [SerializeField] private int _startEnergy;
+        [SerializeField] private int _startHealth;
+        [Header("Events")]
         [SerializeField] private CappedIntEvent _healthEvent;
+        [SerializeField] private CappedIntEvent _energyEvent;
+        [SerializeField] private GameEvent _onPlayerDeath;
 
         private Vector2 _direction;
         private Animator _animator;
@@ -35,6 +40,15 @@ namespace Gameplay.Player
         public LayerPosition LayerPosition { get; set; }
 
         #region Unity Events
+
+        private void Awake()
+        {
+            _energyEvent.Value = _startEnergy;
+            _energyEvent.MaxValue = _startEnergy;
+
+            _healthEvent.Value = _startHealth;
+            _healthEvent.MaxValue = _startHealth;
+        }
 
         private void Start()
         {
@@ -70,7 +84,12 @@ namespace Gameplay.Player
 
         private void OnMove()
         {
-            // manage energy
+            _energyEvent.Value--;
+
+            if (_energyEvent.Value <= 0)
+            {
+                OnDeath();
+            }
         }
 
         private Vector2Int GetMoveDirection()
@@ -141,7 +160,7 @@ namespace Gameplay.Player
 
         protected override void OnDeath()
         {
-            
+            _onPlayerDeath.Invoke();
         }
     }
 }
