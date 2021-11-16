@@ -1,6 +1,7 @@
 using Events;
 using UnityEngine;
 using UnityEngine.UI;
+using ModalWindows;
 
 namespace UI
 {
@@ -14,6 +15,11 @@ namespace UI
         [SerializeField] private Slider _healthSlider;
         [SerializeField] private Text _healthText;
 
+        [SerializeField] private CappedIntEvent _bullets;
+        [SerializeField] private Text _bulletsText;
+
+        [SerializeField] private GameEvent _onPlayerDeath;
+
         private void Start()
         {
             OnMaxEnergyChange();
@@ -22,11 +28,19 @@ namespace UI
             OnMaxHealthChange();
             OnHealthChange();
 
+            OnMaxBulletsChange();
+            OnBulletsChange();
+
             _energy.OnValueChanged += OnEnergyChange;
             _energy.OnMaxValueChanged += OnMaxEnergyChange;
 
             _health.OnValueChanged += OnHealthChange;
             _health.OnMaxValueChanged += OnMaxHealthChange;
+
+            _bullets.OnValueChanged += OnBulletsChange;
+            _bullets.OnMaxValueChanged += OnMaxBulletsChange;
+
+            _onPlayerDeath.OnEvent += OnPlayerDeath;
         }
 
         private void OnDestroy()
@@ -36,6 +50,11 @@ namespace UI
 
             _health.OnValueChanged -= OnHealthChange;
             _health.OnMaxValueChanged -= OnMaxHealthChange;
+
+            _bullets.OnValueChanged -= OnBulletsChange;
+            _bullets.OnMaxValueChanged -= OnMaxBulletsChange;
+
+            _onPlayerDeath.OnEvent -= OnPlayerDeath;
         }
 
         private void OnEnergyChange()
@@ -62,6 +81,16 @@ namespace UI
             UpdateHealthText();
         }
 
+        private void OnBulletsChange()
+        {
+            UpdateBulletsText();
+        }
+
+        private void OnMaxBulletsChange()
+        {
+            UpdateBulletsText();
+        }
+
         private void UpdateEnergyText()
         {
             _energyText.text = $"{_energy.Value.ToString()}/{_energy.MaxValue.ToString()}";
@@ -70,6 +99,18 @@ namespace UI
         private void UpdateHealthText()
         {
             _healthText.text = $"{_health.Value.ToString()}/{_health.MaxValue.ToString()}";
+        }
+
+        private void UpdateBulletsText()
+        {
+            _bulletsText.text = $"{_bullets.Value.ToString()}/{_bullets.MaxValue.ToString()}";
+        }
+
+        private void OnPlayerDeath()
+        {
+            float timeScale = Time.timeScale;
+            Time.timeScale = 0.0f;
+            ModalWindow.ShowSimpleDialog("You died!", () => { Time.timeScale = timeScale; });
         }
     }
 }
