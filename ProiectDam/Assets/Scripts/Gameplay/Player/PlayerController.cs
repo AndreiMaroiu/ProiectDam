@@ -15,6 +15,7 @@ namespace Gameplay.Player
         [SerializeField] private int _startEnergy;
         [SerializeField] private int _startHealth;
         [Header("Events")]
+        [SerializeField] private CappedIntEvent _bulletsEvent;
         [SerializeField] private CappedIntEvent _healthEvent;
         [SerializeField] private CappedIntEvent _energyEvent;
         [SerializeField] private GameEvent _onPlayerDeath;
@@ -35,6 +36,30 @@ namespace Gameplay.Player
         { 
             get => _healthEvent.MaxValue; 
             set => _healthEvent.MaxValue = value; 
+        }
+
+        public int Bullets
+        {
+            get => _bulletsEvent.Value;
+            set => _bulletsEvent.Value = value;
+        }
+
+        public int MaxBullets
+        {
+            get => _bulletsEvent.MaxValue;
+            set => _bulletsEvent.MaxValue = value;
+        }
+
+        public int Energy
+        {
+            get => _energyEvent.Value;
+            set => _energyEvent.Value = value;
+        }
+
+        public int MaxEnergy
+        {
+            get => _energyEvent.MaxValue;
+            set => _energyEvent.MaxValue = value;
         }
 
         public LayerPosition LayerPosition { get; set; }
