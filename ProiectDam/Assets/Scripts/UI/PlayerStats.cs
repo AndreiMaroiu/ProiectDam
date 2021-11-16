@@ -1,6 +1,7 @@
 using Events;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using ModalWindows;
 
 namespace UI
@@ -110,7 +111,10 @@ namespace UI
         {
             float timeScale = Time.timeScale;
             Time.timeScale = 0.0f;
-            ModalWindow.ShowSimpleDialog("You died!", () => { Time.timeScale = timeScale; });
+            ModalWindow.ShowSimpleDialog("You died!", () => { 
+                Time.timeScale = timeScale;
+                SceneManager.LoadScene(1);
+            });
         }
     }
 }

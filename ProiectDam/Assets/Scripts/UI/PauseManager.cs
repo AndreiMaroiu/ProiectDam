@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace UI
 {
     public class PauseManager : MonoBehaviour
     {
-        public bool IsPaused { get; set; }
         public float LastTimeScale { get; set; }
 
         public const float PausedScale = 0.0f;
@@ -18,17 +18,22 @@ namespace UI
             LastTimeScale = Time.timeScale;
             _pauseCanvas.SetActive(false);
         }
-        public void onPauseClick()
+
+        public void OnPauseClick()
         {
             Time.timeScale = PausedScale;
-            IsPaused = !IsPaused;
-            _pauseCanvas.SetActive(IsPaused);
+            _pauseCanvas.SetActive(true);
         }
-        public void onResumeClick()
+
+        public void OnResumeClick()
         {
             Time.timeScale = LastTimeScale;
-            IsPaused = !IsPaused;
-            _pauseCanvas.SetActive(IsPaused);
+            _pauseCanvas.SetActive(false);
+        }
+
+        public void OnCloseClick()
+        {
+            SceneManager.LoadScene(1);
         }
     }
 }
