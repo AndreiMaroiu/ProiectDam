@@ -14,18 +14,13 @@ namespace UI
         [SerializeField] private Slider _healthSlider;
         [SerializeField] private Text _healthText;
 
-        private static int max = 100;
-
         private void Start()
         {
-            _energy.MaxValue = max;
-            _health.MaxValue = max;
-
-            OnEnergyChange();
             OnMaxEnergyChange();
+            OnEnergyChange();
 
-            OnHealthChange();
             OnMaxHealthChange();
+            OnHealthChange();
 
             _energy.OnValueChanged += OnEnergyChange;
             _energy.OnMaxValueChanged += OnMaxEnergyChange;
