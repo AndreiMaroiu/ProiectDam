@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba181f1bdd0d1f2449ec68966abcc356, type: 3}
-  m_Name: Cell Size
+  m_Script: {fileID: 11500000, guid: e928971deeaa26a478597f85c11005b6, type: 3}
+  m_Name: OnPlayerDeath
   m_EditorClassIdentifier: 
-  _value: 1.3

@@ -12,7 +12,13 @@ namespace Gameplay.Player
 
         [SerializeField] private FloatValue _cellSize;
         [SerializeField] private float _moveTime = 1.0f;
-        [SerializeField] private HealthEvent _healthEvent;
+        [SerializeField] private int _startEnergy;
+        [SerializeField] private int _startHealth;
+        [Header("Events")]
+        [SerializeField] private CappedIntEvent _bulletsEvent;
+        [SerializeField] private CappedIntEvent _healthEvent;
+        [SerializeField] private CappedIntEvent _energyEvent;
+        [SerializeField] private GameEvent _onPlayerDeath;
 
         private Vector2 _direction;
         private Animator _animator;
@@ -22,19 +28,52 @@ namespace Gameplay.Player
 
         public override int Health 
         { 
-            get => _healthEvent.Health; 
-            set => _healthEvent.Health = value; 
+            get => _healthEvent.Value; 
+            set => _healthEvent.Value = value; 
         }
 
         public override int MaxHealth 
         { 
-            get => _healthEvent.MaxHealth; 
-            set => _healthEvent.MaxHealth = value; 
+            get => _healthEvent.MaxValue; 
+            set => _healthEvent.MaxValue = value; 
+        }
+
+        public int Bullets
+        {
+            get => _bulletsEvent.Value;
+            set => _bulletsEvent.Value = value;
+        }
+
+        public int MaxBullets
+        {
+            get => _bulletsEvent.MaxValue;
+            set => _bulletsEvent.MaxValue = value;
+        }
+
+        public int Energy
+        {
+            get => _energyEvent.Value;
+            set => _energyEvent.Value = value;
+        }
+
+        public int MaxEnergy
+        {
+            get => _energyEvent.MaxValue;
+            set => _energyEvent.MaxValue = value;
         }
 
         public LayerPosition LayerPosition { get; set; }
 
         #region Unity Events
+
+        private void Awake()
+        {
+            _energyEvent.Value = _startEnergy;
+            _energyEvent.MaxValue = _startEnergy;
+
+            _healthEvent.Value = _startHealth;
+            _healthEvent.MaxValue = _startHealth;
+        }
 
         private void Start()
         {
@@ -70,7 +109,12 @@ namespace Gameplay.Player
 
         private void OnMove()
         {
-            // manage energy
+            _energyEvent.Value--;
+
+            if (_energyEvent.Value <= 0)
+            {
+                OnDeath();
+            }
         }
 
         private Vector2Int GetMoveDirection()
@@ -141,7 +185,7 @@ namespace Gameplay.Player
 
         protected override void OnDeath()
         {
-            
+            _onPlayerDeath.Invoke();
         }
     }
 }

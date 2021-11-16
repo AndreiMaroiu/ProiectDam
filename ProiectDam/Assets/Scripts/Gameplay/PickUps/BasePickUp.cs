@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using Gameplay.Player;
 using UnityEngine;
 
-namespace Gameplay.Player
+namespace Gameplay.PickUps
 {
     public abstract class BasePickUp : MonoBehaviour, IInteractable
     {

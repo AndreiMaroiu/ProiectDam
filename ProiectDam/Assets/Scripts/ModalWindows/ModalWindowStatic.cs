@@ -16,6 +16,11 @@ namespace ModalWindows
             SetDebug(message, null, null, null);
         }
 
+        public static void ShowSimpleDialog(string message, Action closeAction)
+        {
+            SetDebug(message, null, null, null, null, closeAction);
+        }
+
         private static void SetDebug(string header, string content, Sprite image, string footer,
             Action okAction = null, Action closeAction = null, Action alternativeAction = null)
         {
