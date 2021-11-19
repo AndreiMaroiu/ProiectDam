@@ -32,6 +32,12 @@ namespace Events
             }
         }
 
+        public void Init(int value, int max)
+        {
+            MaxValue = max;
+            Value = value;
+        }
+
         public int MaxValue
         {
             get => _maxValue;

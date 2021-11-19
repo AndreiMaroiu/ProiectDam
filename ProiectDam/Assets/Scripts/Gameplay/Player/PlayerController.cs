@@ -69,11 +69,8 @@ namespace Gameplay.Player
 
         private void Awake()
         {
-            _energyEvent.Value = _startEnergy;
-            _energyEvent.MaxValue = _startEnergy;
-
-            _healthEvent.Value = _startHealth;
-            _healthEvent.MaxValue = _startHealth;
+            _energyEvent.Init(_startEnergy, _startEnergy);
+            _healthEvent.Init(_startHealth, _startHealth);
 
             _previewEvent.OnValueChanged += OnPreviewChanged;
         }
