@@ -19,6 +19,7 @@ namespace Gameplay.Player
         [SerializeField] private CappedIntEvent _healthEvent;
         [SerializeField] private CappedIntEvent _energyEvent;
         [SerializeField] private GameEvent _onPlayerDeath;
+        [SerializeField] private BoolEvent _previewEvent;
 
         private Vector2 _direction;
         private Animator _animator;
@@ -73,6 +74,13 @@ namespace Gameplay.Player
 
             _healthEvent.Value = _startHealth;
             _healthEvent.MaxValue = _startHealth;
+
+            _previewEvent.OnValueChanged += OnPreviewChanged;
+        }
+
+        private void OnDestroy()
+        {
+            _previewEvent.OnValueChanged -= OnPreviewChanged;
         }
 
         private void Start()
@@ -103,6 +111,11 @@ namespace Gameplay.Player
         }
 
         #endregion
+
+        private void OnPreviewChanged()
+        {
+            gameObject.SetActive(_previewEvent.Value);
+        }
 
         public void StopMoving() 
             => _canMove = true;

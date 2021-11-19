@@ -626,6 +626,7 @@ MonoBehaviour:
   _healthEvent: {fileID: 11400000, guid: ec3568012a067f84da5a55b8eb7f3079, type: 2}
   _energyEvent: {fileID: 11400000, guid: 917748f6b3e7da44f9e69a2067ad2307, type: 2}
   _onPlayerDeath: {fileID: 11400000, guid: 9d8a5883be5e2394abb1e7e1ec2f447b, type: 2}
+  _previewEvent: {fileID: 11400000, guid: 0a850cb0818136d4188c5b364870105d, type: 2}
 --- !u!4 &291062796
 Transform:
   m_ObjectHideFlags: 0
