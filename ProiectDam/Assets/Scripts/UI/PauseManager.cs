@@ -47,6 +47,7 @@ namespace UI
 
         public void OnCloseClick()
         {
+            Time.timeScale = 1;
             SceneManager.LoadScene(1);
         }
     }
