@@ -63,7 +63,11 @@ namespace Gameplay.Player
             set => _energyEvent.MaxValue = value;
         }
 
-        public LayerPosition LayerPosition { get; set; }
+        public LayerPosition LayerPosition 
+        { 
+            get; 
+            set; 
+        }
 
         #region Unity Events
 
@@ -153,10 +157,13 @@ namespace Gameplay.Player
 
         private IEnumerator Move(Vector2Int dir)
         {
-            if (!LayerPosition.TryMove(new Vector2Int(dir.y, -dir.x)))
+            Vector2Int layerDirection = new Vector2Int(dir.y, -dir.x);
+            if (!LayerPosition.CanMove(layerDirection))
             {
                 yield break;
             }
+
+            LayerPosition.Move(layerDirection);
 
             Vector3 endPosition = transform.position + (new Vector3(dir.x, dir.y) * _cellSize.Value);
             _canMove = false;

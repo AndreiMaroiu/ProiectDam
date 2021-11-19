@@ -32,8 +32,6 @@ namespace ModalWindows
         private Action _okAction = null;
         private Action _alternativeAction = null;
 
-        private VerticalLayoutGroup group;
-
         private void Close()
         {
             _window.gameObject.SetActive(false);

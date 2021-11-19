@@ -15,7 +15,10 @@ namespace Gameplay.Generation
         [Header("Prefabs")]
         [SerializeField] private RoomBehaviour _room;
         [SerializeField] private DoorBehaviour _door;
-        [SerializeField] private TileSettings _tileSettings;
+        [Header("Tiles")]
+        [SerializeField] private TileSettings _dungeonTiles;
+        [SerializeField] private TileSettings _fireTiles;
+        [SerializeField] private TileSettings _grassTiles;
         [Header("Settings")]
         [SerializeField] private FloatValue _cellSize;
         [Tooltip("lenght should be odd")]
@@ -118,7 +121,7 @@ namespace Gameplay.Generation
 
         private void SpawnLayers()
         {
-            LayersSpawner spawner = new LayersSpawner(_cellSize.Value, _tileSettings);
+            LayersSpawner spawner = new LayersSpawner(_cellSize.Value, _grassTiles, _fireTiles, _dungeonTiles);
 
             _traverser.TraverseUnique(room =>
             {

@@ -6,27 +6,48 @@ namespace Gameplay.Generation
 {
     public sealed class LayerPosition
     {
-        private Vector2Int _pos;
+        public LayerPosition(LayerPosition other)
+        {
+            Layer = other.Layer;
+            Position = other.Position;
+        }
 
         public LayerPosition(Vector2Int pos, TileType[,] layer)
         {
-            _pos = pos;
+            Position = pos;
             Layer = layer;
         }
 
-        public TileType[,] Layer { get; set; }
+        public TileType[,] Layer 
+        { 
+            get; 
+            set; 
+        }
 
-        public bool TryMove(Vector2Int dir)
+        public Vector2Int Position { get; private set; }
+
+        public bool CanMove(Vector2Int dir)
         {
-            Vector2Int end = _pos + dir;
+            Vector2Int end = Position + dir;
 
-            if (Layer[end.x, end.y].CanMove())
+            try
             {
-                _pos = end;
-                return true;
+                if (Layer[end.x, end.y].CanMove())
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                Debug.Log($"Could not move, pos: {Position.ToString()}, end: {end.ToString()}");
             }
 
             return false;
+        }
+
+        public void Move(Vector2Int dir)
+        {
+            Position += dir;
         }
     }
 }

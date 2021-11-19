@@ -36,9 +36,9 @@ namespace Gameplay.Generation
 
         void IInteractable.Interact(PlayerController controller)
         {
-            Move(controller.transform);
-            controller.LayerPosition = _other._moveLayerPosition;
             controller.StopMoving();
+            Move(controller.transform);
+            controller.LayerPosition = new LayerPosition(_other._moveLayerPosition);
         }
     }
 }

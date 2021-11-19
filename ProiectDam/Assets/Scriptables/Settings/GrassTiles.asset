@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c0ff5a24f9a4b54b9d7bf11bc7c0920, type: 3}
-  m_Name: TileSettings
+  m_Name: GrassTiles
   m_EditorClassIdentifier: 
   _none:
   - {fileID: 316828150326576697, guid: 83b4cccc23675f943b12eb544902e0a4, type: 3}
@@ -42,7 +42,8 @@ MonoBehaviour:
   - {fileID: 2055102311959635369, guid: 39562e88b536753438a3153c5fbdf7b8, type: 3}
   _enemy:
   - {fileID: 8494387582444560171, guid: f95e4f6a9df7b8d4d9c3abca90f47a4b, type: 3}
-  _door: []
+  _door:
+  - {fileID: 1725855024066428965, guid: 23baa168f78607b4fbacbb6a8476ffc5, type: 3}
   _chest: []
   _heal:
   - {fileID: 1337655539291230482, guid: dbff91d7cf19bc34daf9256a9637d2df, type: 3}

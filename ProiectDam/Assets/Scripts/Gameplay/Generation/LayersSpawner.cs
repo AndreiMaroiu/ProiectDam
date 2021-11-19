@@ -6,14 +6,19 @@ namespace Gameplay.Generation
     public class LayersSpawner
     {
         private readonly float _cellSize;
-        private readonly TileSettings _tileSettings;
+        private readonly TileSettings _grassTiles;
+        private readonly TileSettings _fireTiles;
+        private readonly TileSettings _dungeonTiles;
 
         private Vector3 _offset;
 
-        public LayersSpawner(float cellSize, TileSettings tileSettings)
+        public LayersSpawner(float cellSize, TileSettings grassTiles, TileSettings fireTiles, TileSettings dungeonTiles)
         {
             _cellSize = cellSize;
-            _tileSettings = tileSettings;
+
+            _grassTiles = grassTiles;
+            _fireTiles = fireTiles;
+            _dungeonTiles = dungeonTiles;
         }
 
         public void GenerateLayers(RoomBehaviour behaviour)
@@ -22,82 +27,52 @@ namespace Gameplay.Generation
 
             for (int i = 0; i < layers.Count; i++)
             {
-                SpawnLayer(layers.GetTiles(i), behaviour.GetTransform(i));
+                SpawnLayer(layers.GetTiles(i), behaviour.GetTransform(i), layers.GetBiome(i));
             }
         }
 
-        private void SpawnLayer(TileType[,] layer, Transform where)
+        private void SpawnLayer(TileType[,] layer, Transform where, BiomeType biome)
         {
             int size = layer.GetLength(0);
             // world position is rotated from matrix position
             _offset = new Vector3(-size / 2 * _cellSize, size / 2 * _cellSize);
 
-            SpawnWalls(layer, where);
-            SpawnBackground(layer, where);
-            SpawnForeground(layer, where);
+            SpawnWalls(layer, where, biome);
+            SpawnBackground(layer, where, biome);
+            SpawnForeground(layer, where, biome);
         }
 
-        private void SpawnTile(int i, int j, GameObject tile, Transform where)
-        {
-            // world position is rotated from matrix position
-            Vector3 pos = new Vector3(_cellSize * -j, _cellSize * i) - _offset;
-
-            if (!tile.IsNull())
-            {
-                GameObject spawnedTile = GameObject.Instantiate(tile, where);
-                spawnedTile.transform.localPosition = pos;
-            }
-        }
-
-        private void SpawnTile(int i, int j, GameObject tile, 
-            Transform where, TileType type, TileType condition)
-        {
-            if (type == condition)
-            {
-                SpawnTile(i, j, tile, where);
-            }
-        }
-
-        private void SpawnTileConditional(int i, int j, GameObject tile, 
-            Transform where, TileType type, TileType condition)
-        {
-            if (type != condition)
-            {
-                SpawnTile(i, j, tile, where);
-            }
-        }
-
-        private void SpawnWalls(TileType[,] layer, Transform where)
+        private void SpawnWalls(TileType[,] layer, Transform where, BiomeType biome)
         {
             int size = layer.GetLength(0);
             int sizeMinus = size - 1;
 
             for (int i = 0; i < size; i++)
             {
-                SpawnTile(i, 0, _tileSettings.GetTile(TileType.Wall), where, layer[i, 0], TileType.Wall);
-                SpawnTile(0, i, _tileSettings.GetTile(TileType.Wall), where, layer[0, i], TileType.Wall);
-                SpawnTile(sizeMinus, i, _tileSettings.GetTile(TileType.Wall), where, layer[sizeMinus, i], TileType.Wall);
-                SpawnTile(i, sizeMinus, _tileSettings.GetTile(TileType.Wall), where, layer[i, sizeMinus], TileType.Wall);
+                SpawnTileIf(i, 0, where, biome, layer[i, 0], TileType.Wall, TileType.Wall);
+                SpawnTileIf(0, i, where, biome, layer[0, i], TileType.Wall, TileType.Wall);
+
+                SpawnTileIf(sizeMinus, i, where, biome, layer[sizeMinus, i], TileType.Wall, TileType.Wall);
+                SpawnTileIf(i, sizeMinus, where, biome, layer[i, sizeMinus], TileType.Wall, TileType.Wall);
             }
         }
 
-        private void SpawnBackground(TileType[,] layer, Transform where)
+        private void SpawnBackground(TileType[,] layer, Transform where, BiomeType biome)
         {
             int size = layer.GetLength(0);
-            int sizeMinus = size;
 
-            for (int i = 0; i < sizeMinus; i++)
+            for (int i = 0; i < size; i++)
             {
-                for (int j = 0; j < sizeMinus; j++)
+                for (int j = 0; j < size; j++)
                 {
-                    SpawnTileConditional(i, j, _tileSettings.GetTile(TileType.None), where, layer[i, j], TileType.Wall);
+                    SpawnTileIfNot(i, j, where, biome, TileType.None, layer[i, j], TileType.Wall);
                 }
             }
         }
 
-        private void SpawnForeground(TileType[,] layer, Transform where)
+        private void SpawnForeground(TileType[,] layer, Transform where, BiomeType biome)
         {
-            // minus 2 is required cause there is a wall border and a none border
+            // minus 2 is required because there is a wall border and a none border
             int size = layer.GetLength(0);
             int sizeMinus = size - 2;
 
@@ -106,9 +81,52 @@ namespace Gameplay.Generation
                 for (int j = 2; j < sizeMinus; j++)
                 {
                     TileType type = layer[i, j];
-                    SpawnTileConditional(i, j, _tileSettings.GetTile(type), where, type, TileType.None);
+                    SpawnTileIfNot(i, j, where, biome, type, type, TileType.None);
                 }
             }
         }
+
+        #region Helpers
+
+        private void SpawnTile(int i, int j, Transform where, BiomeType biome, TileType type)
+        {
+            // world position is rotated from matrix position
+            Vector3 pos = new Vector3(_cellSize * -j, _cellSize * i) - _offset;
+            GameObject tile = GetSettings(biome).GetTile(type);
+            
+            if (tile.IsNotNull())
+            {
+                GameObject spawnedTile = GameObject.Instantiate(tile, where);
+                spawnedTile.transform.localPosition = pos;
+            }
+        }
+
+        private void SpawnTileIf(int i, int j, Transform where, BiomeType biome, TileType type, TileType tile, TileType condition)
+        {
+            if (tile == condition)
+            {
+                SpawnTile(i, j, where, biome, type);
+            }
+        }
+
+        private void SpawnTileIfNot(int i, int j, Transform where, BiomeType biome, 
+            TileType type, TileType tile, TileType condition)
+        {
+            if (tile != condition)
+            {
+                SpawnTile(i, j, where, biome, type);
+            }
+        }
+
+        private TileSettings GetSettings(BiomeType biome) => biome switch
+        {
+            BiomeType.None => null,
+            BiomeType.Fire => _fireTiles,
+            BiomeType.Dungeon => _dungeonTiles,
+            BiomeType.Grassland => _grassTiles,
+            _ => null,
+        };
+
+        #endregion
     }
 }
