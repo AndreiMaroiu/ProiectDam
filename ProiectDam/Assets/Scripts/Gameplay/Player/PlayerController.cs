@@ -1,5 +1,6 @@
-using Gameplay.Generation;
 using System.Collections;
+using Gameplay.Generation;
+using Gameplay.Sound;
 using UnityEngine;
 using Values;
 using Events;
@@ -23,6 +24,7 @@ namespace Gameplay.Player
 
         private Vector2 _direction;
         private Animator _animator;
+        private SoundHandler _soundhandler;
         
         private bool _canMove = true;
         private float _inverseMoveTime;
@@ -87,6 +89,7 @@ namespace Gameplay.Player
         private void Start()
         {
             _animator = GetComponent<Animator>();
+            _soundhandler = GetComponent<SoundHandler>();
             _inverseMoveTime = 1 / _moveTime;
         }
 
@@ -118,8 +121,12 @@ namespace Gameplay.Player
             gameObject.SetActive(_previewEvent.Value);
         }
 
-        public void StopMoving() 
-            => _canMove = true;
+        public void StopMoving()
+        {
+            _direction = Vector2.zero;
+            _canMove = true;
+            _soundhandler.StopMove();
+        }
 
         private void OnMove()
         {
@@ -176,8 +183,7 @@ namespace Gameplay.Player
                 yield return null;
             }
 
-            _direction = Vector2.zero;
-            _canMove = true;
+            StopMoving();
         }
 
         private void AnimatePlayer()
