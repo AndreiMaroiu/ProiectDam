@@ -1,9 +1,7 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using Core;
-using Utilities;
 using Gameplay.Events;
+using UnityEngine;
+using Utilities;
 using Values;
 
 namespace Gameplay.Generation
