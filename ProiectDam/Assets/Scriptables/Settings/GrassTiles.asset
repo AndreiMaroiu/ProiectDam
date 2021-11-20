@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: GrassTiles
   m_EditorClassIdentifier: 
   _none:
-  - {fileID: 316828150326576697, guid: 83b4cccc23675f943b12eb544902e0a4, type: 3}
+  - {fileID: 7453195050752160671, guid: a5c4aaa7bc6b5ba45961bd06753fde5c, type: 3}
+  - {fileID: 3081682985837833722, guid: 6d7aac4c179d2ae41ae9c85f164ed01f, type: 3}
+  - {fileID: 9184607472508151026, guid: e213df611dd5e1347bd67d8975e6e4bb, type: 3}
+  - {fileID: 3611809195945154350, guid: 0d5370a3e4ddd5848b0d8faaa5f0108c, type: 3}
+  - {fileID: 1287894562436013569, guid: 600c2e8e5485a3c4397ca5c41193d55f, type: 3}
+  - {fileID: 3446854836180677957, guid: b2e41d37a8b8fb64088a341c5bbaa330, type: 3}
+  - {fileID: 4112923179041079319, guid: d3977f4b8cb5fa84284686bc75f3d8c8, type: 3}
   _wall:
-  - {fileID: 3574291531621317988, guid: 25a025f880713fd439925123dd0730f2, type: 3}
-  - {fileID: 4334884864325911320, guid: a26133ff344572b49ae12f9bbd1e3d42, type: 3}
+  - {fileID: 874052987338099123, guid: afb3f81336b2bc74a9faaf1ee27e6e90, type: 3}
   _enemy:
   - {fileID: 8494387582444560171, guid: f95e4f6a9df7b8d4d9c3abca90f47a4b, type: 3}
   _door:
@@ -29,6 +34,6 @@ MonoBehaviour:
   _pickUp:
   - {fileID: 6300368228489013616, guid: b9f9962775564384793ea37e74690334, type: 3}
   _obstacle:
-  - {fileID: 5194763308062737505, guid: 38393981b36e5364694d0199dad04f28, type: 3}
+  - {fileID: 8508842280716529376, guid: e281897db57b91643ac32d45fe9f7383, type: 3}
   _portal:
   - {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055, type: 3}
