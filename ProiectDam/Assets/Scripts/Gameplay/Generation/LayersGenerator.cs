@@ -8,11 +8,10 @@ namespace Gameplay.Generation
     {
         #region Constants
 
-        private static readonly TileType[] ObjectsTypes = new TileType[]
-        { TileType.None, TileType.Grass, TileType.Enemy, TileType.PickUp, TileType.Obstacle, TileType.Heal, TileType.Trap };
+        private static readonly TileType[] ObjectsTypes = { TileType.None, 
+            TileType.Enemy, TileType.PickUp, TileType.Obstacle, TileType.Trap };
 
-        private static readonly int[] Changes = new int[]
-        { 40, 20, 5, 5, 20, 3, 7 };
+        private static readonly int[] Changes = { 50, 20, 5, 20, 5 };
 
         private static readonly HashSet<TileType> ObstaclesTypes = new HashSet<TileType>()
         { TileType.Enemy, TileType.Obstacle, TileType.Trap };
@@ -61,19 +60,39 @@ namespace Gameplay.Generation
         {
             Layers layers = GenerateEmpty();
 
-            int x = Random.Range(2, layers.LayerSize - 2);
-            int y = Random.Range(2, layers.LayerSize - 2);
+            TileType[,] tiles = layers.GetTiles(0);
 
-            layers.GetTiles(0)[x, y] = TileType.Chest;
+            SetType(tiles, TileType.Chest);
+            SetType(tiles, TileType.Heal);
+            SetType(tiles, TileType.PickUp);
 
             return layers;
+        }
+
+        private void SetType(TileType[,] tiles, TileType type)
+        {
+            int size = tiles.GetLength(0);
+            int x, y;
+            do
+            {
+                x = Random.Range(2, size - 2);
+                y = Random.Range(2, size - 2);
+            } while (tiles[x, y] != TileType.None);
+
+            tiles[x, y] = type;
         }
 
         private Layers GenerateHeal()
         {
             Layers layers = GenerateEmpty();
-            int middle = layers.MiddleIndex;
-            layers.GetTiles(0)[middle, middle] = TileType.Heal;
+            TileType[,] tiles = layers.GetTiles(0);
+
+            int healCount = Random.Range(2, 5);
+
+            for (int i = 0; i < healCount; i++)
+            {
+                SetType(tiles, TileType.Heal);
+            }
 
             return layers;
         }

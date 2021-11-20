@@ -50,23 +50,36 @@ namespace Gameplay.Generation
         private void GenerateRoomTypes()
         {
             _generator.CalculateDistances();
+            var duplicates = _generator.CalculateDuplicates();
             var distances = _generator.Distances;
-            distances[distances.Count - 1].room.Type = RoomType.End;
+            Validate(distances[distances.Count - 1].room.Pos, RoomType.End);
+
             distances[0].room.Type = RoomType.Start;
 
             ChooseRoomRandom(RoomType.Healing);
             ChooseRoomRandom(RoomType.Chest);
 
+            void Validate(Vector2Int pos, RoomType type)
+            {
+                foreach (Room room in duplicates[pos])
+                {
+                    room.Type = type;
+                }
+            }
+
             void ChooseRoomRandom(RoomType type)
             {
                 Room room;
+                int halfCount = distances.Count / 2;
+                int countMinus = distances.Count - 1;
 
                 do
                 {
-                    room = distances[Random.Range(1, distances.Count - 1)].room;
+                    int distance = Random.Range(halfCount, countMinus);
+                    room = distances[distance].room;
                 } while (room.Type != RoomType.Normal);
 
-                room.Type = type;
+                Validate(room.Pos, type);
             }
         }
 

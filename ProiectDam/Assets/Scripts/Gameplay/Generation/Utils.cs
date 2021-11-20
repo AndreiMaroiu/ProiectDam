@@ -21,5 +21,10 @@ namespace Gameplay
             angle -= 90;
             return GetDirection(angle);
         }
+
+        public static Vector3 GetVector3FromMatrixPos(int i, int j, float cellSize = 1.0f)
+        {
+            return new Vector3(cellSize * -j, cellSize * i);
+        }
     }
 }

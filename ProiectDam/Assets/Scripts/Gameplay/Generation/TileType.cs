@@ -4,7 +4,6 @@ namespace Gameplay.Generation
     {
         None,
         Wall,
-        Grass,
         Enemy,
         Door,
         Chest,
@@ -22,7 +21,6 @@ namespace Gameplay.Generation
             switch (tile)
             {
                 case TileType.None:
-                case TileType.Grass:
                 case TileType.Door:
                 case TileType.Heal:
                 case TileType.Trap:

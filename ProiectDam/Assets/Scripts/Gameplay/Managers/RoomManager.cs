@@ -16,6 +16,7 @@ namespace Gameplay.Managers
         [SerializeField] private RoomBehaviourEvent _roomBehaviourEvent;
         [SerializeField] private IntEvent _layersNumberEvent;
         [SerializeField] private IntEvent _currentLayerEvent;
+        [SerializeField] private BiomeEvent _biomeEvent;
 
         public void Awake()
         {
@@ -45,8 +46,11 @@ namespace Gameplay.Managers
         private void OnLayerChanged()
         {
             int layer = _currentLayerEvent.Value;
+
             _roomBehaviourEvent.Value.ChangedLayer(layer);
             _player.LayerPosition.Layer = _roomBehaviourEvent.Value.Layers[layer];
+
+            _biomeEvent.Value = _roomBehaviourEvent.Value.Layers.GetBiome(layer);
         }
 
         private void Update()

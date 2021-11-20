@@ -5,28 +5,33 @@ namespace ModalWindows
 {
     public partial class ModalWindow
     {
-        public static void Show(string header, string content, Sprite image, string footer,
-            Action okAction = null, Action closeAction = null, Action alternativeAction = null)
+        public static void Show(ModalWindowData data)
         {
-            SetDebug(header, content, image, footer, okAction, closeAction, alternativeAction);
+            SetDebug(data);
         }
 
         public static void ShowMessage(string message)
         {
-            SetDebug(message, null, null, null);
+            SetDebug(new ModalWindowData()
+            {
+                Content = message
+            });
         }
 
         public static void ShowSimpleDialog(string message, Action closeAction)
         {
-            SetDebug(message, null, null, null, null, closeAction);
+            SetDebug(new ModalWindowData()
+            {
+                Content = message,
+                CloseAction = closeAction
+            });
         }
 
-        private static void SetDebug(string header, string content, Sprite image, string footer,
-            Action okAction = null, Action closeAction = null, Action alternativeAction = null)
+        private static void SetDebug(ModalWindowData data)
         {
             if (!ReferenceEquals(Instance, null))
             {
-                Instance.SetWindow(header, content, image, footer, okAction, closeAction, alternativeAction);
+                Instance.SetWindow(data);
             }
 #if UNITY_EDITOR
             else

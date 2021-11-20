@@ -27,6 +27,9 @@ namespace ModalWindows
         [Header("Buttons")]
         [SerializeField] private GameObject _okButton;
         [SerializeField] private GameObject _alternativeButton;
+        [SerializeField] private Text _closeText;
+        [SerializeField] private Text _okText;
+        [SerializeField] private Text _alternativeText;
 
         private Action _closeAction = null;
         private Action _okAction = null;
@@ -55,30 +58,32 @@ namespace ModalWindows
             Close();
         }
 
-        private void SetWindow(string header, string content, Sprite image, string footer,
-            Action okAction, Action closeAction, Action alternativeAction)
+        private void SetWindow(ModalWindowData data)
         {
             _window.gameObject.SetActive(true);
 
-            _headerArea.SetActive(!string.IsNullOrEmpty(header));
-            _headerText.text = header;
+            _headerArea.SetActive(!string.IsNullOrEmpty(data.Header));
+            _headerText.text = data.Header;
 
-            _contentText.text = content;
-            _contentImage.gameObject.SetActive(image != null);
-            _contentImage.sprite = image;
+            _contentText.text = data.Content;
+            _contentImage.gameObject.SetActive(data.Image != null);
+            _contentImage.sprite = data.Image;
             _contentImage.SetNativeSize();
-            _contentArea.SetActive(!string.IsNullOrEmpty(content) || image != null);
+            _contentArea.SetActive(!string.IsNullOrEmpty(data.Content) || data.Image != null);
 
-            _footerArea.SetActive(!string.IsNullOrEmpty(footer));
-            _footerText.text = footer;
+            _footerArea.SetActive(!string.IsNullOrEmpty(data.Footer));
+            _footerText.text = data.Footer;
 
-            _okAction = okAction;
-            _okButton.SetActive(okAction != null);
+            _okAction = data.OkAction;
+            _okButton.SetActive(data.OkAction != null);
+            _okText.text = data.OkText;
 
-            _alternativeAction = alternativeAction;
-            _alternativeButton.SetActive(alternativeAction != null);
+            _alternativeAction = data.AlternativeAction;
+            _alternativeButton.SetActive(data.AlternativeAction != null);
+            _alternativeText.text = data.AlternativeText;
 
-            _closeAction = closeAction;
+            _closeAction = data.CloseAction;
+            _closeText.text = data.CloseText;
         }
 
         private void Awake()

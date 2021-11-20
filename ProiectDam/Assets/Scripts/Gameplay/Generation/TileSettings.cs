@@ -8,7 +8,6 @@ namespace Gameplay.Generation
     {
         [SerializeField] private GameObject[] _none;
         [SerializeField] private GameObject[] _wall;
-        [SerializeField] private GameObject[] _grass;
         [SerializeField] private GameObject[] _enemy;
         [SerializeField] private GameObject[] _door;
         [SerializeField] private GameObject[] _chest;
@@ -34,7 +33,6 @@ namespace Gameplay.Generation
         {
             TileType.None => _none,
             TileType.Wall => _wall,
-            TileType.Grass => _grass,
             TileType.Enemy => _enemy,
             TileType.Door => _door,
             TileType.Chest => _chest,

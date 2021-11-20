@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.Generation
@@ -18,10 +16,10 @@ namespace Gameplay.Generation
             Layer = layer;
         }
 
-        public TileType[,] Layer 
-        { 
-            get; 
-            set; 
+        public TileType[,] Layer
+        {
+            get;
+            set;
         }
 
         public Vector2Int Position { get; private set; }
@@ -30,16 +28,9 @@ namespace Gameplay.Generation
         {
             Vector2Int end = Position + dir;
 
-            try
+            if (Layer[end.x, end.y].CanMove())
             {
-                if (Layer[end.x, end.y].CanMove())
-                {
-                    return true;
-                }
-            }
-            catch
-            {
-                Debug.Log($"Could not move, pos: {Position.ToString()}, end: {end.ToString()}");
+                return true;
             }
 
             return false;

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Core;
-using System.IO;
 
 namespace Gameplay.Generation
 {
@@ -146,7 +145,6 @@ namespace Gameplay.Generation
                 }
             }
 
-            //WriteToFile(Matrix);
             return _start;
         }
 
@@ -168,7 +166,25 @@ namespace Gameplay.Generation
                 _distances.Add(new RoomDistance(room, traverser[room.Pos]));
             });
 
-            _distances.Sort((a, b) => a.distance - b.distance);
+            _distances.Sort((first, second) => first.distance - second.distance);
+        }
+
+        public Dictionary<Vector2Int, List<Room>> CalculateDuplicates()
+        {
+            Dictionary<Vector2Int, List<Room>> dict = new Dictionary<Vector2Int, List<Room>>();
+            RoomTraverser<int> traverser = new RoomTraverser<int>(_start, _matrix.GetLength(0));
+
+            traverser.Traverse(room =>
+            {
+                if (!dict.ContainsKey(room.Pos))
+                {
+                    dict.Add(room.Pos, new List<Room>());
+                }
+
+                dict[room.Pos].Add(room);
+            });
+
+            return dict;
         }
 
         private void Reset()
@@ -178,23 +194,5 @@ namespace Gameplay.Generation
             _picker.Reset();
             _distances.Clear();
         }
-
-        //private void WriteToFile(RoomType[,] matrix)
-        //{
-        //    const string path = "./Matrix.txt";
-
-        //    using StreamWriter writer = new StreamWriter(path);
-
-        //    int length = matrix.GetLength(0);
-        //    for (int i = 0; i < length; i++)
-        //    {
-        //        for (int j = 0; j < length; j++)
-        //        {
-        //            writer.Write(matrix[i, j].ToString() + " ");
-        //        }
-
-        //        writer.WriteLine();
-        //    }
-        //}
     }
 }
