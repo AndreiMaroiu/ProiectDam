@@ -4,7 +4,7 @@ namespace Gameplay.Generation
     {
         None,
         Fire,
+        Grassland,
         Dungeon,
-        Grassland
     }
 }
