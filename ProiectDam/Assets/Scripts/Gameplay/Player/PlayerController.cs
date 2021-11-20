@@ -23,7 +23,7 @@ namespace Gameplay.Player
 
         private Vector2 _direction;
         private Animator _animator;
-
+        
         private bool _canMove = true;
         private float _inverseMoveTime;
 
