@@ -25,10 +25,21 @@ namespace Gameplay
 
             float timeScale = Time.timeScale;
             Time.timeScale = 0;
-            ModalWindows.ModalWindow.ShowSimpleDialog("You Won", () =>
+            ModalWindows.ModalWindow.Show(new ModalWindows.ModalWindowData()
             {
-                Time.timeScale = timeScale;
-                SceneManager.LoadScene(1);
+                Content = "You Won!",
+                OkText = "Play again",
+                OkAction = () =>
+                {
+                    Time.timeScale = timeScale;
+                    SceneManager.LoadScene(0);
+                },
+                CloseText = "Main Menu",
+                CloseAction = () =>
+                {
+                    Time.timeScale = timeScale;
+                    SceneManager.LoadScene(1);
+                }
             });
         }
     }
