@@ -196,7 +196,7 @@ namespace Gameplay.Generation
 
         private void SetDoor(DoorBehaviour door, DoorBehaviour other, Vector2Int direction, RoomBehaviour room)
         {
-            Vector3 spawnDirection = new Vector3(-direction.y, direction.x) * _cellSize.Value;
+            Vector3 spawnDirection = Utils.GetVector3FromMatrixPos(direction, _cellSize.Value);
             Vector3 movePoint = spawnDirection * (_cellCount / 2 - 1);
 
             movePoint += room.transform.position;
@@ -206,6 +206,8 @@ namespace Gameplay.Generation
             LayerPosition layerPosition = new LayerPosition(GetLayerPosition(direction, layer) - direction, layer);
 
             door.Set(movePoint, other, room, layerPosition);
+
+            door.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg));
         }
     }
 }

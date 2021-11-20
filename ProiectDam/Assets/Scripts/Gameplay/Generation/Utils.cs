@@ -26,5 +26,10 @@ namespace Gameplay
         {
             return new Vector3(cellSize * -j, cellSize * i);
         }
+
+        public static Vector3 GetVector3FromMatrixPos(Vector2Int pos, float cellSize = 1.0f)
+        {
+            return new Vector3(cellSize * -pos.y, cellSize * pos.x);
+        }
     }
 }
