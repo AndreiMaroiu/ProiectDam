@@ -22,6 +22,21 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4024175890374661513, guid: b9f9962775564384793ea37e74690334,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4024175890374661513, guid: b9f9962775564384793ea37e74690334,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4024175890374661513, guid: b9f9962775564384793ea37e74690334,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.94708157
+      objectReference: {fileID: 0}
     - target: {fileID: 4822390964075783394, guid: b9f9962775564384793ea37e74690334,
         type: 3}
       propertyPath: m_RootOrder
@@ -87,10 +102,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5244361343789919635, guid: b9f9962775564384793ea37e74690334,
+        type: 3}
+      propertyPath: m_Name
+      value: Obstacle-Tile Variant
+      objectReference: {fileID: 0}
     - target: {fileID: 6300368228489013616, guid: b9f9962775564384793ea37e74690334,
         type: 3}
       propertyPath: m_Name
       value: Obstacle-Tile Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720569484342960129, guid: b9f9962775564384793ea37e74690334,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720569484342960129, guid: b9f9962775564384793ea37e74690334,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9f9962775564384793ea37e74690334, type: 3}
