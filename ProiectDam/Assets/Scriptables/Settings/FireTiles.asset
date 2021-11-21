@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: FireTiles
   m_EditorClassIdentifier: 
   _none:
-  - {fileID: 7304116255009516175, guid: 87cbcad08f203e84dab7b3441baf2199, type: 3}
-  - {fileID: 4668702346381528232, guid: 17679a7af392e3445be0811ddb544085, type: 3}
-  - {fileID: 5815219123489071092, guid: 86b370f6b40afeb4f9cb3d29c6f7332e, type: 3}
-  - {fileID: 381870946354208946, guid: f12af0ca98dd72044b99f7368a4bdf20, type: 3}
-  - {fileID: 808332729768001362, guid: 293fb1379037cdf45b08c2a11a74a904, type: 3}
+  - {fileID: 1466878652918677954, guid: 070cd4bcfffb20540b35a4aa09994452, type: 3}
+  - {fileID: 1466878652918677954, guid: 070cd4bcfffb20540b35a4aa09994452, type: 3}
+  - {fileID: 4197119846752616082, guid: ac45e130c4e2a934898974e62d84ec0d, type: 3}
+  - {fileID: 2795611793146036396, guid: f68136961f6a0b34a9586732d1200989, type: 3}
   _wall:
   - {fileID: 7603886771782275034, guid: 10f09fdba4d93224e93df4cf3cb6b6a9, type: 3}
   _enemy:

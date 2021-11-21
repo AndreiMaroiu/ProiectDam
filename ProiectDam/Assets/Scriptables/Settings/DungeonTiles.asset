@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: DungeonTiles
   m_EditorClassIdentifier: 
   _none:
-  - {fileID: 316828150326576697, guid: 83b4cccc23675f943b12eb544902e0a4, type: 3}
+  - {fileID: 6103697459886771666, guid: 9ea3c9e10236b8c4bae9e3e384f8fa90, type: 3}
+  - {fileID: 7482862257357442855, guid: ad9ae12fb48edee45a3227c81b9a9a3b, type: 3}
+  - {fileID: 2545687550425045755, guid: 763b5cd767913ee40bf9654d931e154f, type: 3}
+  - {fileID: 8432962817405959399, guid: 5730a4288b892d646876c271e959e996, type: 3}
+  - {fileID: 2982580317479542893, guid: dbfc56b509d3c05438a689748908e87f, type: 3}
   _wall:
-  - {fileID: 5045276027444388793, guid: ad5a446b78965ba43a22a79ee499afd6, type: 3}
+  - {fileID: 2897697403247223580, guid: ad5a446b78965ba43a22a79ee499afd6, type: 3}
   _enemy:
   - {fileID: 335860570091907127, guid: 4511764ab5a5bb448b32236b777791cb, type: 3}
   _door:
