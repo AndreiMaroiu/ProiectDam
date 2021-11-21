@@ -23,15 +23,21 @@ namespace Gameplay.Managers
             _spawner.Spawn();
             RoomBehaviour behaviour = _roomBehaviourEvent.Value;
 
-            TileType[,] layer = behaviour.Layers[behaviour.CurrentLayer];
-            int middle = layer.GetLength(0) / 2;
-            _player.LayerPosition = new LayerPosition(new Vector2Int(middle, middle), layer);
+            SetPlayerPos(behaviour);
 
             _roomBehaviourEvent.OnValueChanged += OnRoomChanged;
             _currentLayerEvent.OnValueChanged += OnLayerChanged;
 
             _currentLayerEvent.Value = behaviour.CurrentLayer;
             _layersNumberEvent.Value = behaviour.Layers.Count;
+            _roomEvent.Value = behaviour.Room;
+        }
+
+        private void SetPlayerPos(RoomBehaviour behaviour)
+        {
+            TileType[,] layer = behaviour.Layers[behaviour.CurrentLayer];
+            int middle = layer.GetLength(0) / 2;
+            _player.LayerPosition = new LayerPosition(new Vector2Int(middle, middle), layer);
         }
 
         private void OnRoomChanged()

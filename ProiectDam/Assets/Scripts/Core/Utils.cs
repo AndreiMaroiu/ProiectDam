@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Gameplay
+namespace Core
 {
-    internal static class Utils
+    public static class Utils
     {
         public static Vector2Int GetDirectionRounded(float angle)
         {

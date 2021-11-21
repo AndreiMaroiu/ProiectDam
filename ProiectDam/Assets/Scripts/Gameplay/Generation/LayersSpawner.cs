@@ -1,5 +1,6 @@
 using UnityEngine;
 using Utilities;
+using Core;
 
 namespace Gameplay.Generation
 {
