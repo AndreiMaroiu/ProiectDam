@@ -15,7 +15,7 @@ MonoBehaviour:
   _none:
   - {fileID: 316828150326576697, guid: 83b4cccc23675f943b12eb544902e0a4, type: 3}
   _wall:
-  - {fileID: 3574291531621317988, guid: 25a025f880713fd439925123dd0730f2, type: 3}
+  - {fileID: 5045276027444388793, guid: ad5a446b78965ba43a22a79ee499afd6, type: 3}
   _enemy:
   - {fileID: 5191269614189757341, guid: 4511764ab5a5bb448b32236b777791cb, type: 3}
   _door:

@@ -59,6 +59,7 @@ namespace Gameplay.Managers
             _biomeEvent.Value = _roomBehaviourEvent.Value.Layers.GetBiome(layer);
         }
 
+#if UNITY_EDITOR
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.R))
@@ -66,5 +67,6 @@ namespace Gameplay.Managers
                 SceneManager.LoadScene(0);
             }
         }
+#endif
     }
 }
