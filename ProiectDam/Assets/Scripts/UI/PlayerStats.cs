@@ -8,15 +8,16 @@ namespace UI
 {
     public class PlayerStats : MonoBehaviour
     {
+        [Header("Events")]
         [SerializeField] private CappedIntEvent _energy;
-        [SerializeField] private Slider _energySlider;
-        [SerializeField] private Text _energyText;
-
         [SerializeField] private CappedIntEvent _health;
-        [SerializeField] private Slider _healthSlider;
-        [SerializeField] private Text _healthText;
-
         [SerializeField] private CappedIntEvent _bullets;
+        [Header("Sliders")]
+        [SerializeField] private Slider _energySlider;
+        [SerializeField] private Slider _healthSlider;
+        [Header("Texts")]
+        [SerializeField] private Text _energyText;
+        [SerializeField] private Text _healthText;
         [SerializeField] private Text _bulletsText;
 
         [SerializeField] private GameEvent _onPlayerDeath;
