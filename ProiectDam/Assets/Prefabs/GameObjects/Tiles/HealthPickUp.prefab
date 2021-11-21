@@ -49,7 +49,7 @@ PrefabInstance:
     - target: {fileID: 316828150326576697, guid: 83b4cccc23675f943b12eb544902e0a4,
         type: 3}
       propertyPath: m_Name
-      value: Heal-Tile Variant
+      value: HealthPickUp
       objectReference: {fileID: 0}
     - target: {fileID: 1289838240856771499, guid: 83b4cccc23675f943b12eb544902e0a4,
         type: 3}
@@ -123,8 +123,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8897584523900173859, guid: 83b4cccc23675f943b12eb544902e0a4,
         type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -3237844493445452581, guid: 4b1d28d19eafa6242aa6a9c76218fca1,
+        type: 3}
+    - target: {fileID: 8897584523900173859, guid: 83b4cccc23675f943b12eb544902e0a4,
+        type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8897584523900173859, guid: 83b4cccc23675f943b12eb544902e0a4,
         type: 3}
@@ -134,12 +140,12 @@ PrefabInstance:
     - target: {fileID: 8897584523900173859, guid: 83b4cccc23675f943b12eb544902e0a4,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.31243825
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8897584523900173859, guid: 83b4cccc23675f943b12eb544902e0a4,
         type: 3}
       propertyPath: m_SortingLayer
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8897584523900173859, guid: 83b4cccc23675f943b12eb544902e0a4,
         type: 3}

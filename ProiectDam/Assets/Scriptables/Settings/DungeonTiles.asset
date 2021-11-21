@@ -17,7 +17,7 @@ MonoBehaviour:
   _wall:
   - {fileID: 5045276027444388793, guid: ad5a446b78965ba43a22a79ee499afd6, type: 3}
   _enemy:
-  - {fileID: 5191269614189757341, guid: 4511764ab5a5bb448b32236b777791cb, type: 3}
+  - {fileID: 335860570091907127, guid: 4511764ab5a5bb448b32236b777791cb, type: 3}
   _door:
   - {fileID: 1610797193751527803, guid: 44d13e7040070884198d2fc299f5feb3, type: 3}
   _chest:
@@ -28,6 +28,6 @@ MonoBehaviour:
   _pickUp:
   - {fileID: 5244361343789919635, guid: b9f9962775564384793ea37e74690334, type: 3}
   _obstacle:
-  - {fileID: 6322861369851756674, guid: 38393981b36e5364694d0199dad04f28, type: 3}
+  - {fileID: 1953858239105985320, guid: 38393981b36e5364694d0199dad04f28, type: 3}
   _portal:
   - {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055, type: 3}
