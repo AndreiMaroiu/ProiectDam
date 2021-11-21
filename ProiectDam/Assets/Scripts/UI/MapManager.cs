@@ -10,7 +10,6 @@ namespace UI
 {
     public class MapManager : MonoBehaviour
     {
-        [SerializeField] private Canvas _canvas;
         [SerializeField] private GameObject _map;
         [SerializeField] private float _cellSize;
         [SerializeField] private float _cellDistance;
@@ -19,6 +18,7 @@ namespace UI
         [SerializeField] private RoomEvent _currentRoom;
 
         private RoomTraverser<RectTransform> _traverser;
+        private RectTransform _currentRect;
 
         private void Start()
         {
@@ -38,10 +38,16 @@ namespace UI
 
         private void OnRoomChanged()
         {
-            // change active room
+            if (_currentRect.IsNotNull())
+            {
+                _currentRect.GetComponent<Image>().color = Color.gray;
+            }
 
-            _traverser[_currentRoom.Value.Pos].GetComponent<Image>().color = Color.white;
-            _traverser[_currentRoom.Value.Pos].SetAsLastSibling();
+            RectTransform room = _traverser[_currentRoom.Value.Pos];
+            room.gameObject.SetActive(true);
+            room.GetComponent<Image>().color = Color.white;
+
+            _currentRect = room;
         }
 
         private void GenerateMap()
@@ -57,20 +63,19 @@ namespace UI
 
                 _traverser[room.Pos] = Instantiate(_roomPrefab, _map.transform);
                 _traverser[room.Pos].anchoredPosition = pos;
+                _traverser[room.Pos].gameObject.SetActive(false);
             });
 
             _traverser.Traverse(room =>
             {
-                Vector2 pos = Vector2.zero;
-
-                if (room.LastRoom != null)
+                if (room.LastRoom is null)
                 {
-                    pos = _traverser[room.LastRoom.Pos].anchoredPosition + (Vector2)Utils.GetWorldDirection(room.Direction) * _cellSize / 2;
+                    return;
                 }
 
-                RectTransform door = Instantiate(_roomPrefab, _map.transform);
-                door.anchoredPosition = pos;
-                door.sizeDelta /= 2;
+                RectTransform door = Instantiate(_roomPrefab, _traverser[room.LastRoom.Pos].transform);
+                door.anchoredPosition = Utils.GetWorldDirection(room.Direction) * _cellSize / 2;
+                door.sizeDelta /= 5;
             });
         }
     }
