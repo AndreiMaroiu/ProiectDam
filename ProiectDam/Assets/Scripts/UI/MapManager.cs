@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Events;
 using Core;
-using Utilities;
+using Events;
+using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 namespace UI
 {
@@ -22,13 +20,9 @@ namespace UI
 
         private void Start()
         {
-            _currentRoom.OnValueChanged += OnRoomChanged;
-
-            _traverser = new RoomTraverser<RectTransform>(_currentRoom.Value, 20);
-
             GenerateMap();
 
-            OnRoomChanged();
+            _currentRoom.OnValueChanged += OnRoomChanged;
         }
 
         private void OnDestroy()
@@ -50,8 +44,10 @@ namespace UI
             _currentRect = room;
         }
 
-        private void GenerateMap()
+        public void GenerateMap()
         {
+            _traverser = new RoomTraverser<RectTransform>(_currentRoom.Value, 20);
+
             _traverser.TraverseUnique(room =>
             {
                 Vector2 pos = Vector2.zero;
@@ -77,6 +73,8 @@ namespace UI
                 door.anchoredPosition = Utils.GetWorldDirection(room.Direction) * _cellSize / 2;
                 door.sizeDelta /= 5;
             });
+
+            OnRoomChanged();
         }
     }
 }

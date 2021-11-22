@@ -13,7 +13,7 @@ namespace UI
 
         public const float StoppedScale = 0.0f;
 
-        void Awake()
+        private void Start()
         {
             LastTimeScale = Time.timeScale;
             _mapCanvas.SetActive(false);

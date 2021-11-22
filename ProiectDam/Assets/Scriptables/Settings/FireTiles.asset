@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _none:
   - {fileID: 1466878652918677954, guid: 070cd4bcfffb20540b35a4aa09994452, type: 3}
-  - {fileID: 1466878652918677954, guid: 070cd4bcfffb20540b35a4aa09994452, type: 3}
   - {fileID: 4197119846752616082, guid: ac45e130c4e2a934898974e62d84ec0d, type: 3}
   - {fileID: 2795611793146036396, guid: f68136961f6a0b34a9586732d1200989, type: 3}
+  - {fileID: 5960718015070195858, guid: a1376ddf17635dc47a5b96d8eb56b513, type: 3}
   _wall:
   - {fileID: 7603886771782275034, guid: 10f09fdba4d93224e93df4cf3cb6b6a9, type: 3}
   _enemy:
