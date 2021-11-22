@@ -31,5 +31,10 @@ namespace Core
         {
             return new Vector3(cellSize * -pos.y, cellSize * pos.x);
         }
+
+        public static Vector2Int GetMatrixPos(Vector2Int dir)
+        {
+            return new Vector2Int(dir.y, -dir.x);
+        }
     }
 }

@@ -1,18 +1,15 @@
-using System.Collections;
-using Gameplay.Generation;
+using Events;
 using Gameplay.Sound;
 using UnityEngine;
 using Values;
-using Events;
-using System;
 
 namespace Gameplay.Player
 {
-    public class PlayerController : KillableObject
+    public class PlayerController : MovingObject
     {
         private const string WALK_ANIMATION = "Walk";
 
-        [SerializeField] private FloatValue _cellSize;
+        [SerializeField] private FloatValue _cellSizeValue;
         [SerializeField] private float _moveTime = 1.0f;
         [SerializeField] private int _startEnergy;
         [SerializeField] private int _startHealth;
@@ -31,8 +28,7 @@ namespace Gameplay.Player
         private SoundHandler _soundhandler;
         private SpriteRenderer[] _renderers;
 
-        private bool _canMove = true;
-        private float _inverseMoveTime;
+        #region Properties
 
         public override int Health
         {
@@ -70,11 +66,7 @@ namespace Gameplay.Player
             set => _energyEvent.MaxValue = value;
         }
 
-        public LayerPosition LayerPosition
-        {
-            get;
-            set;
-        }
+        #endregion
 
         #region Unity Events
 
@@ -89,17 +81,17 @@ namespace Gameplay.Player
             _animator = GetComponent<Animator>();
             _soundhandler = GetComponent<SoundHandler>();
             _renderers = GetComponentsInChildren<SpriteRenderer>();
-            _inverseMoveTime = 1 / _moveTime;
+            Set(_moveTime, _cellSizeValue.Value);
         }
 
         private void Update()
         {
-            if (_canMove)
+            if (CanMove)
             {
                 Vector2Int dir = GetMoveDirection();
                 if (dir.sqrMagnitude > Vector3.kEpsilon)
                 {
-                    StartCoroutine(Move(dir));
+                    StartCoroutine(TryMove(dir));
                 }
             }
 
@@ -137,23 +129,6 @@ namespace Gameplay.Player
 
         #endregion
 
-        public void StopMoving()
-        {
-            _direction = Vector2.zero;
-            _canMove = true;
-            _soundhandler.StopMove();
-        }
-
-        private void OnMove()
-        {
-            _energyEvent.Value--;
-
-            if (_energyEvent.Value <= 0)
-            {
-                OnDeath();
-            }
-        }
-
         private Vector2Int GetMoveDirection()
         {
             Vector2Int dir = Vector2Int.zero;
@@ -176,30 +151,6 @@ namespace Gameplay.Player
             }
 
             return dir;
-        }
-
-        private IEnumerator Move(Vector2Int dir)
-        {
-            Vector2Int layerDirection = new Vector2Int(dir.y, -dir.x);
-            if (!LayerPosition.CanMove(layerDirection))
-            {
-                yield break;
-            }
-
-            LayerPosition.Move(layerDirection);
-
-            Vector3 endPosition = transform.position + (new Vector3(dir.x, dir.y) * _cellSize.Value);
-            _canMove = false;
-            _direction = dir;
-            OnMove();
-
-            while (transform.position != endPosition && !_canMove)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, endPosition, _inverseMoveTime * Time.deltaTime);
-                yield return null;
-            }
-
-            StopMoving();
         }
 
         private void AnimatePlayer()
@@ -225,6 +176,23 @@ namespace Gameplay.Player
         protected override void OnDeath()
         {
             _onPlayerDeath.Invoke();
+        }
+
+        protected override void OnMove(Vector2Int direction)
+        {
+            _direction = direction;
+            _energyEvent.Value--;
+
+            if (_energyEvent.Value <= 0)
+            {
+                OnDeath();
+            }
+        }
+
+        protected override void OnStopMoving()
+        {
+            _direction = Vector2.zero;
+            _soundhandler.StopMove();
         }
     }
 }

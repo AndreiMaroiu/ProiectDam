@@ -112,9 +112,21 @@ namespace UI
         {
             float timeScale = Time.timeScale;
             Time.timeScale = 0.0f;
-            ModalWindow.ShowSimpleDialog("You died!", () => { 
-                Time.timeScale = timeScale;
-                SceneManager.LoadScene(1);
+            ModalWindow.Show(new ModalWindowData()
+            {
+                Content = "You Died!",
+                CloseText = "Main Menu",
+                CloseAction = () =>
+                {
+                    Time.timeScale = timeScale;
+                    SceneManager.LoadScene(1);
+                },
+                OkText = "Play Again",
+                OkAction = () =>
+                {
+                    Time.timeScale = timeScale;
+                    SceneManager.LoadScene(0);
+                }
             });
         }
     }
