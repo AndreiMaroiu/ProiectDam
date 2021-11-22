@@ -1068,7 +1068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215fcffe80509a8458d545cdad434bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cellSize: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
+  _cellSizeValue: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
   _moveTime: 0.3
   _startEnergy: 100
   _startHealth: 10
