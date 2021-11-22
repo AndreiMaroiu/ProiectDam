@@ -8,6 +8,8 @@ namespace UI
     {
         [Header("Canvas")]
         [SerializeField] private GameObject _mapCanvas;
+        [SerializeField] private GameObject _mainCanvas;
+
 
         public float LastTimeScale { get; set; }
 
@@ -23,12 +25,14 @@ namespace UI
         {
             Time.timeScale = StoppedScale;
             _mapCanvas.SetActive(true);
+            _mainCanvas.SetActive(false);
         }
 
         public void OnCloseClick()
         {
             Time.timeScale = LastTimeScale;
             _mapCanvas.SetActive(false);
+            _mainCanvas.SetActive(true);
         }
     }
 }

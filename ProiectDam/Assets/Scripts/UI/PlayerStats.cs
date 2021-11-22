@@ -12,6 +12,7 @@ namespace UI
         [SerializeField] private CappedIntEvent _energy;
         [SerializeField] private CappedIntEvent _health;
         [SerializeField] private CappedIntEvent _bullets;
+        [SerializeField] private GameEvent _onPlayerDeath;
         [Header("Sliders")]
         [SerializeField] private Slider _energySlider;
         [SerializeField] private Slider _healthSlider;
@@ -20,7 +21,6 @@ namespace UI
         [SerializeField] private Text _healthText;
         [SerializeField] private Text _bulletsText;
 
-        [SerializeField] private GameEvent _onPlayerDeath;
 
         private void Start()
         {
