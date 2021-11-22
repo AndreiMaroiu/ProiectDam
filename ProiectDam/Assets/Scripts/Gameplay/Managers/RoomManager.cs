@@ -17,9 +17,15 @@ namespace Gameplay.Managers
         [SerializeField] private IntEvent _layersNumberEvent;
         [SerializeField] private IntEvent _currentLayerEvent;
         [SerializeField] private BiomeEvent _biomeEvent;
+        [SerializeField] private BoolEvent _previewEvent;
+
+        private int _lastLayer;
+        private bool _canChangeLayer = true;
 
         public void Awake()
         {
+            InitEvents();
+
             _spawner.Spawn();
             RoomBehaviour behaviour = _roomBehaviourEvent.Value;
 
@@ -27,10 +33,23 @@ namespace Gameplay.Managers
 
             _roomBehaviourEvent.OnValueChanged += OnRoomChanged;
             _currentLayerEvent.OnValueChanged += OnLayerChanged;
+            _previewEvent.OnValueChanged += OnPreviewChanged;
 
             _currentLayerEvent.Value = behaviour.CurrentLayer;
             _layersNumberEvent.Value = behaviour.Layers.Count;
             _roomEvent.Value = behaviour.Room;
+        }
+
+        private void InitEvents()
+        {
+            _previewEvent.Value = false;
+        }
+
+        private void OnDestroy()
+        {
+            _roomBehaviourEvent.OnValueChanged -= OnRoomChanged;
+            _currentLayerEvent.OnValueChanged -= OnLayerChanged;
+            _previewEvent.OnValueChanged -= OnPreviewChanged;
         }
 
         private void SetPlayerPos(RoomBehaviour behaviour)
@@ -54,9 +73,58 @@ namespace Gameplay.Managers
             int layer = _currentLayerEvent.Value;
 
             _roomBehaviourEvent.Value.ChangedLayer(layer);
-            _player.LayerPosition.Layer = _roomBehaviourEvent.Value.Layers[layer];
+
+            ChangePlayerColor();
 
             _biomeEvent.Value = _roomBehaviourEvent.Value.Layers.GetBiome(layer);
+        }
+
+        private void ChangePlayerColor()
+        {
+            if (!_previewEvent.Value)
+            {
+                return;
+            }
+
+            if (_lastLayer == _currentLayerEvent.Value)
+            {
+                _player.MakePlayerTransparent();
+                _canChangeLayer = true;
+                return;
+            }
+
+            RoomBehaviour behaviour = _roomBehaviourEvent.Value;
+            Vector2Int playerPos = _player.LayerPosition.Position;
+            TileType[,] previewLayer = behaviour.Layers.GetTiles(_currentLayerEvent.Value);
+
+            if (previewLayer[playerPos.x, playerPos.y] is TileType.None)
+            {
+                _player.MakePlayerGreen();
+                _canChangeLayer = true;
+            }
+            else
+            {
+                _player.MakePlayerRed();
+                _canChangeLayer = false;
+            }
+        }
+
+        private void OnPreviewChanged()
+        {
+            if (_previewEvent.Value)
+            {
+                _lastLayer = _currentLayerEvent.Value;
+            }
+            else
+            {
+                if (!_canChangeLayer)
+                {
+                    _currentLayerEvent.Value = _lastLayer;
+                }
+
+                _player.LayerPosition.Layer = _roomBehaviourEvent.Value.Layers[_currentLayerEvent.Value];
+                _player.MakePlayerWhite();
+            }
         }
 
 #if UNITY_EDITOR

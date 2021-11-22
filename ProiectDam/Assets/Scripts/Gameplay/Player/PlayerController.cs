@@ -4,6 +4,7 @@ using Gameplay.Sound;
 using UnityEngine;
 using Values;
 using Events;
+using System;
 
 namespace Gameplay.Player
 {
@@ -15,30 +16,34 @@ namespace Gameplay.Player
         [SerializeField] private float _moveTime = 1.0f;
         [SerializeField] private int _startEnergy;
         [SerializeField] private int _startHealth;
+        [Header("Colors")]
+        [SerializeField] private Color _transparent;
+        [SerializeField] private Color _red;
+        [SerializeField] private Color _green;
         [Header("Events")]
         [SerializeField] private CappedIntEvent _bulletsEvent;
         [SerializeField] private CappedIntEvent _healthEvent;
         [SerializeField] private CappedIntEvent _energyEvent;
         [SerializeField] private GameEvent _onPlayerDeath;
-        [SerializeField] private BoolEvent _previewEvent;
 
         private Vector2 _direction;
         private Animator _animator;
         private SoundHandler _soundhandler;
-        
+        private SpriteRenderer[] _renderers;
+
         private bool _canMove = true;
         private float _inverseMoveTime;
 
-        public override int Health 
-        { 
-            get => _healthEvent.Value; 
-            set => _healthEvent.Value = value; 
+        public override int Health
+        {
+            get => _healthEvent.Value;
+            set => _healthEvent.Value = value;
         }
 
-        public override int MaxHealth 
-        { 
-            get => _healthEvent.MaxValue; 
-            set => _healthEvent.MaxValue = value; 
+        public override int MaxHealth
+        {
+            get => _healthEvent.MaxValue;
+            set => _healthEvent.MaxValue = value;
         }
 
         public int Bullets
@@ -65,10 +70,10 @@ namespace Gameplay.Player
             set => _energyEvent.MaxValue = value;
         }
 
-        public LayerPosition LayerPosition 
-        { 
-            get; 
-            set; 
+        public LayerPosition LayerPosition
+        {
+            get;
+            set;
         }
 
         #region Unity Events
@@ -77,19 +82,13 @@ namespace Gameplay.Player
         {
             _energyEvent.Init(_startEnergy, _startEnergy);
             _healthEvent.Init(_startHealth, _startHealth);
-
-            _previewEvent.OnValueChanged += OnPreviewChanged;
-        }
-
-        private void OnDestroy()
-        {
-            _previewEvent.OnValueChanged -= OnPreviewChanged;
         }
 
         private void Start()
         {
             _animator = GetComponent<Animator>();
             _soundhandler = GetComponent<SoundHandler>();
+            _renderers = GetComponentsInChildren<SpriteRenderer>();
             _inverseMoveTime = 1 / _moveTime;
         }
 
@@ -116,10 +115,27 @@ namespace Gameplay.Player
 
         #endregion
 
-        private void OnPreviewChanged()
+        #region Colors
+
+        public void MakePlayerTransparent() => ChangeColor(_transparent);
+        public void MakePlayerGreen() => ChangeColor(_green);
+        public void MakePlayerRed() => ChangeColor(_red);
+        public void MakePlayerWhite() => ChangeColor(Color.white);
+
+        private void ChangeColor(Color color)
         {
-            gameObject.SetActive(_previewEvent.Value);
+            if (_renderers is null)
+            {
+                return;
+            }
+
+            foreach (SpriteRenderer spriteRenderer in _renderers)
+            {
+                spriteRenderer.color = color;
+            }
         }
+
+        #endregion
 
         public void StopMoving()
         {
@@ -196,14 +212,14 @@ namespace Gameplay.Player
 
             if (shouldFlip)
             {
-                transform.localScale = new Vector3(transform.localScale.x * -1, 
+                transform.localScale = new Vector3(transform.localScale.x * -1,
                     transform.localScale.y, transform.localScale.z);
             }
         }
 
         protected override void OnDamage()
         {
-            
+
         }
 
         protected override void OnDeath()

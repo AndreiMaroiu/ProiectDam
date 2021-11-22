@@ -46,7 +46,7 @@ namespace UI
 
         private void OnPreviewChanged()
         {
-            if (!_previewActive.Value)
+            if (_previewActive.Value)
             {
                 Time.timeScale = StoppedScale;
                 _layerSlider.gameObject.SetActive(_layersCountEvent.Value > 1);
