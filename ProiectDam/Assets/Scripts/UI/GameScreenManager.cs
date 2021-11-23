@@ -8,12 +8,14 @@ namespace UI
     {
         [Header("Objects")]
         [SerializeField] private Slider _layerSlider;
+        [SerializeField] private Button _previewButton;
         [Header("Events")]
         [SerializeField] private IntEvent _layersCountEvent;
         [SerializeField] private IntEvent _currentLayerEvent;
-
         [SerializeField] private BoolEvent _previewActive;
+        [Header("Texts")]
         [SerializeField] private Text _previewText;
+        [SerializeField] private Text _previewLabel;
 
         public float LastTimeScale { get; set; }
 
@@ -27,6 +29,9 @@ namespace UI
             _previewActive.OnValueChanged += OnPreviewChanged;
 
             _layerSlider.gameObject.SetActive(false);
+            _previewButton.gameObject.SetActive(false);
+            _previewLabel.gameObject.SetActive(false);
+
             LastTimeScale = Time.timeScale;
 
             OnLayersCountChanged();
@@ -36,6 +41,16 @@ namespace UI
         {
             _layerSlider.maxValue = _layersCountEvent.Value - 1;
             _layerSlider.value = _currentLayerEvent.Value;
+            if (_layersCountEvent.Value > 1)
+            {
+                _previewButton.gameObject.SetActive(true);
+                _previewLabel.gameObject.SetActive(true);
+            }
+            else
+            {
+                _previewButton.gameObject.SetActive(false);
+                _previewLabel.gameObject.SetActive(false);
+            }
         }
 
         private void OnSliderChanged(float value)
@@ -49,7 +64,7 @@ namespace UI
             if (_previewActive.Value)
             {
                 Time.timeScale = StoppedScale;
-                _layerSlider.gameObject.SetActive(_layersCountEvent.Value > 1);
+                _layerSlider.gameObject.SetActive(true);
                 _previewText.text = "ON";
             }
             else
