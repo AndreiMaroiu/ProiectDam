@@ -2,6 +2,7 @@ using Events;
 using Gameplay.Sound;
 using UnityEngine;
 using Values;
+using Utilities;
 
 namespace Gameplay.Player
 {
@@ -27,6 +28,8 @@ namespace Gameplay.Player
         private Animator _animator;
         private SoundHandler _soundhandler;
         private SpriteRenderer[] _renderers;
+
+        private SwipeDetector _swipeDetector;
 
         #region Properties
 
@@ -81,11 +84,17 @@ namespace Gameplay.Player
             _animator = GetComponent<Animator>();
             _soundhandler = GetComponent<SoundHandler>();
             _renderers = GetComponentsInChildren<SpriteRenderer>();
+
+            _swipeDetector = new SwipeDetector();
+            _swipeDetector.OnSwipe += OnSwipe;
+
             Set(_moveTime, _cellSizeValue.Value);
         }
 
         private void Update()
         {
+            _swipeDetector.CkeckForSwipes();
+
             if (CanMove)
             {
                 Vector2Int dir = GetMoveDirection();
@@ -128,6 +137,14 @@ namespace Gameplay.Player
         }
 
         #endregion
+
+        private void OnSwipe(Vector2Int dir)
+        {
+            if (CanMove)
+            {
+                StartCoroutine(TryMove(dir));
+            }
+        }
 
         private Vector2Int GetMoveDirection()
         {

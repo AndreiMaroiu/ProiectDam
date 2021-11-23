@@ -1,6 +1,7 @@
 using Gameplay.Generation;
 using System.Collections;
 using UnityEngine;
+using Utilities;
 
 namespace Gameplay
 {
@@ -28,7 +29,7 @@ namespace Gameplay
 
         protected IEnumerator TryMove(Vector2Int direction)
         {
-            Vector2Int layerdirectionection = Core.Utils.GetMatrixPos(direction);
+            Vector2Int layerdirectionection = Utils.GetMatrixPos(direction);
             if (!LayerPosition.CanMove(layerdirectionection))
             {
                 yield break;
