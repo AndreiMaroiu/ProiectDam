@@ -11,12 +11,13 @@ namespace Gameplay.Generation
         Trap,
         PickUp,
         Obstacle,
-        Portal
+        Portal,
+        Player
     }
 
     public static class TileTypeExtension
     {
-        public static bool CanMove(this TileType tile)
+        public static bool CanMovePlayer(this TileType tile)
         {
             switch (tile)
             {
@@ -31,5 +32,12 @@ namespace Gameplay.Generation
                     return false;
             }
         }
+
+        public static bool CanMove(this TileType tile) => tile switch
+        {
+            TileType.None => true,
+            TileType.Trap => true,
+            _ => false,
+        };
     }
 }

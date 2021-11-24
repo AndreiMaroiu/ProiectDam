@@ -88,7 +88,7 @@ namespace Gameplay.Player
             _swipeDetector = new SwipeDetector();
             _swipeDetector.OnSwipe += OnSwipe;
 
-            Set(_moveTime, _cellSizeValue.Value);
+            SetMove(_moveTime, _cellSizeValue.Value, Generation.TileType.Player);
         }
 
         private void Update()

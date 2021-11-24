@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using ModalWindows;
+using Utilities;
 
 namespace UI
 {
@@ -119,13 +120,13 @@ namespace UI
                 CloseAction = () =>
                 {
                     Time.timeScale = timeScale;
-                    SceneManager.LoadScene(1);
+                    SceneManager.LoadScene(Scenes.MainMenu);
                 },
                 OkText = "Play Again",
                 OkAction = () =>
                 {
                     Time.timeScale = timeScale;
-                    SceneManager.LoadScene(0);
+                    SceneManager.LoadScene(Scenes.MainScene);
                 }
             });
         }

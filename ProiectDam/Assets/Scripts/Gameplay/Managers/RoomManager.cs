@@ -4,6 +4,7 @@ using Gameplay.Generation;
 using Gameplay.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Utilities;
 
 namespace Gameplay.Managers
 {
@@ -56,6 +57,7 @@ namespace Gameplay.Managers
         {
             TileType[,] layer = behaviour.Layers[behaviour.CurrentLayer];
             int middle = layer.GetLength(0) / 2;
+            layer[middle, middle] = TileType.Player;
             _player.LayerPosition = new LayerPosition(new Vector2Int(middle, middle), layer);
         }
 
@@ -132,7 +134,7 @@ namespace Gameplay.Managers
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(Scenes.MainScene);
             }
         }
 #endif

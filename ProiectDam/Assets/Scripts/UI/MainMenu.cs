@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Utilities;
 
 namespace UI
 {
@@ -39,7 +40,7 @@ namespace UI
 
         public void OnStartClick()
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(Scenes.MainScene);
         }
     }
 }

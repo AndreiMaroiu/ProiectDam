@@ -10,6 +10,7 @@ namespace Gameplay
         public LayerPosition LayerPosition { get; set; }
         public bool CanMove { get; private set; } = true;
 
+        private TileType _tileType;
         private float _cellSize;
         private float _inverseMoveTime;
 
@@ -21,14 +22,16 @@ namespace Gameplay
             CanMove = true;
         }
 
-        protected void Set(float moveTime, float cellSize)
+        protected void SetMove(float moveTime, float cellSize, TileType tileType)
         {
             _inverseMoveTime = 1 / moveTime;
             _cellSize = cellSize;
+            _tileType = tileType;
         }
 
         protected IEnumerator TryMove(Vector2Int direction)
         {
+            Vector2Int lastPos = LayerPosition.Position;
             Vector2Int layerdirectionection = Utils.GetMatrixPos(direction);
             if (!LayerPosition.CanMove(layerdirectionection))
             {
@@ -45,6 +48,13 @@ namespace Gameplay
             {
                 transform.position = Vector3.MoveTowards(transform.position, endPosition, _inverseMoveTime * Time.deltaTime);
                 yield return null;
+            }
+
+            if (transform.position == endPosition)
+            {
+                Vector2Int currentPos = LayerPosition.Position;
+                LayerPosition.Layer[lastPos.x, lastPos.y] = TileType.None;
+                LayerPosition.Layer[currentPos.x, currentPos.y] = _tileType;
             }
 
             StopMoving();

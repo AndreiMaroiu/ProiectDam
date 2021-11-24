@@ -2,6 +2,7 @@ using Gameplay.Player;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Utilities;
 
 namespace Gameplay
 {
@@ -32,13 +33,13 @@ namespace Gameplay
                 OkAction = () =>
                 {
                     Time.timeScale = timeScale;
-                    SceneManager.LoadScene(0);
+                    SceneManager.LoadScene(Scenes.MainScene);
                 },
                 CloseText = "Main Menu",
                 CloseAction = () =>
                 {
                     Time.timeScale = timeScale;
-                    SceneManager.LoadScene(1);
+                    SceneManager.LoadScene(Scenes.MainMenu);
                 }
             });
         }

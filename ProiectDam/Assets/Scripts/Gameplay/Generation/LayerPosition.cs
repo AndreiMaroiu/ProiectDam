@@ -28,7 +28,7 @@ namespace Gameplay.Generation
         {
             Vector2Int end = Position + dir;
 
-            if (Layer[end.x, end.y].CanMove())
+            if (Layer[end.x, end.y].CanMovePlayer())
             {
                 return true;
             }
