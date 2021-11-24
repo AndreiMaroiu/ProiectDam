@@ -1,9 +1,10 @@
 using Events;
+using Gameplay.Enemies;
+using Gameplay.Generation;
 using Gameplay.Sound;
 using UnityEngine;
-using Values;
 using Utilities;
-using Gameplay.Generation;
+using Values;
 
 namespace Gameplay.Player
 {
@@ -24,11 +25,13 @@ namespace Gameplay.Player
         [SerializeField] private CappedIntEvent _healthEvent;
         [SerializeField] private CappedIntEvent _energyEvent;
         [SerializeField] private GameEvent _onPlayerDeath;
+        [SerializeField] private GameEvent _onMeleeAttack;
 
         private Vector2 _direction;
         private Animator _animator;
         private SoundHandler _soundhandler;
         private SpriteRenderer[] _renderers;
+        private Collider2D _collider;
 
         private SwipeDetector _swipeDetector;
 
@@ -85,11 +88,19 @@ namespace Gameplay.Player
             _animator = GetComponent<Animator>();
             _soundhandler = GetComponent<SoundHandler>();
             _renderers = GetComponentsInChildren<SpriteRenderer>();
+            _collider = GetComponent<Collider2D>();
 
             _swipeDetector = new SwipeDetector();
             _swipeDetector.OnSwipe += OnSwipe;
 
+            _onMeleeAttack.OnEvent += OnMeleeAttack;
+
             SetMove(_moveTime, _cellSizeValue.Value, Generation.TileType.Player);
+        }
+
+        private void OnDestroy()
+        {
+            _onMeleeAttack.OnEvent -= OnMeleeAttack;
         }
 
         private void Update()
@@ -97,6 +108,11 @@ namespace Gameplay.Player
             if (Time.timeScale == 0.0f)
             {
                 return;
+            }
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                _onMeleeAttack.Invoke();
             }
 
             _swipeDetector.CkeckForSwipes();
@@ -143,6 +159,37 @@ namespace Gameplay.Player
         }
 
         #endregion
+
+        private void OnMeleeAttack()
+        {
+            Debug.Log("Melee Attack");
+
+            _collider.enabled = false;
+
+            CheckForEnemy(Vector2.left);
+            CheckForEnemy(Vector2.right);
+            CheckForEnemy(Vector2.up);
+            CheckForEnemy(Vector2.down);
+
+            _collider.enabled = true;
+        }
+
+        private void CheckForEnemy(Vector2 dir)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir * _cellSizeValue.Value);
+
+            if (!hit)
+            {
+                return;
+            }
+
+            BaseEnemy enemy = hit.collider.gameObject.GetComponent<BaseEnemy>();
+
+            if (enemy.IsNotNull())
+            {
+                enemy.TakeDamage(1);
+            }
+        }
 
         private void OnSwipe(Vector2Int dir)
         {
@@ -191,6 +238,8 @@ namespace Gameplay.Player
             }
         }
 
+        #region Overrides
+
         protected override void OnDamage()
         {
 
@@ -222,5 +271,7 @@ namespace Gameplay.Player
             _direction = Vector2.zero;
             _soundhandler.StopMove();
         }
+
+        #endregion
     }
 }

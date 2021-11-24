@@ -1099,6 +1099,7 @@ MonoBehaviour:
   _healthEvent: {fileID: 11400000, guid: ec3568012a067f84da5a55b8eb7f3079, type: 2}
   _energyEvent: {fileID: 11400000, guid: 917748f6b3e7da44f9e69a2067ad2307, type: 2}
   _onPlayerDeath: {fileID: 11400000, guid: 9d8a5883be5e2394abb1e7e1ec2f447b, type: 2}
+  _onMeleeAttack: {fileID: 11400000, guid: 9ac3f7dbbe869d74b8ad26d6e787b8d3, type: 2}
 --- !u!82 &291062795
 AudioSource:
   m_ObjectHideFlags: 0
