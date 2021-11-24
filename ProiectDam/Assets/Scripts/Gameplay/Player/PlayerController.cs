@@ -2,6 +2,7 @@ using Events;
 using Gameplay.Enemies;
 using Gameplay.Generation;
 using Gameplay.Sound;
+using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
 using Values;
@@ -10,6 +11,7 @@ namespace Gameplay.Player
 {
     public class PlayerController : MovingObject
     {
+        private static readonly Vector2[] Directions = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
         private const string WALK_ANIMATION = "Walk";
 
         [SerializeField] private FloatValue _cellSizeValue;
@@ -176,14 +178,10 @@ namespace Gameplay.Player
         {
             Debug.Log("Melee Attack");
 
-            _collider.enabled = false;
-
-            CheckForEnemy(Vector2.left, _cellSizeValue.Value, _meleeDamage);
-            CheckForEnemy(Vector2.right, _cellSizeValue.Value, _meleeDamage);
-            CheckForEnemy(Vector2.up, _cellSizeValue.Value, _meleeDamage);
-            CheckForEnemy(Vector2.down, _cellSizeValue.Value, _meleeDamage);
-
-            _collider.enabled = true;
+            foreach (BaseEnemy enemy in GetNearbyEnemies(_cellSizeValue.Value))
+            {
+                enemy.TakeDamage(_meleeDamage);
+            }
 
             // play melee attack animation and sound
         }
@@ -198,26 +196,56 @@ namespace Gameplay.Player
                 return;
             }
 
+            // play shoot animation and sound
+
             --_bulletsEvent.Value;
 
-            // play shoot animation and sound
+            List<BaseEnemy> enemies = GetNearbyEnemies(_cellSizeValue.Value * 2);
+
+            float min = float.MaxValue;
+            BaseEnemy closest = null;
+            foreach (BaseEnemy enemy in enemies)
+            {
+                float distance = (enemy.transform.position - transform.position).sqrMagnitude;
+                if (distance < min)
+                {
+                    min = distance;
+                    closest = enemy;
+                }
+            }
+
+            if (closest.IsNotNull())
+            {
+                closest.TakeDamage(_rangedDamage);
+            }
         }
 
-        private void CheckForEnemy(Vector2 dir, float distance, int damage)
+        private List<BaseEnemy> GetNearbyEnemies(float distance)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, distance);
+            List<BaseEnemy> result = new List<BaseEnemy>();
 
-            if (!hit)
+            _collider.enabled = false;
+
+            foreach (Vector2 direction in Directions)
             {
-                return;
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance);
+
+                if (!hit)
+                {
+                    continue;
+                }
+
+                BaseEnemy enemy = hit.collider.gameObject.GetComponent<BaseEnemy>();
+
+                if (enemy.IsNotNull())
+                {
+                    result.Add(enemy);
+                }
             }
 
-            BaseEnemy enemy = hit.collider.gameObject.GetComponent<BaseEnemy>();
+            _collider.enabled = true;
 
-            if (enemy.IsNotNull())
-            {
-                enemy.TakeDamage(damage);
-            }
+            return result;
         }
 
         private void OnSwipe(Vector2Int dir)
