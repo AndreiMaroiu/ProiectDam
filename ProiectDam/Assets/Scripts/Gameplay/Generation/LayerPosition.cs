@@ -4,23 +4,36 @@ namespace Gameplay.Generation
 {
     public sealed class LayerPosition
     {
+        private TileType[,] _layer;
+
         public LayerPosition(LayerPosition other)
         {
-            Layer = other.Layer;
+            _layer = other.Layer;
             Position = other.Position;
         }
 
         public LayerPosition(Vector2Int pos, TileType[,] layer)
         {
             Position = pos;
-            Layer = layer;
+            _layer = layer;
         }
 
         public TileType[,] Layer
         {
-            get;
-            set;
+            get => _layer;
+            set
+            {
+                TileType tile = GetTile();
+                GetTile() = TileType.None;
+
+                _layer = value;
+
+                GetTile() = tile;
+            }
         }
+
+        private ref TileType GetTile()
+            => ref _layer[Position.x, Position.y];
 
         public Vector2Int Position { get; private set; }
 
