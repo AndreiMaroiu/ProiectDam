@@ -7,7 +7,6 @@ namespace Gameplay
 {
     public abstract class MovingObject : KillableObject
     {
-        public LayerPosition LayerPosition { get; set; }
         public bool CanMove { get; private set; } = true;
 
         private TileType _tileType;
@@ -16,6 +15,7 @@ namespace Gameplay
 
         protected abstract void OnMove(Vector2Int direction);
         protected abstract void OnStopMoving();
+        protected abstract bool CanMoveToTile(TileType tile);
 
         public void StopMoving()
         {
@@ -32,13 +32,13 @@ namespace Gameplay
         protected IEnumerator TryMove(Vector2Int direction)
         {
             Vector2Int lastPos = LayerPosition.Position;
-            Vector2Int layerdirectionection = Utils.GetMatrixPos(direction);
-            if (!LayerPosition.CanMove(layerdirectionection))
+            Vector2Int layerDirection = Utils.GetMatrixPos(direction);
+            if (!CanMoveToTile(LayerPosition.GetTile(layerDirection)))
             {
                 yield break;
             }
 
-            LayerPosition.Move(layerdirectionection);
+            LayerPosition.Move(layerDirection);
 
             Vector3 endPosition = transform.position + (new Vector3(direction.x, direction.y) * _cellSize);
             CanMove = false;

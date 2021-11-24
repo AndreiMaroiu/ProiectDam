@@ -6,7 +6,7 @@ namespace Gameplay.Generation
 {
     public sealed class RoomBehaviour : MonoBehaviour
     {
-        private GameObject[] _layersObjects;
+        private LayerBehaviour[] _layersObjects;
         private BaseEnemy[] _enemies;
         private DoorBehaviour[] _doors;
 
@@ -18,29 +18,33 @@ namespace Gameplay.Generation
         public Room Room => _room;
         public Layers Layers => _layers;
         public int CurrentLayer => _currentLayer;
+        public LayerBehaviour ActiveLayer => _layersObjects[_currentLayer];
 
-        private GameObject CreateEmptyObject(string name)
+        private LayerBehaviour CreateEmptyObject(string name)
         {
             GameObject result = new GameObject(name);
+            LayerBehaviour behaviour = result.AddComponent<LayerBehaviour>();
+
             result.transform.parent = transform;
             result.transform.localPosition = Vector3.zero;
-            return result;
+
+            return behaviour;
         }
 
         public void Set(Room room, Layers layers)
         {
             _room = room;
             _layers = layers;
-            _layersObjects = new GameObject[layers.Count];
+            _layersObjects = new LayerBehaviour[layers.Count];
 
             for(int i = 0; i < layers.Count; i++)
             {
                 _layersObjects[i] = CreateEmptyObject($"Layer {i.ToString()}");
-                _layersObjects[i].SetActive(false);
+                _layersObjects[i].gameObject.SetActive(false);
             }
 
             _currentLayer = _layers.Count / 2;
-            _layersObjects[_currentLayer].SetActive(true);
+            _layersObjects[_currentLayer].gameObject.SetActive(true);
         }
 
         public void ChangedLayer(int layer)
@@ -50,9 +54,9 @@ namespace Gameplay.Generation
                 return;
             }
 
-            _layersObjects[_currentLayer].SetActive(false);
+            _layersObjects[_currentLayer].gameObject.SetActive(false);
             _currentLayer = layer;
-            _layersObjects[layer].SetActive(true);
+            _layersObjects[layer].gameObject.SetActive(true);
         }
 
         public void OnRoomEnter()

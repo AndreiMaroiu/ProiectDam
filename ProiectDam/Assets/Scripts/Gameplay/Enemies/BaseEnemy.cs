@@ -1,4 +1,3 @@
-using UnityEngine;
 using System;
 
 namespace Gameplay.Enemies
@@ -10,6 +9,7 @@ namespace Gameplay.Enemies
         protected override void OnDeath()
         {
             OnDeathEvent?.Invoke(this);
+            LayerPosition.Clear();
             Destroy(this.gameObject);
         }
     }

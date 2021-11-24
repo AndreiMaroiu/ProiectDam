@@ -65,7 +65,14 @@ namespace Gameplay.Generation
             {
                 for (int j = 0; j < size; j++)
                 {
-                    SpawnTileIfNot(i, j, where, biome, TileType.None, layer[i, j], TileType.Wall);
+                    TileType tile = layer[i, j];
+
+                    if (tile == TileType.Wall)
+                    {
+                        continue;
+                    }
+
+                    SpawnTile(i, j, where, biome, TileType.None);
                 }
             }
         }
@@ -87,14 +94,14 @@ namespace Gameplay.Generation
                         continue;
                     }
 
-                    SpawnTile(i, j, where, biome, type);
+                    SpawnTile(i, j, where, biome, type, layer);
                 }
             }
         }
 
         #region Helpers
 
-        private void SpawnTile(int i, int j, Transform where, BiomeType biome, TileType type)
+        private GameObject SpawnTile(int i, int j, Transform where, BiomeType biome, TileType type)
         {
             Vector3 pos = Utils.GetVector3FromMatrixPos(i, j, _cellSize) - _offset;
             GameObject tile = GetSettings(biome).GetTile(type);
@@ -103,21 +110,34 @@ namespace Gameplay.Generation
             {
                 GameObject spawnedTile = GameObject.Instantiate(tile, where);
                 spawnedTile.transform.localPosition = pos;
+                return spawnedTile;
             }
+
+            return null;
+        }
+
+        private void SpawnTile(int i, int j, Transform where, BiomeType biome, TileType tyle, TileType[,] layer)
+        {
+            GameObject spawnedObject = SpawnTile(i, j, where, biome, tyle);
+
+            if (spawnedObject.IsNull())
+            {
+                return;
+            }
+
+            TileObject tile = spawnedObject.GetComponent<TileObject>();
+
+            if (tile.IsNull())
+            {
+                return;
+            }
+
+            tile.LayerPosition = new LayerPosition(new Vector2Int(i, j), layer);
         }
 
         private void SpawnTileIf(int i, int j, Transform where, BiomeType biome, TileType type, TileType condition)
         {
             if (type == condition)
-            {
-                SpawnTile(i, j, where, biome, type);
-            }
-        }
-
-        private void SpawnTileIfNot(int i, int j, Transform where, BiomeType biome,
-            TileType type, TileType tile, TileType condition)
-        {
-            if (tile != condition)
             {
                 SpawnTile(i, j, where, biome, type);
             }

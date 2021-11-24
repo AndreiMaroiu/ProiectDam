@@ -3,6 +3,7 @@ using Gameplay.Sound;
 using UnityEngine;
 using Values;
 using Utilities;
+using Gameplay.Generation;
 
 namespace Gameplay.Player
 {
@@ -198,6 +199,11 @@ namespace Gameplay.Player
         protected override void OnDeath()
         {
             _onPlayerDeath.Invoke();
+        }
+
+        protected override bool CanMoveToTile(TileType tile)
+        {
+            return tile.CanMovePlayer();
         }
 
         protected override void OnMove(Vector2Int direction)

@@ -1,26 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.Enemies
 {
     public sealed class SimpleEnemy : BaseEnemy
     {
+        [SerializeField] private int _startHealth = 1;
+
+        private void Start()
+        {
+            MaxHealth = _startHealth;
+            Health = _startHealth;
+        }
+
         protected override void OnDamage()
         {
-            
-        }
-
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            // play sound and animations
         }
     }
 }

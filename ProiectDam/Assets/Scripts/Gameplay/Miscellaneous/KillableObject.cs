@@ -1,8 +1,9 @@
 using UnityEngine;
+using Gameplay.Generation;
 
 namespace Gameplay
 {
-    public abstract class KillableObject : MonoBehaviour
+    public abstract class KillableObject : TileObject
     {
         public virtual int Health { get; set; }
         public virtual int MaxHealth { get; set; }
