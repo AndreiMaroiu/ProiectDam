@@ -13,9 +13,12 @@ namespace Gameplay.Player
         private const string WALK_ANIMATION = "Walk";
 
         [SerializeField] private FloatValue _cellSizeValue;
-        [SerializeField] private float _moveTime = 1.0f;
+        [SerializeField] private float _moveTime = 0.3f;
         [SerializeField] private int _startEnergy;
         [SerializeField] private int _startHealth;
+        [SerializeField] private int _startBullets;
+        [SerializeField] private int _meleeDamage;
+        [SerializeField] private int _rangedDamage;
         [Header("Colors")]
         [SerializeField] private Color _transparent;
         [SerializeField] private Color _red;
@@ -26,6 +29,7 @@ namespace Gameplay.Player
         [SerializeField] private CappedIntEvent _energyEvent;
         [SerializeField] private GameEvent _onPlayerDeath;
         [SerializeField] private GameEvent _onMeleeAttack;
+        [SerializeField] private GameEvent _onRangeAttack;
 
         private Vector2 _direction;
         private Animator _animator;
@@ -79,8 +83,9 @@ namespace Gameplay.Player
 
         private void Awake()
         {
-            _energyEvent.Init(_startEnergy, _startEnergy);
-            _healthEvent.Init(_startHealth, _startHealth);
+            _energyEvent.Init(_startEnergy);
+            _healthEvent.Init(_startHealth);
+            _bulletsEvent.Init(_startBullets);
         }
 
         private void Start()
@@ -94,6 +99,7 @@ namespace Gameplay.Player
             _swipeDetector.OnSwipe += OnSwipe;
 
             _onMeleeAttack.OnEvent += OnMeleeAttack;
+            _onRangeAttack.OnEvent += OnRangedAttack;
 
             SetMove(_moveTime, _cellSizeValue.Value, Generation.TileType.Player);
         }
@@ -101,6 +107,7 @@ namespace Gameplay.Player
         private void OnDestroy()
         {
             _onMeleeAttack.OnEvent -= OnMeleeAttack;
+            _onRangeAttack.OnEvent -= OnRangedAttack;
         }
 
         private void Update()
@@ -113,6 +120,11 @@ namespace Gameplay.Player
             if (Input.GetKeyDown(KeyCode.F))
             {
                 _onMeleeAttack.Invoke();
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                _onRangeAttack.Invoke();
             }
 
             _swipeDetector.CkeckForSwipes();
@@ -166,17 +178,34 @@ namespace Gameplay.Player
 
             _collider.enabled = false;
 
-            CheckForEnemy(Vector2.left);
-            CheckForEnemy(Vector2.right);
-            CheckForEnemy(Vector2.up);
-            CheckForEnemy(Vector2.down);
+            CheckForEnemy(Vector2.left, _cellSizeValue.Value, _meleeDamage);
+            CheckForEnemy(Vector2.right, _cellSizeValue.Value, _meleeDamage);
+            CheckForEnemy(Vector2.up, _cellSizeValue.Value, _meleeDamage);
+            CheckForEnemy(Vector2.down, _cellSizeValue.Value, _meleeDamage);
 
             _collider.enabled = true;
+
+            // play melee attack animation and sound
         }
 
-        private void CheckForEnemy(Vector2 dir)
+        private void OnRangedAttack()
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir * _cellSizeValue.Value);
+            Debug.Log("Ranged Attack");
+
+            if (_bulletsEvent.Value <= 0)
+            {
+                // play sound for empty magazin
+                return;
+            }
+
+            --_bulletsEvent.Value;
+
+            // play shoot animation and sound
+        }
+
+        private void CheckForEnemy(Vector2 dir, float distance, int damage)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, distance);
 
             if (!hit)
             {
@@ -187,7 +216,7 @@ namespace Gameplay.Player
 
             if (enemy.IsNotNull())
             {
-                enemy.TakeDamage(1);
+                enemy.TakeDamage(damage);
             }
         }
 

@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 414b32e847e420044b8399d1fca553b7, type: 3}
-  m_Name: Health Event
+  m_Name: HealthEvent
   m_EditorClassIdentifier: 

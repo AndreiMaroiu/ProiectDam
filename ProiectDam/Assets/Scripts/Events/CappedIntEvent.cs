@@ -32,9 +32,9 @@ namespace Events
             }
         }
 
-        public void Init(int value, int max)
+        public void Init(int value)
         {
-            MaxValue = max;
+            MaxValue = value;
             Value = value;
         }
 
