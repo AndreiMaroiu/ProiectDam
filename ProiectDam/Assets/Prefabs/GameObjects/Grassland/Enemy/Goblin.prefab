@@ -117,6 +117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startHealth: 2
+  _moveTime: 0.2
+  _cellSizeValue: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
 --- !u!58 &-3451378893999709655
 CircleCollider2D:
   m_ObjectHideFlags: 0

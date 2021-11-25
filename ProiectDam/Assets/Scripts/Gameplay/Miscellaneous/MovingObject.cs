@@ -8,6 +8,7 @@ namespace Gameplay
     public abstract class MovingObject : KillableObject
     {
         public bool CanMove { get; private set; } = true;
+        public float MoveTime { get; private set; }
 
         private TileType _tileType;
         private float _cellSize;
@@ -24,6 +25,7 @@ namespace Gameplay
 
         protected void SetMove(float moveTime, float cellSize, TileType tileType)
         {
+            MoveTime = moveTime;
             _inverseMoveTime = 1 / moveTime;
             _cellSize = cellSize;
             _tileType = tileType;

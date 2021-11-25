@@ -1,7 +1,9 @@
 using Events;
+using Gameplay.Enemies;
 using Gameplay.Events;
 using Gameplay.Generation;
 using Gameplay.Player;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utilities;
@@ -129,12 +131,29 @@ namespace Gameplay.Managers
             }
         }
 
+        private IEnumerator ProcessEnemies()
+        {
+            foreach (BaseEnemy enemy in _roomBehaviourEvent.Value.ActiveLayer.Enemies)
+            {
+                enemy.OnEnemyTurn(_player);
+                
+                yield return new WaitForSeconds(enemy.MoveTime);
+                Debug.Log("Enemy finished!");
+            }
+        }
+
 #if UNITY_EDITOR
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
                 SceneManager.LoadScene(Scenes.MainScene);
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("Process enemies!");
+                StartCoroutine(ProcessEnemies());
             }
         }
 #endif
