@@ -1608,7 +1608,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 0.5
+  orthographic size: 11.555555
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1652,9 +1652,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _wireColor: {r: 1, g: 1, b: 1, a: 1}
-  _unitsSize: 1
-  _constraint: 1
-  _camera: {fileID: 519420031}
+  _unitsSize: 13
+  _constraint: 0
   _executeInUpdate: 1
 --- !u!1001 &568140654
 PrefabInstance:
