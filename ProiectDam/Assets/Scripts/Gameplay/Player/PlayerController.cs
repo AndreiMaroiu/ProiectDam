@@ -124,11 +124,6 @@ namespace Gameplay.Player
                 _onMeleeAttack.Invoke();
             }
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                _onRangeAttack.Invoke();
-            }
-
             _swipeDetector.CkeckForSwipes();
 
             if (CanMove)

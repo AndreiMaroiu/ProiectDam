@@ -9,10 +9,14 @@ namespace UI
         [Header("Objects")]
         [SerializeField] private Slider _layerSlider;
         [SerializeField] private Button _previewButton;
+        [SerializeField] private Button _weaponButton;
+        [SerializeField] private Button _meleeButton;
         [Header("Events")]
         [SerializeField] private IntEvent _layersCountEvent;
         [SerializeField] private IntEvent _currentLayerEvent;
         [SerializeField] private BoolEvent _previewActive;
+        [SerializeField] private GameEvent _meleeEvent;
+        [SerializeField] private GameEvent _shootEvent;
         [Header("Texts")]
         [SerializeField] private Text _previewText;
         [SerializeField] private Text _previewLabel;
@@ -65,11 +69,15 @@ namespace UI
             {
                 Time.timeScale = StoppedScale;
                 _layerSlider.gameObject.SetActive(true);
+                _weaponButton.gameObject.SetActive(false);
+                _meleeButton.gameObject.SetActive(false);
                 _previewText.text = "ON";
             }
             else
             { 
                 _layerSlider.gameObject.SetActive(false);
+                _weaponButton.gameObject.SetActive(true);
+                _meleeButton.gameObject.SetActive(true);
                 _previewText.text = "OFF";
                 Time.timeScale = LastTimeScale;
             }
@@ -85,6 +93,16 @@ namespace UI
             _layersCountEvent.OnValueChanged -= OnLayersCountChanged;
             _layerSlider.onValueChanged.RemoveListener(OnSliderChanged);
             _previewActive.OnValueChanged -= OnPreviewChanged;
+        }
+
+        public void OnWeaponClick()
+        {
+            _shootEvent.Invoke();
+        }
+
+        public void OnMeleeClick()
+        {
+            _meleeEvent.Invoke();
         }
     }
 }
