@@ -20,7 +20,10 @@ MonoBehaviour:
   _wall:
   - {fileID: 7603886771782275034, guid: 10f09fdba4d93224e93df4cf3cb6b6a9, type: 3}
   _enemy:
-  - {fileID: 335860570091907127, guid: 4511764ab5a5bb448b32236b777791cb, type: 3}
+  - {fileID: 3405772353389896854, guid: 0ede92900d66e7c41be952af4f9d4b94, type: 3}
+  - {fileID: 4506473171506505353, guid: 02532e903a7169d4bb23219d1fdba964, type: 3}
+  - {fileID: 3315774591173551085, guid: b26e1de7566101947af2f7d9852bcff6, type: 3}
+  - {fileID: 1500245301518716129, guid: 9eb1d5169aca0924fbbaec1b483e245c, type: 3}
   _door:
   - {fileID: 1610797193751527803, guid: 44d13e7040070884198d2fc299f5feb3, type: 3}
   _chest:

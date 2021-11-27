@@ -26,6 +26,7 @@ MonoBehaviour:
   - {fileID: 707960728017774799, guid: c20b8acf8d9018343a64fbc00895fcce, type: 3}
   - {fileID: 7094814026472970816, guid: 1300ce7baa8956e4892f9e249a7b84ad, type: 3}
   - {fileID: 8628810412978345560, guid: 234b191ed7de2904e9f4c0cb7540d068, type: 3}
+  - {fileID: 4000387639615082020, guid: 54b6c2feea0d04d46827cb9c8ea156e8, type: 3}
   _door:
   - {fileID: 1610797193751527803, guid: 44d13e7040070884198d2fc299f5feb3, type: 3}
   _chest:
