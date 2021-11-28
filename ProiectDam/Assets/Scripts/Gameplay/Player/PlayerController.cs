@@ -173,7 +173,7 @@ namespace Gameplay.Player
         {
             Debug.Log("Melee Attack");
 
-            foreach (BaseEnemy enemy in GetNearbyEnemies(_cellSizeValue.Value))
+            foreach (KillableObject enemy in GetNearbyEnemies(_cellSizeValue.Value))
             {
                 enemy.TakeDamage(_meleeDamage);
             }
@@ -195,11 +195,11 @@ namespace Gameplay.Player
 
             --_bulletsEvent.Value;
 
-            List<BaseEnemy> enemies = GetNearbyEnemies(_cellSizeValue.Value * 2);
+            List<KillableObject> enemies = GetNearbyEnemies(_cellSizeValue.Value * 2);
 
             float min = float.MaxValue;
-            BaseEnemy closest = null;
-            foreach (BaseEnemy enemy in enemies)
+            KillableObject closest = null;
+            foreach (KillableObject enemy in enemies)
             {
                 float distance = (enemy.transform.position - transform.position).sqrMagnitude;
                 if (distance < min)
@@ -215,9 +215,9 @@ namespace Gameplay.Player
             }
         }
 
-        private List<BaseEnemy> GetNearbyEnemies(float distance)
+        private List<KillableObject> GetNearbyEnemies(float distance)
         {
-            List<BaseEnemy> result = new List<BaseEnemy>();
+            List<KillableObject> result = new List<KillableObject>();
 
             _collider.enabled = false;
 
@@ -230,7 +230,7 @@ namespace Gameplay.Player
                     continue;
                 }
 
-                BaseEnemy enemy = hit.collider.gameObject.GetComponent<BaseEnemy>();
+                KillableObject enemy = hit.collider.gameObject.GetComponent<KillableObject>();
 
                 if (enemy.IsNotNull())
                 {

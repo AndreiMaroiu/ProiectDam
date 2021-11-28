@@ -1,4 +1,3 @@
-using UnityEngine;
 using Gameplay.Generation;
 
 namespace Gameplay
@@ -7,6 +6,12 @@ namespace Gameplay
     {
         public virtual int Health { get; set; }
         public virtual int MaxHealth { get; set; }
+
+        public void InitHealth(int health)
+        {
+            MaxHealth = health;
+            Health = health;
+        }
 
         public void TakeDamage(int damage)
         {
