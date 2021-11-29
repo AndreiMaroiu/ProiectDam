@@ -13,12 +13,14 @@ namespace UI
         public const float PausedScale = 0.0f;
 
         [SerializeField] private GameObject _pauseCanvas;
+        [SerializeField] private GameObject _howToCanvas;
         [SerializeField] private GameObject _optionsCanvas;
 
         void Awake()
         {
             LastTimeScale = Time.timeScale;
             _pauseCanvas.SetActive(false);
+            _howToCanvas.SetActive(false);
             _optionsCanvas.SetActive(false);
         }
 
@@ -40,8 +42,15 @@ namespace UI
             _pauseCanvas.SetActive(false);
         }
 
+        public void OnHowToClick()
+        {
+            _howToCanvas.SetActive(true);
+            _pauseCanvas.SetActive(false);
+        }
+
         public void OnBackClick()
         {
+            _howToCanvas.SetActive(false);
             _optionsCanvas.SetActive(false);
             _pauseCanvas.SetActive(true);
         }
