@@ -13,6 +13,8 @@ namespace Gameplay.Player
     {
         private static readonly Vector2[] Directions = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
         private const string WALK_ANIMATION = "Walk";
+        private const string Melee_ANIMATION = "Melee";
+        private const string Shoot_ANIMATION = "Shoot";
 
         [SerializeField] private FloatValue _cellSizeValue;
         [SerializeField] private float _moveTime = 0.3f;
@@ -179,6 +181,17 @@ namespace Gameplay.Player
             }
 
             // play melee attack animation and sound
+            _animator.SetBool(Melee_ANIMATION, true);
+
+        }
+
+        private void OnMeleeEnd()
+        { 
+            _animator.SetBool(Melee_ANIMATION, false); 
+        }
+        private void OnShootEnd()
+        {
+            _animator.SetBool(Shoot_ANIMATION, false);
         }
 
         private void OnRangedAttack()
@@ -194,6 +207,7 @@ namespace Gameplay.Player
             // play shoot animation and sound
 
             --_bulletsEvent.Value;
+            _animator.SetBool(Shoot_ANIMATION, true);
 
             List<KillableObject> enemies = GetNearbyEnemies(_cellSizeValue.Value * 2);
 
