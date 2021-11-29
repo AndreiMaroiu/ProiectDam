@@ -1109,7 +1109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cellSizeValue: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
   _moveTime: 0.3
-  _startEnergy: 2
+  _startEnergy: 100
   _startHealth: 10
   _startBullets: 15
   _meleeDamage: 1
@@ -1660,7 +1660,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 11.555555
+  orthographic size: 13
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
