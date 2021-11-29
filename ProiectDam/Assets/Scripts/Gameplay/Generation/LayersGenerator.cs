@@ -113,39 +113,22 @@ namespace Gameplay.Generation
         {
             GenerateBorder(tiles);
 
-            int size = tiles.GetLength(0);
+            List<Vector2Int> positions = GetPositions(tiles);
 
-            // counting starts from 2 to ignore wall and empty path
-            for (int i = 2; i < size - 2; i++)
-            {
-                for (int j = 2; j < size - 2; j++)
-                {
-                    tiles[i, j] = _random.Take();
-                }
-            }
+            SpawnTiles(tiles, positions, Random.Range(3, 6), TileType.Enemy);
+            SpawnTiles(tiles, positions, Random.Range(2, 3), TileType.PickUp);
+            SpawnTiles(tiles, positions, Random.Range(3, 7), TileType.Obstacle);
         }
 
         private void GenerateComplex(TileType[,] current, TileType[,] previous)
         {
             GenerateBorder(current);
 
-            int size = current.GetLength(0);
-
-            // counting starts from 2 to ignore wall and empty path
-            for (int i = 2; i < size - 2; i++)
-            {
-                for (int j = 2; j < size - 2; j++)
-                {
-                    if (ObstaclesTypes.Contains(previous[i, j]))
-                    {
-                        current[i, j] = TileType.None;
-                    }
-                    else
-                    {
-                        current[i, j] = ObjectsTypes[Random.Range(0, ObjectsTypes.Length)];
-                    }
-                }
-            }
+            List<Vector2Int> positions = GetPositions(current);
+            
+            SpawnTilesComplex(current, previous, positions, Random.Range(3, 6), TileType.Enemy);
+            SpawnTilesComplex(current, previous, positions, Random.Range(2, 3), TileType.PickUp);
+            SpawnTilesComplex(current, previous, positions, Random.Range(3, 7), TileType.Obstacle);
         }
 
         private void GenerateBorder(TileType[,] tiles)
@@ -166,6 +149,57 @@ namespace Gameplay.Generation
                 tiles[size - 2, i] = TileType.None;
                 tiles[i, 1] = TileType.None;
                 tiles[i, size - 2] = TileType.None;
+            }
+        }
+
+        private List<Vector2Int> GetPositions(TileType[,] layer)
+        {
+            List<Vector2Int> list = new List<Vector2Int>();
+            int size = layer.GetLength(0) - 2;
+
+            for (int i = 2; i < size; i++)
+            {
+                for (int j = 2; j < size; j++)
+                {
+                    list.Add(new Vector2Int(i, j));
+                }
+            }
+
+            return list;
+        }
+
+        private void SpawnTiles(TileType[,] layer, List<Vector2Int> positions, int count, TileType type)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                int where = Random.Range(0, positions.Count);
+                Vector2Int position = positions[where];
+
+                positions.RemoveAt(where);
+                layer[position.x, position.y] = type;
+            }
+        }
+
+        private void SpawnTilesComplex(TileType[,] layer, TileType[,] previous, List<Vector2Int> positions, int count, TileType type)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Vector2Int position;
+
+                do
+                {
+                    if (positions.Count < 1)
+                    {
+                        return;
+                    }
+
+                    int where = Random.Range(0, positions.Count);
+                    position = positions[where];
+
+                    positions.RemoveAt(where);
+                } while (ObstaclesTypes.Contains(previous[position.x, position.y]));
+
+                layer[position.x, position.y] = type;
             }
         }
     }
