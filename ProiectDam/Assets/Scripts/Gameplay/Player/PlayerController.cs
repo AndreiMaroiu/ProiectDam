@@ -13,10 +13,11 @@ namespace Gameplay.Player
     {
         private static readonly Vector2[] Directions = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
         private const string WALK_ANIMATION = "Walk";
-        private const string Melee_ANIMATION = "Melee";
-        private const string Shoot_ANIMATION = "Shoot";
+        private const string MELEE_ANIMATION = "Melee";
+        private const string SHOOT_ANIMATION = "Shoot";
+        private const string DEATH_ANIMATION = "Death"; 
 
-        [SerializeField] private FloatValue _cellSizeValue;
+         [SerializeField] private FloatValue _cellSizeValue;
         [SerializeField] private float _moveTime = 0.3f;
         [SerializeField] private int _startEnergy;
         [SerializeField] private int _startHealth;
@@ -181,17 +182,17 @@ namespace Gameplay.Player
             }
 
             // play melee attack animation and sound
-            _animator.SetBool(Melee_ANIMATION, true);
+            _animator.SetBool(MELEE_ANIMATION, true);
 
         }
 
         private void OnMeleeEnd()
         { 
-            _animator.SetBool(Melee_ANIMATION, false); 
+            _animator.SetBool(MELEE_ANIMATION, false); 
         }
         private void OnShootEnd()
         {
-            _animator.SetBool(Shoot_ANIMATION, false);
+            _animator.SetBool(SHOOT_ANIMATION, false);
         }
 
         private void OnRangedAttack()
@@ -207,7 +208,7 @@ namespace Gameplay.Player
             // play shoot animation and sound
 
             --_bulletsEvent.Value;
-            _animator.SetBool(Shoot_ANIMATION, true);
+            _animator.SetBool(SHOOT_ANIMATION, true);
 
             List<KillableObject> enemies = GetNearbyEnemies(_cellSizeValue.Value * 2);
 
@@ -314,6 +315,8 @@ namespace Gameplay.Player
         protected override void OnDeath()
         {
             _onPlayerDeath.Invoke();
+            _swipeDetector.OnSwipe -= OnSwipe;
+            _animator.SetBool(DEATH_ANIMATION, true);
         }
 
         protected override bool CanMoveToTile(TileType tile)

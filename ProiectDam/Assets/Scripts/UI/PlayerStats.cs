@@ -112,7 +112,7 @@ namespace UI
         private void OnPlayerDeath()
         {
             float timeScale = Time.timeScale;
-            Time.timeScale = 0.0f;
+            //Time.timeScale = 0.0f;
             ModalWindow.Show(new ModalWindowData()
             {
                 Content = "You Died!",
