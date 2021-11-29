@@ -36,6 +36,7 @@ MonoBehaviour:
   _trap: []
   _pickUp:
   - {fileID: 5244361343789919635, guid: b9f9962775564384793ea37e74690334, type: 3}
+  - {fileID: 2725781087358859865, guid: b1865ca7b4c56be409a438ff5f95f0b8, type: 3}
   _obstacle:
   - {fileID: 8508842280716529376, guid: e281897db57b91643ac32d45fe9f7383, type: 3}
   - {fileID: 7492388303378191110, guid: 7bfd5331433e49b4394ee9557fded5bf, type: 3}
