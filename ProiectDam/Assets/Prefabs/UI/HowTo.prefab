@@ -614,6 +614,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8082633763614656962}
   - component: {fileID: 4169713167512937039}
+  - component: {fileID: 5095777230200155749}
   - component: {fileID: 1055313075818867497}
   m_Layer: 5
   m_Name: Health
@@ -650,6 +651,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3211496511924691381}
   m_CullTransparentMesh: 1
+--- !u!114 &5095777230200155749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3211496511924691381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e8a4f306bb71734f9dc69bee13e4b61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _values:
+  - {fileID: 11400000, guid: e9193961a44f2b14d8831701bf07e517, type: 2}
 --- !u!114 &1055313075818867497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -683,7 +698,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Collect        \nto restore one health point"
+  m_Text: "Collect        \nto restore {0} health point(s)"
 --- !u!1 &3830823572160462617
 GameObject:
   m_ObjectHideFlags: 0
@@ -1281,6 +1296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1734307789005196110}
   - component: {fileID: 1485020007377251667}
+  - component: {fileID: 4994464306867368008}
   - component: {fileID: 4282583912039523384}
   m_Layer: 5
   m_Name: Bullets
@@ -1317,6 +1333,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6665541933801169108}
   m_CullTransparentMesh: 1
+--- !u!114 &4994464306867368008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6665541933801169108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e8a4f306bb71734f9dc69bee13e4b61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _values:
+  - {fileID: 11400000, guid: 6d3bdc2d0e5ad1d43bcc728820c15e78, type: 2}
 --- !u!114 &4282583912039523384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1350,7 +1380,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Collect        \nto restore 5 bullets"
+  m_Text: "Collect        \nto restore {0} bullet(s)"
 --- !u!1 &7235046879287519445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1672,6 +1702,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3409915488872455197}
   - component: {fileID: 774623306304625750}
+  - component: {fileID: 2915971703464702986}
   - component: {fileID: 4884317898356982160}
   m_Layer: 5
   m_Name: Energy
@@ -1708,6 +1739,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7862830883602757113}
   m_CullTransparentMesh: 1
+--- !u!114 &2915971703464702986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7862830883602757113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e8a4f306bb71734f9dc69bee13e4b61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _values:
+  - {fileID: 11400000, guid: 9b18526d09a856c4497bd687dd8cec5f, type: 2}
 --- !u!114 &4884317898356982160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1741,7 +1786,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Collect         \nto restore 5 energy points"
+  m_Text: "Collect         \nto restore {0} energy point(s)"
 --- !u!1 &8293350002419847484
 GameObject:
   m_ObjectHideFlags: 0
