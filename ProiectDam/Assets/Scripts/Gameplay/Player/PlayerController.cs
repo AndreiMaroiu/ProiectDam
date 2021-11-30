@@ -338,7 +338,7 @@ namespace Gameplay.Player
         protected override void OnStopMoving()
         {
             _direction = Vector2.zero;
-            _soundhandler.StopMove();
+            _soundhandler.Stop();
         }
 
         #endregion

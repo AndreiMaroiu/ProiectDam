@@ -1602,7 +1602,8 @@ AudioSource:
   m_GameObject: {fileID: 291062791}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3132467982603537758, guid: 30533e10242a2ec43a50259b45388e13,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 4b4c23493ed825748bbb74da5096a3f1, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1736,6 +1737,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd8ccd7371d6604b8b1303c3a89fa8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shootClip: {fileID: 8300000, guid: d10f15337b281c94889576c23c1565cf, type: 3}
+  _walkClip: {fileID: 8300000, guid: 4b4c23493ed825748bbb74da5096a3f1, type: 3}
+  _meleeClip: {fileID: 8300000, guid: 07a81db5edf53da46bb2f6995fddcbd8, type: 3}
+  _deathClip: {fileID: 8300000, guid: 45b0831d943047643830e11363b79cfa, type: 3}
 --- !u!212 &291062799
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2205,7 +2210,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 13.240741
+  orthographic size: 11.555555
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4738,7 +4743,7 @@ PrefabInstance:
     - target: {fileID: 4710153761591464379, guid: c9792292877bded4b982db135e87164c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 504.4673
+      value: 540
       objectReference: {fileID: 0}
     - target: {fileID: 4710153761591464379, guid: c9792292877bded4b982db135e87164c,
         type: 3}
@@ -4953,7 +4958,7 @@ PrefabInstance:
     - target: {fileID: 4710153762891080636, guid: c9792292877bded4b982db135e87164c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 504.4673
+      value: 540
       objectReference: {fileID: 0}
     - target: {fileID: 4710153762891080636, guid: c9792292877bded4b982db135e87164c,
         type: 3}
@@ -4988,7 +4993,7 @@ PrefabInstance:
     - target: {fileID: 4710153763042920953, guid: c9792292877bded4b982db135e87164c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 504.4673
+      value: 540
       objectReference: {fileID: 0}
     - target: {fileID: 4710153763042920953, guid: c9792292877bded4b982db135e87164c,
         type: 3}
@@ -5458,7 +5463,8 @@ AudioSource:
   m_GameObject: {fileID: 1946832940}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8674721033119666456, guid: 30533e10242a2ec43a50259b45388e13,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 74e5b780468feac49b4d2808b2016b5a, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.132
