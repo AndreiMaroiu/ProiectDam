@@ -11,8 +11,10 @@ namespace Gameplay.Enemies
         [SerializeField] private float _moveTime;
         [SerializeField] private FloatValue _cellSizeValue;
 
+        private EnemySoundHandler _soundhandler;
         private void Start()
         {
+            _soundhandler = GetComponent<EnemySoundHandler>();
             MaxHealth = _startHealth;
             Health = _startHealth;
 
@@ -52,7 +54,7 @@ namespace Gameplay.Enemies
 
         protected override void OnStopMoving()
         {
-            
+            _soundhandler.Stop();
         }
 
         protected override bool CanMoveToTile(TileType tile)
