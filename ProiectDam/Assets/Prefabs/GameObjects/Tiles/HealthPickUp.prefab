@@ -28,7 +28,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef188663a5a1e354ba3c74cee729a674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBonus: 1
+  _healthBonus: {fileID: 11400000, guid: e9193961a44f2b14d8831701bf07e517, type: 2}
 --- !u!1001 &1654464996744550187
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -48,5 +48,8 @@ namespace Events
                 OnMaxValueChanged?.Invoke();
             }
         }
+
+        public override string ToString()
+            => $"{Value.ToString()}/{MaxValue.ToString()}";
     }
 }

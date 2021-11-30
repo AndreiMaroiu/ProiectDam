@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 namespace ModalWindows
 {
+    /// <summary>
+    /// Modal Window, can be used to show short massages without the need to create more UI assets
+    /// </summary>
     public partial class ModalWindow : MonoBehaviour
     {
         public static ModalWindow Instance { get; private set; } = null;
@@ -90,7 +93,7 @@ namespace ModalWindows
         {
             if (FindObjectsOfType<ModalWindow>().Length > 1)
             {
-                Destroy(this.gameObject);
+                DestroyImmediate(this.transform.parent.gameObject);
                 return;
             }
 

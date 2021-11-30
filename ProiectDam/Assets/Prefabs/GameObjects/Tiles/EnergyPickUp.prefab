@@ -28,7 +28,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08341b34fb8faca41ad3d1d0d6efd9e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _energyBonus: 5
+  _energyBonus: {fileID: 11400000, guid: 9b18526d09a856c4497bd687dd8cec5f, type: 2}
 --- !u!1001 &5522028169880415146
 PrefabInstance:
   m_ObjectHideFlags: 0

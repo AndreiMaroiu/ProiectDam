@@ -96,39 +96,26 @@ namespace UI
 
         private void UpdateEnergyText()
         {
-            _energyText.text = $"{_energy.Value.ToString()}/{_energy.MaxValue.ToString()}";
+            _energyText.text = _energy.ToString();
         }
 
         private void UpdateHealthText()
         {
-            _healthText.text = $"{_health.Value.ToString()}/{_health.MaxValue.ToString()}";
+            _healthText.text = _health.ToString();
         }
 
         private void UpdateBulletsText()
         {
-            _bulletsText.text = $"{_bullets.Value.ToString()}/{_bullets.MaxValue.ToString()}";
+            _bulletsText.text = _bullets.ToString();
         }
 
-        private void OnPlayerDeath()
+        private void OnPlayerDeath() => ModalWindow.Show(new ModalWindowData()
         {
-            float timeScale = Time.timeScale;
-            //Time.timeScale = 0.0f;
-            ModalWindow.Show(new ModalWindowData()
-            {
-                Content = "You Died!",
-                CloseText = "Main Menu",
-                CloseAction = () =>
-                {
-                    Time.timeScale = timeScale;
-                    SceneManager.LoadScene(Scenes.MainMenu);
-                },
-                OkText = "Play Again",
-                OkAction = () =>
-                {
-                    Time.timeScale = timeScale;
-                    SceneManager.LoadScene(Scenes.MainScene);
-                }
-            });
-        }
+            Content = "You Died!",
+            CloseText = "Main Menu",
+            CloseAction = () => SceneManager.LoadScene(Scenes.MainMenu),
+            OkText = "Play Again",
+            OkAction = () => SceneManager.LoadScene(Scenes.MainScene)
+        });
     }
 }

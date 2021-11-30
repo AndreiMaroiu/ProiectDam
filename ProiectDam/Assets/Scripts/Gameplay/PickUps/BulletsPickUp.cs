@@ -1,11 +1,12 @@
 using Gameplay.Player;
 using UnityEngine;
+using Values;
 
 namespace Gameplay.PickUps
 {
     public class BulletsPickUp : BasePickUp
     {
-        [SerializeField] private int _bulletsBonus;
+        [SerializeField] private IntValue _bulletsBonus;
 
         protected override void OnInteract(PlayerController controller)
         {

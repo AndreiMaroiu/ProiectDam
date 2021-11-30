@@ -2,15 +2,14 @@ using UnityEngine;
 
 namespace Utilities
 {
-    [ExecuteInEditMode]
-    [RequireComponent(typeof(Camera))]
+    [RequireComponent(typeof(Camera)), ExecuteInEditMode]
     public class CameraViewportHandler : MonoBehaviour
     {
-        public enum Constraint { Landscape, Portrait }
+        public enum Constraint { Width, Height }
 
         [SerializeField] private Color _wireColor = Color.white;
         [SerializeField] private float _unitsSize = 1; // size of your scene in unity units
-        [SerializeField] private Constraint _constraint = Constraint.Portrait;
+        [SerializeField] private Constraint _constraint = Constraint.Width;
         [SerializeField] private bool _executeInUpdate;
 
         private Camera _camera;
@@ -24,7 +23,7 @@ namespace Utilities
 
         private void ComputeResolution()
         {
-            if (_constraint == Constraint.Landscape)
+            if (_constraint is Constraint.Width)
             {
                 _camera.orthographicSize = 1f / _camera.aspect * _unitsSize / 2f;
             }
