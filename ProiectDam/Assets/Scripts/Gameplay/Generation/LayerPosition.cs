@@ -43,7 +43,7 @@ namespace Gameplay.Generation
             GetTile() = TileType.None;
         }
 
-        private ref TileType GetTile()
+        public ref TileType GetTile()
             => ref _layer[Position.x, Position.y];
 
         public TileType GetTile(Vector2Int dir)

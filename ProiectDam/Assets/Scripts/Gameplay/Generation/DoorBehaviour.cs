@@ -36,9 +36,10 @@ namespace Gameplay.Generation
 
         void IInteractable.Interact(PlayerController controller)
         {
-            controller.StopMoving();
             Move(controller.transform);
+            controller.StopMoving();
             controller.LayerPosition = new LayerPosition(_other._moveLayerPosition);
+            controller.LayerPosition.GetTile() = TileType.Player;
         }
     }
 }
