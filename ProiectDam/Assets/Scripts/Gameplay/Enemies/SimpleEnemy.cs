@@ -24,6 +24,7 @@ namespace Gameplay.Enemies
         protected override void OnDamage()
         {
             // play sound and animations
+            _soundhandler.PlayHit();
         }
 
         public override void OnEnemyTurn(PlayerController player)
