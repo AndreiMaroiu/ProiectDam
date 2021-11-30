@@ -28,6 +28,7 @@ namespace UI
         private void Start()
         {
             _layersCountEvent.OnValueChanged += OnLayersCountChanged;
+            _currentLayerEvent.OnValueChanged += OnCurrentLayerChanged;
             _layerSlider.onValueChanged.AddListener(OnSliderChanged);
 
             _previewActive.OnValueChanged += OnPreviewChanged;
@@ -55,6 +56,11 @@ namespace UI
                 _previewButton.gameObject.SetActive(false);
                 _previewLabel.gameObject.SetActive(false);
             }
+        }
+
+        private void OnCurrentLayerChanged()
+        {
+            _layerSlider.value = _currentLayerEvent.Value;
         }
 
         private void OnSliderChanged(float value)
@@ -91,6 +97,7 @@ namespace UI
         private void OnDestroy()
         {
             _layersCountEvent.OnValueChanged -= OnLayersCountChanged;
+            _currentLayerEvent.OnValueChanged -= OnCurrentLayerChanged;
             _layerSlider.onValueChanged.RemoveListener(OnSliderChanged);
             _previewActive.OnValueChanged -= OnPreviewChanged;
         }
