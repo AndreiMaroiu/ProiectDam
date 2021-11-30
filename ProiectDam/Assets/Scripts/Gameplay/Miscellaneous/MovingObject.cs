@@ -40,8 +40,6 @@ namespace Gameplay
                 yield break;
             }
 
-            LayerPosition.Move(layerDirection);
-
             Vector3 endPosition = transform.position + (new Vector3(direction.x, direction.y) * _cellSize);
             CanMove = false;
             OnMove(direction);
@@ -56,7 +54,8 @@ namespace Gameplay
             {
                 Vector2Int currentPos = LayerPosition.Position;
                 LayerPosition.Layer[lastPos.x, lastPos.y] = TileType.None;
-                LayerPosition.Layer[currentPos.x, currentPos.y] = _tileType;
+                LayerPosition.Move(layerDirection);
+                LayerPosition.GetTile() = _tileType;
             }
 
             StopMoving();

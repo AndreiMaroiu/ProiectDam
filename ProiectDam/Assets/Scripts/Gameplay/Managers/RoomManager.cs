@@ -137,7 +137,7 @@ namespace Gameplay.Managers
             {
                 enemy.OnEnemyTurn(_player);
                 
-                yield return new WaitForSeconds(enemy.MoveTime);
+                yield return new WaitForSeconds(enemy.MoveTime + 0.1f);
                 Debug.Log("Enemy finished!");
             }
         }
