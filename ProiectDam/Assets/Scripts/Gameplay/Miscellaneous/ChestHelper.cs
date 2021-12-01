@@ -5,21 +5,22 @@ namespace Gameplay
 {
     public class ChestHelper : MonoBehaviour, IInteractable
     {
-        private PlayerController _controller;
-
         public bool CanInteract { get; private set; }
+        public PlayerController Controller { get; private set; }
 
         public void Interact(PlayerController controller)
         {
             CanInteract = true;
-            _controller = controller;
+            Controller = controller;
+            Debug.Log("Can Open Chest!");
         }
 
         public void OnTriggerExit2D(Collider2D collision)
         {
-            if (collision.gameObject == _controller.gameObject)
+            if (collision.gameObject == Controller.gameObject)
             {
                 CanInteract = false;
+                Debug.Log("Cannot open chest anymore!");
             }
         }
     }

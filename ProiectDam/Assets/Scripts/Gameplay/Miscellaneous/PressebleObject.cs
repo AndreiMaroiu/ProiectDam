@@ -5,5 +5,10 @@ namespace Gameplay
     public abstract class PressebleObject : MonoBehaviour
     {
         public abstract void OnClick();
+
+        private void OnMouseUp()
+        {
+            OnClick();
+        }
     }
 }

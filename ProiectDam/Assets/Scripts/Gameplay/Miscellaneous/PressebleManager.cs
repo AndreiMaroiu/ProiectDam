@@ -5,6 +5,8 @@ namespace Gameplay
 {
     public class PressebleManager : MonoBehaviour
     {
+        [SerializeField] private LayerMask _layer;
+
         private Camera _camera;
 
         private void Start()
@@ -14,6 +16,11 @@ namespace Gameplay
 
         private void Update()
         {
+            if (Time.timeScale == 0.0f)
+            {
+                return;
+            }
+
             foreach (Touch touch in Input.touches)
             {
                 if (touch.phase != TouchPhase.Ended)
@@ -22,7 +29,7 @@ namespace Gameplay
                 }
 
                 Ray ray = _camera.ScreenPointToRay(touch.position);
-                RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+                RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 1000.0f, _layer);
 
                 if (hit.collider.IsNull())
                 {
