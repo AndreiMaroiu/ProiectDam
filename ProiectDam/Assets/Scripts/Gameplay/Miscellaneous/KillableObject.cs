@@ -17,13 +17,12 @@ namespace Gameplay
         {
             Health -= damage;
 
-            if (Health > 0)
-            {
-                OnDamage();
-                return;
-            }
+            OnDamage();
 
-            OnDeath();
+            if (Health <= 0)
+            {
+                OnDeath();
+            }
         }
 
         protected abstract void OnDamage();

@@ -10,7 +10,7 @@ namespace Gameplay
 
         private SpriteRenderer _renderer;
 
-        protected override void OnClick()
+        public override void OnClick()
         {
             if (!_helper.CanInteract)
             {

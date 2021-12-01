@@ -1,20 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay
 {
     public class EnemySoundHandler : MonoBehaviour
     {
-        private AudioSource _currentSound;
         [SerializeField] private AudioClip _attackClip;
         [SerializeField] private AudioClip _hitClip;
         [SerializeField] private AudioClip _deathClip;
         [SerializeField] private AudioClip _walkClip;
+
+        private AudioSource _currentSound;
+
         private void Start()
         {
             _currentSound = GetComponent<AudioSource>();
-
         }
 
         public void PlayAttack()
@@ -34,11 +33,13 @@ namespace Gameplay
             _currentSound.clip = _walkClip;
             _currentSound.Play();
         }
+
         public void PlayDeath()
         {
             _currentSound.clip = _deathClip;
             _currentSound.Play();
         }
+
         public void Stop() => _currentSound.Stop();
     }
 }

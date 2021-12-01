@@ -12,6 +12,7 @@ namespace Gameplay.Managers
 {
     public class RoomManager : MonoBehaviour
     {
+        [SerializeField] private bool _drawGizmos;
         [SerializeField] private LevelSpawner _spawner;
         [SerializeField] private PlayerController _player;
         [Header("Events")]
@@ -54,6 +55,44 @@ namespace Gameplay.Managers
             _currentLayerEvent.OnValueChanged -= OnLayerChanged;
             _previewEvent.OnValueChanged -= OnPreviewChanged;
         }
+
+        private void OnDrawGizmos()
+        {
+            if (Application.isPlaying && _drawGizmos)
+            {
+                int size = _roomBehaviourEvent.Value.ActiveLayer.GetLength(0);
+                TileType[,] layer = _roomBehaviourEvent.Value.ActiveLayer;
+
+                Vector3 offset = Utils.GetVector3FromMatrixPos(size / 2, size / 2, 1.3f) 
+                                        - _roomBehaviourEvent.Value.transform.position;
+
+                for (int i = 0; i < size; i++)
+                {
+                    for (int j = 0; j < size; j++)
+                    {
+                        Vector3 where = Utils.GetVector3FromMatrixPos(i, j, 1.3f) - offset;
+                        Gizmos.color = GetGizmoColor(layer[i, j]);
+                        Gizmos.DrawCube(where, Vector3.one);
+                    }
+                }
+            }
+        }
+
+        private Color GetGizmoColor(TileType tile) => tile switch
+        {
+            TileType.None => Color.white,
+            TileType.Wall => new Color(0.42f, 0.20f, 0.20f),// brown
+            TileType.Enemy => Color.red,
+            TileType.Door => Color.gray,
+            TileType.Chest => new Color(255, 165, 0),// orange
+            TileType.Heal => Color.green,
+            TileType.Trap => Color.magenta,
+            TileType.PickUp => Color.blue,
+            TileType.Obstacle => Color.yellow,
+            TileType.Portal => Color.black,
+            TileType.Player => Color.cyan,
+            _ => Color.clear,
+        };
 
         private void SetPlayerPos(RoomBehaviour behaviour)
         {
@@ -133,7 +172,7 @@ namespace Gameplay.Managers
 
         private IEnumerator ProcessEnemies()
         {
-            foreach (BaseEnemy enemy in _roomBehaviourEvent.Value.ActiveLayer.Enemies)
+            foreach (BaseEnemy enemy in _roomBehaviourEvent.Value.ActiveLayerBehaviour.Enemies)
             {
                 enemy.OnEnemyTurn(_player);
                 

@@ -18,7 +18,8 @@ namespace Gameplay.Generation
         public Room Room => _room;
         public Layers Layers => _layers;
         public int CurrentLayer => _currentLayer;
-        public LayerBehaviour ActiveLayer => _layersObjects[_currentLayer];
+        public LayerBehaviour ActiveLayerBehaviour => _layersObjects[_currentLayer];
+        public TileType[,] ActiveLayer => Layers.GetTiles(_currentLayer);
 
         private LayerBehaviour CreateEmptyObject(string name)
         {

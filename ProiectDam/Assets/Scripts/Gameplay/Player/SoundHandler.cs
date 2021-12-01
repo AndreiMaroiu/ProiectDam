@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Gameplay.Sound
+namespace Gameplay.Player
 {
     public class SoundHandler : MonoBehaviour
     {

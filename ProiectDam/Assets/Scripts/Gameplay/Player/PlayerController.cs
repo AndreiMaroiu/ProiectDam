@@ -1,7 +1,5 @@
 using Events;
-using Gameplay.Enemies;
 using Gameplay.Generation;
-using Gameplay.Sound;
 using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
@@ -15,9 +13,9 @@ namespace Gameplay.Player
         private const string WALK_ANIMATION = "Walk";
         private const string MELEE_ANIMATION = "Melee";
         private const string SHOOT_ANIMATION = "Shoot";
-        private const string DEATH_ANIMATION = "Death"; 
+        private const string DEATH_ANIMATION = "Death";
 
-         [SerializeField] private FloatValue _cellSizeValue;
+        [SerializeField] private FloatValue _cellSizeValue;
         [SerializeField] private float _moveTime = 0.3f;
         [SerializeField] private int _startEnergy;
         [SerializeField] private int _startHealth;
@@ -187,8 +185,8 @@ namespace Gameplay.Player
         }
 
         private void OnMeleeEnd()
-        { 
-            _animator.SetBool(MELEE_ANIMATION, false); 
+        {
+            _animator.SetBool(MELEE_ANIMATION, false);
         }
         private void OnShootEnd()
         {
