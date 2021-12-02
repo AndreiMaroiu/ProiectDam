@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5961820620640631713}
   - component: {fileID: -2083756617904472782}
   - component: {fileID: 9188057751684523292}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ancient Golem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7073b968086755f419c7e86fc4d6910f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startHealth: 2
   _damage: 1
+  _startHealth: 2
   _moveTime: 0.2
   _cellSizeValue: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
 --- !u!114 &-2083756617904472782

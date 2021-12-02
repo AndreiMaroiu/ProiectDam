@@ -9,7 +9,8 @@ namespace Gameplay.Player
 {
     public class PlayerController : MovingObject
     {
-        private static readonly Vector2[] Directions = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
+        private static readonly Vector2[] Directions = { Vector2.right, Vector2.up, Vector2.left, Vector2.down };
+        private static readonly Vector2[] ReversedDirections = { Vector2.left, Vector2.up, Vector2.right, Vector2.down };
         private const string WALK_ANIMATION = "Walk";
         private const string MELEE_ANIMATION = "Melee";
         private const string SHOOT_ANIMATION = "Shoot";
@@ -22,6 +23,7 @@ namespace Gameplay.Player
         [SerializeField] private int _startBullets;
         [SerializeField] private int _meleeDamage;
         [SerializeField] private int _rangedDamage;
+        [SerializeField] private LayerMask _mask;
         [Header("Colors")]
         [SerializeField] private Color _transparent;
         [SerializeField] private Color _red;
@@ -172,9 +174,7 @@ namespace Gameplay.Player
 
         private void OnMeleeAttack()
         {
-            Debug.Log("Melee Attack");
-
-            foreach (KillableObject enemy in GetNearbyEnemies(_cellSizeValue.Value))
+            foreach (KillableObject enemy in GetNearbyEnemies(Directions, _cellSizeValue.Value))
             {
                 enemy.TakeDamage(_meleeDamage);
             }
@@ -195,8 +195,6 @@ namespace Gameplay.Player
 
         private void OnRangedAttack()
         {
-            Debug.Log("Ranged Attack");
-
             if (_bulletsEvent.Value <= 0)
             {
                 // play sound for empty magazin
@@ -208,7 +206,8 @@ namespace Gameplay.Player
             --_bulletsEvent.Value;
             _animator.SetBool(SHOOT_ANIMATION, true);
 
-            List<KillableObject> enemies = GetNearbyEnemies(_cellSizeValue.Value * 2);
+            Vector2[] directions = transform.localScale.x > 0 ? Directions : ReversedDirections;
+            List<KillableObject> enemies = GetNearbyEnemies(directions, _cellSizeValue.Value * 2);
 
             float min = float.MaxValue;
             KillableObject closest = null;
@@ -225,18 +224,29 @@ namespace Gameplay.Player
             if (closest.IsNotNull())
             {
                 closest.TakeDamage(_rangedDamage);
+
+                float xPlayer = transform.position.x;
+                float XEnemy = closest.transform.position.x;
+                float xScale = transform.localScale.x;
+                bool shouldFlip = xScale > 0 && XEnemy < xPlayer || xScale < 0 && XEnemy > xPlayer;
+
+                if (shouldFlip)
+                {
+                    Vector3 scale = transform.localScale;
+                    transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
+                }
             }
         }
 
-        private List<KillableObject> GetNearbyEnemies(float distance)
+        private List<KillableObject> GetNearbyEnemies(Vector2[] directions, float distance)
         {
             List<KillableObject> result = new List<KillableObject>();
 
             _collider.enabled = false;
 
-            foreach (Vector2 direction in Directions)
+            foreach (Vector2 direction in directions)
             {
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance);
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, _mask);
 
                 if (!hit)
                 {
@@ -298,8 +308,8 @@ namespace Gameplay.Player
 
             if (shouldFlip)
             {
-                transform.localScale = new Vector3(transform.localScale.x * -1,
-                    transform.localScale.y, transform.localScale.z);
+                Vector3 scale = transform.localScale;
+                transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
             }
         }
 

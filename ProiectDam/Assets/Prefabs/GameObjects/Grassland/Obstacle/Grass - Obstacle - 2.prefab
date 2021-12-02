@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 366485774922705961}
   - component: {fileID: 366485774922705974}
-  m_Layer: 20
+  m_Layer: 7
   m_Name: PF Props Pot C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 366485775272490091}
   - component: {fileID: 366485775272490088}
-  m_Layer: 20
+  m_Layer: 7
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 7492388303378191129}
   - component: {fileID: 8108478852651704817}
   - component: {fileID: 3643817641660281093}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Grass - Obstacle - 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

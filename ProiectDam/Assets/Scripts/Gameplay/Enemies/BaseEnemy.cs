@@ -62,7 +62,7 @@ namespace Gameplay.Enemies
         protected sealed override void OnDeath()
         {
             OnDeathEvent?.Invoke(this);
-            LayerPosition.Clear();
+            LayerPosition?.Clear();
             Destroy(this.gameObject);
         }
     }

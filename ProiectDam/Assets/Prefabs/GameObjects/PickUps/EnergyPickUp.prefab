@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4024175890374661513}
   - component: {fileID: -4417383721252861514}
   - component: {fileID: 912150835015195157}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnergyPickUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}

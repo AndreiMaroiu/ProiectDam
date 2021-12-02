@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6793438004925385169}
   - component: {fileID: -7763281863142373771}
   - component: {fileID: 6069112625905604588}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Axe Demon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7073b968086755f419c7e86fc4d6910f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 0
   _startHealth: 2
   _moveTime: 0.2
   _cellSizeValue: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
