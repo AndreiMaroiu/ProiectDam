@@ -107,6 +107,7 @@ namespace Gameplay.Player
 
             _onMeleeAttack.OnEvent += OnMeleeAttack;
             _onRangeAttack.OnEvent += OnRangedAttack;
+            _energyEvent.OnValueChanged += OnEnergyChanged;
 
             SetMove(_moveTime, _cellSizeValue.Value, Generation.TileType.Player);
         }
@@ -115,6 +116,7 @@ namespace Gameplay.Player
         {
             _onMeleeAttack.OnEvent -= OnMeleeAttack;
             _onRangeAttack.OnEvent -= OnRangedAttack;
+            _energyEvent.OnValueChanged -= OnEnergyChanged;
         }
 
         private void Update()
@@ -169,6 +171,8 @@ namespace Gameplay.Player
 
         #endregion
 
+        #region Methods
+
         private void OnMeleeAttack()
         {
             if (!_playerTurn)
@@ -183,13 +187,14 @@ namespace Gameplay.Player
 
             // play melee attack animation and sound
             _animator.SetBool(MELEE_ANIMATION, true);
-
+            _energyEvent.Value--;
         }
 
         private void OnMeleeEnd()
         {
             _animator.SetBool(MELEE_ANIMATION, false);
         }
+
         private void OnShootEnd()
         {
             _animator.SetBool(SHOOT_ANIMATION, false);
@@ -320,6 +325,16 @@ namespace Gameplay.Player
             }
         }
 
+        private void OnEnergyChanged()
+        {
+            if (_energyEvent.Value <= 0)
+            {
+                OnDeath();
+            }
+        }
+
+        #endregion
+
         #region Overrides
 
         protected override void OnDamage()
@@ -353,12 +368,6 @@ namespace Gameplay.Player
         {
             _direction = direction;
             _energyEvent.Value--;
-
-            if (_energyEvent.Value <= 0)
-            {
-                OnDeath();
-                return;
-            }
         }
 
         protected override void OnStopMoving()
