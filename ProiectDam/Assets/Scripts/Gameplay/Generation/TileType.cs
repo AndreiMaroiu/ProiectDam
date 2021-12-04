@@ -12,7 +12,7 @@ namespace Gameplay.Generation
         PickUp,
         Obstacle,
         Portal,
-        Player
+        Player,
     }
 
     public static class TileTypeExtension

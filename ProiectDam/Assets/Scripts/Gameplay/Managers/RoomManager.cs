@@ -22,6 +22,7 @@ namespace Gameplay.Managers
         [SerializeField] private IntEvent _currentLayerEvent;
         [SerializeField] private BiomeEvent _biomeEvent;
         [SerializeField] private BoolEvent _previewEvent;
+        [SerializeField] private BoolEvent _playerTurn;
 
         private int _lastLayer;
         private bool _canChangeLayer = true;
@@ -38,6 +39,7 @@ namespace Gameplay.Managers
             _roomBehaviourEvent.OnValueChanged += OnRoomChanged;
             _currentLayerEvent.OnValueChanged += OnLayerChanged;
             _previewEvent.OnValueChanged += OnPreviewChanged;
+            _playerTurn.OnValueChanged += OnPlayerMoveEnd;
 
             _currentLayerEvent.Value = behaviour.CurrentLayer;
             _layersNumberEvent.Value = behaviour.Layers.Count;
@@ -47,6 +49,7 @@ namespace Gameplay.Managers
         private void InitEvents()
         {
             _previewEvent.Value = false;
+            _playerTurn.Value = true;
         }
 
         private void OnDestroy()
@@ -54,6 +57,7 @@ namespace Gameplay.Managers
             _roomBehaviourEvent.OnValueChanged -= OnRoomChanged;
             _currentLayerEvent.OnValueChanged -= OnLayerChanged;
             _previewEvent.OnValueChanged -= OnPreviewChanged;
+            _playerTurn.OnValueChanged -= OnPlayerMoveEnd;
         }
 
         private void OnDrawGizmos()
@@ -179,6 +183,17 @@ namespace Gameplay.Managers
                 yield return new WaitForSeconds(enemy.MoveTime + 0.1f);
                 Debug.Log("Enemy finished!");
             }
+
+            _playerTurn.Value = true;
+        }
+
+        private void OnPlayerMoveEnd()
+        {
+            if (!_playerTurn)
+            {
+                Debug.Log("Process enemies!");
+                StartCoroutine(ProcessEnemies());
+            }
         }
 
 #if UNITY_EDITOR
@@ -187,12 +202,6 @@ namespace Gameplay.Managers
             if (Input.GetKeyDown(KeyCode.R))
             {
                 SceneManager.LoadScene(Scenes.MainScene);
-            }
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                Debug.Log("Process enemies!");
-                StartCoroutine(ProcessEnemies());
             }
         }
 #endif

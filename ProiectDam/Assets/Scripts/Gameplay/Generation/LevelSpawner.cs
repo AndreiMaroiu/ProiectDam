@@ -31,18 +31,23 @@ namespace Gameplay.Generation
 
         public void Spawn()
         {
-            _generator = new DungeonGenerator(_maxRoomNeighbours, _maxRoomCount, _length);
-            Room start = _generator.GenerateDungeon();
-            _traverser = new RoomTraverser<RoomBehaviour>(start, _generator.Matrix.GetLength(0));
-
+            GenerateDungeon();
             GenerateRoomTypes();
             GenerateGameAssests();
             GenereteLayers();
-            SetDoorPositions();
+            EmptyDoorPositions();
             SpawnLayers();
             SpawnDoors();
+            SetDoorPositions();
 
             _roomBehaviourEvent.Value = _traverser.Start;
+        }
+
+        private void GenerateDungeon()
+        {
+            _generator = new DungeonGenerator(_maxRoomNeighbours, _maxRoomCount, _length);
+            Room start = _generator.GenerateDungeon();
+            _traverser = new RoomTraverser<RoomBehaviour>(start, _generator.Matrix.GetLength(0));
         }
 
         private void GenerateRoomTypes()
@@ -141,6 +146,23 @@ namespace Gameplay.Generation
             });
         }
 
+        private void EmptyDoorPositions()
+        {
+            _traverser.Traverse(room =>
+            {
+                if (room.LastRoom is null)
+                {
+                    return;
+                }
+
+                RoomBehaviour current = _traverser[room.Pos];
+                RoomBehaviour previous = _traverser[room.LastRoom.Pos];
+
+                SetDoorPosition(room.Pos - room.LastRoom.Pos, current.Layers.Middle, TileType.None);
+                SetDoorPosition(room.LastRoom.Pos - room.Pos, previous.Layers.Middle, TileType.None);
+            });
+        }
+
         private void SetDoorPositions()
         {
             _traverser.Traverse(room =>
@@ -153,15 +175,15 @@ namespace Gameplay.Generation
                 RoomBehaviour current = _traverser[room.Pos];
                 RoomBehaviour previous = _traverser[room.LastRoom.Pos];
 
-                SetDoorPosition(room.Pos - room.LastRoom.Pos, current.Layers.Middle);
-                SetDoorPosition(room.LastRoom.Pos - room.Pos, previous.Layers.Middle);
+                SetDoorPosition(room.Pos - room.LastRoom.Pos, current.Layers.Middle, TileType.None);
+                SetDoorPosition(room.LastRoom.Pos - room.Pos, previous.Layers.Middle, TileType.None);
             });
         }
 
-        private void SetDoorPosition(Vector2Int direction, TileType[,] layer)
+        private void SetDoorPosition(Vector2Int direction, TileType[,] layer, TileType type)
         {
             Vector2Int where = GetLayerPosition(direction, layer);
-            layer[where.x, where.y] = TileType.None;
+            layer[where.x, where.y] = type;
         }
 
         private Vector2Int GetLayerPosition(Vector2Int direction, TileType[,] layer)

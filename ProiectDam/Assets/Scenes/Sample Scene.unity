@@ -3866,6 +3866,7 @@ MonoBehaviour:
   _currentLayerEvent: {fileID: 11400000, guid: cd608015f91a1fa43a5cf68ae0e14b9e, type: 2}
   _biomeEvent: {fileID: 11400000, guid: 1b459c8b1d65f814db434e14a43778b8, type: 2}
   _previewEvent: {fileID: 11400000, guid: 0a850cb0818136d4188c5b364870105d, type: 2}
+  _playerTurn: {fileID: 11400000, guid: 69dd59b851979e44887a9df5080b5552, type: 2}
 --- !u!4 &1577360188
 Transform:
   m_ObjectHideFlags: 0
@@ -5981,5 +5982,17 @@ PrefabInstance:
       propertyPath: _deathTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 47525207141400157, guid: 1292ef2264e73a94fb25f52ed02eb628,
+        type: 3}
+      propertyPath: _playerTurn
+      value: 
+      objectReference: {fileID: 11400000, guid: 69dd59b851979e44887a9df5080b5552,
+        type: 2}
+    - target: {fileID: 47525207141400157, guid: 1292ef2264e73a94fb25f52ed02eb628,
+        type: 3}
+      propertyPath: _onPlayerMoveEnd
+      value: 
+      objectReference: {fileID: 11400000, guid: d64b44b83c716b34bb4f33817b4373c5,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1292ef2264e73a94fb25f52ed02eb628, type: 3}

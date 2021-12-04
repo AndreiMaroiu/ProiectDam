@@ -35,6 +35,7 @@ namespace Gameplay.Player
         [SerializeField] private GameEvent _onPlayerDeath;
         [SerializeField] private GameEvent _onMeleeAttack;
         [SerializeField] private GameEvent _onRangeAttack;
+        [SerializeField] private BoolEvent _playerTurn;
 
         private Vector2 _direction;
         private Animator _animator;
@@ -122,14 +123,9 @@ namespace Gameplay.Player
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                _onMeleeAttack.Invoke();
-            }
-
             _swipeDetector.CkeckForSwipes();
 
-            if (CanMove)
+            if (_playerTurn && CanMove)
             {
                 Vector2Int dir = GetMoveDirection();
                 if (dir.sqrMagnitude > Vector3.kEpsilon)
@@ -174,6 +170,11 @@ namespace Gameplay.Player
 
         private void OnMeleeAttack()
         {
+            if (!_playerTurn)
+            {
+                return;
+            }
+
             foreach (KillableObject enemy in GetNearbyEnemies(Directions, _cellSizeValue.Value))
             {
                 enemy.TakeDamage(_meleeDamage);
@@ -195,6 +196,11 @@ namespace Gameplay.Player
 
         private void OnRangedAttack()
         {
+            if (!_playerTurn)
+            {
+                return;
+            }
+
             if (_bulletsEvent.Value <= 0)
             {
                 // play sound for empty magazin
@@ -268,7 +274,7 @@ namespace Gameplay.Player
 
         private void OnSwipe(Vector2Int dir)
         {
-            if (CanMove)
+            if (_playerTurn && CanMove)
             {
                 StartCoroutine(TryMove(dir));
             }
@@ -344,6 +350,7 @@ namespace Gameplay.Player
             if (_energyEvent.Value <= 0)
             {
                 OnDeath();
+                return;
             }
         }
 
@@ -351,6 +358,7 @@ namespace Gameplay.Player
         {
             _direction = Vector2.zero;
             _soundhandler.Stop();
+            _playerTurn.Value = false;
         }
 
         #endregion
