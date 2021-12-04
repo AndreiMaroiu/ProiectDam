@@ -26,6 +26,7 @@ namespace Gameplay.Managers
 
         private int _lastLayer;
         private bool _canChangeLayer = true;
+        private bool _wasRoomChanged = false;
 
         public void Awake()
         {
@@ -113,6 +114,8 @@ namespace Gameplay.Managers
             _roomEvent.Value = room.Room;
             _currentLayerEvent.Value = room.CurrentLayer;
             _layersNumberEvent.Value = room.Layers.Count;
+
+            _wasRoomChanged = true;
         }
 
         private void OnLayerChanged()
@@ -176,6 +179,13 @@ namespace Gameplay.Managers
 
         private IEnumerator ProcessEnemies()
         {
+            if (_wasRoomChanged)
+            {
+                _wasRoomChanged = false;
+                _playerTurn.Value = true;
+                yield break;
+            }
+
             foreach (BaseEnemy enemy in _roomBehaviourEvent.Value.ActiveLayerBehaviour.Enemies)
             {
                 enemy.OnEnemyTurn(_player);
