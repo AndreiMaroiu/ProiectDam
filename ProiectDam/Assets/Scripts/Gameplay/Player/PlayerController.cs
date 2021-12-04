@@ -118,12 +118,12 @@ namespace Gameplay.Player
 
         private void Update()
         {
+            _swipeDetector.CkeckForSwipes();
+
             if (Time.timeScale == 0.0f)
             {
                 return;
             }
-
-            _swipeDetector.CkeckForSwipes();
 
             if (_playerTurn && CanMove)
             {

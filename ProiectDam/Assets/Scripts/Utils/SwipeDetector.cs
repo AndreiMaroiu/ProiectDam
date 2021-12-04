@@ -10,10 +10,18 @@ namespace Utilities
         private Vector2 _fingerDown;
         private Vector2 _fingerUp;
 
+        private bool _touchStarted = false;
+
         public event Action<Vector2Int> OnSwipe;
 
         public void CkeckForSwipes()
         {
+            if (Time.timeScale == 0.0f)
+            {
+                _touchStarted = false;
+                return;
+            }
+
             foreach (Touch touch in Input.touches)
             {
                 switch (touch.phase)
@@ -21,10 +29,13 @@ namespace Utilities
                     case TouchPhase.Began:
                         _fingerUp = touch.position;
                         _fingerDown = touch.position;
+                        _touchStarted = true;
+                        Debug.Log("Touch stared!");
                         break;
                     case TouchPhase.Ended:
                         _fingerDown = touch.position;
                         CheckSwipe();
+                        Debug.Log("Touch Ended!");
                         break;
                 }
             }
@@ -32,6 +43,11 @@ namespace Utilities
 
         void CheckSwipe()
         {
+            if (!_touchStarted)
+            {
+                return;
+            }
+
             //Check if Vertical swipe
             if (VerticalMove() > SwipeThreshold && VerticalMove() > HorizontalValMove())
             {
