@@ -20,8 +20,11 @@ namespace Gameplay.Enemies
         {
             // play sound and animations
             _soundhandler.PlayHit();
+        }
 
-            Debug.Log("Hit!");
+        protected override void OnDeath()
+        {
+            
         }
 
         public override void OnAttack()

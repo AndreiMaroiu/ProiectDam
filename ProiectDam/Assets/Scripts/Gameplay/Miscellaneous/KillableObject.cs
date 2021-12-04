@@ -1,9 +1,14 @@
 using Gameplay.Generation;
+using UnityEngine;
+using System.Collections;
 
 namespace Gameplay
 {
     public abstract class KillableObject : TileObject
     {
+        [SerializeField] private float _deathTime;
+        private bool _isDead = false;
+
         public virtual int Health { get; set; }
         public virtual int MaxHealth { get; set; }
 
@@ -15,18 +20,30 @@ namespace Gameplay
 
         public void TakeDamage(int damage)
         {
-            Health -= damage;
+            if (_isDead)
+            {
+                return;
+            }
 
+            Health -= damage;
             OnDamage();
 
             if (Health <= 0)
             {
                 OnDeath();
+                StartCoroutine(StartDeath());
             }
         }
 
-        protected abstract void OnDamage();
+        IEnumerator StartDeath()
+        {
 
+            yield return new WaitForSeconds(_deathTime);
+            OnDeathFinished();
+        }
+
+        protected abstract void OnDamage();
         protected abstract void OnDeath();
+        protected abstract void OnDeathFinished();
     }
 }

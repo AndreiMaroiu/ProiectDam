@@ -11,6 +11,11 @@ namespace Gameplay
 
         protected override void OnDeath()
         {
+            // maybe animate object
+        }
+
+        protected override void OnDeathFinished()
+        {
             Destroy(this.gameObject);
             LayerPosition.Clear();
         }

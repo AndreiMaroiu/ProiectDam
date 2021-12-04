@@ -59,7 +59,7 @@ namespace Gameplay.Enemies
             return result;
         }
 
-        protected sealed override void OnDeath()
+        protected sealed override void OnDeathFinished()
         {
             OnDeathEvent?.Invoke(this);
             LayerPosition?.Clear();

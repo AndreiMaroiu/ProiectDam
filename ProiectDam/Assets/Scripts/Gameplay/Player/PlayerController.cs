@@ -322,9 +322,13 @@ namespace Gameplay.Player
 
         protected override void OnDeath()
         {
-            _onPlayerDeath.Invoke();
             _swipeDetector.OnSwipe -= OnSwipe;
             _animator.SetBool(DEATH_ANIMATION, true);
+        }
+
+        protected override void OnDeathFinished()
+        {
+            _onPlayerDeath.Invoke();
         }
 
         protected override bool CanMoveToTile(TileType tile)
