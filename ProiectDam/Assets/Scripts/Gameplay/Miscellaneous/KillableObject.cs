@@ -31,19 +31,11 @@ namespace Gameplay
             if (Health <= 0)
             {
                 OnDeath();
-                StartCoroutine(StartDeath());
             }
-        }
-
-        IEnumerator StartDeath()
-        {
-
-            yield return new WaitForSeconds(_deathTime);
-            OnDeathFinished();
         }
 
         protected abstract void OnDamage();
         protected abstract void OnDeath();
-        protected abstract void OnDeathFinished();
+        public abstract void OnDeathFinished();
     }
 }

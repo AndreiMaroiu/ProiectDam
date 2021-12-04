@@ -332,7 +332,7 @@ namespace Gameplay.Player
             _animator.SetBool(DEATH_ANIMATION, true);
         }
 
-        protected override void OnDeathFinished()
+        public override void OnDeathFinished()
         {
             _onPlayerDeath.Invoke();
         }

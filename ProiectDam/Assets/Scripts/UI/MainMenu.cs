@@ -49,7 +49,7 @@ namespace UI
 
         public void OnStartClick()
         {
-            SceneManager.LoadScene(Scenes.MainScene);
+            SceneManager.LoadScene(Scenes.LoadingMenu);
         }
     }
 }
