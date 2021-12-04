@@ -49,6 +49,8 @@ namespace Gameplay.Enemies
             // play sounds and animations
             _soundhandler.PlayAttack();
             _animator.SetBool(MELEE_ANIMATION, true);
+
+            _renderer.flipX = (player.transform.position.x - transform.position.x) < 0;
         }
 
         public void OnStopAttack()
