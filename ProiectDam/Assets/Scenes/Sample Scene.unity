@@ -2869,6 +2869,7 @@ GameObject:
   - component: {fileID: 846167193}
   - component: {fileID: 846167194}
   - component: {fileID: 846167195}
+  - component: {fileID: 846167196}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -2930,7 +2931,7 @@ SpriteRenderer:
   m_SortingLayerID: -1869315837
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: efe1103b0adb42f4a8677974b0456fdf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 744d16e8817113b4ca368a4739334aa5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2954,6 +2955,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startSize: 1.21
+--- !u!114 &846167196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846167192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f145fbdf68affa4fa7662ecd7e68c73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _grass: {fileID: 21300000, guid: 744d16e8817113b4ca368a4739334aa5, type: 3}
+  _fire: {fileID: 21300000, guid: dfbe486d4bcc81048aea4be39e75ee0b, type: 3}
+  _dungeon: {fileID: 21300000, guid: b51ad4b923ada4f4cba288d7391df9be, type: 3}
+  _currentBiome: {fileID: 11400000, guid: 1b459c8b1d65f814db434e14a43778b8, type: 2}
 --- !u!114 &912911305 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5726967451941518923, guid: f450f6a07e115d7479751e103b7c5e18,
