@@ -14,6 +14,7 @@ namespace Gameplay.Player
         private const string WALK_ANIMATION = "Walk";
         private const string MELEE_ANIMATION = "Melee";
         private const string SHOOT_ANIMATION = "Shoot";
+        private const string HIT_ANIMATION = "Hit";
         private const string DEATH_ANIMATION = "Death";
 
         [SerializeField] private FloatValue _cellSizeValue;
@@ -323,7 +324,11 @@ namespace Gameplay.Player
 
         protected override void OnDamage()
         {
-
+            _animator.SetBool(HIT_ANIMATION, true);
+        }
+        public void OnDamageEnd()
+        {
+            _animator.SetBool(HIT_ANIMATION, false);
         }
 
         protected override void OnDeath()

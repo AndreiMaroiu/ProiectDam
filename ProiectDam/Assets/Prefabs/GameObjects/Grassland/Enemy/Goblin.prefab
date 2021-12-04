@@ -118,7 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7073b968086755f419c7e86fc4d6910f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deathTime: 0
   _damage: 1
   _startHealth: 2
   _moveTime: 0.4
@@ -151,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f17b0832482ef1340ba994ae73d04f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: 17b1b14f384942c42ace3ee57fc0e7a7, type: 3}
   _hitClip: {fileID: 8300000, guid: aacd54c5054b3ab4b9fbb382c5d1481c, type: 3}
   _deathClip: {fileID: 0}
   _walkClip: {fileID: 0}

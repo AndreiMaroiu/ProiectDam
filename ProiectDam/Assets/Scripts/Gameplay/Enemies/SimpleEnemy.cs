@@ -47,6 +47,7 @@ namespace Gameplay.Enemies
         public override void OnAttack(PlayerController player)
         {
             // play sounds and animations
+            _soundhandler.PlayAttack();
             _animator.SetBool(MELEE_ANIMATION, true);
         }
 
