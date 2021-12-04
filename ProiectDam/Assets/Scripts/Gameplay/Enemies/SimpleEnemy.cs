@@ -1,15 +1,17 @@
 using Gameplay.Generation;
+using Gameplay.Player;
 using UnityEngine;
 
 namespace Gameplay.Enemies
 {
     public sealed class SimpleEnemy : BaseEnemy
     {
-        private EnemySoundHandler _soundhandler;
         private const string WALK_ANIMATION = "Walk";
         private const string MELEE_ANIMATION = "Melee";
         private const string DEATH_ANIMATION = "Death";
         private const string HIT_ANIMATION = "Hit";
+
+        private EnemySoundHandler _soundhandler;
         private Animator _animator;
         private SpriteRenderer _renderer;
 
@@ -42,12 +44,13 @@ namespace Gameplay.Enemies
             _animator.SetBool(DEATH_ANIMATION, true);
         }
 
-        public override void OnAttack()
+        public override void OnAttack(PlayerController player)
         {
             // play sounds and animations
             _animator.SetBool(MELEE_ANIMATION, true);
         }
-        public  void OnStopAttack()
+
+        public void OnStopAttack()
         {
             // play sounds and animations
             _animator.SetBool(MELEE_ANIMATION, false);
@@ -60,15 +63,10 @@ namespace Gameplay.Enemies
             _animator.SetBool(WALK_ANIMATION, true);
         }
 
-        protected override void OnStopMoving()
+        protected sealed override void OnStopMoving()
         {
            // _soundhandler.Stop();
             _animator.SetBool(WALK_ANIMATION, false);
-        }
-
-        protected override bool CanMoveToTile(TileType tile)
-        {
-            return tile.CanMove();
         }
     }
 }

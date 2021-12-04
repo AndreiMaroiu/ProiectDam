@@ -86,10 +86,10 @@ namespace Gameplay.Managers
         private Color GetGizmoColor(TileType tile) => tile switch
         {
             TileType.None => Color.white,
-            TileType.Wall => new Color(0.42f, 0.20f, 0.20f),// brown
+            TileType.Wall => new Color(0.42f, 0.20f, 0.20f), // brown
             TileType.Enemy => Color.red,
-            TileType.Door => Color.gray,
-            TileType.Chest => new Color(255, 165, 0),// orange
+            TileType.Door => new Color(0.7f, 0.7f, 0.7f), //dark gray
+            TileType.Chest => new Color(255, 165, 0), // orange
             TileType.Heal => Color.green,
             TileType.Trap => Color.magenta,
             TileType.PickUp => Color.blue,
@@ -189,8 +189,9 @@ namespace Gameplay.Managers
             foreach (BaseEnemy enemy in _roomBehaviourEvent.Value.ActiveLayerBehaviour.Enemies)
             {
                 enemy.OnEnemyTurn(_player);
-                
-                yield return new WaitForSeconds(enemy.MoveTime + 0.1f);
+
+                //yield return new WaitForSeconds(enemy.MoveTime + 0.15f);
+                yield return new WaitUntil(() => !enemy.IsMoving);
                 Debug.Log("Enemy finished!");
             }
 

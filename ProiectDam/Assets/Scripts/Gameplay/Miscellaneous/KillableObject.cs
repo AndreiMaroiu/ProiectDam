@@ -6,7 +6,6 @@ namespace Gameplay
 {
     public abstract class KillableObject : TileObject
     {
-        [SerializeField] private float _deathTime;
         private bool _isDead = false;
 
         public virtual int Health { get; set; }

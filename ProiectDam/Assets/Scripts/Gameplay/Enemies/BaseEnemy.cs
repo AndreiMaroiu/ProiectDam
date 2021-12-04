@@ -18,14 +18,14 @@ namespace Gameplay.Enemies
 
         public event Action<BaseEnemy> OnDeathEvent;
 
-        public abstract void OnAttack();
+        public abstract void OnAttack(PlayerController player);
 
         public void OnEnemyTurn(PlayerController player)
         {
             if ((LayerPosition.Position - player.LayerPosition.Position).sqrMagnitude == 1)
             {
                 player.TakeDamage(_damage);
-                OnAttack();
+                OnAttack(player);
                 return;
             }
 
@@ -64,6 +64,11 @@ namespace Gameplay.Enemies
             OnDeathEvent?.Invoke(this);
             LayerPosition?.Clear();
             Destroy(this.gameObject);
+        }
+
+        protected sealed override bool CanMoveToTile(TileType tile)
+        {
+            return tile.CanMove();
         }
     }
 }

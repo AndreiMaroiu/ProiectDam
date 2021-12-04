@@ -175,8 +175,8 @@ namespace Gameplay.Generation
                 RoomBehaviour current = _traverser[room.Pos];
                 RoomBehaviour previous = _traverser[room.LastRoom.Pos];
 
-                SetDoorPosition(room.Pos - room.LastRoom.Pos, current.Layers.Middle, TileType.None);
-                SetDoorPosition(room.LastRoom.Pos - room.Pos, previous.Layers.Middle, TileType.None);
+                SetDoorPosition(room.Pos - room.LastRoom.Pos, current.Layers.Middle, TileType.Door);
+                SetDoorPosition(room.LastRoom.Pos - room.Pos, previous.Layers.Middle, TileType.Door);
             });
         }
 

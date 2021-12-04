@@ -8,6 +8,7 @@ namespace Gameplay
     public abstract class MovingObject : KillableObject
     {
         public bool CanMove { get; private set; } = true;
+        public bool IsMoving { get; private set; } = false;
         public float MoveTime { get; private set; }
 
         private TileType _tileType;
@@ -21,6 +22,7 @@ namespace Gameplay
         public void StopMoving()
         {
             CanMove = true;
+            IsMoving = false;
         }
 
         protected void SetMove(float moveTime, float cellSize, TileType tileType)
@@ -42,6 +44,7 @@ namespace Gameplay
 
             Vector3 endPosition = transform.position + (new Vector3(direction.x, direction.y) * _cellSize);
             CanMove = false;
+            IsMoving = true;
             OnMove(direction);
 
             while (transform.position != endPosition && !CanMove)
@@ -52,12 +55,11 @@ namespace Gameplay
 
             if (transform.position == endPosition)
             {
-                Vector2Int currentPos = LayerPosition.Position;
                 LayerPosition.Layer[lastPos.x, lastPos.y] = TileType.None;
                 LayerPosition.Move(layerDirection);
-                LayerPosition.GetTile() = _tileType;
             }
 
+            LayerPosition.GetTile() = _tileType;
             StopMoving();
             OnStopMoving();
         }
