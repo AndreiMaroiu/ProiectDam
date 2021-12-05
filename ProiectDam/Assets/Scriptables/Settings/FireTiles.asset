@@ -39,5 +39,6 @@ MonoBehaviour:
   - {fileID: 8258725449374077283, guid: 985a758ed9d7f3347be84f75944b46b6, type: 3}
   - {fileID: 7073643945006248555, guid: 32dfc8426b7ecf245a07cf2f8cb39bba, type: 3}
   - {fileID: 2473727910534505370, guid: 09b4f44ad9cae624e89c5e36814caed0, type: 3}
+  - {fileID: 7050579564912361278, guid: 462025fe1d7a11f4380d574b61d8b589, type: 3}
   _portal:
   - {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055, type: 3}
