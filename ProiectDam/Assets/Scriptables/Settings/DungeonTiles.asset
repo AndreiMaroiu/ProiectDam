@@ -38,5 +38,6 @@ MonoBehaviour:
   _obstacle:
   - {fileID: 4824315244157227811, guid: fd7e620a2d8439540b4c73fe73186c54, type: 3}
   - {fileID: 2437073103354387617, guid: 7f140f8b9d0eff84e8c1a73284eff501, type: 3}
+  - {fileID: 47643028413218300, guid: 937b3a5661cf7ef49ba6110c5c980a86, type: 3}
   _portal:
   - {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055, type: 3}
