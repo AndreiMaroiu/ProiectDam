@@ -1612,12 +1612,12 @@ MonoBehaviour:
     m_MinSize: 0
     m_MaxSize: 120
     m_Alignment: 4
-    m_AlignByGeometry: 0
+    m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Collect        \nto restore {0} bullet(s)"
+  m_Text: "Collect        \nto restore {0} \nbullet(s)"
 --- !u!1 &7235046879287519445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2223,7 +2223,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Swipe\n up/down\nleft/right \nto move around\n\n"
+  m_Text: "Swipe\nup/down\nleft/right \nto move around\n\n"
 --- !u!1 &8460163077750620891
 GameObject:
   m_ObjectHideFlags: 0
