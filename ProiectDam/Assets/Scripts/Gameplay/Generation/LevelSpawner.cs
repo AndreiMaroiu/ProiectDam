@@ -20,7 +20,7 @@ namespace Gameplay.Generation
         [Header("Settings")]
         [SerializeField] private FloatValue _cellSize;
         [Tooltip("lenght should be odd")]
-        [SerializeField] private int _length;
+        [SerializeField] private IntValue _maxtrixSize;
         [SerializeField] private int _maxRoomCount;
         [SerializeField] private int _cellCount;
         [Header("Events")]
@@ -45,7 +45,7 @@ namespace Gameplay.Generation
 
         private void GenerateDungeon()
         {
-            _generator = new DungeonGenerator(_maxRoomNeighbours, _maxRoomCount, _length);
+            _generator = new DungeonGenerator(_maxRoomNeighbours, _maxRoomCount, _maxtrixSize);
             Room start = _generator.GenerateDungeon();
             _traverser = new RoomTraverser<RoomBehaviour>(start, _generator.Matrix.GetLength(0));
         }

@@ -3,6 +3,7 @@ using Events;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
+using Values;
 
 namespace UI
 {
@@ -12,14 +13,21 @@ namespace UI
         [SerializeField] private float _cellSize;
         [SerializeField] private float _cellDistance;
         [SerializeField] private RectTransform _roomPrefab;
+        [SerializeField] private IntValue _matrixSize;
         [Header("Events")]
         [SerializeField] private RoomEvent _currentRoom;
 
         private RoomTraverser<RectTransform> _traverser;
         private RectTransform _currentRect;
+        private RectTransform _mapRect;
+
+        private Vector2Int _width;
+        private Vector2Int _height;
 
         private void Start()
         {
+            _mapRect = _map.GetComponent<RectTransform>();
+
             GenerateMap();
 
             _currentRoom.OnValueChanged += OnRoomChanged;
@@ -42,11 +50,44 @@ namespace UI
             room.GetComponent<Image>().color = Color.white;
 
             _currentRect = room;
+
+            CheckMinMax();
         }
 
-        public void GenerateMap()
+        private void CheckMinMax()
         {
-            _traverser = new RoomTraverser<RectTransform>(_currentRoom.Value, 20);
+            Room room = _currentRoom.Value;
+            float size = (_cellDistance + _cellSize);
+
+            if (room.Pos.x > _width.x)
+            {
+                _mapRect.sizeDelta += new Vector2(0, size);
+                _width.x = room.Pos.x;
+            }
+            else if (room.Pos.x < _width.y)
+            {
+                _mapRect.sizeDelta += new Vector2(0, size);
+                _width.y = room.Pos.x;
+            }
+            else if (room.Pos.y > _height.x)
+            {
+                _mapRect.sizeDelta += new Vector2(size, 0);
+                _height.x = room.Pos.x;
+            }
+            else if (room.Pos.y < _height.y)
+            {
+                _mapRect.sizeDelta += new Vector2(size, 0);
+                _height.y = room.Pos.x;
+            }
+        }
+
+        private void GenerateMap()
+        {
+            Room start = _currentRoom.Value;
+            _traverser = new RoomTraverser<RectTransform>(start, _matrixSize);
+
+            _width = start.Pos;
+            _height = start.Pos;
 
             _traverser.TraverseUnique(room =>
             {

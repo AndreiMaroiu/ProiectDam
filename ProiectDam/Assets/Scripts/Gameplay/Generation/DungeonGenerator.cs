@@ -30,7 +30,7 @@ namespace Gameplay.Generation
         {
             _maxRoomCount = maxRoomCount;
             _maxRoomNeighbours = maxRoomNeighbours;
-            _matrix = new RoomType[matrixSize + 2, matrixSize + 2];
+            _matrix = new RoomType[matrixSize, matrixSize];
 
             _distances = new List<RoomDistance>();
             _weightedRandom = new WeightedRandom<int>(new int[] { 1, 2, 3 }, new int[] { 60, 30, 10 });
