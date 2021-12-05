@@ -16,9 +16,12 @@ namespace Events
 
             set
             {
-                _value = value;
+                if (_value != value)
+                {
+                    _value = value;
 
-                OnValueChanged?.Invoke();
+                    OnValueChanged?.Invoke();
+                }
             }
         }
 

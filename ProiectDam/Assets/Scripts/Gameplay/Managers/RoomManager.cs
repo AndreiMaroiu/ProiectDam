@@ -26,7 +26,6 @@ namespace Gameplay.Managers
 
         private int _lastLayer;
         private bool _canChangeLayer = true;
-        private bool _wasRoomChanged = false;
 
         public void Awake()
         {
@@ -40,7 +39,6 @@ namespace Gameplay.Managers
             _roomBehaviourEvent.OnValueChanged += OnRoomChanged;
             _currentLayerEvent.OnValueChanged += OnLayerChanged;
             _previewEvent.OnValueChanged += OnPreviewChanged;
-            _playerTurn.OnValueChanged += OnPlayerMoveEnd;
 
             _currentLayerEvent.Value = behaviour.CurrentLayer;
             _layersNumberEvent.Value = behaviour.Layers.Count;
@@ -58,7 +56,6 @@ namespace Gameplay.Managers
             _roomBehaviourEvent.OnValueChanged -= OnRoomChanged;
             _currentLayerEvent.OnValueChanged -= OnLayerChanged;
             _previewEvent.OnValueChanged -= OnPreviewChanged;
-            _playerTurn.OnValueChanged -= OnPlayerMoveEnd;
         }
 
         private void OnDrawGizmos()
@@ -114,8 +111,6 @@ namespace Gameplay.Managers
             _roomEvent.Value = room.Room;
             _currentLayerEvent.Value = room.CurrentLayer;
             _layersNumberEvent.Value = room.Layers.Count;
-
-            _wasRoomChanged = true;
         }
 
         private void OnLayerChanged()
@@ -156,55 +151,26 @@ namespace Gameplay.Managers
             {
                 _player.MakePlayerRed();
                 _canChangeLayer = false;
+                Handheld.Vibrate();
             }
         }
 
         private void OnPreviewChanged()
         {
-            if (_previewEvent.Value)
+            if (_previewEvent)
             {
                 _lastLayer = _currentLayerEvent.Value;
+                return;
             }
-            else
+
+            // exits preview
+            if (!_canChangeLayer)
             {
-                if (!_canChangeLayer)
-                {
-                    _currentLayerEvent.Value = _lastLayer;
-                }
-
-                _player.LayerPosition.Layer = _roomBehaviourEvent.Value.Layers[_currentLayerEvent.Value];
-                _player.MakePlayerWhite();
-            }
-        }
-
-        private IEnumerator ProcessEnemies()
-        {
-            if (_wasRoomChanged)
-            {
-                _wasRoomChanged = false;
-                _playerTurn.Value = true;
-                yield break;
+                _currentLayerEvent.Value = _lastLayer;
             }
 
-            foreach (BaseEnemy enemy in _roomBehaviourEvent.Value.ActiveLayerBehaviour.Enemies)
-            {
-                enemy.OnEnemyTurn(_player);
-
-                //yield return new WaitForSeconds(enemy.MoveTime + 0.15f);
-                yield return new WaitUntil(() => !enemy.IsMoving);
-                Debug.Log("Enemy finished!");
-            }
-
-            _playerTurn.Value = true;
-        }
-
-        private void OnPlayerMoveEnd()
-        {
-            if (!_playerTurn)
-            {
-                Debug.Log("Process enemies!");
-                StartCoroutine(ProcessEnemies());
-            }
+            _player.LayerPosition.Layer = _roomBehaviourEvent.Value.Layers[_currentLayerEvent.Value];
+            _player.MakePlayerWhite();
         }
 
 #if UNITY_EDITOR
