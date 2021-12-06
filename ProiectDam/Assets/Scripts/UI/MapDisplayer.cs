@@ -1,3 +1,4 @@
+using Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace UI
         [Header("Canvas")]
         [SerializeField] private GameObject _mapCanvas;
         [SerializeField] private GameObject _mainCanvas;
+        [Header("Events")]
+        [SerializeField] private BoolEvent _previewActive;
 
 
         public float LastTimeScale { get; set; }
@@ -23,9 +26,12 @@ namespace UI
 
         public void OnMapClick()
         {
-            Time.timeScale = StoppedScale;
-            _mapCanvas.SetActive(true);
-            _mainCanvas.SetActive(false);
+            if (!_previewActive.Value)
+            {
+                Time.timeScale = StoppedScale;
+                _mapCanvas.SetActive(true);
+                _mainCanvas.SetActive(false);
+            }
         }
 
         public void OnCloseClick()

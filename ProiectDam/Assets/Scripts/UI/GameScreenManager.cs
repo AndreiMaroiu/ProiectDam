@@ -15,6 +15,7 @@ namespace UI
         [SerializeField] private IntEvent _layersCountEvent;
         [SerializeField] private IntEvent _currentLayerEvent;
         [SerializeField] private BoolEvent _previewActive;
+        [SerializeField] private BoolEvent _playerTurn;
         [SerializeField] private GameEvent _meleeEvent;
         [SerializeField] private GameEvent _shootEvent;
         [Header("Texts")]
@@ -71,7 +72,7 @@ namespace UI
 
         private void OnPreviewChanged()
         {
-            if (_previewActive.Value)
+            if (_previewActive.Value && _playerTurn.Value)
             {
                 Time.timeScale = StoppedScale;
                 _layerSlider.gameObject.SetActive(true);
