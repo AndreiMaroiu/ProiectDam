@@ -4,6 +4,17 @@ namespace Gameplay.Generation
 {
     public class TileObject : MonoBehaviour
     {
-        public LayerPosition LayerPosition { get; set; }
+        private LayerPosition _layerPostion;
+
+        public LayerPosition LayerPosition
+        {
+            get => _layerPostion;
+
+            set
+            {
+                _layerPostion?.Clear();
+                _layerPostion = value;
+            }
+        }
     }
 }

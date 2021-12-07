@@ -35,8 +35,10 @@ namespace Gameplay
 
         protected IEnumerator TryMove(Vector2Int direction)
         {
+            TileType[,] lastLayer = LayerPosition.Layer;
             Vector2Int lastPos = LayerPosition.Position;
             Vector2Int layerDirection = Utils.GetMatrixPos(direction);
+
             if (!CanMoveToTile(LayerPosition.GetTile(layerDirection)))
             {
                 yield break;
@@ -54,12 +56,17 @@ namespace Gameplay
             }
 
             if (transform.position == endPosition)
-            {
-                LayerPosition.Layer[lastPos.x, lastPos.y] = TileType.None;
+            {    
                 LayerPosition.Move(layerDirection);
             }
 
+            if (LayerPosition.Layer == lastLayer)
+            {
+                LayerPosition.Layer[lastPos.x, lastPos.y] = TileType.None;
+            }
+            
             LayerPosition.GetTile() = _tileType;
+
             StopMoving();
             OnStopMoving();
         }
