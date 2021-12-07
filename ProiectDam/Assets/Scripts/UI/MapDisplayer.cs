@@ -20,18 +20,15 @@ namespace UI
 
         private void Start()
         {
-            LastTimeScale = Time.timeScale;
             _mapCanvas.SetActive(false);
         }
 
         public void OnMapClick()
         {
-            if (!_previewActive.Value)
-            {
-                Time.timeScale = StoppedScale;
-                _mapCanvas.SetActive(true);
-                _mainCanvas.SetActive(false);
-            }
+            LastTimeScale = Time.timeScale;
+            Time.timeScale = StoppedScale;
+            _mapCanvas.SetActive(true);
+            _mainCanvas.SetActive(false);
         }
 
         public void OnCloseClick()

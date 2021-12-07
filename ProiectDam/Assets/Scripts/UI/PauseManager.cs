@@ -18,7 +18,6 @@ namespace UI
 
         void Awake()
         {
-            LastTimeScale = Time.timeScale;
             _pauseCanvas.SetActive(false);
             _howToCanvas.SetActive(false);
             _optionsCanvas.SetActive(false);
@@ -26,6 +25,7 @@ namespace UI
 
         public void OnPauseClick()
         {
+            LastTimeScale = Time.timeScale;
             Time.timeScale = PausedScale;
             _pauseCanvas.SetActive(true);
         }

@@ -74,6 +74,7 @@ namespace UI
         {
             if (_previewActive.Value && _playerTurn.Value)
             {
+                LastTimeScale = Time.timeScale;
                 Time.timeScale = StoppedScale;
                 _layerSlider.gameObject.SetActive(true);
                 _weaponButton.gameObject.SetActive(false);
