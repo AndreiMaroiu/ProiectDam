@@ -8,7 +8,8 @@ namespace UI
 {
     public class VolumeManager : MonoBehaviour
     {
-        private const float MinVolume = 0.0001f;
+        private const float MuteVolume = -80.00f;
+        private const float MinVolume = -45.00f;
         private const float MaxVolume = 5.00f;
 
         [SerializeField] private Slider _masterSlider;
@@ -34,34 +35,27 @@ namespace UI
             _masterSlider.value = PlayerPrefs.GetFloat("Master", MaxVolume);
             _fxSlider.value = PlayerPrefs.GetFloat("Sound Effects", MaxVolume);
             _musicSlider.value = PlayerPrefs.GetFloat("Music", MaxVolume);
-
-            _volumes.SetFloat("Master", ToVolume(_masterSlider.value));
-            _volumes.SetFloat("Sound Effects", ToVolume(_fxSlider.value));
-            _volumes.SetFloat("Music", ToVolume(_musicSlider.value));
         }
 
         private void OnMasterChanged(float value)
         {
-            _volumes.SetFloat("Master", ToVolume(value));
             PlayerPrefs.SetFloat("Master", value);
+            value = CheckMute(value);
+            _volumes.SetFloat("Master", value);
         }
 
         private void OnFxChanged(float value)
         {
-            _volumes.SetFloat("Sound Effects", ToVolume(value));
             PlayerPrefs.SetFloat("Sound Effects", value);
-
+            value = CheckMute(value);
+            _volumes.SetFloat("Sound Effects", value);
         }
 
         private void OnMusicChanged(float value)
         {
-            _volumes.SetFloat("Music", ToVolume(value));
             PlayerPrefs.SetFloat("Music", value);
-        }
-
-        private float ToVolume(float value)
-        {
-            return Mathf.Log10(value) * 20;
+            value = CheckMute(value);
+            _volumes.SetFloat("Music", value);
         }
 
         private void OnDestroy()
@@ -69,6 +63,15 @@ namespace UI
             _masterSlider.onValueChanged.RemoveListener(OnMasterChanged);
             _fxSlider.onValueChanged.RemoveListener(OnFxChanged);
             _musicSlider.onValueChanged.RemoveListener(OnMusicChanged);
+        }
+
+        private float CheckMute(float value)
+        {
+            if (value <= MinVolume)
+            {
+                return MuteVolume;
+            }
+            return value;
         }
     }
 }

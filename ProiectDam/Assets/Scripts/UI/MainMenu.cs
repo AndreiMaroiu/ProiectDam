@@ -51,5 +51,10 @@ namespace UI
         {
             SceneManager.LoadScene(Scenes.LoadingMenu);
         }
+
+        public void OnQuitClick()
+        {
+            Application.Quit();
+        }
     }
 }
