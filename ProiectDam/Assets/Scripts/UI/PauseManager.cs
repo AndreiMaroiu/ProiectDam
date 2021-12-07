@@ -15,6 +15,7 @@ namespace UI
         [SerializeField] private GameObject _pauseCanvas;
         [SerializeField] private GameObject _howToCanvas;
         [SerializeField] private GameObject _optionsCanvas;
+        [SerializeField] private Animator _transition;
 
         void Awake()
         {
@@ -58,6 +59,7 @@ namespace UI
         public void OnCloseClick()
         {
             Time.timeScale = 1;
+            _transition.SetTrigger("Start");
             SceneManager.LoadScene(Scenes.MainMenu);
         }
     }

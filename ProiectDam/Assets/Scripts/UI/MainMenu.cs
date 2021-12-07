@@ -12,6 +12,7 @@ namespace UI
         [SerializeField] private GameObject _howToCanvas;
         [SerializeField] private GameObject _optionsCanvas;
         [SerializeField] private GameObject _creditsCanvas;
+        [SerializeField] private Animator _transition;
 
         void Awake()
         {
@@ -49,6 +50,7 @@ namespace UI
 
         public void OnStartClick()
         {
+            _transition.SetTrigger("Start");
             SceneManager.LoadScene(Scenes.LoadingMenu);
         }
 
