@@ -8,7 +8,7 @@ namespace Utilities
         private IEnumerator Start()
         {
             yield return new WaitForSeconds(1.0f);
-            StartCoroutine(Scenes.LoadAsync(Scenes.MainScene));
+            yield return Scenes.LoadAsync(Scenes.MainScene);
         }
     }
 }
