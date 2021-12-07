@@ -8,7 +8,8 @@ namespace UI
     {
         private Animator _animator;
         private const string WALK_ANIMATION = "Walk";
-        void Awake()
+
+        private void Start()
         {
             _animator = GetComponent<Animator>();
             _animator.SetBool(WALK_ANIMATION, true);
