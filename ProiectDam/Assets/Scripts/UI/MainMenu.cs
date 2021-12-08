@@ -51,7 +51,7 @@ namespace UI
         public void OnStartClick()
         {
             _transition.SetTrigger("Start");
-            SceneManager.LoadScene(Scenes.LoadingMenu);
+            StartCoroutine(Scenes.LoadAsync(Scenes.LoadingMenu));
         }
 
         public void OnQuitClick()

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Gameplay
+namespace Gameplay.Enemies
 {
     public class EnemySoundHandler : MonoBehaviour
     {

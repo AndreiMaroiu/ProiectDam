@@ -14,12 +14,14 @@ namespace Gameplay.Enemies
         private EnemySoundHandler _soundhandler;
         private Animator _animator;
         private SpriteRenderer _renderer;
+        private Collider2D _collider;
 
         private void Start()
         {
             _animator = GetComponent<Animator>();
             _soundhandler = GetComponent<EnemySoundHandler>();
             _renderer = GetComponent<SpriteRenderer>();
+            _collider = GetComponent<Collider2D>();
             MaxHealth = _startHealth;
             Health = _startHealth;
 
@@ -42,6 +44,7 @@ namespace Gameplay.Enemies
         protected override void OnDeath()
         {
             _animator.SetBool(DEATH_ANIMATION, true);
+            _collider.enabled = false;
         }
 
         public override void OnAttack(PlayerController player)
