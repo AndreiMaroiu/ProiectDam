@@ -9,6 +9,7 @@ namespace Gameplay
         [SerializeField] private ChestHelper _helper;
         [SerializeField] private Sprite _openedChestImage;
         [SerializeField] private GameObject[] _pickUps;
+        [SerializeField] private FloatValue _cellSize;
 
         private SpriteRenderer _renderer;
         private bool _wasOpened = false;
@@ -25,7 +26,11 @@ namespace Gameplay
 
             _renderer.sprite = _openedChestImage;
 
-            Vector3 where = transform.position - (_helper.Controller.transform.position - transform.position);
+            Vector3 direction = (transform.parent.position - _helper.Controller.transform.position);
+            direction.z = 0;
+            direction.Normalize();
+
+            Vector3 where = transform.parent.position + direction * _cellSize.Value;
             Instantiate(_pickUps[Random.Range(0, _pickUps.Length)], where, Quaternion.identity);
 
             _wasOpened = true;
