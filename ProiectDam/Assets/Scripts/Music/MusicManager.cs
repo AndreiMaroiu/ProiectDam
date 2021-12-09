@@ -10,7 +10,6 @@ public class MusicManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log(PlayerPrefs.GetFloat("Master", MaxVolume));
         _volumes.SetFloat("Master", PlayerPrefs.GetFloat("Master", MaxVolume));
         _volumes.SetFloat("Music", PlayerPrefs.GetFloat("Music", MaxVolume));
         _volumes.SetFloat("Sound Effects", PlayerPrefs.GetFloat("Sound Effects", MaxVolume));
