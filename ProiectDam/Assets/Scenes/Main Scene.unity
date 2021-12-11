@@ -2993,7 +2993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _grass: {fileID: 21300000, guid: 744d16e8817113b4ca368a4739334aa5, type: 3}
-  _fire: {fileID: 21300000, guid: dfbe486d4bcc81048aea4be39e75ee0b, type: 3}
+  _fire: {fileID: 21300000, guid: 555e975c7137eb54484e284e3be8c97e, type: 3}
   _dungeon: {fileID: 21300000, guid: b51ad4b923ada4f4cba288d7391df9be, type: 3}
   _currentBiome: {fileID: 11400000, guid: 1b459c8b1d65f814db434e14a43778b8, type: 2}
 --- !u!114 &912911305 stripped
