@@ -11,20 +11,16 @@ namespace Gameplay.Generation
         private static readonly TileType[] ObjectsTypes = { TileType.None, 
             TileType.Enemy, TileType.PickUp, TileType.Obstacle, TileType.Trap };
 
-        private static readonly int[] Changes = { 50, 20, 5, 20, 5 };
-
         private static readonly HashSet<TileType> ObstaclesTypes = new HashSet<TileType>()
         { TileType.Enemy, TileType.Obstacle, TileType.Trap };
 
         #endregion
 
         private readonly int _layerSize;
-        private readonly WeightedRandom<TileType> _random;
 
         public LayersGenerator(int layerSize)
         {
             _layerSize = layerSize;
-            _random = new WeightedRandom<TileType>(ObjectsTypes, Changes);
         }
 
         public Layers Generate(Room room) => room.Type switch
@@ -118,6 +114,7 @@ namespace Gameplay.Generation
             SpawnTiles(tiles, positions, Random.Range(3, 6), TileType.Enemy);
             SpawnTiles(tiles, positions, Random.Range(2, 3), TileType.PickUp);
             SpawnTiles(tiles, positions, Random.Range(3, 7), TileType.Obstacle);
+            SpawnTiles(tiles, positions, 1, TileType.Trap);
         }
 
         private void GenerateComplex(TileType[,] current, TileType[,] previous)
@@ -129,6 +126,7 @@ namespace Gameplay.Generation
             SpawnTilesComplex(current, previous, positions, Random.Range(3, 6), TileType.Enemy);
             SpawnTilesComplex(current, previous, positions, Random.Range(2, 3), TileType.PickUp);
             SpawnTilesComplex(current, previous, positions, Random.Range(3, 7), TileType.Obstacle);
+            SpawnTilesComplex(current, previous, positions, 1, TileType.Trap);
         }
 
         private void GenerateBorder(TileType[,] tiles)

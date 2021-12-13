@@ -33,7 +33,8 @@ MonoBehaviour:
   - {fileID: 5103085370490182207, guid: 6fda3b807af98694b81380c37b3ee07f, type: 3}
   _heal:
   - {fileID: 1337655539291230482, guid: dbff91d7cf19bc34daf9256a9637d2df, type: 3}
-  _trap: []
+  _trap:
+  - {fileID: 6182598759413703565, guid: 26f2cc17671c1fa45a7ec6e3bc0eabf5, type: 3}
   _pickUp:
   - {fileID: 5244361343789919635, guid: b9f9962775564384793ea37e74690334, type: 3}
   - {fileID: 2725781087358859865, guid: b1865ca7b4c56be409a438ff5f95f0b8, type: 3}
