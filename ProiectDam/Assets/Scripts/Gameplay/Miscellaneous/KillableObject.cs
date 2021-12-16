@@ -1,15 +1,12 @@
 using Gameplay.Generation;
-using UnityEngine;
-using System.Collections;
 
 namespace Gameplay
 {
     public abstract class KillableObject : TileObject
     {
-        private bool _isDead = false;
-
         public virtual int Health { get; set; }
         public virtual int MaxHealth { get; set; }
+        public bool IsDead { get; private set; }
 
         public void InitHealth(int health)
         {
@@ -19,7 +16,7 @@ namespace Gameplay
 
         public void TakeDamage(int damage)
         {
-            if (_isDead)
+            if (IsDead)
             {
                 return;
             }
@@ -29,6 +26,7 @@ namespace Gameplay
 
             if (Health <= 0)
             {
+                IsDead = true;
                 OnDeath();
             }
         }

@@ -3,6 +3,7 @@ using Gameplay.Enemies;
 using Gameplay.Events;
 using Gameplay.Player;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.Managers
@@ -52,10 +53,13 @@ namespace Gameplay.Managers
                 yield break;
             }
 
-            foreach (BaseEnemy enemy in _currentBehaviour.Value.ActiveLayerBehaviour.Enemies)
+            List<BaseEnemy> enemies = _currentBehaviour.Value.ActiveLayerBehaviour.Enemies;
+
+            for (int i = 0; i < enemies.Count; i++)
             {
+                BaseEnemy enemy = enemies[i];
                 enemy.OnEnemyTurn(_player);
-                yield return new WaitUntil(() => !enemy.IsMoving);
+                yield return new WaitUntil(() => enemy.IsDead || !enemy.IsMoving);
             }
 
             _playerTurn.Value = true;
