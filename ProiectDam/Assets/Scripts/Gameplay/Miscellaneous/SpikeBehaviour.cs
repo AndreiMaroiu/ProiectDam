@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Utilities;
+using Values;
 
 namespace Gameplay
 {
@@ -8,7 +9,7 @@ namespace Gameplay
     public class SpikeBehaviour : MonoBehaviour
     {
         [SerializeField] private Sprite _activatedSprite;
-        [SerializeField] private int _damage = 1;
+        [SerializeField] private IntValue _damage;
         [Header("Animation")]
         [SerializeField] private float _animationTime = 0.5f;
         [SerializeField] private float _waitTime = 0.3f;

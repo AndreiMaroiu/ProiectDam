@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6182598759413703563}
   - component: {fileID: 6182598759413703562}
   - component: {fileID: 6182598759413703561}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Spike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _activatedSprite: {fileID: 162300977691182334, guid: 692fe2ac483c75646a0330996b4d63cc,
     type: 3}
-  _damage: 2
+  _damage: {fileID: 11400000, guid: 18765f8abdb2e454c962c20a3fb34638, type: 2}
   _animationTime: 0.5
   _waitTime: 0.3
 --- !u!58 &6182598759413703561
