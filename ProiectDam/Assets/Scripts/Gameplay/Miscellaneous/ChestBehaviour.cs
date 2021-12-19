@@ -4,7 +4,7 @@ using Values;
 namespace Gameplay
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    public class ChestBehaviour : PressebleObject
+    public class ChestBehaviour : PressableObject
     {
         [SerializeField] private ChestHelper _helper;
         [SerializeField] private Sprite _openedChestImage;

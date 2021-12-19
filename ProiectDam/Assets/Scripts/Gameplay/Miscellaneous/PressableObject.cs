@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Gameplay
 {
-    public abstract class PressebleObject : MonoBehaviour
+    public abstract class PressableObject : MonoBehaviour
     {
         public abstract void OnClick();
 

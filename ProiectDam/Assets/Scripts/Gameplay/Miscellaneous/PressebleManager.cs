@@ -36,11 +36,11 @@ namespace Gameplay
                     continue;
                 }
 
-                PressebleObject pressebleObject = hit.collider.gameObject.GetComponent<PressebleObject>();
+                PressableObject pressableObject = hit.collider.gameObject.GetComponent<PressableObject>();
 
-                if (pressebleObject.IsNotNull())
+                if (pressableObject.IsNotNull())
                 {
-                    pressebleObject.OnClick();
+                    pressableObject.OnClick();
                 }
             }
         }
