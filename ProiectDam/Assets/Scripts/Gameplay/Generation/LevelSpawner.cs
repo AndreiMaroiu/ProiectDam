@@ -33,12 +33,11 @@ namespace Gameplay.Generation
         {
             GenerateDungeon();
             GenerateRoomTypes();
-            GenerateGameAssests();
+            SpawnRoomAssets();
             GenereteLayers();
-            EmptyDoorPositions();
+            SetDoorPositions();
             SpawnLayers();
             SpawnDoors();
-            SetDoorPositions();
 
             _roomBehaviourEvent.Value = _traverser.Start;
         }
@@ -102,7 +101,7 @@ namespace Gameplay.Generation
             return null;
         }
 
-        private void GenerateGameAssests()
+        private void SpawnRoomAssets()
         {
             _traverser.Traverse(room =>
             {
@@ -143,23 +142,6 @@ namespace Gameplay.Generation
             {
                 RoomBehaviour behaviour = _traverser[room.Pos];
                 spawner.GenerateLayers(behaviour);
-            });
-        }
-
-        private void EmptyDoorPositions()
-        {
-            _traverser.Traverse(room =>
-            {
-                if (room.LastRoom is null)
-                {
-                    return;
-                }
-
-                RoomBehaviour current = _traverser[room.Pos];
-                RoomBehaviour previous = _traverser[room.LastRoom.Pos];
-
-                SetDoorPosition(room.Pos - room.LastRoom.Pos, current.Layers.Middle, TileType.None);
-                SetDoorPosition(room.LastRoom.Pos - room.Pos, previous.Layers.Middle, TileType.None);
             });
         }
 
