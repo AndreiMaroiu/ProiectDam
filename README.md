@@ -1,10 +1,10 @@
-# Nera: Lost Amoung Dimensions
+# Nera: Lost Among Dimensions
 
-A mobile game made in Unity with C# for a collage project.<br/>
-Contribuitors: 
+A mobile game made in Unity with C# for a college project.<br/>
+Contributors: 
 * Gociman Marius: GUI and user options
 * Iancu Norbert: art, animation and sound
-* myselft: level procedural generation, core gameplay and emeny logic
+* Maroiu Andrei: level procedural generation, core gameplay and emeny logic
 
 # About the game
 The game is a rouge-like with turn based elements.
