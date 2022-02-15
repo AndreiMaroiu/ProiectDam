@@ -4,7 +4,7 @@ A mobile game made in Unity with C# for a college project.<br/>
 Contributors: 
 * Gociman Marius: GUI and user options
 * Iancu Norbert: art, animation and sound
-* Maroiu Andrei: level procedural generation, core gameplay and emeny logic
+* Maroiu Andrei: level procedural generation, core gameplay and enemy logic
 
 # About the game
 The game is a rouge-like with turn based elements.
@@ -12,33 +12,33 @@ The game is a rouge-like with turn based elements.
 ### The basics:
 * The player must traverse multiple rooms in a random generated labyrinth in order to find the exits. 
 * To make traversing easier, the player is aided by a map that reveals all explored rooms.
-* Each room can have one or three dimensions which the player can switch between, in each dimension exists enemies or obstacles which can be avoided or killed
-* The player has a limited number of health points, energy points and bullets. If one of them reaches 0, then is game over. 
+* Each room can have one or three dimensions which the player can switch between, in each dimension there are enemies or obstacles which can be killed, destroyed or avoided
+* The player has a limited number of health points, energy points and bullets. If one of them reaches 0, then the game is over. 
 * The player can collect different pick-ups to regenerate health, energy or bullets.
-* Enegy points are used when the player move or attacks.
+* Energy points are used when the player move or attacks.
 
 ### About Dimensions:
-There are three dimensions in game:
+There are three in-game dimensions:
 * Grass dimension
 * Fire dimension
 * Dungeon dimension
 
 ### About the enemies:
-* The enemies will move one block torwards the player when their turn come.
-* If a enemy is close enough to the player, it will attack.
+* The enemies will move one block towards the player when their turn come.
+* If an enemy is close enough to the player, it will attack.
 
 ### Combat:
 * The player can use a melee attack, that can hit all enemies around him. This attack uses energy points.
-* The player can use a range attack, (a gun) that can hit a single enemy, but dealing more damage. This attack uses bullets.
+* The player can use a ranged attack (a gun), that can hit a single enemy, but inflicts more damage. This attack uses bullets.
 
 ### Pick-ups and Traps:
-* The player can collect pick-ups, as told earlier, to regenerate health, energy or bullets
+* The player can collect pick-ups, as stated earlier, to regenerate health, energy or bullets
 * The player should avoid traps, or can even lure enemies into traps
 
 ### Special rooms
-Special rooms are rooms that can spawn only once in the labyrinth. This rooms have a single dimension. Such roooms are:
-* Chest room: a rooms that contains a chest with can give the player a random pick-up
-* Potions room: a rooms that contains some random pick-ups
+Special rooms are rooms that can spawn only once in the labyrinth. These rooms have a single dimension. Such rooms are:
+* Chest room: a room that contains a chest that can give the player a random pick-up
+* Potions room: a room that contains some random pick-ups
 * Portal room: the exit
 
 # Screenshots:
