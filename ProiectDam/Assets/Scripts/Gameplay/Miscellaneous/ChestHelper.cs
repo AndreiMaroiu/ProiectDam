@@ -15,13 +15,10 @@ namespace Gameplay
             Debug.Log("Can Open Chest!");
         }
 
-        public void OnTriggerExit2D(Collider2D collision)
+        public void OnPlayerLeave(PlayerController controller)
         {
-            if (collision.gameObject == Controller.gameObject)
-            {
-                CanInteract = false;
-                Debug.Log("Cannot open chest anymore!");
-            }
+            CanInteract = false;
+            Debug.Log("Cannot open chest anymore!");
         }
     }
 }

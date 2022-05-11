@@ -12,6 +12,11 @@ namespace Gameplay.PickUps
             Destroy(this.gameObject);
         }
 
+        void IInteractable.OnPlayerLeave(PlayerController controller)
+        {
+            
+        }
+
         protected abstract void OnInteract(PlayerController controller);
     }
 }

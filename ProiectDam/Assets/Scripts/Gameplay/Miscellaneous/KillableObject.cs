@@ -8,6 +8,19 @@ namespace Gameplay
         public virtual int MaxHealth { get; set; }
         public bool IsDead { get; private set; }
 
+        public virtual int Score
+        {
+            get
+            {
+                if (IsDead)
+                {
+                    return 1;
+                }
+
+                return 0;
+            }
+        }
+
         public void InitHealth(int health)
         {
             MaxHealth = health;

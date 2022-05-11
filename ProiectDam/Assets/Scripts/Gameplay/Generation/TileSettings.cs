@@ -15,6 +15,7 @@ namespace Gameplay.Generation
         [SerializeField] private GameObject[] _pickUp;
         [SerializeField] private GameObject[] _obstacle;
         [SerializeField] private GameObject[] _portal;
+        [SerializeField] private GameObject[] _merchant;
 
         public GameObject GetTile(TileType type)
         {
@@ -40,6 +41,7 @@ namespace Gameplay.Generation
             TileType.PickUp => _pickUp,
             TileType.Obstacle => _obstacle,
             TileType.Portal => _portal,
+            TileType.Merchant => _merchant,
             _ => null,
         };
     }

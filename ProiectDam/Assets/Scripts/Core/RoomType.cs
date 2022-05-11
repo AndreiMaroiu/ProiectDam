@@ -10,7 +10,8 @@ namespace Core
         End,
         Healing,
         Chest,
-        Wall
+        Wall,
+        Merchant
     }
 
     public static class RoomTypeExtension
@@ -24,6 +25,7 @@ namespace Core
             Healing => nameof(Healing),
             Chest => nameof(Chest),
             Wall => nameof(Wall),
+            Merchant => nameof(Merchant),
             _ => default,
         };
     }

@@ -1,7 +1,9 @@
 {
     "name": "ModalWindow",
     "rootNamespace": "ModalWindows",
-    "references": [],
+    "references": [
+        "GUID:e3739e6b0222bce449b6999951a32d22"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

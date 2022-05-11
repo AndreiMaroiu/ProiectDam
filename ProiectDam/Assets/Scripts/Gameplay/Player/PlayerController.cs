@@ -9,6 +9,8 @@ namespace Gameplay.Player
 {
     public class PlayerController : MovingObject
     {
+        #region Constants
+
         private static readonly Vector2[] Directions = { Vector2.right, Vector2.up, Vector2.left, Vector2.down };
         private static readonly Vector2[] ReversedDirections = { Vector2.left, Vector2.up, Vector2.right, Vector2.down };
         private const string WALK_ANIMATION = "Walk";
@@ -17,6 +19,11 @@ namespace Gameplay.Player
         private const string HIT_ANIMATION = "Hit";
         private const string DEATH_ANIMATION = "Death";
 
+        #endregion
+
+        #region Serializable Fields
+
+        [SerializeField] private PlayerStats _stats;
         [SerializeField] private FloatValue _cellSizeValue;
         [SerializeField] private float _moveTime = 0.3f;
         [SerializeField] private int _startEnergy;
@@ -37,6 +44,11 @@ namespace Gameplay.Player
         [SerializeField] private GameEvent _onMeleeAttack;
         [SerializeField] private GameEvent _onRangeAttack;
         [SerializeField] private BoolEvent _playerTurn;
+        [SerializeField] private IntEvent _playerScore;
+
+        #endregion
+
+        #region Private Fields
 
         private Vector2 _direction;
         private Animator _animator;
@@ -45,6 +57,8 @@ namespace Gameplay.Player
         private Collider2D _collider;
 
         private SwipeDetector _swipeDetector;
+
+        #endregion
 
         #region Properties
 
@@ -84,6 +98,18 @@ namespace Gameplay.Player
             set => _energyEvent.MaxValue = value;
         }
 
+        public int MeleeDamage
+        {
+            get => _meleeDamage;
+            set => _meleeDamage = value;
+        }
+
+        public int RangedDamage
+        {
+            get => _rangedDamage;
+            set => _rangedDamage = value;
+        }
+
         #endregion
 
         #region Unity Events
@@ -93,6 +119,8 @@ namespace Gameplay.Player
             _energyEvent.Init(_startEnergy);
             _healthEvent.Init(_startHealth);
             _bulletsEvent.Init(_startBullets);
+
+            _playerScore.Value = 0;
         }
 
         private void Start()
@@ -147,6 +175,13 @@ namespace Gameplay.Player
             interactable?.Interact(this);
         }
 
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
+
+            interactable?.OnPlayerLeave(this);
+        }
+
         #endregion
 
         #region Colors
@@ -171,7 +206,7 @@ namespace Gameplay.Player
 
         #endregion
 
-        #region Methods
+        #region Private Methods
 
         private void OnMeleeAttack()
         {
@@ -183,11 +218,12 @@ namespace Gameplay.Player
             foreach (KillableObject enemy in GetNearbyEnemies(Directions, _cellSizeValue.Value))
             {
                 enemy.TakeDamage(_meleeDamage);
+                _playerScore.Value += enemy.Score;
             }
 
             // play melee attack animation and sound
             _animator.SetBool(MELEE_ANIMATION, true);
-            _energyEvent.Value--;
+            _energyEvent.Value -= _stats.EnergyPerAttack;
         }
 
         private void OnMeleeEnd()
@@ -215,7 +251,7 @@ namespace Gameplay.Player
 
             // play shoot animation and sound
 
-            --_bulletsEvent.Value;
+            _bulletsEvent.Value -= _stats.BulletCount;
             _animator.SetBool(SHOOT_ANIMATION, true);
 
             Vector2[] directions = transform.localScale.x > 0 ? Directions : ReversedDirections;
@@ -236,6 +272,7 @@ namespace Gameplay.Player
             if (closest.IsNotNull())
             {
                 closest.TakeDamage(_rangedDamage);
+                _playerScore.Value += closest.Score;
 
                 float xPlayer = transform.position.x;
                 float XEnemy = closest.transform.position.x;
@@ -335,6 +372,15 @@ namespace Gameplay.Player
 
         #endregion
 
+        #region Public Methods
+
+        public void AddScore(int score)
+        {
+            _playerScore.Value += score;
+        }
+
+        #endregion
+
         #region Overrides
 
         protected override void OnDamage()
@@ -367,7 +413,7 @@ namespace Gameplay.Player
         protected override void OnMove(Vector2Int direction)
         {
             _direction = direction;
-            _energyEvent.Value--;
+            _energyEvent.Value -= _stats.EnergyPerMove;
         }
 
         protected override void OnStopMoving()

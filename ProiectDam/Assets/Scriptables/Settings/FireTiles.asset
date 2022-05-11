@@ -43,3 +43,5 @@ MonoBehaviour:
   - {fileID: 7050579564912361278, guid: 462025fe1d7a11f4380d574b61d8b589, type: 3}
   _portal:
   - {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055, type: 3}
+  _merchant:
+  - {fileID: 7068375410405565471, guid: 68f6faeda2b864d4ca6b0cabb52c4a99, type: 3}

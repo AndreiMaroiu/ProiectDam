@@ -6,5 +6,6 @@ namespace Gameplay
     {
         // TODO: add paramater for player controller
         public void Interact(PlayerController controller);
+        public void OnPlayerLeave(PlayerController controller);
     }
 }

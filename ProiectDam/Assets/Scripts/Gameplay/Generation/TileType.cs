@@ -13,6 +13,7 @@ namespace Gameplay.Generation
         Obstacle,
         Portal,
         Player,
+        Merchant
     }
 
     public static class TileTypeExtension

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using ModalWindows;
 using Utilities;
+using GameStatistics;
 
 namespace UI
 {
@@ -14,6 +15,7 @@ namespace UI
         [SerializeField] private CappedIntEvent _health;
         [SerializeField] private CappedIntEvent _bullets;
         [SerializeField] private GameEvent _onPlayerDeath;
+        [SerializeField] private IntEvent _scoreEvent;
         [Header("Sliders")]
         [SerializeField] private Slider _energySlider;
         [SerializeField] private Slider _healthSlider;
@@ -21,6 +23,7 @@ namespace UI
         [SerializeField] private Text _energyText;
         [SerializeField] private Text _healthText;
         [SerializeField] private Text _bulletsText;
+        [SerializeField] private Text _scoreText;
 
 
         private void Start()
@@ -34,6 +37,8 @@ namespace UI
             OnMaxBulletsChange();
             OnBulletsChange();
 
+            OnScoreChange();
+
             _energy.OnValueChanged += OnEnergyChange;
             _energy.OnMaxValueChanged += OnMaxEnergyChange;
 
@@ -44,6 +49,7 @@ namespace UI
             _bullets.OnMaxValueChanged += OnMaxBulletsChange;
 
             _onPlayerDeath.OnEvent += OnPlayerDeath;
+            _scoreEvent.OnValueChanged += OnScoreChange;
         }
 
         private void OnDestroy()
@@ -58,6 +64,7 @@ namespace UI
             _bullets.OnMaxValueChanged -= OnMaxBulletsChange;
 
             _onPlayerDeath.OnEvent -= OnPlayerDeath;
+            _scoreEvent.OnValueChanged -= OnScoreChange;
         }
 
         private void OnEnergyChange()
@@ -109,13 +116,28 @@ namespace UI
             _bulletsText.text = _bullets.ToString();
         }
 
-        private void OnPlayerDeath() => ModalWindow.Show(new ModalWindowData()
+        private void OnPlayerDeath()
         {
-            Content = "You Died!",
-            CloseText = "Main Menu",
-            CloseAction = () => SceneManager.LoadScene(Scenes.MainMenu),
-            OkText = "Play Again",
-            OkAction = () => SceneManager.LoadScene(Scenes.MainScene)
-        });
+            Statistics data = StatisticsManager.Intance.LoadStats();
+
+            data.AddLoss();
+
+            StatisticsManager.Intance.Save(data);
+
+            ModalWindow.Show(new ModalWindowData()
+            {
+                Header = "You Died!",
+                Content = "Score: " + _scoreEvent.Value.ToString(),
+                CloseText = "Main Menu",
+                CloseAction = () => SceneManager.LoadScene(Scenes.MainMenu),
+                OkText = "Play Again",
+                OkAction = () => SceneManager.LoadScene(Scenes.MainScene)
+            });
+        }
+
+        private void OnScoreChange()
+        {
+            _scoreText.text = _scoreEvent.Value.ToString();
+        }
     }
 }

@@ -1,6 +1,7 @@
 using Action = System.Action;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 namespace ModalWindows
 {
@@ -69,7 +70,7 @@ namespace ModalWindows
             _headerText.text = data.Header;
 
             _contentText.text = data.Content;
-            _contentImage.gameObject.SetActive(data.Image != null);
+            _contentImage.gameObject.SetActive(data.Image.IsNotNull());
             _contentImage.sprite = data.Image;
             _contentImage.SetNativeSize();
             _contentArea.SetActive(!string.IsNullOrEmpty(data.Content) || data.Image != null);

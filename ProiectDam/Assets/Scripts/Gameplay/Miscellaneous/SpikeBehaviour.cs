@@ -16,15 +16,28 @@ namespace Gameplay
 
         private SpriteRenderer _renderer;
         private Sprite _original;
+        private bool _canHit;
 
         private void Start()
         {
             _renderer = GetComponent<SpriteRenderer>();
             _original = _renderer.sprite;
+            
+        }
+
+        private void OnEnable()
+        {
+            _canHit = false;
+            StartCoroutine(WaitAfterEnable());
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (!_canHit)
+            {
+                return;
+            }
+
             KillableObject killableObject = collision.gameObject.GetComponent<KillableObject>();
 
             if (killableObject.IsNotNull())
@@ -40,6 +53,12 @@ namespace Gameplay
             _renderer.sprite = _activatedSprite;
             yield return new WaitForSeconds(_animationTime);
             _renderer.sprite = _original;
+        }
+
+        private IEnumerator WaitAfterEnable()
+        {
+            yield return new WaitForSeconds(0.5f);
+            _canHit = true;
         }
     }
 }

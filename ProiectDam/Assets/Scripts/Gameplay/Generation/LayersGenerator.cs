@@ -31,6 +31,7 @@ namespace Gameplay.Generation
             RoomType.Empty => GenerateEmpty(),
             RoomType.Healing => GenerateHeal(),
             RoomType.Chest => GenerateChest(),
+            RoomType.Merchant => GenerateMerchant(),
             _ => GenerateEmpty(),
         };
 
@@ -39,6 +40,15 @@ namespace Gameplay.Generation
             Layers layers = new Layers(_layerSize, 1);
 
             GenerateBorder(layers.GetTiles(0));
+
+            return layers;
+        }
+
+        private Layers GenerateMerchant()
+        {
+            Layers layers = GenerateEmpty();
+            int middle = layers.MiddleIndex;
+            layers.GetTiles(0)[middle + Random.Range(-2, 3), middle + Random.Range(-2, 3)] = TileType.Merchant;
 
             return layers;
         }

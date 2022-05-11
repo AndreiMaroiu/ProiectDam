@@ -15,6 +15,5 @@ namespace ModalWindows
         public Action OkAction { get; set; }
         public Action CloseAction { get; set; }
         public Action AlternativeAction { get; set; }
-
     }
 }

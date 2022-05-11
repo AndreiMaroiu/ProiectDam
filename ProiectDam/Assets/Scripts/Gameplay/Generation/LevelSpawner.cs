@@ -6,6 +6,9 @@ using Values;
 
 namespace Gameplay.Generation
 {
+    /// <summary>
+    /// Main Behaviour to generate the whole level data
+    /// </summary>
     internal sealed class LevelSpawner : MonoBehaviour
     {
         [SerializeField] private int _maxRoomNeighbours;
@@ -29,6 +32,9 @@ namespace Gameplay.Generation
         private RoomTraverser<RoomBehaviour> _traverser;
         private DungeonGenerator _generator;
 
+        /// <summary>
+        /// Main spawn point function
+        /// </summary>
         public void Spawn()
         {
             GenerateDungeon();
@@ -42,6 +48,9 @@ namespace Gameplay.Generation
             _roomBehaviourEvent.Value = _traverser.Start;
         }
 
+        /// <summary>
+        /// Generate dungeon room layout (only room positions)
+        /// </summary>
         private void GenerateDungeon()
         {
             _generator = new DungeonGenerator(_maxRoomNeighbours, _maxRoomCount, _maxtrixSize);
@@ -49,6 +58,9 @@ namespace Gameplay.Generation
             _traverser = new RoomTraverser<RoomBehaviour>(start, _generator.Matrix.GetLength(0));
         }
 
+        /// <summary>
+        /// Choose random some room types such as heal, chest etc.
+        /// </summary>
         private void GenerateRoomTypes()
         {
             _generator.CalculateDistances();
@@ -60,6 +72,7 @@ namespace Gameplay.Generation
 
             ChooseRoomRandom(RoomType.Healing);
             ChooseRoomRandom(RoomType.Chest);
+            ChooseRoomRandom(RoomType.Merchant);
 
             void Validate(Vector2Int pos, RoomType type)
             {
@@ -85,6 +98,12 @@ namespace Gameplay.Generation
             }
         }
 
+        /// <summary>
+        /// Spawn gameobjects for a single room
+        /// </summary>
+        /// <param name="room">room data</param>
+        /// <param name="where">world position where to spawn the room</param>
+        /// <returns>the gameobject of the room</returns>
         private GameObject SpawnRoom(Room room, Vector3 where)
         {
             Vector2Int pos = room.Pos;
@@ -101,6 +120,9 @@ namespace Gameplay.Generation
             return null;
         }
 
+        /// <summary>
+        /// For each room in dungeon spawn, spawn their game objects
+        /// </summary>
         private void SpawnRoomAssets()
         {
             _traverser.Traverse(room =>
@@ -119,6 +141,10 @@ namespace Gameplay.Generation
             });
         }
 
+
+        /// <summary>
+        /// For each room in dungeon, based on it's RoomType, generate room layers (tiles for each dimension)
+        /// </summary>
         private void GenereteLayers()
         {
             LayersGenerator generator = new LayersGenerator(_cellCount);
@@ -134,6 +160,9 @@ namespace Gameplay.Generation
             });
         }
 
+        /// <summary>
+        /// For each room, spawn the game objects based on room layout (tiles)
+        /// </summary>
         private void SpawnLayers()
         {
             LayersSpawner spawner = new LayersSpawner(_cellSize.Value, _grassTiles, _fireTiles, _dungeonTiles);
@@ -145,6 +174,9 @@ namespace Gameplay.Generation
             });
         }
 
+        /// <summary>
+        /// For each room set door position. Door position are independent of the room layout.
+        /// </summary>
         private void SetDoorPositions()
         {
             _traverser.Traverse(room =>
@@ -162,12 +194,19 @@ namespace Gameplay.Generation
             });
         }
 
+
         private void SetDoorPosition(Vector2Int direction, TileType[,] layer, TileType type)
         {
             Vector2Int where = GetLayerPosition(direction, layer);
             layer[where.x, where.y] = type;
         }
 
+        /// <summary>
+        /// Get the furthest position of a layer based on a direction
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <param name="layer"></param>
+        /// <returns></returns>
         private Vector2Int GetLayerPosition(Vector2Int direction, TileType[,] layer)
         {
             int size = layer.GetLength(0);
@@ -176,6 +215,9 @@ namespace Gameplay.Generation
             return middlePos + (direction * middle);
         }
 
+        /// <summary>
+        /// Spawn door assets for each room. Doors also have a rotation
+        /// </summary>
         private void SpawnDoors()
         {
             _traverser.Traverse(room =>
@@ -196,6 +238,13 @@ namespace Gameplay.Generation
             });
         }
 
+        /// <summary>
+        /// Sets necessary data to connect two doors
+        /// </summary>
+        /// <param name="door">first door</param>
+        /// <param name="other">second door</param>
+        /// <param name="direction">direction between doors</param>
+        /// <param name="room">room of the first door</param>
         private void SetDoor(DoorBehaviour door, DoorBehaviour other, Vector2Int direction, RoomBehaviour room)
         {
             Vector3 spawnDirection = Utils.GetVector3FromMatrixPos(direction, _cellSize.Value);
