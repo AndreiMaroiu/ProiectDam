@@ -19,8 +19,6 @@ namespace Utilities
             {
                 yield return null;
             }
-
-            SceneManager.LoadScene(scene);
         }
     }
 }
