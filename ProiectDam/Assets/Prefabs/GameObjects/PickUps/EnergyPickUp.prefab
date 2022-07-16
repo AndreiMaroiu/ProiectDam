@@ -110,7 +110,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5244361343789919635}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08341b34fb8faca41ad3d1d0d6efd9e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 41a0f72c895b87a47bf38bbfcec3cc29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _energyBonus: {fileID: 11400000, guid: 9b18526d09a856c4497bd687dd8cec5f, type: 2}
+  _item: {fileID: 11400000, guid: ee0b13be4869ba941873f45c2e564a6e, type: 2}

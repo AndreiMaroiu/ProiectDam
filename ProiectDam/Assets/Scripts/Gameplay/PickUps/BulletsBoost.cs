@@ -2,16 +2,16 @@ using Gameplay.Player;
 
 namespace Gameplay.PickUps
 {
-    public class HealthBoost : AbstractPickUp
+    public class BulletsBoost : AbstractPickUp
     {
-        public HealthBoost(int boost) : base(boost)
+        public BulletsBoost(int boost) : base(boost)
         {
 
         }
 
         public override void Interact(PlayerController controller)
         {
-            controller.Health += _boost;
+            controller.Bullets += _boost;
         }
     }
 }

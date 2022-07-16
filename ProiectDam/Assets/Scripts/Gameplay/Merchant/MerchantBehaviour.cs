@@ -72,7 +72,7 @@ namespace Gameplay.Merchant
 
         public override void OnClick()
         {
-            _items[0].interactable.Interact(_player);
+            _items[0].GetPickUp().Interact(_player);
         }
     }
 }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Merchant Items
   m_EditorClassIdentifier: 
   _items:
-  - item: {fileID: 11400000, guid: 975e92385d97e4e449c217942de5b07b, type: 2}
-    interactable: {fileID: 912150835015195157, guid: b9f9962775564384793ea37e74690334,
-      type: 3}
+  - {fileID: 11400000, guid: 5ec69e1f7616b1948a4fa1146eae1259, type: 2}
+  - {fileID: 11400000, guid: 75f1397651551614d83f3788afb70f3a, type: 2}
+  - {fileID: 11400000, guid: ee0b13be4869ba941873f45c2e564a6e, type: 2}

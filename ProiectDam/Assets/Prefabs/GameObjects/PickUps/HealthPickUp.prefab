@@ -110,7 +110,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1337655539291230482}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef188663a5a1e354ba3c74cee729a674, type: 3}
+  m_Script: {fileID: 11500000, guid: 41a0f72c895b87a47bf38bbfcec3cc29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBonus: {fileID: 11400000, guid: e9193961a44f2b14d8831701bf07e517, type: 2}
+  _item: {fileID: 11400000, guid: 5ec69e1f7616b1948a4fa1146eae1259, type: 2}

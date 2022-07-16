@@ -1,13 +1,17 @@
 using Gameplay.Generation;
 using Gameplay.Player;
+using UnityEngine;
 
 namespace Gameplay.PickUps
 {
-    public abstract class BasePickUp : TileObject, IInteractable
+    public class BasePickUp : TileObject, IInteractable
     {
+        [SerializeField]
+        private Item _item;
+
         public void Interact(PlayerController controller)
         {
-            OnInteract(controller);
+            _item.GetPickUp().Interact(controller);
 
             Destroy(this.gameObject);
         }
@@ -16,7 +20,5 @@ namespace Gameplay.PickUps
         {
             
         }
-
-        protected abstract void OnInteract(PlayerController controller);
     }
 }
