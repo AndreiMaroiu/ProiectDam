@@ -1,4 +1,4 @@
-using Events;
+using Core.Events;
 using GameStatistics;
 using ModalWindows;
 using UnityEngine;

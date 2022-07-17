@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Values
+namespace Core.Values
 {
     [CreateAssetMenu(fileName = "New Float Value", menuName = "Scriptables/Values/Float")]
     public class FloatValue : Value

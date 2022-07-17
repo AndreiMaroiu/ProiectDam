@@ -1,9 +1,7 @@
 {
-    "name": "Events",
-    "rootNamespace": "Events",
-    "references": [
-        "GUID:b07b71b68acc3d049afcfa865a0bb59b"
-    ],
+    "name": "Music",
+    "rootNamespace": "Music",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

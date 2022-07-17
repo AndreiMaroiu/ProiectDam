@@ -3,14 +3,14 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Values;
+using Core.Values;
 
 namespace UI
 {
     [RequireComponent(typeof(Text)), ExecuteInEditMode]
     public class TextDisplay : MonoBehaviour
     {
-        private static Regex Regex = new Regex(@"{\d+}");
+        private static readonly Regex Regex = new Regex(@"{\d+}");
 
         [SerializeField] private Value[] _values;
 

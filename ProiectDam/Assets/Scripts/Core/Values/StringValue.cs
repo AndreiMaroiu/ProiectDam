@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Values
+namespace Core.Values
 {
     [CreateAssetMenu(fileName = "NewStringValue", menuName = "Scriptables/Values/String Value")]
     public class StringValue : Value

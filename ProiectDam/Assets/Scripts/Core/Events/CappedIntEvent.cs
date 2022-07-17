@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Events
+namespace Core.Events
 {
     /// <summary>
     /// Can be used to represent int values with a maximum value

@@ -2,8 +2,7 @@ using UnityEngine;
 
 namespace Core
 {
-    [CreateAssetMenu(fileName = "New Item Description", menuName = "Scriptables/Items/Description")]
-    public class ItemDescription : ScriptableObject
+    public abstract class ItemDescription : ScriptableObject
     {
         [SerializeField] private int _cost;
         [SerializeField] private Sprite _image;

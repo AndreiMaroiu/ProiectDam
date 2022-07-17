@@ -3,7 +3,7 @@ using Gameplay.Player;
 using System;
 using UnityEngine;
 using Utilities;
-using Values;
+using Core.Values;
 using Priority_Queue;
 using System.Collections.Generic;
 

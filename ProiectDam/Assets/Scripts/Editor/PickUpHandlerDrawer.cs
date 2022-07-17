@@ -19,13 +19,13 @@ namespace EditorScripts
             SerializedProperty type = property.FindPropertyRelative("_type");
             _choiceIndex = Mathf.Clamp(Array.IndexOf(_choices, type.stringValue), 0, _choices.Length);
 
-            int indent = EditorGUI.indentLevel;
-            EditorGUI.indentLevel = 0;
+            //int indent = EditorGUI.indentLevel;
+            //EditorGUI.indentLevel = 0;
             
             _choiceIndex = EditorGUI.Popup(rect, "Type", _choiceIndex, _choices);
             type.stringValue = _choices[_choiceIndex];
 
-            EditorGUI.indentLevel = indent;
+            //EditorGUI.indentLevel = indent;
             EditorGUI.EndProperty();
         }
     }

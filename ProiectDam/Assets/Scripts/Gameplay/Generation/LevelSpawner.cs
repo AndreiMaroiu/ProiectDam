@@ -2,7 +2,7 @@ using Core;
 using Gameplay.Events;
 using UnityEngine;
 using Utilities;
-using Values;
+using Core.Values;
 
 namespace Gameplay.Generation
 {

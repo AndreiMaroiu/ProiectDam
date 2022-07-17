@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Values
+namespace Core.Values
 {
     public abstract class Value : ScriptableObject
     {

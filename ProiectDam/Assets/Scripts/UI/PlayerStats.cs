@@ -1,4 +1,4 @@
-using Events;
+using Core.Events;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;

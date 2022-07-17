@@ -1,5 +1,5 @@
 using UnityEngine;
-using Values;
+using Core.Values;
 
 namespace Gameplay
 {

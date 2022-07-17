@@ -1,9 +1,9 @@
 using Core;
-using Events;
+using Core.Events;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
-using Values;
+using Core.Values;
 
 namespace UI
 {

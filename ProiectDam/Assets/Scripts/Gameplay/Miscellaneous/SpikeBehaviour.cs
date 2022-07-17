@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Utilities;
-using Values;
+using Core.Values;
 
 namespace Gameplay
 {

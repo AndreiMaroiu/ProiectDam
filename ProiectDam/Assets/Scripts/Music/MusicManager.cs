@@ -1,29 +1,32 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class MusicManager : MonoBehaviour
+namespace Music
 {
-    private static MusicManager musicManagerInstance;
-    [SerializeField] private AudioMixer _volumes;
-
-    private const float MaxVolume = 5.00f;
-
-    private void Awake()
+    public class MusicManager : MonoBehaviour
     {
-        _volumes.SetFloat("Master", PlayerPrefs.GetFloat("Master", MaxVolume));
-        _volumes.SetFloat("Music", PlayerPrefs.GetFloat("Music", MaxVolume));
-        _volumes.SetFloat("Sound Effects", PlayerPrefs.GetFloat("Sound Effects", MaxVolume));
+        private static MusicManager musicManagerInstance;
+        [SerializeField] private AudioMixer _volumes;
 
-        DontDestroyOnLoad(this);
+        private const float MaxVolume = 5.00f;
 
-        if (musicManagerInstance == null)
+        private void Awake()
         {
-            musicManagerInstance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+            _volumes.SetFloat("Master", PlayerPrefs.GetFloat("Master", MaxVolume));
+            _volumes.SetFloat("Music", PlayerPrefs.GetFloat("Music", MaxVolume));
+            _volumes.SetFloat("Sound Effects", PlayerPrefs.GetFloat("Sound Effects", MaxVolume));
 
+            DontDestroyOnLoad(this);
+
+            if (musicManagerInstance == null)
+            {
+                musicManagerInstance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+        }
     }
 }

@@ -1,4 +1,4 @@
-using Events;
+using Core.Events;
 using Gameplay.Enemies;
 using Gameplay.Events;
 using Gameplay.Generation;

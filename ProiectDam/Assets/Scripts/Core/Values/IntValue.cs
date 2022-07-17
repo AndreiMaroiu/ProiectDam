@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Values
+namespace Core.Values
 {
     [CreateAssetMenu(fileName = "NewIntValue", menuName = "Scriptables/Values/Int Value")]
     public class IntValue : Value

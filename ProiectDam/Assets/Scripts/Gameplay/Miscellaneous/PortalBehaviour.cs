@@ -1,4 +1,4 @@
-using Events;
+using Core.Events;
 using Gameplay.Player;
 using System.Collections;
 using UnityEngine;

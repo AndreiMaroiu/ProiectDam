@@ -1,9 +1,9 @@
-using Events;
+using Core.Events;
 using Gameplay.Generation;
 using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
-using Values;
+using Core.Values;
 
 namespace Gameplay.Player
 {

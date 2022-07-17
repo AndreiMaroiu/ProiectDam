@@ -1,4 +1,4 @@
-using Events;
+using Core.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

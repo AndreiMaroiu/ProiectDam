@@ -1,17 +1,16 @@
-using Core;
 using System;
 using UnityEngine;
 
-namespace Events
+namespace Core.Events
 {
-    [CreateAssetMenu(fileName = "New Room Event", menuName = "Scriptables/Events/Room Event")]
-    public class RoomEvent : ScriptableObject
+    [CreateAssetMenu(fileName = "New Bool Event", menuName = "Scriptables/Events/Bool Event")]
+    public class BoolEvent : ScriptableObject
     {
         public event Action OnValueChanged;
 
-        private Room _value;
+        private bool _value;
 
-        public Room Value
+        public bool Value
         {
             get => _value;
 
@@ -23,7 +22,7 @@ namespace Events
             }
         }
 
-        public static implicit operator Room(RoomEvent @event)
+        public static implicit operator bool(BoolEvent @event)
             => @event.Value;
     }
 }
