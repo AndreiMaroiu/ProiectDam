@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core
+namespace Core.Items
 {
     public abstract class ItemDescription : ScriptableObject
     {

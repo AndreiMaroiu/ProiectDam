@@ -9,7 +9,7 @@ namespace Gameplay.PickUps
 
         }
 
-        public override void Interact(PlayerController controller)
+        protected override void Interact(PlayerController controller)
         {
             controller.Bullets += _boost;
         }

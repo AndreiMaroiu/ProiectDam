@@ -1,4 +1,5 @@
 using Core;
+using Core.Items;
 using UnityEngine;
 
 namespace Gameplay.PickUps

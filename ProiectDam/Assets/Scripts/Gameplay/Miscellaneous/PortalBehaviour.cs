@@ -11,7 +11,7 @@ namespace Gameplay
 
         private Coroutine _coroutine = null;
 
-        public void Interact(PlayerController controller)
+        public void OnInteract(PlayerController controller)
         {
             if (_coroutine != null)
             {

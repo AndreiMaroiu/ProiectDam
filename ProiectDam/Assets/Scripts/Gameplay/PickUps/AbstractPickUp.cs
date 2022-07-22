@@ -11,7 +11,17 @@ namespace Gameplay.PickUps
             _boost = boost;
         }
 
-        public abstract void Interact(PlayerController controller);
+        protected abstract void Interact(PlayerController controller);
+
+        public void OnInteract(PlayerController controller)
+        {
+            if (controller is null)
+            {
+                return;
+            }
+
+            Interact(controller);
+        }
 
         void IInteractable.OnPlayerLeave(PlayerController controller)
         {

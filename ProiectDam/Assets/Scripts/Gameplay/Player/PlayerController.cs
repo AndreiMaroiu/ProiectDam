@@ -172,7 +172,7 @@ namespace Gameplay.Player
         {
             IInteractable interactable = collision.gameObject.GetComponent<IInteractable>();
 
-            interactable?.Interact(this);
+            interactable?.OnInteract(this);
         }
 
         private void OnTriggerExit2D(Collider2D collision)

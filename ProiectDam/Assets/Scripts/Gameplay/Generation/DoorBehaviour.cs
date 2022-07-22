@@ -34,7 +34,7 @@ namespace Gameplay.Generation
             Gizmos.DrawCube(_movePoint, transform.localScale);
         }
 
-        void IInteractable.Interact(PlayerController controller)
+        void IInteractable.OnInteract(PlayerController controller)
         {
             Move(controller.transform);
             controller.StopMoving();

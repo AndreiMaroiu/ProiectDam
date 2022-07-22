@@ -8,7 +8,7 @@ namespace Gameplay
         public bool CanInteract { get; private set; }
         public PlayerController Controller { get; private set; }
 
-        public void Interact(PlayerController controller)
+        public void OnInteract(PlayerController controller)
         {
             CanInteract = true;
             Controller = controller;

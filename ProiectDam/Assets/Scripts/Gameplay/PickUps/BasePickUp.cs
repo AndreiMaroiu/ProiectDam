@@ -9,9 +9,9 @@ namespace Gameplay.PickUps
         [SerializeField]
         private Item _item;
 
-        public void Interact(PlayerController controller)
+        public void OnInteract(PlayerController controller)
         {
-            _item.GetPickUp().Interact(controller);
+            _item.GetPickUp().OnInteract(controller);
 
             Destroy(this.gameObject);
         }
