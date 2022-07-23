@@ -118,11 +118,11 @@ namespace UI
 
         private void OnPlayerDeath()
         {
-            Statistics data = StatisticsManager.Intance.LoadStats();
+            Statistics data = StatisticsManager.Instance.LoadStats();
 
             data.AddLoss();
 
-            StatisticsManager.Intance.Save(data);
+            StatisticsManager.Instance.Save(data);
 
             ModalWindow.Show(new ModalWindowData()
             {

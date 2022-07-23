@@ -1,3 +1,4 @@
+using GameStatistics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,7 +61,17 @@ namespace UI
         {
             Time.timeScale = 1;
             _transition.SetTrigger("Start");
+
+            AddLoss();
+
             SceneManager.LoadScene(Scenes.MainMenu);
+        }
+
+        private void AddLoss()
+        {
+            Statistics stats = StatisticsManager.Instance.LoadStats();
+            stats.AddLoss();
+            StatisticsManager.Instance.Save(stats);
         }
     }
 }

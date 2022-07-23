@@ -6,7 +6,7 @@ namespace GameStatistics
 {
     public class StatisticsManager
     {
-        public static StatisticsManager Intance { get; } = new StatisticsManager();
+        public static StatisticsManager Instance { get; } = new StatisticsManager();
 
         private readonly string _statsPath;
         private readonly string _moneyPath;
@@ -19,35 +19,13 @@ namespace GameStatistics
 
         #region Public Methods
 
-        public Statistics LoadStats()
-        {
-            if (!File.Exists(_statsPath))
-            {
-                return new Statistics();
-            }
+        public Statistics LoadStats() => Load<Statistics>(_statsPath);
 
-            return Load<Statistics>(_statsPath);
-        }
+        public PlayerMoney LoadMoney() => Load<PlayerMoney>(_moneyPath);
 
-        public PlayerMoney LoadMoney()
-        {
-            if (!File.Exists(""))
-            {
-                return new PlayerMoney();
-            }
+        public void Save(Statistics stats) => Save(stats, _statsPath);
 
-            return Load<PlayerMoney>(_moneyPath);
-        }
-
-        public void Save(Statistics stats)
-        {
-            Save(stats, _statsPath);
-        }
-
-        public void Save(PlayerMoney money)
-        {
-            Save(money, _moneyPath);
-        }
+        public void Save(PlayerMoney money) => Save(money, _moneyPath);
 
         #endregion
 
@@ -61,8 +39,13 @@ namespace GameStatistics
             bf.Serialize(file, data);
         }
 
-        private T Load<T>(string path)
+        private T Load<T>(string path) where T : new()
         {
+            if (!File.Exists(path))
+            {
+                return new T();
+            }
+
             using FileStream file = File.OpenRead(_statsPath);
             BinaryFormatter bf = new BinaryFormatter();
             return (T)bf.Deserialize(file);

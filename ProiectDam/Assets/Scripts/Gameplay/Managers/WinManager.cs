@@ -24,7 +24,7 @@ namespace Gameplay
 
             string footer = null;
 
-            Statistics stats = StatisticsManager.Intance.LoadStats();
+            Statistics stats = StatisticsManager.Instance.LoadStats();
             stats.AddWin();
             
             if (_scoreEvent > stats.Highscore)
@@ -33,7 +33,7 @@ namespace Gameplay
                 footer = "New high score!";
             }
 
-            StatisticsManager.Intance.Save(stats);
+            StatisticsManager.Instance.Save(stats);
 
             ModalWindow.Show(new ModalWindowData()
             {

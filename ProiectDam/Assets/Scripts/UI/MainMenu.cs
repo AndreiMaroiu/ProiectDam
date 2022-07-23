@@ -12,14 +12,12 @@ namespace UI
         [SerializeField] private GameObject _howToCanvas;
         [SerializeField] private GameObject _optionsCanvas;
         [SerializeField] private GameObject _creditsCanvas;
+        [SerializeField] private GameObject _statsCanvas;
         [SerializeField] private Animator _transition;
 
-        void Awake()
+        private void Awake()
         {
-            _mainCanvas.SetActive(true);
-            _howToCanvas.SetActive(false);
-            _optionsCanvas.SetActive(false);
-            _creditsCanvas.SetActive(false);
+            OnMenuClick();
         }
 
         public void OnOptionsClick()
@@ -34,12 +32,17 @@ namespace UI
             _mainCanvas.SetActive(false);
         }
 
+        /// <summary>
+        /// Close all other panels and activates main panel
+        /// </summary>
         public void OnMenuClick()
         {
-            _howToCanvas.SetActive(false);
-            _creditsCanvas.SetActive(false);
-            _optionsCanvas.SetActive(false);
             _mainCanvas.SetActive(true);
+
+            _howToCanvas.SetActive(false);
+            _optionsCanvas.SetActive(false);
+            _creditsCanvas.SetActive(false);
+            _statsCanvas.SetActive(false);
         }
 
         public void OnHowToClick()
@@ -52,6 +55,12 @@ namespace UI
         {
             _transition.SetTrigger("Start");
             StartCoroutine(Scenes.LoadAsync(Scenes.LoadingMenu));
+        }
+
+        public void OnStatsClick()
+        {
+            _mainCanvas.SetActive(false);
+            _statsCanvas.SetActive(true);
         }
 
         public void OnQuitClick()
