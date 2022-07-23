@@ -39,7 +39,7 @@ namespace Gameplay.Generation
             Move(controller.transform);
             controller.StopMoving();
             controller.LayerPosition = new LayerPosition(_other._moveLayerPosition);
-            controller.LayerPosition.GetTile() = TileType.Player;
+            controller.LayerPosition.TileType = TileType.Player;
         }
 
         void IInteractable.OnPlayerLeave(PlayerController controller)

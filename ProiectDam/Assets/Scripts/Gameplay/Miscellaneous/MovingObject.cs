@@ -49,7 +49,7 @@ namespace Gameplay
             IsMoving = true;
             OnMove(direction);
 
-            while (transform.position != endPosition && !CanMove)
+            while (transform.position != endPosition && !CanMove && !IsDead)
             {
                 transform.position = Vector3.MoveTowards(transform.position, endPosition, _inverseMoveTime * Time.deltaTime);
                 yield return null;
@@ -65,7 +65,7 @@ namespace Gameplay
                 LayerPosition.Layer[lastPos.x, lastPos.y] = TileType.None;
             }
             
-            LayerPosition.GetTile() = _tileType;
+            LayerPosition.TileType = _tileType;
 
             StopMoving();
             OnStopMoving();

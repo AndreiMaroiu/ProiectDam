@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 592847a8023f4584e9ee044b886205bb, type: 3}
+  m_Name: Coins PickUp
+  m_EditorClassIdentifier: 
+  _cost: 15
+  _image: {fileID: -7715589643225986936, guid: 0df646a72a064d2479967be33ace8307, type: 3}
+  _description: Add one coin
+  _type:
+    _type: CoinPickUp
+  _points: 1

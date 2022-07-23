@@ -106,12 +106,12 @@ namespace UI
 
         public void OnWeaponClick()
         {
-            _shootEvent.Invoke();
+            _shootEvent.Invoke(this);
         }
 
         public void OnMeleeClick()
         {
-            _meleeEvent.Invoke();
+            _meleeEvent.Invoke(this);
         }
     }
 }

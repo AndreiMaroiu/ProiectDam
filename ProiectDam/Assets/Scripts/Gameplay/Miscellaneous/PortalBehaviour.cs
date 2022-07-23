@@ -33,7 +33,7 @@ namespace Gameplay
         {
             yield return new WaitForSeconds(2.0f);
 
-            _winEvent.Invoke();
+            _winEvent.Invoke(this);
         }
     }
 }

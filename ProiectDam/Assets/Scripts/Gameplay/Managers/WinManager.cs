@@ -17,7 +17,7 @@ namespace Gameplay
             _winEvent.OnEvent += OnWin;
         }
 
-        private void OnWin()
+        private void OnWin(object sender)
         {
             float timeScale = Time.timeScale;
             Time.timeScale = 0;

@@ -17,6 +17,11 @@ namespace Gameplay.Events
 
             set
             {
+                if (_value == value)
+                {
+                    return;
+                }
+
                 _value = value;
 
                 OnValueChanged?.Invoke();

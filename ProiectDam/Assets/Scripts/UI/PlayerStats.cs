@@ -116,7 +116,7 @@ namespace UI
             _bulletsText.text = _bullets.ToString();
         }
 
-        private void OnPlayerDeath()
+        private void OnPlayerDeath(object sender)
         {
             Statistics data = StatisticsManager.Instance.LoadStats();
 

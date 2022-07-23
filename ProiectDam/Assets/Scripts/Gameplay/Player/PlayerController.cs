@@ -208,7 +208,7 @@ namespace Gameplay.Player
 
         #region Private Methods
 
-        private void OnMeleeAttack()
+        private void OnMeleeAttack(object sender)
         {
             if (!_playerTurn)
             {
@@ -236,7 +236,7 @@ namespace Gameplay.Player
             _animator.SetBool(SHOOT_ANIMATION, false);
         }
 
-        private void OnRangedAttack()
+        private void OnRangedAttack(object sender)
         {
             if (!_playerTurn)
             {
@@ -402,7 +402,7 @@ namespace Gameplay.Player
 
         public override void OnDeathFinished()
         {
-            _onPlayerDeath.Invoke();
+            _onPlayerDeath.Invoke(this);
         }
 
         protected override bool CanMoveToTile(TileType tile)

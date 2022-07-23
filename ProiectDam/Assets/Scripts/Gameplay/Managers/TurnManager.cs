@@ -58,8 +58,9 @@ namespace Gameplay.Managers
             for (int i = 0; i < enemies.Count; i++)
             {
                 BaseEnemy enemy = enemies[i];
-                enemy.OnEnemyTurn(_player);
-                yield return new WaitUntil(() => enemy.IsDead || !enemy.IsMoving);
+                yield return enemy.OnEnemyTurn(_player);
+                //enemy.OnEnemyTurn(_player);
+                //yield return new WaitUntil(() => enemy.IsDead || !enemy.IsMoving);
             }
 
             _playerTurn.Value = true;

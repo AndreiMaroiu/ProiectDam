@@ -11,10 +11,10 @@ namespace Gameplay
         private void Start()
         {
             BaseEnemy[] enemies = gameObject.GetComponentsInChildren<BaseEnemy>();
+            Enemies.AddRange(enemies);
 
             foreach (BaseEnemy enemy in enemies)
             {
-                Enemies.Add(enemy);
                 enemy.OnDeathEvent += OnEnemyDeath;
             }
         }

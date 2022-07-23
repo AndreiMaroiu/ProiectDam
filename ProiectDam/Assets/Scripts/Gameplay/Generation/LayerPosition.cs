@@ -22,29 +22,24 @@ namespace Gameplay.Generation
             get => _layer;
             set
             {
-                TileType tile = GetTile();
-                GetTile() = TileType.None;
+                TileType tile = TileType;
+                TileType = TileType.None;
 
                 _layer = value;
 
-                GetTile() = tile;
+                TileType = tile;
             }
         }
 
-        public TileType Tile => Layer[Position.x, Position.y];
-
-        public void Move(Vector2Int dir)
+        public TileType TileType 
         {
-            Position += dir;
+            get => Layer[Position.x, Position.y];
+            set => Layer[Position.x, Position.y] = value;
         }
 
-        public void Clear()
-        {
-            GetTile() = TileType.None;
-        }
+        public void Move(Vector2Int dir) => Position += dir;
 
-        public ref TileType GetTile()
-            => ref _layer[Position.x, Position.y];
+        public void Clear() => TileType = TileType.None;
 
         public TileType GetTile(Vector2Int dir)
         {

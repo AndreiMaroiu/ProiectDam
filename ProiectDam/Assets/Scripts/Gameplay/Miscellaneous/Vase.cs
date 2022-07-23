@@ -1,8 +1,13 @@
+using Gameplay.Generation;
+using UnityEngine;
+
 namespace Gameplay
 {
     public class Vase : KillableObject
     {
         private const int StartHealth = 1;
+
+        [SerializeField] private TileObject _coinPickUp;
 
         protected override void OnDamage()
         {
@@ -11,10 +16,15 @@ namespace Gameplay
 
         protected override void OnDeath()
         {
-            // maybe animate object
+            // play sound
+
+            TileObject pickUp = Instantiate(_coinPickUp, transform.parent);
+
+            pickUp.transform.position = transform.position;
+            pickUp.LayerPosition = LayerPosition;
+            pickUp.LayerPosition.TileType = TileType.PickUp;
 
             Destroy(this.gameObject);
-            LayerPosition.Clear();
         }
 
         public override void OnDeathFinished()

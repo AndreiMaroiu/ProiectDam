@@ -6,8 +6,8 @@ namespace Core.Events
     [CreateAssetMenu(fileName = "New Game Event", menuName = "Scriptables/Events/Game Event")]
     public class GameEvent : ScriptableObject
     {
-        public event Action OnEvent;
+        public event Action<object> OnEvent;
 
-        public void Invoke() => OnEvent?.Invoke();
+        public void Invoke(object sender) => OnEvent?.Invoke(sender);
     }
 }

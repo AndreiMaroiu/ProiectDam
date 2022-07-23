@@ -1,11 +1,10 @@
+using Core.Values;
 using Gameplay.Generation;
 using Gameplay.Player;
 using System;
+using System.Collections;
 using UnityEngine;
 using Utilities;
-using Core.Values;
-using Priority_Queue;
-using System.Collections.Generic;
 
 namespace Gameplay.Enemies
 {
@@ -22,17 +21,17 @@ namespace Gameplay.Enemies
 
         public abstract void OnAttack(PlayerController player);
 
-        public void OnEnemyTurn(PlayerController player)
+        public IEnumerator OnEnemyTurn(PlayerController player)
         {
             if ((LayerPosition.Position - player.LayerPosition.Position).sqrMagnitude == 1)
             {
                 player.TakeDamage(_damage);
                 OnAttack(player);
-                return;
+                yield break;
             }
 
             Vector2Int direction = Utils.GetMatrixPos(GetMoveDirection(player));
-            StartCoroutine(TryMove(-direction));
+            yield return TryMove(-direction);
         }
 
         private Vector2Int GetMoveDirection(PlayerController player)
@@ -130,11 +129,6 @@ namespace Gameplay.Enemies
         protected sealed override bool CanMoveToTile(TileType tile)
         {
             return tile.CanMove();
-        }
-
-        private void OnDrawGizmos()
-        {
-            
         }
     }
 }
