@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215fcffe80509a8458d545cdad434bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stats: {fileID: 0}
   _cellSizeValue: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
   _moveTime: 0.3
   _startEnergy: 100
@@ -70,6 +71,8 @@ MonoBehaviour:
   _onPlayerDeath: {fileID: 11400000, guid: 9d8a5883be5e2394abb1e7e1ec2f447b, type: 2}
   _onMeleeAttack: {fileID: 11400000, guid: 9ac3f7dbbe869d74b8ad26d6e787b8d3, type: 2}
   _onRangeAttack: {fileID: 11400000, guid: 25c64d8be397375498675c2099a88543, type: 2}
+  _playerTurn: {fileID: 11400000, guid: 69dd59b851979e44887a9df5080b5552, type: 2}
+  _playerScore: {fileID: 11400000, guid: 9aecf744fcf296c449c7077303118a78, type: 2}
 --- !u!50 &47525207141400158
 Rigidbody2D:
   serializedVersion: 4

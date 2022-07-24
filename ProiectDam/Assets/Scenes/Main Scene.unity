@@ -5596,6 +5596,7 @@ GameObject:
   - component: {fileID: 1577360188}
   - component: {fileID: 1577360187}
   - component: {fileID: 1577360189}
+  - component: {fileID: 1577360190}
   m_Layer: 0
   m_Name: Dungeon Manager
   m_TagString: Untagged
@@ -5615,7 +5616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a98017f3d043d7d4f83281746dda9fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _drawGizmos: 0
+  _drawGizmos: 1
   _spawner: {fileID: 760259611}
   _player: {fileID: 291062794}
   _roomEvent: {fileID: 11400000, guid: d1d78b254926b314d84ce8c10c8375c0, type: 2}
@@ -5655,6 +5656,20 @@ MonoBehaviour:
   _player: {fileID: 291062794}
   _currentBehaviour: {fileID: 11400000, guid: c546f3029682b1f46a1a1d15a38817fc, type: 2}
   _playerTurn: {fileID: 11400000, guid: 69dd59b851979e44887a9df5080b5552, type: 2}
+--- !u!114 &1577360190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577360186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b3ca921116cc048af0eadf7e23a6cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _globalDeathEvent: {fileID: 11400000, guid: 3a69f05b5ff99064eac93dd2ec9d5272, type: 2}
+  _scoreEvent: {fileID: 11400000, guid: 9aecf744fcf296c449c7077303118a78, type: 2}
 --- !u!1 &1613015416
 GameObject:
   m_ObjectHideFlags: 0
@@ -5899,12 +5914,12 @@ PrefabInstance:
     - target: {fileID: 1623593557072920601, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1623593557072920601, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1623593557072920601, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}
@@ -5914,17 +5929,17 @@ PrefabInstance:
     - target: {fileID: 1623593557072920601, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -985
       objectReference: {fileID: 0}
     - target: {fileID: 2216316099108252254, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2216316099108252254, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2216316099108252254, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}
@@ -5934,7 +5949,7 @@ PrefabInstance:
     - target: {fileID: 2216316099108252254, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -1235
       objectReference: {fileID: 0}
     - target: {fileID: 2293762549386174938, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}
@@ -6099,12 +6114,12 @@ PrefabInstance:
     - target: {fileID: 8193577484619337631, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8193577484619337631, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8193577484619337631, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}
@@ -6114,7 +6129,7 @@ PrefabInstance:
     - target: {fileID: 8193577484619337631, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -735
       objectReference: {fileID: 0}
     - target: {fileID: 8652036511446717209, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}

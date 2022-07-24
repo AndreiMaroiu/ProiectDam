@@ -135,10 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7073b968086755f419c7e86fc4d6910f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 1
-  _startHealth: 2
-  _moveTime: 0.4
-  _cellSizeValue: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
+  _data: {fileID: 11400000, guid: 30b9817aba2763446aa8fb9ea1d68f56, type: 2}
 --- !u!114 &1685458206275162321
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -22,10 +22,9 @@ namespace Gameplay.Enemies
             _soundhandler = GetComponent<EnemySoundHandler>();
             _renderer = GetComponent<SpriteRenderer>();
             _collider = GetComponent<Collider2D>();
-            MaxHealth = _startHealth;
-            Health = _startHealth;
+            InitHealth(_data.StartHealth);
 
-            SetMove(_moveTime, _cellSizeValue, TileType.Enemy);
+            SetMove(_data.MoveTime, _data.CellSizeValue, TileType.Enemy);
         }
 
         protected override void OnDamage()

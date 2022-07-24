@@ -127,8 +127,6 @@ namespace Gameplay.Generation
         {
             _traverser.Traverse(room =>
             {
-                RoomBehaviour behavior = _traverser[room.Pos];
-
                 Vector3 where = Vector3.zero;
 
                 if (room.LastRoom != null)
@@ -189,8 +187,8 @@ namespace Gameplay.Generation
                 RoomBehaviour current = _traverser[room.Pos];
                 RoomBehaviour previous = _traverser[room.LastRoom.Pos];
 
-                SetDoorPosition(room.Pos - room.LastRoom.Pos, current.Layers.Middle, TileType.Door);
-                SetDoorPosition(room.LastRoom.Pos - room.Pos, previous.Layers.Middle, TileType.Door);
+                SetDoorPosition(room.LastRoom.Pos - room.Pos, current.Layers.Middle, TileType.Door);
+                SetDoorPosition(room.Pos - room.LastRoom.Pos, previous.Layers.Middle, TileType.Door);
             });
         }
 
@@ -233,8 +231,8 @@ namespace Gameplay.Generation
                 DoorBehaviour currentDoor = Instantiate(_door, currentRoom.GetTransform(currentRoom.Layers.MiddleLayerIndex));
                 DoorBehaviour previousDoor = Instantiate(_door, previousRoom.GetTransform(previousRoom.Layers.MiddleLayerIndex));
 
-                SetDoor(currentDoor, previousDoor, room.Pos - room.LastRoom.Pos, currentRoom);
-                SetDoor(previousDoor, currentDoor, room.LastRoom.Pos - room.Pos, previousRoom);
+                SetDoor(currentDoor, previousDoor, room.LastRoom.Pos - room.Pos, currentRoom);
+                SetDoor(previousDoor, currentDoor, room.Pos - room.LastRoom.Pos, previousRoom);
             });
         }
 

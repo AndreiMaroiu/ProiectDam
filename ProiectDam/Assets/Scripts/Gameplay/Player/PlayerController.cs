@@ -119,8 +119,6 @@ namespace Gameplay.Player
             _energyEvent.Init(_startEnergy);
             _healthEvent.Init(_startHealth);
             _bulletsEvent.Init(_startBullets);
-
-            _playerScore.Value = 0;
         }
 
         private void Start()
@@ -218,7 +216,6 @@ namespace Gameplay.Player
             foreach (KillableObject enemy in GetNearbyEnemies(Directions, _cellSizeValue.Value))
             {
                 enemy.TakeDamage(_meleeDamage);
-                _playerScore.Value += enemy.Score;
             }
 
             // play melee attack animation and sound
@@ -272,7 +269,6 @@ namespace Gameplay.Player
             if (closest.IsNotNull())
             {
                 closest.TakeDamage(_rangedDamage);
-                _playerScore.Value += closest.Score;
 
                 float xPlayer = transform.position.x;
                 float XEnemy = closest.transform.position.x;

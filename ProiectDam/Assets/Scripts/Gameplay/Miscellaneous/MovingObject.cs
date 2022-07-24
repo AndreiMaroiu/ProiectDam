@@ -12,6 +12,7 @@ namespace Gameplay
         public float MoveTime { get; private set; }
 
         private TileType _tileType;
+        private TileType _lastType;
         private float _cellSize;
         private float _inverseMoveTime;
 
@@ -55,14 +56,15 @@ namespace Gameplay
                 yield return null;
             }
 
-            if (transform.position == endPosition)
-            {    
-                LayerPosition.Move(layerDirection);
-            }
-
             if (LayerPosition.Layer == lastLayer)
             {
-                LayerPosition.Layer[lastPos.x, lastPos.y] = TileType.None;
+                LayerPosition.Layer[lastPos.x, lastPos.y] = _lastType;
+            }
+
+            if (transform.position == endPosition)
+            {
+                _lastType = LayerPosition.GetTile(layerDirection);
+                LayerPosition.Move(layerDirection);
             }
             
             LayerPosition.TileType = _tileType;

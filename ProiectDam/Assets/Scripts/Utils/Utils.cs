@@ -24,17 +24,17 @@ namespace Utilities
 
         public static Vector3 GetVector3FromMatrixPos(int i, int j, float cellSize = 1.0f)
         {
-            return new Vector3(cellSize * -j, cellSize * i);
+            return new Vector3(cellSize * j, cellSize * -i);
         }
 
         public static Vector3 GetVector3FromMatrixPos(Vector2Int pos, float cellSize = 1.0f)
         {
-            return new Vector3(cellSize * -pos.y, cellSize * pos.x);
+            return GetVector3FromMatrixPos(pos.x, pos.y, cellSize);
         }
 
         public static Vector2Int GetMatrixPos(Vector2Int dir)
         {
-            return new Vector2Int(dir.y, -dir.x);
+            return new Vector2Int(-dir.y, dir.x);
         }
     }
 }

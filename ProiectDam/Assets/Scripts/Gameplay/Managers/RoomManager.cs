@@ -4,6 +4,7 @@ using Gameplay.Events;
 using Gameplay.Generation;
 using Gameplay.Player;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utilities;
@@ -74,7 +75,8 @@ namespace Gameplay.Managers
                     {
                         Vector3 where = Utils.GetVector3FromMatrixPos(i, j, 1.3f) - offset;
                         Gizmos.color = GetGizmoColor(layer[i, j]);
-                        Gizmos.DrawCube(where, Vector3.one);
+                        Gizmos.DrawWireCube(where, Vector3.one);
+                        Handles.Label(where, $"({i.ToString()}, {j.ToString()})");
                     }
                 }
             }

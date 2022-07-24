@@ -1,4 +1,3 @@
-using Core.Values;
 using Gameplay.Generation;
 using Gameplay.Player;
 using System;
@@ -12,10 +11,9 @@ namespace Gameplay.Enemies
     {
         private static readonly Vector2Int[] Directions = { Vector2Int.down, Vector2Int.up, Vector2Int.left, Vector2Int.right };
 
-        [SerializeField] protected int _damage;
-        [SerializeField] protected int _startHealth = 1;
-        [SerializeField] protected float _moveTime;
-        [SerializeField] protected FloatValue _cellSizeValue;
+        [SerializeField] protected EnemyData _data;
+
+        private Vector2Int? _lastPosition;
 
         public event Action<BaseEnemy> OnDeathEvent;
 
@@ -25,13 +23,13 @@ namespace Gameplay.Enemies
         {
             if ((LayerPosition.Position - player.LayerPosition.Position).sqrMagnitude == 1)
             {
-                player.TakeDamage(_damage);
+                player.TakeDamage(_data.Damage);
                 OnAttack(player);
                 yield break;
             }
 
-            Vector2Int direction = Utils.GetMatrixPos(GetMoveDirection(player));
-            yield return TryMove(-direction);
+            Vector2Int direction = -Utils.GetMatrixPos(GetMoveDirection(player));
+            yield return TryMove(direction);
         }
 
         private Vector2Int GetMoveDirection(PlayerController player)
@@ -44,7 +42,8 @@ namespace Gameplay.Enemies
             foreach (Vector2Int direction in Directions)
             {
                 Vector2Int pos = direction + LayerPosition.Position;
-                if (!layer[pos.x, pos.y].CanMove())
+
+                if (!layer[pos.x, pos.y].CanMove() || _lastPosition.HasValue && _lastPosition.Value == pos)
                 {
                     continue;
                 }
@@ -57,23 +56,23 @@ namespace Gameplay.Enemies
                 }
             }
 
+            _lastPosition = LayerPosition.Position;
+
             return result;
 
             //var queue = new SimplePriorityQueue<Vector2Int, int>();
             //var previous = new Dictionary<Vector2Int, Vector2Int>();
             //var visited = new HashSet<Vector2Int>();
             //var playerPos = player.LayerPosition.Position;
-
-            //TileType[,] layer = LayerPosition.Layer;
-
-
-            ////float min = float.MaxValue;
-            //Vector2Int result = Vector2Int.zero;
+            //var layer = LayerPosition.Layer;
+            //var found = false;
 
             //queue.Enqueue(LayerPosition.Position, 0);
 
-            //// TODO: save data for backtracking
-            //bool found = false;
+            ////if (_lastPosition.HasValue)
+            ////{
+            ////    visited.Add(_lastPosition.Value);
+            ////}
 
             //while (queue.Count > 0)
             //{
@@ -99,24 +98,26 @@ namespace Gameplay.Enemies
             //        int distance = Math.Abs(pos.x - playerPos.x) + Math.Abs(pos.y - playerPos.y);
 
             //        queue.Enqueue(pos, distance);
-            //        previous[pos] = first;                    
+            //        previous[pos] = first;
             //    }
             //}
 
             //if (!found)
             //{
-            //    print("not found direction");
+            //    print("no direction found!");
             //    return Vector2Int.zero;
             //}
 
             //Vector2Int current = player.LayerPosition.Position;
+            //_lastPosition = current;
 
             //while (previous[current] != this.LayerPosition.Position)
             //{
             //    current = previous[current];
             //}
 
-            //return current - this.LayerPosition.Position;
+            //Vector2Int result = current - this.LayerPosition.Position;
+            //return result;
         }
 
         public sealed override void OnDeathFinished()
@@ -124,6 +125,7 @@ namespace Gameplay.Enemies
             OnDeathEvent?.Invoke(this);
             LayerPosition?.Clear();
             Destroy(this.gameObject);
+            _data.GlobalDeathEvent.Invoke(this);
         }
 
         protected sealed override bool CanMoveToTile(TileType tile)
