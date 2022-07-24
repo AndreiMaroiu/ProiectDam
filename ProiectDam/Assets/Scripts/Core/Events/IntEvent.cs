@@ -27,5 +27,8 @@ namespace Core.Events
 
         public static implicit operator int(IntEvent @event)
             => @event.Value;
+
+        public override string ToString()
+            => Value.ToString();
     }
 }

@@ -3,6 +3,7 @@ using Core.Items;
 using ModalWindows;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Merchant
 {
@@ -10,10 +11,12 @@ namespace UI.Merchant
     {
         [Header("Events")]
         [SerializeField] private ItemsEvent _itemsEvent;
+        [SerializeField] private IntEvent _moneyEvent;
         [Header("UI Elements")]
         [SerializeField] private GameObject _mainCanvas;
         [SerializeField] private GameObject _panel;
         [SerializeField] private ItemDescriptionUI _itemPrefab;
+        [SerializeField] private Text _moneyText;
 
         private void Start()
         {
@@ -40,6 +43,8 @@ namespace UI.Merchant
                     ClosePanel();
                 });
             }
+
+            _moneyText.text = _moneyEvent.ToString();
         }
 
         private void ClearPanel()

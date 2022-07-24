@@ -45,6 +45,7 @@ namespace Gameplay.Player
         [SerializeField] private GameEvent _onRangeAttack;
         [SerializeField] private BoolEvent _playerTurn;
         [SerializeField] private IntEvent _playerScore;
+        [SerializeField] private IntEvent _money;
 
         #endregion
 
@@ -108,6 +109,12 @@ namespace Gameplay.Player
         {
             get => _rangedDamage;
             set => _rangedDamage = value;
+        }
+
+        public int Money
+        {
+            get => _money;
+            set => _money.Value = value;
         }
 
         #endregion

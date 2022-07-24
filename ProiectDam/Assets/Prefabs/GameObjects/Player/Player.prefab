@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215fcffe80509a8458d545cdad434bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stats: {fileID: 0}
+  _stats: {fileID: 11400000, guid: 293f54894d8086549abaa38eb9a523c1, type: 2}
   _cellSizeValue: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
   _moveTime: 0.3
   _startEnergy: 100
@@ -73,6 +73,7 @@ MonoBehaviour:
   _onRangeAttack: {fileID: 11400000, guid: 25c64d8be397375498675c2099a88543, type: 2}
   _playerTurn: {fileID: 11400000, guid: 69dd59b851979e44887a9df5080b5552, type: 2}
   _playerScore: {fileID: 11400000, guid: 9aecf744fcf296c449c7077303118a78, type: 2}
+  _money: {fileID: 11400000, guid: 661123d1b8fb1594ba6f3bb46be35907, type: 2}
 --- !u!50 &47525207141400158
 Rigidbody2D:
   serializedVersion: 4

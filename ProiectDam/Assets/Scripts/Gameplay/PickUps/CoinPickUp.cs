@@ -11,7 +11,7 @@ namespace Gameplay.PickUps
 
         protected override void Interact(PlayerController controller)
         {
-            // TODO: add coins to player
+            controller.Money += _boost;
         }
     }
 }
