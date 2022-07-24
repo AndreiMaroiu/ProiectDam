@@ -39,6 +39,8 @@ namespace Gameplay.Merchant
             StartCoroutine(ShowDialog("Bye!", 1.0f));
 
             _animator.SetTrigger("Hide");
+
+            _player = null;
         }
 
         #endregion
@@ -64,7 +66,12 @@ namespace Gameplay.Merchant
 
         public override void OnClick()
         {
-            if (!_canBuy || _player is null)
+            if (_player is null)
+            {
+                return;
+            }
+
+            if (!_canBuy)
             {
                 StartCoroutine(ShowDialog("Sorry, no more items for now!", 2.0f));
                 return;
