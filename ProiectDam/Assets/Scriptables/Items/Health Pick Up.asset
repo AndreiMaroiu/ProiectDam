@@ -15,6 +15,7 @@ MonoBehaviour:
   _cost: 10
   _image: {fileID: 1371628056344953650, guid: 5568de939d4993849ae877ef2fe0392b, type: 3}
   _description: Restore health points
+  _sound: {fileID: 8300000, guid: a7b73a0db258a1849a763935cdbad51d, type: 3}
   _type:
     _type: HealthBoost
   _points: 2

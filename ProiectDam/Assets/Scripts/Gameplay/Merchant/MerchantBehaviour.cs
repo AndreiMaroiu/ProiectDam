@@ -94,7 +94,7 @@ namespace Gameplay.Merchant
             return "Hello!";
         }
 
-        IEnumerator ShowDialog(string dialogText, float openDuration = 1.0f)
+        private IEnumerator ShowDialog(string dialogText, float openDuration = 1.0f)
         {
             //StopAllCoroutines();
 
@@ -106,7 +106,6 @@ namespace Gameplay.Merchant
             yield return null;
             _layout.enabled = true;
             
-
             yield return new WaitForSeconds(openDuration);
 
             _dialogCanvas.SetActive(false);

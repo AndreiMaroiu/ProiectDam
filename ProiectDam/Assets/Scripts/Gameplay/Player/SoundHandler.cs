@@ -1,44 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.Player
 {
+    /// <summary>
+    /// Player sound handler
+    /// </summary>
+    [RequireComponent(typeof(AudioSource))]
     public class SoundHandler : MonoBehaviour
     {
-        private AudioSource _currentSound;
         [SerializeField] private AudioClip _shootClip;
         [SerializeField] private AudioClip _walkClip;
         [SerializeField] private AudioClip _meleeClip;
         [SerializeField] private AudioClip _deathClip;
+
+        private const float _randomRange = 0.2f;
+        private AudioSource _currentSound;
+
         private void Start()
         {
-           _currentSound = GetComponent<AudioSource>();
-
+            _currentSound = GetComponent<AudioSource>();
         }
 
-        public void PlayMove() 
-        {
-            _currentSound.clip = _walkClip;
-            _currentSound.Play();
-        }
+        public void PlayMove() => PlaySound(_walkClip);
 
-        public void PlayShoot()
-        {
-            _currentSound.clip = _shootClip;
-            _currentSound.Play();
-        }
+        public void PlayShoot() => PlaySound(_shootClip, _randomRange);
 
-        public void PlayMelee()
-        {
-            _currentSound.clip = _meleeClip;
-            _currentSound.Play();
-        }
-        public void PlayDeath()
-        {
-            _currentSound.clip = _deathClip;
-            _currentSound.Play();
-        }
+        public void PlayMelee() => PlaySound(_meleeClip, _randomRange);
+
+        public void PlayDeath() => PlaySound(_deathClip);
+
         public void Stop() => _currentSound.Stop();
+
+        private void PlaySound(AudioClip clip, float randomRange = 0.0f)
+            => _currentSound.PlayOneShot(clip, _currentSound.volume + Random.Range(-randomRange, 0.0f));
     }
 }

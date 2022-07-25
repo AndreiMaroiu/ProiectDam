@@ -8,6 +8,11 @@ namespace Gameplay
 
         private void OnMouseUp()
         {
+            if (Time.deltaTime == 0.0f)
+            {
+                return;
+            }
+
             OnClick();
         }
     }

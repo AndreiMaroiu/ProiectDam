@@ -7,9 +7,11 @@ namespace Core.Items
         [SerializeField] private int _cost;
         [SerializeField] private Sprite _image;
         [SerializeField] private string _description;
+        [SerializeField] private AudioClip _sound;
         
         public int Cost => _cost;
         public Sprite Image => _image;
         public string Description => _description;
+        public AudioClip Sound => _sound;
     }
 }
