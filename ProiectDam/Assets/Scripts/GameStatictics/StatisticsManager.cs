@@ -19,9 +19,9 @@ namespace GameStatistics
 
         #region Public Methods
 
-        public Statistics LoadStats() => Load<Statistics>(_statsPath);
+        public StatsHandler<Statistics> LoadStats() => Load<Statistics>(_statsPath);
 
-        public PlayerMoney LoadMoney() => Load<PlayerMoney>(_moneyPath);
+        public StatsHandler<PlayerMoney> LoadMoney() => Load<PlayerMoney>(_moneyPath);
 
         public void Save(Statistics stats) => Save(stats, _statsPath);
 
@@ -31,7 +31,7 @@ namespace GameStatistics
 
         #region Private Methods
 
-        private void Save<T>(T data, string path) where T : class
+        internal void Save<T>(T data, string path)
         {
             using FileStream file = File.Create(path);
             BinaryFormatter bf = new BinaryFormatter();
@@ -39,16 +39,18 @@ namespace GameStatistics
             bf.Serialize(file, data);
         }
 
-        private T Load<T>(string path) where T : new()
+        private StatsHandler<T> Load<T>(string path) where T : new()
         {
             if (!File.Exists(path))
             {
-                return new T();
+                return new StatsHandler<T>(new T(), this, path);
             }
 
             using FileStream file = File.OpenRead(_statsPath);
             BinaryFormatter bf = new BinaryFormatter();
-            return (T)bf.Deserialize(file);
+            T data = (T)bf.Deserialize(file);
+
+            return new StatsHandler<T>(data, this, path);
         }
 
         #endregion

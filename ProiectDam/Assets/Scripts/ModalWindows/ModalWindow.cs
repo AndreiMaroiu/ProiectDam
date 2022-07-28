@@ -39,9 +39,16 @@ namespace ModalWindows
         private Action _okAction = null;
         private Action _alternativeAction = null;
 
+        private float? _lastTimeScale = null;
+
         private void Close()
         {
             _window.gameObject.SetActive(false);
+
+            if (_lastTimeScale.HasValue)
+            {
+                Time.timeScale = _lastTimeScale.Value;
+            }
         }
 
         public void OnClose()
@@ -62,8 +69,9 @@ namespace ModalWindows
             Close();
         }
 
-        private void SetWindow(ModalWindowData data)
+        private void SetWindow(ModalWindowData data, float? lastTimeScale = null)
         {
+            _lastTimeScale = lastTimeScale;
             _window.gameObject.SetActive(true);
 
             _headerArea.SetActive(!string.IsNullOrEmpty(data.Header));

@@ -14,7 +14,6 @@ namespace UI
         [SerializeField] private CappedIntEvent _energy;
         [SerializeField] private CappedIntEvent _health;
         [SerializeField] private CappedIntEvent _bullets;
-        [SerializeField] private GameEvent _onPlayerDeath;
         [SerializeField] private IntEvent _scoreEvent;
         [Header("Sliders")]
         [SerializeField] private Slider _energySlider;
@@ -48,7 +47,6 @@ namespace UI
             _bullets.OnValueChanged += OnBulletsChange;
             _bullets.OnMaxValueChanged += OnMaxBulletsChange;
 
-            _onPlayerDeath.OnEvent += OnPlayerDeath;
             _scoreEvent.OnValueChanged += OnScoreChange;
         }
 
@@ -63,7 +61,6 @@ namespace UI
             _bullets.OnValueChanged -= OnBulletsChange;
             _bullets.OnMaxValueChanged -= OnMaxBulletsChange;
 
-            _onPlayerDeath.OnEvent -= OnPlayerDeath;
             _scoreEvent.OnValueChanged -= OnScoreChange;
         }
 
@@ -114,25 +111,6 @@ namespace UI
         private void UpdateBulletsText()
         {
             _bulletsText.text = _bullets.ToString();
-        }
-
-        private void OnPlayerDeath(object sender)
-        {
-            Statistics data = StatisticsManager.Instance.LoadStats();
-
-            data.AddLoss();
-
-            StatisticsManager.Instance.Save(data);
-
-            ModalWindow.Show(new ModalWindowData()
-            {
-                Header = "You Died!",
-                Content = "Score: " + _scoreEvent.Value.ToString(),
-                CloseText = "Main Menu",
-                CloseAction = () => SceneManager.LoadScene(Scenes.MainMenu),
-                OkText = "Play Again",
-                OkAction = () => SceneManager.LoadScene(Scenes.MainScene)
-            });
         }
 
         private void OnScoreChange()

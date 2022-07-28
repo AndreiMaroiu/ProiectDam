@@ -10,6 +10,12 @@ namespace ModalWindows
             SetDebug(data);
         }
 
+        public static void ShowDialog(float timeScale, ModalWindowData data)
+        {
+            Time.timeScale = 0;
+            SetDebug(data, timeScale);
+        }
+
         public static void ShowMessage(string message)
         {
             SetDebug(new ModalWindowData()
@@ -18,16 +24,7 @@ namespace ModalWindows
             });
         }
 
-        public static void ShowSimpleDialog(string message, Action closeAction)
-        {
-            SetDebug(new ModalWindowData()
-            {
-                Content = message,
-                CloseAction = closeAction
-            });
-        }
-
-        private static void SetDebug(ModalWindowData data)
+        private static void SetDebug(ModalWindowData data, float? lastTimeScale = null)
         {
             if (!ReferenceEquals(Instance, null))
             {

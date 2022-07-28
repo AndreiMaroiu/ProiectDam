@@ -4653,7 +4653,6 @@ MonoBehaviour:
   _energy: {fileID: 11400000, guid: 917748f6b3e7da44f9e69a2067ad2307, type: 2}
   _health: {fileID: 11400000, guid: ec3568012a067f84da5a55b8eb7f3079, type: 2}
   _bullets: {fileID: 11400000, guid: d6da2fced39aa024aaaea806d85ae96c, type: 2}
-  _onPlayerDeath: {fileID: 11400000, guid: 9d8a5883be5e2394abb1e7e1ec2f447b, type: 2}
   _scoreEvent: {fileID: 11400000, guid: 9aecf744fcf296c449c7077303118a78, type: 2}
   _energySlider: {fileID: 1378458368}
   _healthSlider: {fileID: 347247742}
@@ -8422,6 +8421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _winEvent: {fileID: 11400000, guid: ffcb45c4c8e69e343b5a88c7b2fcf87f, type: 2}
   _scoreEvent: {fileID: 11400000, guid: 9aecf744fcf296c449c7077303118a78, type: 2}
+  _loseEvent: {fileID: 11400000, guid: 9d8a5883be5e2394abb1e7e1ec2f447b, type: 2}
 --- !u!4 &2044503602
 Transform:
   m_ObjectHideFlags: 0
@@ -8852,6 +8852,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _deathTime
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 47525207141400157, guid: 1292ef2264e73a94fb25f52ed02eb628,
+        type: 3}
+      propertyPath: _startHealth
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 47525207141400157, guid: 1292ef2264e73a94fb25f52ed02eb628,
         type: 3}

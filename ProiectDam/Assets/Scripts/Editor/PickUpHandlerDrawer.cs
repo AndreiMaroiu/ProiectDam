@@ -3,6 +3,8 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
+
 namespace EditorScripts
 {
     [CustomPropertyDrawer(typeof(PickUpHandler))]
@@ -21,7 +23,7 @@ namespace EditorScripts
 
             //int indent = EditorGUI.indentLevel;
             //EditorGUI.indentLevel = 0;
-            
+
             _choiceIndex = EditorGUI.Popup(rect, "Type", _choiceIndex, _choices);
             type.stringValue = _choices[_choiceIndex];
 
@@ -30,3 +32,5 @@ namespace EditorScripts
         }
     }
 }
+
+#endif

@@ -59,6 +59,8 @@ namespace Gameplay.Managers
             _previewEvent.OnValueChanged -= OnPreviewChanged;
         }
 
+#if UNITY_EDITOR
+
         private void OnDrawGizmos()
         {
             if (Application.isPlaying && _drawGizmos)
@@ -66,7 +68,7 @@ namespace Gameplay.Managers
                 int size = _roomBehaviourEvent.Value.ActiveLayer.GetLength(0);
                 TileType[,] layer = _roomBehaviourEvent.Value.ActiveLayer;
 
-                Vector3 offset = Utils.GetVector3FromMatrixPos(size / 2, size / 2, 1.3f) 
+                Vector3 offset = Utils.GetVector3FromMatrixPos(size / 2, size / 2, 1.3f)
                                         - _roomBehaviourEvent.Value.transform.position;
 
                 for (int i = 0; i < size; i++)
@@ -81,6 +83,8 @@ namespace Gameplay.Managers
                 }
             }
         }
+
+#endif
 
         private Color GetGizmoColor(TileType tile) => tile switch
         {
