@@ -24,6 +24,9 @@ namespace Core
             _matrixSize = matrix.GetLength(0);
         }
 
+        /// <summary>
+        /// Traverse all rooms, including duplicates. Usefull for finding doors
+        /// </summary>
         public void Traverse(Action<Room> action)
         {
             Queue<Room> queue = new Queue<Room>();
@@ -43,6 +46,9 @@ namespace Core
             }
         }
 
+        /// <summary>
+        /// Traverse all rooms, excluding duplicates. Usefull for generating rooms
+        /// </summary>
         public void TraverseUnique(Action<Room> action)
         {
             Queue<Room> queue = new Queue<Room>();

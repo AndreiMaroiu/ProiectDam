@@ -1,9 +1,7 @@
 using Core.Events;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace UI
+namespace UI.Map
 {
     public class MapDisplayer : MonoBehaviour
     {
@@ -12,7 +10,6 @@ namespace UI
         [SerializeField] private GameObject _mainCanvas;
         [Header("Events")]
         [SerializeField] private BoolEvent _previewActive;
-
 
         public float LastTimeScale { get; set; }
 

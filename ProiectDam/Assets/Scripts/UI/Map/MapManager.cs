@@ -5,20 +5,21 @@ using UnityEngine.UI;
 using Utilities;
 using Core.Values;
 
-namespace UI
+namespace UI.Map
 {
     public class MapManager : MonoBehaviour
     {
         [SerializeField] private GameObject _map;
         [SerializeField] private float _cellSize;
         [SerializeField] private float _cellDistance;
-        [SerializeField] private RectTransform _roomPrefab;
+        [SerializeField] private RoomUIBehaviour _roomPrefab;
         [SerializeField] private IntValue _matrixSize;
+        [SerializeField] private MapIcons _icons;
         [Header("Events")]
         [SerializeField] private RoomEvent _currentRoom;
 
-        private RoomTraverser<RectTransform> _traverser;
-        private RectTransform _currentRect;
+        private RoomTraverser<RoomUIBehaviour> _traverser;
+        private RoomUIBehaviour _currentRect;
         private RectTransform _mapRect;
 
         private Vector2Int _width;
@@ -45,17 +46,17 @@ namespace UI
                 _currentRect.GetComponent<Image>().color = Color.gray;
             }
 
-            RectTransform room = _traverser[_currentRoom.Value.Pos];
-            room.gameObject.SetActive(true);
-            room.GetComponent<Image>().color = Color.white;
+            RoomUIBehaviour room = _traverser[_currentRoom.Value.Pos];
+            room.SetActive(Color.white);
 
             _currentRect = room;
 
-            CheckMinMax();
+            CheckBounds();
         }
 
-        private void CheckMinMax()
+        private void CheckBounds()
         {
+            // TODO: refactor
             Room room = _currentRoom.Value;
             float size = (_cellDistance + _cellSize);
 
@@ -84,25 +85,32 @@ namespace UI
         private void GenerateMap()
         {
             Room start = _currentRoom.Value;
-            _traverser = new RoomTraverser<RectTransform>(start, _matrixSize);
+            _traverser = new RoomTraverser<RoomUIBehaviour>(start, _matrixSize);
 
             _width = start.Pos;
             _height = start.Pos;
 
-            _traverser.TraverseUnique(room =>
+            // generating rooms
+            _traverser.Traverse(room =>
             {
                 Vector2 pos = Vector2.zero;
 
                 if (room.LastRoom != null)
                 {
-                    pos = _traverser[room.LastRoom.Pos].anchoredPosition + (Vector2)Utils.GetWorldDirection(room.Direction) * _cellDistance;
+                    pos = _traverser[room.LastRoom.Pos].Rect.anchoredPosition + (Vector2)Utils.GetWorldDirection(room.Direction) * _cellDistance;
                 }
 
-                _traverser[room.Pos] = Instantiate(_roomPrefab, _map.transform);
-                _traverser[room.Pos].anchoredPosition = pos;
-                _traverser[room.Pos].gameObject.SetActive(false);
+                RoomUIBehaviour clone = Instantiate(_roomPrefab, _map.transform);
+                clone.Rect.anchoredPosition = pos;
+                clone.gameObject.SetActive(false);
+                clone.Set(_icons.GetIcon(room.Type));
+
+                _traverser[room.Pos] = clone;
             });
 
+            RectTransform door = GenerateDoor();
+
+            // generating doors
             _traverser.Traverse(room =>
             {
                 if (room.LastRoom is null)
@@ -110,12 +118,21 @@ namespace UI
                     return;
                 }
 
-                RectTransform door = Instantiate(_roomPrefab, _traverser[room.LastRoom.Pos].transform);
-                door.anchoredPosition = Utils.GetWorldDirection(room.Direction) * _cellSize / 2;
-                door.sizeDelta /= 5;
+                RectTransform clone = Instantiate(door, _traverser[room.LastRoom.Pos].transform);
+                clone.anchoredPosition = Utils.GetWorldDirection(room.Direction) * _cellSize / 2;
             });
 
             OnRoomChanged();
+            Destroy(door.gameObject);
+        }
+
+        private RectTransform GenerateDoor()
+        {
+            RectTransform rect = new GameObject("door image", typeof(RectTransform), typeof(Image)).GetComponent<RectTransform>();
+            rect.localScale = Vector3.one;
+            rect.sizeDelta /= 5;
+
+            return rect;
         }
     }
 }
