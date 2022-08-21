@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Utilities;
 
 namespace UI
@@ -53,9 +50,19 @@ namespace UI
 
         public void OnStartClick()
         {
+            const string firstTimeKey = "FirstTime";
             _transition.SetTrigger("Start");
             StartCoroutine(Scenes.LoadAsync(Scenes.LoadingMenu));
-            Loader.TargetScene = Scenes.MainScene;
+
+            if (PlayerPrefs.GetInt(firstTimeKey, defaultValue: 0) == 1)
+            {
+                Loader.TargetScene = Scenes.MainScene;
+            }
+            else
+            {
+                Loader.TargetScene = Scenes.Tutorial;
+                PlayerPrefs.SetInt(firstTimeKey, 1);
+            }
         }
 
         public void OnStatsClick()
