@@ -22,7 +22,10 @@ namespace UI
         {
             _onGlobalKillEvent.OnEvent += OnKillMessage;
             _OnRoomEvent.OnValueChanged += OnRoomEnter;
+        }
 
+        private void Start()
+        {
             ShowWelcomeMessage();
         }
 
