@@ -1,12 +1,13 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace Utilities
 {
     public class Loader : MonoBehaviour
     {
+        public static int TargetScene { get; set; } = Scenes.MainScene;
+
         [SerializeField] private Animator _transition;
 
         private IEnumerator Start()
@@ -14,7 +15,7 @@ namespace Utilities
             // wait for fade in animation to finish
             yield return new WaitForSeconds(1.0f);
 
-            AsyncOperation loader = SceneManager.LoadSceneAsync(Scenes.MainScene);
+            AsyncOperation loader = SceneManager.LoadSceneAsync(TargetScene);
             loader.allowSceneActivation = false;
 
             while (!loader.isDone)

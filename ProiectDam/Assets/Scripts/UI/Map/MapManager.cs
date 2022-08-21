@@ -85,13 +85,13 @@ namespace UI.Map
         private void GenerateMap()
         {
             Room start = _currentRoom.Value;
-            _traverser = new RoomTraverser<RoomUIBehaviour>(start, _matrixSize);
+            _traverser = new RoomTraverser<RoomUIBehaviour>(start);
 
             _width = start.Pos;
             _height = start.Pos;
 
             // generating rooms
-            _traverser.Traverse(room =>
+            _traverser.TraverseUnique(room =>
             {
                 Vector2 pos = Vector2.zero;
 
@@ -128,9 +128,12 @@ namespace UI.Map
 
         private RectTransform GenerateDoor()
         {
-            RectTransform rect = new GameObject("door image", typeof(RectTransform), typeof(Image)).GetComponent<RectTransform>();
+            RectTransform rect = new GameObject("door image", typeof(RectTransform), typeof(Image))
+                                    .GetComponent<RectTransform>();
             rect.localScale = Vector3.one;
             rect.sizeDelta /= 5;
+
+            rect.GetComponent<Image>().color = Color.grey;
 
             return rect;
         }

@@ -9,6 +9,7 @@ namespace UI.Merchant
     {
         [SerializeField] private Text _description;
         [SerializeField] private Image _image;
+        [SerializeField] private Text _priceText;
 
         private Action _buyCallback;
 
@@ -16,6 +17,7 @@ namespace UI.Merchant
         {
             _buyCallback = onBuy;
             _description.text = description.Description;
+            _priceText.text = description.Cost.ToString();
             _image.sprite = description.Image;
         }
 

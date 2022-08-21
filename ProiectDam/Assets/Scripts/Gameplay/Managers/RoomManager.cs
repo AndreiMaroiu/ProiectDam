@@ -14,7 +14,7 @@ namespace Gameplay.Managers
     public class RoomManager : MonoBehaviour
     {
         [SerializeField] private bool _drawGizmos;
-        [SerializeField] private LevelSpawner _spawner;
+        [SerializeField] private BaseLevelSpawner _spawner;
         [SerializeField] private PlayerController _player;
         [Header("Events")]
         [SerializeField] private RoomEvent _roomEvent;

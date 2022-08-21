@@ -9,6 +9,7 @@ namespace Utilities
         public const int MainScene = 1;
         public const int MainMenu = 0;
         public const int LoadingMenu = 2;
+        public const int Tutorial = 3;
 
         public static IEnumerator LoadAsync(int scene)
         {

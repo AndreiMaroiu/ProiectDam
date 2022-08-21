@@ -6,22 +6,13 @@ namespace Core
 {
     public class RoomTraverser<T>
     {
-        private readonly T[,] _matrix;
+        private readonly Dictionary<Vector2Int, T> _matrix;
         private readonly Room _start;
-        private readonly int _matrixSize;
 
-        public RoomTraverser(Room start, int matrixSize)
+        public RoomTraverser(Room start)
         {
-            _matrixSize = matrixSize;
-            _matrix = new T[matrixSize, matrixSize];
+            _matrix = new Dictionary<Vector2Int, T>();
             _start = start;
-        }
-
-        public RoomTraverser(Room start, T[,] matrix)
-        {
-            _matrix = matrix;
-            _start = start;
-            _matrixSize = matrix.GetLength(0);
         }
 
         /// <summary>
@@ -52,7 +43,7 @@ namespace Core
         public void TraverseUnique(Action<Room> action)
         {
             Queue<Room> queue = new Queue<Room>();
-            bool[,] wasTraversed = new bool[_matrixSize, _matrixSize];
+            HashSet<Vector2Int> wasTraversed = new HashSet<Vector2Int>();
 
             queue.Enqueue(_start);
 
@@ -60,10 +51,10 @@ namespace Core
             {
                 Room top = queue.Dequeue();
 
-                if (!wasTraversed[top.Pos.x, top.Pos.y])
+                if (!wasTraversed.Contains(top.Pos))
                 {
                     action(top);
-                    wasTraversed[top.Pos.x, top.Pos.y] = true;
+                    wasTraversed.Add(top.Pos);
                 }
                 
                 foreach (Room room in top)
@@ -73,20 +64,19 @@ namespace Core
             }
         }
 
-        public void Traverse(Action<Vector2Int> action) 
-            => Traverse(room => action(room.Pos));
-
-        public void Traverse(Action<Vector2Int, T[,]> action) 
-            => Traverse(room => action(room.Pos, _matrix));
-
-        public T[,] Matrix => _matrix;
-
-        public int Size => _matrix.GetLength(0);
-
         public T Start => this[_start.Pos];
 
-        public ref T this[Vector2Int where] => ref _matrix[where.x, where.y];
-
-        public ref T this[int x, int y] => ref _matrix[x, y];
+        public T this[Vector2Int where]
+        {
+            get
+            {
+                if (!_matrix.ContainsKey(where))
+                {
+                    _matrix[where] = default;
+                }
+                return _matrix[where];
+            }
+            set => _matrix[where] = value;
+        }
     }
 }

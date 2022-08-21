@@ -41,6 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7212762324802027849}
   - component: {fileID: 578128566426964009}
+  - component: {fileID: 8805685031685024347}
+  - component: {fileID: 7850046590867482839}
   m_Layer: 0
   m_Name: TX Props Pot A
   m_TagString: Untagged
@@ -103,7 +105,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300090, guid: 29c9cded5e558164aaf8c9bf08aa1510, type: 3}
-  m_Color: {r: 0.9056604, g: 0.5339979, b: 0.6727369, a: 1}
+  m_Color: {r: 0.8867924, g: 0.70692414, b: 0.7746667, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -113,3 +115,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8805685031685024347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8384855874080204505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e683024b30ba5e64abba4a74f92f5747, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _coinPickUp: {fileID: 8540815872065423717, guid: 160c206b264608442862f313c8354941,
+    type: 3}
+--- !u!58 &7850046590867482839
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8384855874080204505}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.5}
+  serializedVersion: 2
+  m_Radius: 0.37798285

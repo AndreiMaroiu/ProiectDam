@@ -17,10 +17,12 @@ namespace Gameplay.Generation
         #endregion
 
         private readonly int _layerSize;
+        private readonly Vector2Int _enemiesRange;
 
-        public LayersGenerator(int layerSize)
+        public LayersGenerator(int layerSize, Vector2Int enemiesRange)
         {
             _layerSize = layerSize;
+            _enemiesRange = enemiesRange;
         }
 
         public Layers Generate(Room room) => room.Type switch
@@ -115,13 +117,18 @@ namespace Gameplay.Generation
             return layers;
         }
 
+        private int GetEnemiesCountRandom()
+        {
+            return Random.Range(_enemiesRange.x, _enemiesRange.y + 1);
+        }
+
         private void GenerateSimple(TileType[,] tiles)
         {
             GenerateBorder(tiles);
 
             List<Vector2Int> positions = GetPositions(tiles);
 
-            SpawnTiles(tiles, positions, Random.Range(3, 6), TileType.Enemy);
+            SpawnTiles(tiles, positions, GetEnemiesCountRandom(), TileType.Enemy);
             SpawnTiles(tiles, positions, Random.Range(2, 3), TileType.PickUp);
             SpawnTiles(tiles, positions, Random.Range(3, 7), TileType.Obstacle);
             SpawnTiles(tiles, positions, 1, TileType.Trap);
@@ -133,7 +140,7 @@ namespace Gameplay.Generation
 
             List<Vector2Int> positions = GetPositions(current);
             
-            SpawnTilesComplex(current, previous, positions, Random.Range(3, 6), TileType.Enemy);
+            SpawnTilesComplex(current, previous, positions, GetEnemiesCountRandom(), TileType.Enemy);
             SpawnTilesComplex(current, previous, positions, Random.Range(2, 3), TileType.PickUp);
             SpawnTilesComplex(current, previous, positions, Random.Range(3, 7), TileType.Obstacle);
             SpawnTilesComplex(current, previous, positions, 1, TileType.Trap);

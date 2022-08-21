@@ -151,7 +151,7 @@ namespace Gameplay.Generation
 
         public void CalculateDistances()
         {
-            RoomTraverser<int> traverser = new RoomTraverser<int>(_start, _matrix.GetLength(0));
+            RoomTraverser<int> traverser = new RoomTraverser<int>(_start);
 
             traverser.Traverse(room =>
             {
@@ -173,7 +173,7 @@ namespace Gameplay.Generation
         public Dictionary<Vector2Int, List<Room>> CalculateDuplicates()
         {
             Dictionary<Vector2Int, List<Room>> dict = new Dictionary<Vector2Int, List<Room>>();
-            RoomTraverser<int> traverser = new RoomTraverser<int>(_start, _matrix.GetLength(0));
+            RoomTraverser<int> traverser = new RoomTraverser<int>(_start);
 
             traverser.Traverse(room =>
             {

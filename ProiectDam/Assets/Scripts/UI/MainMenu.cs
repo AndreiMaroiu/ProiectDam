@@ -55,12 +55,20 @@ namespace UI
         {
             _transition.SetTrigger("Start");
             StartCoroutine(Scenes.LoadAsync(Scenes.LoadingMenu));
+            Loader.TargetScene = Scenes.MainScene;
         }
 
         public void OnStatsClick()
         {
             _mainCanvas.SetActive(false);
             _statsCanvas.SetActive(true);
+        }
+
+        public void OnTutorialClick()
+        {
+            _transition.SetTrigger("Start");
+            StartCoroutine(Scenes.LoadAsync(Scenes.LoadingMenu));
+            Loader.TargetScene = Scenes.Tutorial;
         }
 
         public void OnQuitClick()
