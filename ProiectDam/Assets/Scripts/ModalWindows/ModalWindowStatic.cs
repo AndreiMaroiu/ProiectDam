@@ -28,7 +28,7 @@ namespace ModalWindows
         {
             if (!ReferenceEquals(Instance, null))
             {
-                Instance.SetWindow(data);
+                Instance.SetWindow(data, lastTimeScale);
             }
 #if UNITY_EDITOR
             else
