@@ -19,16 +19,20 @@ namespace UI
         private bool _endEntered;
 
 
-        private void Awake()
+        private void Start()
         {
             _onGlobalKillEvent.OnEvent += OnKillMessage;
             _OnRoomEvent.OnValueChanged += OnRoomEnter;
             _onPlayerMoveEnded.OnEvent += ShowMoveMessage;
+
+            ShowWelcomeMessage();
         }
 
-        private void Start()
+        private void OnDestroy()
         {
-            ShowWelcomeMessage();
+            _onGlobalKillEvent.OnEvent -= OnKillMessage;
+            _OnRoomEvent.OnValueChanged -= OnRoomEnter;
+            _onPlayerMoveEnded.OnEvent -= ShowMoveMessage;
         }
 
         private void OnRoomEnter()
@@ -67,7 +71,6 @@ namespace UI
             {
                 Header = "You entered the finish room!",
                 Content = "Move towards the portal in the middle in order to win the game!",
-                Footer = "You can always check the \"How to play\" panel for more info or to replay the tutorial"
             });
         }
 
