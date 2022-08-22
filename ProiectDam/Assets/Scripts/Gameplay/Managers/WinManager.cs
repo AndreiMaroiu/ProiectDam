@@ -61,7 +61,7 @@ namespace Gameplay.Managers
                 footer = "New high score!";
             }
 
-            ModalWindow.ShowDialog(timeScale, new ModalWindowData()
+            ModalWindow.ShowDialog(new ModalWindowData()
             {
                 Header = "You Won!",
                 Content = "Score: " + _scoreEvent.Value.ToString(),

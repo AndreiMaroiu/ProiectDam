@@ -10,8 +10,9 @@ namespace ModalWindows
             SetDebug(data);
         }
 
-        public static void ShowDialog(float timeScale, ModalWindowData data)
+        public static void ShowDialog(ModalWindowData data)
         {
+            float timeScale = Time.timeScale;
             Time.timeScale = 0;
             SetDebug(data, timeScale);
         }

@@ -56,7 +56,7 @@ namespace UI
         {
             yield return new WaitForSeconds(_roomMessageWaitTime);
 
-            ModalWindow.ShowDialog(Time.timeScale, new ModalWindowData()
+            ModalWindow.ShowDialog(new ModalWindowData()
             {
                 Header = "You entered a new room",
                 Content = "Kill enemies with your pistol or knife",
@@ -67,7 +67,7 @@ namespace UI
         {
             yield return new WaitForSeconds(_roomMessageWaitTime);
 
-            ModalWindow.ShowDialog(Time.timeScale, new ModalWindowData()
+            ModalWindow.ShowDialog(new ModalWindowData()
             {
                 Header = "You entered the finish room!",
                 Content = "Move towards the portal in the middle in order to win the game!",
@@ -78,7 +78,7 @@ namespace UI
         {
             _onGlobalKillEvent.OnEvent -= OnKillMessage;
 
-            ModalWindow.ShowDialog(Time.timeScale, new ModalWindowData()
+            ModalWindow.ShowDialog(new ModalWindowData()
             {
                 Header = "Enemy killed!",
                 Content = "Congratiolations, you killed your first enemy!"
@@ -87,7 +87,7 @@ namespace UI
 
         private void ShowWelcomeMessage()
         {
-            ModalWindow.ShowDialog(Time.timeScale, new ModalWindowData()
+            ModalWindow.ShowDialog(new ModalWindowData()
             {
                 Header = "Welcome to Nera!",
                 Content = "Swipe the screen to move up, down, left or right\n\n" +
@@ -99,7 +99,7 @@ namespace UI
         {
             _onPlayerMoveEnded.OnEvent -= ShowMoveMessage;
 
-            ModalWindow.ShowDialog(Time.timeScale, new ModalWindowData()
+            ModalWindow.ShowDialog(new ModalWindowData()
             {
                 Header = "You did your first move!",
                 Content = "Beware when you move you use your energy points.\n" +

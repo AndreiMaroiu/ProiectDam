@@ -25,7 +25,7 @@ namespace Gameplay.Managers
 
         private void OnWin(object sender)
         {
-            ModalWindow.ShowDialog(Time.timeScale, new ModalWindowData()
+            ModalWindow.ShowDialog(new ModalWindowData()
             {
                 Header = "Tutorial finished!",
                 Content = "You can always check the \"How to play\" panel for more info or to replay the tutorial",
@@ -36,7 +36,7 @@ namespace Gameplay.Managers
 
         private void OnLose(object sender)
         {
-            ModalWindow.ShowDialog(Time.timeScale, new ModalWindowData()
+            ModalWindow.ShowDialog(new ModalWindowData()
             {
                 Header = "You died!",
                 Content = "Let's try again, but be more careful",
