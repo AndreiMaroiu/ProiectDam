@@ -11,6 +11,7 @@ namespace UI
         [Header("Events")]
         [SerializeField] private GameEvent _onGlobalKillEvent;
         [SerializeField] private RoomEvent _OnRoomEvent;
+        [SerializeField] private GameEvent _onPlayerMoveEnded;
         [Header("Settings")]
         [SerializeField] private float _roomMessageWaitTime;
 
@@ -22,6 +23,7 @@ namespace UI
         {
             _onGlobalKillEvent.OnEvent += OnKillMessage;
             _OnRoomEvent.OnValueChanged += OnRoomEnter;
+            _onPlayerMoveEnded.OnEvent += ShowMoveMessage;
         }
 
         private void Start()
@@ -87,6 +89,18 @@ namespace UI
                 Header = "Welcome to Nera!",
                 Content = "Swipe the screen to move up, down, left or right\n\n" +
                 "Try to move towards the door to reach the next room",
+            });
+        }
+
+        private void ShowMoveMessage(object sender)
+        {
+            _onPlayerMoveEnded.OnEvent -= ShowMoveMessage;
+
+            ModalWindow.ShowDialog(Time.timeScale, new ModalWindowData()
+            {
+                Header = "You did your first move!",
+                Content = "Beware when you move you use your energy points.\n" +
+                "When your energy reaches 0 you lose!",
             });
         }
     }

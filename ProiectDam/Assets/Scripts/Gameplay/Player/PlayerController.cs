@@ -46,6 +46,8 @@ namespace Gameplay.Player
         [SerializeField] private BoolEvent _playerTurn;
         [SerializeField] private IntEvent _playerScore;
         [SerializeField] private IntEvent _money;
+        [SerializeField] private GameEvent _onMoveStared;
+        [SerializeField] private GameEvent _onMoveEnded;
 
         #endregion
 
@@ -417,6 +419,7 @@ namespace Gameplay.Player
         {
             _direction = direction;
             _energyEvent.Value -= _stats.EnergyPerMove;
+            _onMoveStared?.Invoke(this);
         }
 
         protected override void OnStopMoving()
@@ -424,6 +427,7 @@ namespace Gameplay.Player
             _direction = Vector2.zero;
             _soundhandler.Stop();
             _playerTurn.Value = false;
+            _onMoveEnded?.Invoke(this);
         }
 
         #endregion

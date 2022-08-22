@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onGlobalKillEvent: {fileID: 11400000, guid: 3a69f05b5ff99064eac93dd2ec9d5272, type: 2}
   _OnRoomEvent: {fileID: 11400000, guid: d1d78b254926b314d84ce8c10c8375c0, type: 2}
+  _onPlayerMoveEnded: {fileID: 11400000, guid: 70d01dc1cdc4dca40ba2ec5b0ac4aa2a, type: 2}
   _roomMessageWaitTime: 0.5
 --- !u!4 &823534072
 Transform:
@@ -729,7 +730,7 @@ PrefabInstance:
     - target: {fileID: 7855007954112815129, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 7855007954112815129, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}

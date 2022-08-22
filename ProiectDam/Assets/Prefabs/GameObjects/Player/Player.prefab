@@ -74,6 +74,8 @@ MonoBehaviour:
   _playerTurn: {fileID: 11400000, guid: 69dd59b851979e44887a9df5080b5552, type: 2}
   _playerScore: {fileID: 11400000, guid: 9aecf744fcf296c449c7077303118a78, type: 2}
   _money: {fileID: 11400000, guid: 661123d1b8fb1594ba6f3bb46be35907, type: 2}
+  _onMoveStared: {fileID: 11400000, guid: 5a9c4b1edf325164494dc1630993042c, type: 2}
+  _onMoveEnded: {fileID: 11400000, guid: 70d01dc1cdc4dca40ba2ec5b0ac4aa2a, type: 2}
 --- !u!50 &47525207141400158
 Rigidbody2D:
   serializedVersion: 4
