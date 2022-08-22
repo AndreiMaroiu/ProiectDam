@@ -6,7 +6,7 @@ using Utilities;
 namespace Gameplay.PickUps
 {
     [RequireComponent(typeof(AudioSource))]
-    public class BasePickUp : TileObject, IInteractable
+    public class BasePickUp : TileObject, IInteractableEnter
     {
         [SerializeField] private Item _item;
 
@@ -57,7 +57,5 @@ namespace Gameplay.PickUps
 
             return _item.Sound.length;
         }
-
-        void IInteractable.OnPlayerLeave(PlayerController controller) { }
     }
 }

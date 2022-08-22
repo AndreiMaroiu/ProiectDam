@@ -2,7 +2,7 @@ using Gameplay.Player;
 
 namespace Gameplay.PickUps
 {
-    public abstract class AbstractPickUp : IInteractable
+    public abstract class AbstractPickUp : IInteractableEnter
     {
         protected int _boost;
 
@@ -21,11 +21,6 @@ namespace Gameplay.PickUps
             }
 
             Interact(controller);
-        }
-
-        void IInteractable.OnPlayerLeave(PlayerController controller)
-        {
-            
         }
     }
 }

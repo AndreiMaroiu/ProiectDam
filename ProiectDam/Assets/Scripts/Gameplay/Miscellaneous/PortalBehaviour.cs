@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Gameplay
 {
-    public class PortalBehaviour : MonoBehaviour, IInteractable
+    public class PortalBehaviour : MonoBehaviour, IInteractableEnter, IInteractableLeave
     {
         [SerializeField] private GameEvent _winEvent;
 

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Gameplay.Merchant
 {
-    public class MerchantBehaviour : PressableObject, IInteractable
+    public class MerchantBehaviour : PressableObject, IInteractableEnter, IInteractableLeave
     {
         [SerializeField] private Transform _dialogPosition;
         [SerializeField] private GameObject _dialogCanvas;

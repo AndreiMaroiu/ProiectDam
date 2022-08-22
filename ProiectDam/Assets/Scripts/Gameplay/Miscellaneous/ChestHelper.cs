@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Gameplay
 {
-    public class ChestHelper : MonoBehaviour, IInteractable
+    public class ChestHelper : MonoBehaviour, IInteractableEnter, IInteractableLeave
     {
         public bool CanInteract { get; private set; }
         public PlayerController Controller { get; private set; }

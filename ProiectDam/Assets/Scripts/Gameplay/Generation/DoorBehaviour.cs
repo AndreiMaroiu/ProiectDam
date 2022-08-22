@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Gameplay.Generation
 {
-    public class DoorBehaviour : MonoBehaviour, IInteractable
+    public class DoorBehaviour : MonoBehaviour, IInteractableEnter
     {
         [SerializeField] private RoomBehaviourEvent _event;
 
@@ -34,17 +34,12 @@ namespace Gameplay.Generation
             Gizmos.DrawCube(_movePoint, transform.localScale);
         }
 
-        void IInteractable.OnInteract(PlayerController controller)
+        void IInteractableEnter.OnInteract(PlayerController controller)
         {
             Move(controller.transform);
             controller.StopMoving();
             controller.LayerPosition = new LayerPosition(_other._moveLayerPosition);
             controller.LayerPosition.TileType = TileType.Player;
-        }
-
-        void IInteractable.OnPlayerLeave(PlayerController controller)
-        {
-            
         }
     }
 }
