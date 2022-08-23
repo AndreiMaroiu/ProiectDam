@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using Utilities;
 
 namespace UI
 {
@@ -14,6 +15,8 @@ namespace UI
         [SerializeField] private Slider _masterSlider;
         [SerializeField] private Slider _fxSlider;
         [SerializeField] private Slider _musicSlider;
+        [Header("Toggles")]
+        [SerializeField] private Toggle _vibrationToggle;
         [Header("Mixer")]
         [SerializeField] private AudioMixer _volumes;
         [Header("Version")]
@@ -32,10 +35,12 @@ namespace UI
             _masterSlider.onValueChanged.AddListener(OnMasterChanged);
             _fxSlider.onValueChanged.AddListener(OnFxChanged);
             _musicSlider.onValueChanged.AddListener(OnMusicChanged);
+            _vibrationToggle.onValueChanged.AddListener(OnVibrationChanged);
 
             _masterSlider.value = PlayerPrefs.GetFloat("Master", MaxVolume);
             _fxSlider.value = PlayerPrefs.GetFloat("Sound Effects", MaxVolume);
             _musicSlider.value = PlayerPrefs.GetFloat("Music", MaxVolume);
+            _vibrationToggle.isOn = VibrationManager.Instance.CanVibrate;
 
             _version.text = "Version: " + Application.version;
         }
@@ -45,6 +50,7 @@ namespace UI
             _masterSlider.onValueChanged.RemoveListener(OnMasterChanged);
             _fxSlider.onValueChanged.RemoveListener(OnFxChanged);
             _musicSlider.onValueChanged.RemoveListener(OnMusicChanged);
+            _vibrationToggle.onValueChanged.RemoveListener(OnVibrationChanged);
         }
 
         private void OnMasterChanged(float value) => SetVolumeValue("Master", value);
@@ -59,6 +65,8 @@ namespace UI
             value = CheckMute(value);
             _volumes.SetFloat(volumeType, value);
         }
+
+        private void OnVibrationChanged(bool toggled) => VibrationManager.Instance.CanVibrate = toggled;
 
         private float CheckMute(float value)
         {
