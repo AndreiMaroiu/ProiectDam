@@ -391,7 +391,8 @@ namespace Gameplay.Player
         protected override void OnDamage()
         {
             _animator.SetBool(HIT_ANIMATION, true);
-            Handheld.Vibrate();
+
+            _ = VibrationManager.Instance.TryVibrate();
         }
 
         public void OnDamageEnd()
