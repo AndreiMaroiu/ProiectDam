@@ -14,6 +14,8 @@ namespace UI
         [SerializeField] private GameEvent _onPlayerMoveEnded;
         [Header("Settings")]
         [SerializeField] private float _roomMessageWaitTime;
+        [Header("Icons")]
+        [SerializeField] private Sprite _loopIcon;
 
         private bool _normalEntered;
         private bool _endEntered;
@@ -56,11 +58,19 @@ namespace UI
         {
             yield return new WaitForSeconds(_roomMessageWaitTime);
 
-            ModalWindow.ShowDialog(new ModalWindowData()
+#pragma warning disable HAA0101 // Array allocation for params parameter
+            ModalWindow.ShowPages(new ModalWindowPageData()
             {
                 Header = "You entered a new room",
                 Content = "Kill enemies with your pistol or knife",
+            },
+            new ModalWindowPageData()
+            {
+                Header = "You can change dimensions",
+                Content = "You the preview button to switch dimensions if you feel stuck!",
+                Image = _loopIcon,
             });
+#pragma warning restore HAA0101 // Array allocation for params parameter
         }
 
         private IEnumerator ShowEndRoomMessage()

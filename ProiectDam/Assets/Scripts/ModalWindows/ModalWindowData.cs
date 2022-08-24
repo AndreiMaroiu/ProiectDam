@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ModalWindows
 {
-    public class ModalWindowData
+    public class ModalWindowData : IModalWindowData
     {
         public string Header { get; set; }
         public string Content { get; set; }
@@ -15,5 +15,6 @@ namespace ModalWindows
         public Action OkAction { get; set; }
         public Action CloseAction { get; set; }
         public Action AlternativeAction { get; set; }
+        public bool CanClose => true;
     }
 }

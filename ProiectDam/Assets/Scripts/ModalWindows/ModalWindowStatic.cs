@@ -5,7 +5,7 @@ namespace ModalWindows
 {
     public partial class ModalWindow
     {
-        public static void Show(ModalWindowData data)
+        public static void Show(IModalWindowData data)
         {
             SetDebug(data);
         }
@@ -25,7 +25,12 @@ namespace ModalWindows
             });
         }
 
-        private static void SetDebug(ModalWindowData data, float? lastTimeScale = null)
+        public static void ShowPages(params ModalWindowPageData[] pages)
+        {
+            SetDebug(new ModalWindowPages(pages), Time.timeScale);
+        }
+
+        private static void SetDebug(IModalWindowData data, float? lastTimeScale = null)
         {
             if (!ReferenceEquals(Instance, null))
             {

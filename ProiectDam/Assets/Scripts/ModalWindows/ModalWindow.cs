@@ -40,9 +40,15 @@ namespace ModalWindows
         private Action _alternativeAction = null;
 
         private float? _lastTimeScale = null;
+        private bool _canClose = true;
 
-        private void Close()
+        private void TryClose()
         {
+            if (_canClose is false)
+            {
+                return;
+            }
+
             _window.gameObject.SetActive(false);
 
             if (_lastTimeScale.HasValue)
@@ -54,22 +60,22 @@ namespace ModalWindows
         public void OnClose()
         {
             _closeAction?.Invoke();
-            Close();
+            TryClose();
         }
 
         public void OnOk()
         {
             _okAction?.Invoke();
-            Close();
+            TryClose();
         }
 
         public void OnAlternative()
         {
             _alternativeAction?.Invoke();
-            Close();
+            TryClose();
         }
 
-        private void SetWindow(ModalWindowData data, float? lastTimeScale = null)
+        private void SetWindow(IModalWindowData data, float? lastTimeScale = null)
         {
             _lastTimeScale = lastTimeScale;
             _window.gameObject.SetActive(true);
@@ -87,15 +93,17 @@ namespace ModalWindows
             _footerText.text = data.Footer;
 
             _okAction = data.OkAction;
-            _okButton.SetActive(data.OkAction != null);
+            _okButton.SetActive(data.OkAction != null && data.OkText != null);
             _okText.text = data.OkText;
 
             _alternativeAction = data.AlternativeAction;
-            _alternativeButton.SetActive(data.AlternativeAction != null);
+            _alternativeButton.SetActive(data.AlternativeAction != null && data.AlternativeText != null);
             _alternativeText.text = data.AlternativeText;
 
             _closeAction = data.CloseAction;
             _closeText.text = data.CloseText;
+
+            _canClose = data.CanClose;
         }
 
         private void Awake()
@@ -107,7 +115,7 @@ namespace ModalWindows
             }
 
             Instance = this;
-            Close();
+            TryClose();
 
             if (_dontDestroyOnLoad)
             {
