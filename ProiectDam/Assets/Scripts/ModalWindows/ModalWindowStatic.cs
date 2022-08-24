@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace ModalWindows
@@ -10,9 +9,15 @@ namespace ModalWindows
             SetDebug(data);
         }
 
-        public static void ShowDialog(ModalWindowData data)
+        public static void ShowDialog(IModalWindowData data)
         {
             float timeScale = Time.timeScale;
+            Time.timeScale = 0;
+            SetDebug(data, timeScale);
+        }
+
+        public static void ShowDialog(IModalWindowData data, float timeScale)
+        {
             Time.timeScale = 0;
             SetDebug(data, timeScale);
         }
@@ -27,20 +32,23 @@ namespace ModalWindows
 
         public static void ShowPages(params ModalWindowPageData[] pages)
         {
-            SetDebug(new ModalWindowPages(pages), Time.timeScale);
+            SetDebug(new ModalWindowPages(pages, Time.timeScale), Time.timeScale);
+            Time.timeScale = 0;
         }
 
         private static void SetDebug(IModalWindowData data, float? lastTimeScale = null)
         {
+#if UNITY_EDITOR
             if (!ReferenceEquals(Instance, null))
             {
                 Instance.SetWindow(data, lastTimeScale);
             }
-#if UNITY_EDITOR
             else
             {
                 Debug.LogError("Null Modal window instace. Please make sure you add an GameObject with a ModalWindow component in your scene");
             }
+#else
+            Instance.SetWindow(data, lastTimeScale);
 #endif
         }
     }

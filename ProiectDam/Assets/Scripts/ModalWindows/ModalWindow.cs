@@ -1,7 +1,7 @@
-using Action = System.Action;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
+using System;
 
 namespace ModalWindows
 {

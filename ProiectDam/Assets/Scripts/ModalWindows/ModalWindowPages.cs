@@ -5,11 +5,12 @@ namespace ModalWindows
 {
     public class ModalWindowPages : IModalWindowData
     {
-        private ModalWindowPageData[] _pages;
+        private readonly ModalWindowPageData[] _pages;
+        private readonly float _lastTimeScale;
         private int _currentIndex;
         private int _lastIndex;
 
-        public ModalWindowPages(ModalWindowPageData[] pages)
+        public ModalWindowPages(ModalWindowPageData[] pages, float timeScale)
         {
 #if DEBUG
             if (pages is null || pages.Length == 0)
@@ -20,8 +21,9 @@ namespace ModalWindows
             _pages = pages;
             _lastIndex = pages.Length - 1;
             _currentIndex = 0;
-            Current = _pages[0];
+            _lastTimeScale = timeScale;
 
+            Current = _pages[0];
             CloseAction = Next;
             OkAction = Previous;
         }
@@ -78,7 +80,7 @@ namespace ModalWindows
                 CanClose = false;
             }
 
-            ModalWindow.Show(this);
+            ModalWindow.ShowDialog(this, _lastTimeScale);
         }
     }
 }
