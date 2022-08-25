@@ -39,12 +39,39 @@ namespace UI.Merchant
                 ItemDescriptionUI prefab = GameObject.Instantiate(_itemPrefab, _panel.transform);
                 prefab.SetItem(item, () =>
                 {
-                    _itemsEvent.BuyItem(item);
-                    ClosePanel();
+                    TryBuyItem(item);
                 });
             }
 
             _moneyText.text = _moneyEvent.ToString();
+        }
+
+        private bool TryBuyItem(ItemDescription item)
+        {
+            if (item.Cost > _moneyEvent.Value)
+            {
+                ModalWindow.ShowDialog(new ModalWindowData()
+                {
+                    Header = "Not enough money!",
+                });
+
+                return false;
+            }
+
+            _moneyEvent.Value -= item.Cost;
+            _moneyText.text = _moneyEvent.Value.ToString();
+            _itemsEvent.BuyItem(item);
+
+            ModalWindow.ShowDialog(new ModalWindowData()
+            {
+                Header = "Item bought!",
+                Image = item.Image,
+                Content = item.Name,
+            });
+
+            ClosePanel();
+
+            return true;
         }
 
         private void ClearPanel()

@@ -128,6 +128,8 @@ namespace Gameplay.Player
             _energyEvent.Init(_startEnergy);
             _healthEvent.Init(_startHealth);
             _bulletsEvent.Init(_startBullets);
+
+            _money.Value = 0;
         }
 
         private void Start()

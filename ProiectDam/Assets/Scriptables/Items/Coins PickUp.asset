@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 592847a8023f4584e9ee044b886205bb, type: 3}
   m_Name: Coins PickUp
   m_EditorClassIdentifier: 
+  _name: Coins
   _cost: 15
   _image: {fileID: -7715589643225986936, guid: 0df646a72a064d2479967be33ace8307, type: 3}
   _description: Add one coin
   _sound: {fileID: 8300000, guid: 681ee9494e1f5d34ca2d1e722fbc929f, type: 3}
   _type:
     _type: CoinPickUp
-  _points: 1
+  _points: 100

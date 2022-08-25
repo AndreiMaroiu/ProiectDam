@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 592847a8023f4584e9ee044b886205bb, type: 3}
   m_Name: Bullets Pick Up
   m_EditorClassIdentifier: 
+  _name: Bullets Magazine
   _cost: 10
   _image: {fileID: -8288651211804498993, guid: 0df646a72a064d2479967be33ace8307, type: 3}
   _description: Restore bullets
+  _sound: {fileID: 0}
   _type:
     _type: BulletsBoost
   _points: 5
