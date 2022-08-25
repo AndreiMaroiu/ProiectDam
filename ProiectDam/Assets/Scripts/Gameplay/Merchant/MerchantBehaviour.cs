@@ -1,4 +1,3 @@
-using Core;
 using Core.Events;
 using Core.Items;
 using Gameplay.PickUps;
@@ -96,8 +95,6 @@ namespace Gameplay.Merchant
 
         private IEnumerator ShowDialog(string dialogText, float openDuration = 1.0f)
         {
-            //StopAllCoroutines();
-
             _dialogCanvas.SetActive(true);
             _dialogCanvas.transform.position = _dialogPosition.position;
             _dialogText.text = dialogText;
@@ -105,7 +102,7 @@ namespace Gameplay.Merchant
 
             yield return null;
             _layout.enabled = true;
-            
+
             yield return new WaitForSeconds(openDuration);
 
             _dialogCanvas.SetActive(false);
