@@ -53,6 +53,7 @@ namespace Gameplay.Player
 
         #region Private Fields
 
+        private bool _canInteract = true;
         private Vector2 _direction;
         private Animator _animator;
         private SoundHandler _soundhandler;
@@ -179,6 +180,11 @@ namespace Gameplay.Player
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (_canInteract is false)
+            {
+                return;
+            }
+
             IInteractableEnter interactable = collision.gameObject.GetComponent<IInteractableEnter>();
 
             interactable?.OnInteract(this);
@@ -186,6 +192,11 @@ namespace Gameplay.Player
 
         private void OnTriggerExit2D(Collider2D collision)
         {
+            if (_canInteract is false)
+            {
+                return;
+            }
+
             IInteractableLeave interactable = collision.gameObject.GetComponent<IInteractableLeave>();
 
             interactable?.OnPlayerLeave(this);
@@ -224,6 +235,8 @@ namespace Gameplay.Player
                 return;
             }
 
+            _canInteract = false;
+
             foreach (KillableObject enemy in GetNearbyEnemies(Directions, _cellSizeValue.Value))
             {
                 enemy.TakeDamage(_meleeDamage);
@@ -232,6 +245,8 @@ namespace Gameplay.Player
             // play melee attack animation and sound
             _animator.SetBool(MELEE_ANIMATION, true);
             _energyEvent.Value -= _stats.EnergyPerAttack;
+
+            _canInteract = true;
         }
 
         private void OnMeleeEnd()
@@ -253,11 +268,12 @@ namespace Gameplay.Player
 
             if (_bulletsEvent.Value <= 0)
             {
-                // play sound for empty magazin
+                // TODO: play sound for empty magazin
                 return;
             }
 
             // play shoot animation and sound
+            _canInteract = false;
 
             _bulletsEvent.Value -= _stats.BulletCount;
             _animator.SetBool(SHOOT_ANIMATION, true);
@@ -292,6 +308,8 @@ namespace Gameplay.Player
                     transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
                 }
             }
+
+            _canInteract = true;
         }
 
         private List<KillableObject> GetNearbyEnemies(Vector2[] directions, float distance)

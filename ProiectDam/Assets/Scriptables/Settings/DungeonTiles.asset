@@ -24,6 +24,9 @@ MonoBehaviour:
   - {fileID: 3830468525077079486, guid: 2e279d6e3dda9e54388e92fa9034f728, type: 3}
   - {fileID: 4656047349275142187, guid: 6d1c7aa5b08e1ba4a9329e277791f690, type: 3}
   - {fileID: 273513427762976090, guid: df48b32b0054bc54ebfce3e21be8d0f3, type: 3}
+  - {fileID: 2345627090318672419, guid: 76076f004059a6e41a607b16fa1645b4, type: 3}
+  - {fileID: 2117406774665810976, guid: ab7e6fdd59c92244db1fed4a565c9f76, type: 3}
+  - {fileID: 2345627090318672419, guid: 76076f004059a6e41a607b16fa1645b4, type: 3}
   _wall:
   - {fileID: 131365518662187911, guid: 66f310d96f74f984fb600dfa69df9cb7, type: 3}
   _enemy:
@@ -52,6 +55,7 @@ MonoBehaviour:
   - {fileID: 8509627533710793875, guid: 81d4242d42a80954a84c7b1092da9194, type: 3}
   - {fileID: 6165869435630929751, guid: a0992f379e816ce41861eda19180ae1e, type: 3}
   - {fileID: 4734065177275879823, guid: 38d1db5223c7e0f4cb98c1fb7a73d782, type: 3}
+  - {fileID: 1881188920927462754, guid: 56b79440ee757d344ac81c8bf47549ac, type: 3}
   _portal:
   - {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055, type: 3}
   _merchant:
