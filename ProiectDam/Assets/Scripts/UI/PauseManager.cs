@@ -54,6 +54,14 @@ namespace UI
             _pauseCanvas.SetActive(true);
         }
 
+        public void OnRestartClick()
+        {
+            Time.timeScale = 1;
+            _transition.SetTrigger("Start");
+
+            SceneManager.LoadScene(Scenes.MainScene);
+        }
+
         public void OnCloseClick()
         {
             Time.timeScale = 1;

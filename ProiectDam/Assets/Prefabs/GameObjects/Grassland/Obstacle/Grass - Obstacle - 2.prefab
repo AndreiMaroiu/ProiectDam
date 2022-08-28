@@ -228,3 +228,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _coinPickUp: {fileID: 8540815872065423717, guid: 160c206b264608442862f313c8354941,
     type: 3}
+  _coinsSpawnChance: 50

@@ -19,4 +19,4 @@ MonoBehaviour:
   _sound: {fileID: 8300000, guid: 681ee9494e1f5d34ca2d1e722fbc929f, type: 3}
   _type:
     _type: CoinPickUp
-  _points: 100
+  _points: 1

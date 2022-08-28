@@ -42,6 +42,7 @@ namespace Gameplay.Enemies
 
         protected override void OnDeath()
         {
+            _animator.SetBool(HIT_ANIMATION, false);
             _animator.SetBool(DEATH_ANIMATION, true);
             _collider.enabled = false;
         }
