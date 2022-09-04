@@ -41,6 +41,8 @@ MonoBehaviour:
   - {fileID: 7073643945006248555, guid: 32dfc8426b7ecf245a07cf2f8cb39bba, type: 3}
   - {fileID: 2473727910534505370, guid: 09b4f44ad9cae624e89c5e36814caed0, type: 3}
   - {fileID: 2955135658419645162, guid: 5cb34e07445a2da43b9fadbcd53a7436, type: 3}
+  _breakable:
+  - {fileID: 6624150824593996783, guid: b4abda3122fe462409bfbd7afafe2517, type: 3}
   _portal:
   - {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055, type: 3}
   _merchant:

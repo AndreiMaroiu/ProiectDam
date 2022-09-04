@@ -13,7 +13,12 @@ namespace Gameplay.Managers
 {
     public class RoomManager : MonoBehaviour
     {
+#if UNITY_EDITOR
+        [Header("Gizmos")]
         [SerializeField] private bool _drawGizmos;
+        [SerializeField] private bool _fillSquare;
+#endif
+        [Header("Game objects")]
         [SerializeField] private BaseLevelSpawner _spawner;
         [SerializeField] private PlayerController _player;
         [Header("Events")]
@@ -71,14 +76,21 @@ namespace Gameplay.Managers
                 Vector3 offset = Utils.GetVector3FromMatrixPos(size / 2, size / 2, 1.3f)
                                         - _roomBehaviourEvent.Value.transform.position;
 
-                for (int i = 0; i < size; i++)
+                for (int row = 0; row < size; row++)
                 {
-                    for (int j = 0; j < size; j++)
+                    for (int column = 0; column < size; column++)
                     {
-                        Vector3 where = Utils.GetVector3FromMatrixPos(i, j, 1.3f) - offset;
-                        Gizmos.color = GetGizmoColor(layer[i, j]);
-                        Gizmos.DrawWireCube(where, Vector3.one);
-                        Handles.Label(where, $"({i.ToString()}, {j.ToString()})");
+                        Vector3 where = Utils.GetVector3FromMatrixPos(row, column, 1.3f) - offset;
+                        Gizmos.color = GetGizmoColor(layer[row, column]);
+                        if (_fillSquare)
+                        {
+                            Gizmos.DrawCube(where, Vector3.one);
+                        }
+                        else
+                        {
+                            Gizmos.DrawWireCube(where, Vector3.one);
+                        }
+                        Handles.Label(where, $"({row.ToString()}, {column.ToString()})");
                     }
                 }
             }
@@ -99,6 +111,8 @@ namespace Gameplay.Managers
             TileType.Obstacle => Color.yellow,
             TileType.Portal => Color.black,
             TileType.Player => Color.cyan,
+            TileType.Merchant => new Color(11, 83, 69), // dark cyan
+            TileType.Breakable => new Color(121, 85, 72), // light brown
             _ => Color.clear,
         };
 

@@ -40,11 +40,12 @@ MonoBehaviour:
   - {fileID: 2725781087358859865, guid: b1865ca7b4c56be409a438ff5f95f0b8, type: 3}
   _obstacle:
   - {fileID: 8508842280716529376, guid: e281897db57b91643ac32d45fe9f7383, type: 3}
-  - {fileID: 7492388303378191110, guid: 7bfd5331433e49b4394ee9557fded5bf, type: 3}
   - {fileID: 2130141364183092600, guid: 26c3a9edfab13944ab271281234bcdee, type: 3}
   - {fileID: 5538041083089430321, guid: 80a9e6d76ef25fe419ae4641b1eca4f5, type: 3}
   - {fileID: 6393301109130023456, guid: ac01f5a8f43b92244a8a8deb8a253fcd, type: 3}
   - {fileID: 8498262135166885985, guid: d76e8cd6490a48142a3353b0bd360423, type: 3}
+  _breakable:
+  - {fileID: 7492388303378191110, guid: 7bfd5331433e49b4394ee9557fded5bf, type: 3}
   _portal:
   - {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055, type: 3}
   _merchant:

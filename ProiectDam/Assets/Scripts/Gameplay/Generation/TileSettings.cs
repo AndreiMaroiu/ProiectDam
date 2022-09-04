@@ -14,6 +14,7 @@ namespace Gameplay.Generation
         [SerializeField] private GameObject[] _trap;
         [SerializeField] private GameObject[] _pickUp;
         [SerializeField] private GameObject[] _obstacle;
+        [SerializeField] private GameObject[] _breakable;
         [SerializeField] private GameObject[] _portal;
         [SerializeField] private GameObject[] _merchant;
 
@@ -21,7 +22,7 @@ namespace Gameplay.Generation
         {
             GameObject[] _list = GetList(type);
 
-            if (_list?.Length > 0)
+            if (_list != null && _list.Length > 0)
             {
                 return _list[Random.Range(0, _list.Length)];
             }
@@ -42,6 +43,7 @@ namespace Gameplay.Generation
             TileType.Obstacle => _obstacle,
             TileType.Portal => _portal,
             TileType.Merchant => _merchant,
+            TileType.Breakable => _breakable,
             _ => null,
         };
     }

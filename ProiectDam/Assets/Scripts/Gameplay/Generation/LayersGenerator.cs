@@ -132,6 +132,7 @@ namespace Gameplay.Generation
             SpawnTiles(tiles, positions, Random.Range(2, 3), TileType.PickUp);
             SpawnTiles(tiles, positions, Random.Range(3, 7), TileType.Obstacle);
             SpawnTiles(tiles, positions, 1, TileType.Trap);
+            SpawnTiles(tiles, positions, Random.Range(0, 3), TileType.Breakable);
         }
 
         private void GenerateComplex(TileType[,] current, TileType[,] previous)
@@ -144,6 +145,7 @@ namespace Gameplay.Generation
             SpawnTilesComplex(current, previous, positions, Random.Range(2, 3), TileType.PickUp);
             SpawnTilesComplex(current, previous, positions, Random.Range(3, 7), TileType.Obstacle);
             SpawnTilesComplex(current, previous, positions, 1, TileType.Trap);
+            SpawnTilesComplex(current, previous, positions, Random.Range(0, 3), TileType.Breakable);
         }
 
         private void GenerateBorder(TileType[,] tiles)

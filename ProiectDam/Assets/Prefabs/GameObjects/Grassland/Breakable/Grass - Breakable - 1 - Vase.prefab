@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 8108478852651704817}
   - component: {fileID: 3643817641660281093}
   m_Layer: 7
-  m_Name: Grass - Obstacle - 2
+  m_Name: Grass - Breakable - 1 - Vase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
