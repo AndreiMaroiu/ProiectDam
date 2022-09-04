@@ -1,8 +1,7 @@
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 public class WeightedRandom<T>
 {
-    private readonly Random _random = new Random();
     private readonly int[] _weights;
     private readonly T[] _elems;
     private readonly int _totalWeight;
@@ -23,7 +22,7 @@ public class WeightedRandom<T>
     public T Take()
     {
         int sum = 0;
-        int target = _random.Next(0, _totalWeight + 1);
+        int target = Random.Range(0, _totalWeight + 1);
         int resultIndex;
 
         for (resultIndex = 0; resultIndex < _weights.Length; resultIndex++)

@@ -1,8 +1,8 @@
 using Core;
-using Gameplay.Events;
-using UnityEngine;
-using Utilities;
 using Core.Values;
+using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Gameplay.Generation
 {
@@ -16,11 +16,14 @@ namespace Gameplay.Generation
         [SerializeField] private IntValue _maxtrixSize;
         [SerializeField] private int _maxRoomCount;
         [SerializeField] private int _maxRoomNeighbours;
-        
+
         private DungeonGenerator _generator;
 
         public override void Spawn()
         {
+            int seed = (int)DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            Debug.Log("seed: " + seed.ToString());
+            Random.InitState(seed);
             GenerateDungeon();
             GenerateRoomTypes();
 
@@ -49,9 +52,12 @@ namespace Gameplay.Generation
 
             distances[0].room.Type = RoomType.Start;
 
-            ChooseRoomRandom(RoomType.Healing);
-            ChooseRoomRandom(RoomType.Chest);
-            ChooseRoomRandom(RoomType.Merchant);
+            if (distances.Count > 7)
+            {
+                ChooseRoomRandom(RoomType.Healing);
+                ChooseRoomRandom(RoomType.Chest);
+                ChooseRoomRandom(RoomType.Merchant);
+            }
 
             void Validate(Vector2Int pos, RoomType type)
             {

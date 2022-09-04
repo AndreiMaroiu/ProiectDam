@@ -1,9 +1,8 @@
 ﻿using System;
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 public class RandomPicker<T>
 {
-    private readonly Random _random = new Random();
     private readonly T[] _elems;
     private int _max;
 
@@ -22,7 +21,7 @@ public class RandomPicker<T>
 
     public T Take()
     {
-        int index = _random.Next(0, _max);
+        int index = Random.Range(0, _max);
         --_max;
         Swap(index);
 
