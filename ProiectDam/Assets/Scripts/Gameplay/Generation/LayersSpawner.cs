@@ -1,6 +1,7 @@
 using UnityEngine;
 using Utilities;
 using Core;
+using System;
 
 namespace Gameplay.Generation
 {
@@ -22,24 +23,40 @@ namespace Gameplay.Generation
             _dungeonTiles = dungeonTiles;
         }
 
-        public void GenerateLayers(RoomBehaviour behaviour)
+        public void SpawnStatic(RoomBehaviour behaviour)
         {
             Layers layers = behaviour.Layers;
 
             for (int i = 0; i < layers.Count; i++)
             {
-                SpawnLayer(layers.GetTiles(i), behaviour.GetTransform(i), layers.GetBiome(i));
+                SpawnStaticLayer(layers.GetTiles(i), behaviour.GetTransform(i), layers.GetBiome(i));
             }
         }
 
-        private void SpawnLayer(TileType[,] layer, Transform where, BiomeType biome)
+        public void SpawnDynamic(RoomBehaviour behaviour)
         {
-            int halfSize = layer.GetLength(0) / 2;
-            _offset = Utils.GetVector3FromMatrixPos(halfSize, halfSize, _cellSize);
+            Layers layers = behaviour.Layers;
 
-            SpawnWalls(layer, where, biome);
+            for (int i = 0; i < layers.Count; i++)
+            {
+                SpawnDynamicLayer(layers.GetTiles(i), behaviour.GetTransform(i), layers.GetBiome(i));
+            }
+        }
+
+        private void SpawnStaticLayer(TileType[,] layer, Transform where, BiomeType biome)
+        {
+            SetOffset(layer);
+
             SpawnBackground(layer, where, biome);
-            SpawnForeground(layer, where, biome);
+            SpawnWalls(layer, where, biome);
+            SpawnForegroundIf(layer, where, biome, type => type.IsStatic());
+        }
+
+        private void SpawnDynamicLayer(TileType[,] layer, Transform where, BiomeType biome)
+        {
+            SetOffset(layer);
+
+            SpawnForegroundIf(layer, where, biome, type => !type.IsStatic());
         }
 
         private void SpawnWalls(TileType[,] layer, Transform where, BiomeType biome)
@@ -77,7 +94,7 @@ namespace Gameplay.Generation
             }
         }
 
-        private void SpawnForeground(TileType[,] layer, Transform where, BiomeType biome)
+        private void SpawnForegroundIf(TileType[,] layer, Transform where, BiomeType biome, Func<TileType, bool> condition)
         {
             // minus 2 is required because there is a wall border and a none border
             int size = layer.GetLength(0);
@@ -89,7 +106,7 @@ namespace Gameplay.Generation
                 {
                     TileType type = layer[i, j];
 
-                    if (type is TileType.None)
+                    if (condition(type))
                     {
                         continue;
                     }
@@ -145,12 +162,17 @@ namespace Gameplay.Generation
 
         private TileSettings GetSettings(BiomeType biome) => biome switch
         {
-            BiomeType.None => null,
             BiomeType.Fire => _fireTiles,
             BiomeType.Dungeon => _dungeonTiles,
             BiomeType.Grassland => _grassTiles,
             _ => null,
         };
+
+        private void SetOffset(TileType[,] layer)
+        {
+            int middlePos = layer.GetLength(0) / 2;
+            _offset = Utils.GetVector3FromMatrixPos(middlePos, middlePos, _cellSize);
+        }
 
         #endregion
     }

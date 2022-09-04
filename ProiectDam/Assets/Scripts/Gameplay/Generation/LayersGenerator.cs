@@ -29,7 +29,7 @@ namespace Gameplay.Generation
         {
             RoomType.Normal => GenerateNormal(),
             RoomType.Start => GenerateEmpty(),
-            RoomType.End => GenerateEnd(),
+            RoomType.End => GenerateInMiddle(TileType.Portal),
             RoomType.Empty => GenerateEmpty(),
             RoomType.Healing => GenerateHeal(),
             RoomType.Chest => GenerateChest(),
@@ -51,15 +51,6 @@ namespace Gameplay.Generation
             Layers layers = GenerateEmpty();
             int middle = layers.MiddleIndex;
             layers.GetTiles(0)[middle + Random.Range(-2, 3), middle + Random.Range(-2, 3)] = TileType.Merchant;
-
-            return layers;
-        }
-
-        private Layers GenerateEnd()
-        {
-            Layers layers = GenerateEmpty();
-            int middle = layers.MiddleIndex;
-            layers.GetTiles(0)[middle, middle] = TileType.Portal;
 
             return layers;
         }
@@ -88,6 +79,15 @@ namespace Gameplay.Generation
             } while (tiles[x, y] != TileType.None);
 
             tiles[x, y] = type;
+        }
+
+        private Layers GenerateInMiddle(TileType type)
+        {
+            Layers layers = GenerateEmpty();
+            int middle = layers.MiddleIndex;
+            layers.GetTiles(0)[middle, middle] = type;
+
+            return layers;
         }
 
         private Layers GenerateHeal()
