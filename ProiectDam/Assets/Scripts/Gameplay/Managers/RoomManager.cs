@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utilities;
+using Gameplay.DataSaving;
 
 namespace Gameplay.Managers
 {
@@ -21,6 +22,8 @@ namespace Gameplay.Managers
         [Header("Game objects")]
         [SerializeField] private BaseLevelSpawner _spawner;
         [SerializeField] private PlayerController _player;
+        [Tooltip("Leave empty if no level saver is needed")]
+        [SerializeField] private RandomLevelSaverManager _levelSaver;
         [Header("Events")]
         [SerializeField] private RoomEvent _roomEvent;
         [SerializeField] private RoomBehaviourEvent _roomBehaviourEvent;
@@ -37,6 +40,7 @@ namespace Gameplay.Managers
         {
             InitEvents();
 
+            _levelSaver?.Init();
             _spawner.Spawn();
             RoomBehaviour behaviour = _roomBehaviourEvent.Value;
 

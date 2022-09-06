@@ -1,6 +1,5 @@
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using BinaryReader = Utilities.BinaryReader;
 
 namespace GameStatistics
 {
@@ -33,24 +32,13 @@ namespace GameStatistics
 
         internal void Save<T>(T data, string path)
         {
-            using FileStream file = File.Create(path);
-            BinaryFormatter bf = new BinaryFormatter();
-
-            bf.Serialize(file, data);
+            BinaryReader.Write(path, data);
         }
 
         private StatsHandler<T> Load<T>(string path) where T : new()
         {
-            if (!File.Exists(path))
-            {
-                return new StatsHandler<T>(new T(), this, path);
-            }
-
-            using FileStream file = File.OpenRead(_statsPath);
-            BinaryFormatter bf = new BinaryFormatter();
-            T data = (T)bf.Deserialize(file);
-
-            return new StatsHandler<T>(data, this, path);
+            BinaryReader.TryRead(path, out T result);
+            return new StatsHandler<T>(result, this, path);
         }
 
         #endregion

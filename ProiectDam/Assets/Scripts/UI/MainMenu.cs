@@ -1,3 +1,5 @@
+using Core.DataSaving;
+using System.IO;
 using UnityEngine;
 using Utilities;
 
@@ -11,6 +13,7 @@ namespace UI
         [SerializeField] private GameObject _creditsCanvas;
         [SerializeField] private GameObject _statsCanvas;
         [SerializeField] private Animator _transition;
+        [SerializeField] private LevelSaverHandler _saverHandler;
 
         private void Awake()
         {
@@ -57,6 +60,7 @@ namespace UI
             if (PlayerPrefs.GetInt(firstTimeKey, defaultValue: 0) == 1)
             {
                 Loader.TargetScene = Scenes.MainScene;
+                _saverHandler.SetForNewScene();
             }
             else
             {
@@ -76,6 +80,23 @@ namespace UI
             _transition.SetTrigger("Start");
             StartCoroutine(Scenes.LoadAsync(Scenes.LoadingMenu));
             Loader.TargetScene = Scenes.Tutorial;
+        }
+
+        public void OnLoadLevelClick()
+        {
+            string saveFile = Application.persistentDataPath + "/Save.dat";
+
+            if (!File.Exists(saveFile))
+            {
+                ModalWindows.ModalWindow.ShowMessage("No saves found!");
+                return;
+            }
+
+            _transition.SetTrigger("Start");
+            StartCoroutine(Scenes.LoadAsync(Scenes.LoadingMenu));
+            Loader.TargetScene = Scenes.MainScene;
+
+            _saverHandler.Load(saveFile);
         }
 
         public void OnQuitClick()

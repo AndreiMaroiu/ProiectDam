@@ -19,7 +19,7 @@ namespace Gameplay.PickUps
 
         public void OnInteract(PlayerController controller)
         {
-            LayerPosition.Clear();
+            LayerPosition?.Clear();
 
             _item.GetPickUp().OnInteract(controller);
 

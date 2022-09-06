@@ -1,6 +1,6 @@
 using Core;
-using Core.DataSaving;
 using Core.Values;
+using Gameplay.DataSaving;
 using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -18,9 +18,11 @@ namespace Gameplay.Generation
         [SerializeField] private int _maxRoomCount;
         [SerializeField] private int _maxRoomNeighbours;
         [Header("Data Saving")]
-        [SerializeField] private LevelSaverData _levelSaver;
+        [SerializeField] private RandomLevelSaverManager _levelSaver;
 
         private DungeonGenerator _generator;
+
+        public int Seed { get; private set; }
 
         public override void Spawn()
         {
@@ -40,18 +42,17 @@ namespace Gameplay.Generation
 
         private void SetSeed()
         {
-            int seed;
-            if (_levelSaver.ShouldLoad)
+            if (_levelSaver.ShouldLoad && _levelSaver.SaveData != null)
             {
-                seed = _levelSaver.Seed;
+                Seed = _levelSaver.SaveData.Seed;
             }
             else
             {
-                seed = (int)DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                Seed = (int)DateTimeOffset.Now.ToUnixTimeMilliseconds();
             }
 
-            Debug.Log("seed: " + seed.ToString());
-            Random.InitState(seed);
+            Debug.Log("seed: " + Seed.ToString());
+            Random.InitState(Seed);
         }
 
         /// <summary>
