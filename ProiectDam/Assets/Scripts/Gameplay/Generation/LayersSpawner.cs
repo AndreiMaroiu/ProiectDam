@@ -106,7 +106,7 @@ namespace Gameplay.Generation
                 {
                     TileType type = layer[i, j];
 
-                    if (condition(type))
+                    if (!condition(type))
                     {
                         continue;
                     }

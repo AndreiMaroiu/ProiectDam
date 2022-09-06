@@ -34,7 +34,6 @@ MonoBehaviour:
   - {fileID: 159906091533144117, guid: f12524ffbced9b240ba13da29cd497f5, type: 3}
   - {fileID: 8406186276615991972, guid: 29605856277a4af41b1596630accebd4, type: 3}
   - {fileID: 5058254460211195354, guid: 4af6f8b7dc6686d42afc3a92a3a08a40, type: 3}
-  - {fileID: 1942353289487568272, guid: c3747dfd326778d4fb06c997e2ffa9e5, type: 3}
   _door:
   - {fileID: 1610797193751527803, guid: 44d13e7040070884198d2fc299f5feb3, type: 3}
   _chest:

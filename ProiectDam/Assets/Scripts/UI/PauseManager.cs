@@ -1,3 +1,4 @@
+using Core.DataSaving;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utilities;
@@ -14,12 +15,15 @@ namespace UI
         [SerializeField] private GameObject _howToCanvas;
         [SerializeField] private GameObject _optionsCanvas;
         [SerializeField] private Animator _transition;
+        [SerializeField] private GameObject _saveButton;
+        [SerializeField] private LevelSaverManager _saver;
 
         void Awake()
         {
             _pauseCanvas.SetActive(false);
             _howToCanvas.SetActive(false);
             _optionsCanvas.SetActive(false);
+            _saveButton.SetActive(_saver != null);
         }
 
         public void OnPauseClick()
@@ -68,6 +72,11 @@ namespace UI
             _transition.SetTrigger("Start");
 
             SceneManager.LoadScene(Scenes.MainMenu);
+        }
+
+        public void OnSaveClick()
+        {
+            _saver.Save();
         }
     }
 }

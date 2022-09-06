@@ -1,4 +1,5 @@
 using Core;
+using Core.DataSaving;
 using Core.Values;
 using System;
 using UnityEngine;
@@ -16,18 +17,41 @@ namespace Gameplay.Generation
         [SerializeField] private IntValue _maxtrixSize;
         [SerializeField] private int _maxRoomCount;
         [SerializeField] private int _maxRoomNeighbours;
+        [Header("Data Saving")]
+        [SerializeField] private LevelSaverData _levelSaver;
 
         private DungeonGenerator _generator;
 
         public override void Spawn()
         {
-            int seed = (int)DateTimeOffset.Now.ToUnixTimeMilliseconds();
-            Debug.Log("seed: " + seed.ToString());
-            Random.InitState(seed);
+            SetSeed();
+
             GenerateDungeon();
             GenerateRoomTypes();
 
-            GenerateAndSpawnLevel();
+            SpawnRoomAssets();
+            GenereteLayers();
+            SetDoorPositions();
+            SpawnOrLoadLayers();
+            SpawnDoors();
+
+            _data.RoomBehaviourEvent.Value = _traverser.Start;
+        }
+
+        private void SetSeed()
+        {
+            int seed;
+            if (_levelSaver.ShouldLoad)
+            {
+                seed = _levelSaver.Seed;
+            }
+            else
+            {
+                seed = (int)DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            }
+
+            Debug.Log("seed: " + seed.ToString());
+            Random.InitState(seed);
         }
 
         /// <summary>
@@ -38,6 +62,31 @@ namespace Gameplay.Generation
             _generator = new DungeonGenerator(_maxRoomNeighbours, _maxRoomCount, _maxtrixSize);
             Room start = _generator.GenerateDungeon();
             _traverser = new RoomTraverser<RoomBehaviour>(start);
+        }
+
+        private void SpawnOrLoadLayers()
+        {
+            if (!_levelSaver.ShouldLoad) // generate layers
+            {
+                base.SpawnLayers();
+                Debug.Log("Spawn from generated!");
+            }
+            else // load layers
+            {
+                SpawnStaticLayers();
+                Debug.Log("spawn only static");
+            }
+        }
+
+        private void SpawnStaticLayers()
+        {
+            LayersSpawner spawner = new LayersSpawner(_data.CellSize, _data.GrassTiles, _data.FireTiles, _data.DungeonTiles);
+
+            _traverser.TraverseUnique(room =>
+            {
+                RoomBehaviour behaviour = _traverser[room.Pos];
+                spawner.SpawnStatic(behaviour);
+            });
         }
 
         /// <summary>
