@@ -14,6 +14,7 @@ namespace Gameplay.Enemies
         [SerializeField] protected EnemyData _data;
 
         private Vector2Int? _lastPosition;
+        private Vector3 _targetPosition;
 
         public event Action<BaseEnemy> OnDeathEvent;
 
@@ -59,65 +60,6 @@ namespace Gameplay.Enemies
             _lastPosition = LayerPosition.Position;
 
             return result;
-
-            //var queue = new SimplePriorityQueue<Vector2Int, int>();
-            //var previous = new Dictionary<Vector2Int, Vector2Int>();
-            //var visited = new HashSet<Vector2Int>();
-            //var playerPos = player.LayerPosition.Position;
-            //var layer = LayerPosition.Layer;
-            //var found = false;
-
-            //queue.Enqueue(LayerPosition.Position, 0);
-
-            ////if (_lastPosition.HasValue)
-            ////{
-            ////    visited.Add(_lastPosition.Value);
-            ////}
-
-            //while (queue.Count > 0)
-            //{
-            //    var first = queue.Dequeue();
-
-            //    visited.Add(first);
-
-            //    foreach (Vector2Int direction in Directions)
-            //    {
-            //        Vector2Int pos = direction + first;
-
-            //        if (layer[pos.x, pos.y] == TileType.Player)
-            //        {
-            //            previous[pos] = first;
-            //            found = true;
-            //        }
-
-            //        if (!layer[pos.x, pos.y].CanMove() || visited.Contains(pos))
-            //        {
-            //            continue;
-            //        }
-
-            //        int distance = Math.Abs(pos.x - playerPos.x) + Math.Abs(pos.y - playerPos.y);
-
-            //        queue.Enqueue(pos, distance);
-            //        previous[pos] = first;
-            //    }
-            //}
-
-            //if (!found)
-            //{
-            //    print("no direction found!");
-            //    return Vector2Int.zero;
-            //}
-
-            //Vector2Int current = player.LayerPosition.Position;
-            //_lastPosition = current;
-
-            //while (previous[current] != this.LayerPosition.Position)
-            //{
-            //    current = previous[current];
-            //}
-
-            //Vector2Int result = current - this.LayerPosition.Position;
-            //return result;
         }
 
         public sealed override void OnDeathFinished()
@@ -128,9 +70,27 @@ namespace Gameplay.Enemies
             _data.GlobalDeathEvent.Invoke(this);
         }
 
+        protected override void OnMove(Vector2Int direction)
+        {
+            _targetPosition = transform.position + new Vector3(direction.x, direction.y) * CellSize;
+        }
+
         protected sealed override bool CanMoveToTile(TileType tile)
         {
             return tile.CanMove();
+        }
+
+        public void OnDrawGizmos()
+        {
+            if (IsMoving)
+            {
+                Color lastColor = Gizmos.color;
+                Gizmos.color = Color.red;
+
+                Gizmos.DrawCube(_targetPosition, CellSize * Vector3.one);
+
+                Gizmos.color = lastColor;
+            }
         }
     }
 }

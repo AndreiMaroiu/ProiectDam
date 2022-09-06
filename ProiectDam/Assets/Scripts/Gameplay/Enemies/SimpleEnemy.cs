@@ -64,6 +64,8 @@ namespace Gameplay.Enemies
 
         protected override void OnMove(Vector2Int direction)
         {
+            base.OnMove(direction);
+
             //play sounds and animations
             _renderer.flipX = direction.x < 0;
             _animator.SetBool(WALK_ANIMATION, true);
