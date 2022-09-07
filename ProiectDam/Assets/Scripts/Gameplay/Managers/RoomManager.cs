@@ -40,9 +40,8 @@ namespace Gameplay.Managers
         {
             InitEvents();
 
-            _levelSaver?.Init();
             _spawner.Spawn();
-            RoomBehaviour behaviour = _roomBehaviourEvent.Value;
+            RoomBehaviour behaviour = GetActiveBehaviour();
 
             SetPlayerPos(behaviour);
 
@@ -120,12 +119,40 @@ namespace Gameplay.Managers
             _ => Color.clear,
         };
 
+        private RoomBehaviour GetActiveBehaviour()
+        {
+            if (_levelSaver.ShouldLoad)
+            {
+                RoomBehaviour roomBehaviour = _spawner.Traverser[_levelSaver.SaveData.CurrentRoom];
+                _roomBehaviourEvent.Value = roomBehaviour;
+                return roomBehaviour;
+            }
+
+            return _roomBehaviourEvent.Value;
+        }
+
         private void SetPlayerPos(RoomBehaviour behaviour)
         {
-            TileType[,] layer = behaviour.Layers[behaviour.CurrentLayer];
-            int middle = layer.GetLength(0) / 2;
-            layer[middle, middle] = TileType.Player;
-            _player.LayerPosition = new LayerPosition(new Vector2Int(middle, middle), layer);
+            if (_levelSaver != null && _levelSaver.ShouldLoad)
+            {
+                int biomeIndex = _levelSaver.SaveData.PlayerData.LayerPos.Biome;
+                TileType[,] layer = behaviour.Layers[biomeIndex];
+                var pos = _levelSaver.SaveData.PlayerData.LayerPos.Position;
+                layer[pos.X, pos.Y] = TileType.Player;
+                _player.LayerPosition = new LayerPosition(pos, layer);
+                _player.transform.position = _levelSaver.SaveData.PlayerData.PlayerPos;
+
+                _currentLayerEvent.Value = biomeIndex;
+                behaviour.ChangedLayer(biomeIndex);
+                _biomeEvent.Value = _roomBehaviourEvent.Value.Layers.GetBiome(biomeIndex);
+            }
+            else
+            {
+                TileType[,] layer = behaviour.Layers[behaviour.CurrentLayer];
+                int middle = layer.GetLength(0) / 2;
+                layer[middle, middle] = TileType.Player;
+                _player.LayerPosition = new LayerPosition(new Vector2Int(middle, middle), layer);
+            }
         }
 
         private void OnRoomChanged()

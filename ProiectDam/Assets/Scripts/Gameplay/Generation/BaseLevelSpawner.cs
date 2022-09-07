@@ -13,6 +13,8 @@ namespace Gameplay.Generation
 
         protected RoomTraverser<RoomBehaviour> _traverser;
 
+        public RoomTraverser<RoomBehaviour> Traverser => _traverser;
+
         /// <summary>
         /// Main spawn point function
         /// </summary>

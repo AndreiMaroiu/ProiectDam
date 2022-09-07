@@ -25,9 +25,9 @@ namespace Gameplay.DataSaving
             _shouldLoad = false;
         }
 
-        private void OnEnable()
-        {
-            SetForNewScene();
-        }
+        //private void OnEnable()
+        //{
+        //    SetForNewScene();
+        //}
     }
 }
