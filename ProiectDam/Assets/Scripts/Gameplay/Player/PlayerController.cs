@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
 using Core.Values;
+using Gameplay.DataSaving;
 
 namespace Gameplay.Player
 {
@@ -48,6 +49,8 @@ namespace Gameplay.Player
         [SerializeField] private IntEvent _money;
         [SerializeField] private GameEvent _onMoveStared;
         [SerializeField] private GameEvent _onMoveEnded;
+        [Header("Data Saving")]
+        [SerializeField] private RandomLevelSaverManager _levelSaver;
 
         #endregion
 
@@ -120,17 +123,38 @@ namespace Gameplay.Player
             set => _money.Value = value;
         }
 
+        public bool IsFlipped => transform.localScale.x < 0;
+
         #endregion
 
         #region Unity Events
 
         private void Awake()
         {
-            _energyEvent.Init(_startEnergy);
-            _healthEvent.Init(_startHealth);
-            _bulletsEvent.Init(_startBullets);
+            if (_levelSaver != null && _levelSaver.ShouldLoad) // set values from save data
+            {
+                PlayerSaveData saveData = _levelSaver.SaveData.PlayerData;
 
-            _money.Value = 0;
+                _energyEvent.Set(saveData.Energy, _startEnergy);
+                _healthEvent.Set(saveData.Health, _startHealth);
+                _bulletsEvent.Set(saveData.Bullets, _startBullets);
+
+                _money.Value = saveData.Coins;
+                _playerScore.Value = saveData.Score;
+
+                if (saveData.IsFliped)
+                {
+                    Flip();
+                }
+            }
+            else // set default values
+            {
+                _energyEvent.Init(_startEnergy);
+                _healthEvent.Init(_startHealth);
+                _bulletsEvent.Init(_startBullets);
+
+                _money.Value = 0;
+            }
         }
 
         private void Start()
@@ -147,7 +171,7 @@ namespace Gameplay.Player
             _onRangeAttack.OnEvent += OnRangedAttack;
             _energyEvent.OnValueChanged += OnEnergyChanged;
 
-            SetMove(_moveTime, _cellSizeValue.Value, Generation.TileType.Player);
+            SetMove(_moveTime, _cellSizeValue.Value, TileType.Player);
         }
 
         private void OnDestroy()
@@ -382,9 +406,14 @@ namespace Gameplay.Player
 
             if (shouldFlip)
             {
-                Vector3 scale = transform.localScale;
-                transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
+                Flip();
             }
+        }
+
+        private void Flip()
+        {
+            Vector3 scale = transform.localScale;
+            transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
         }
 
         private void OnEnergyChanged()

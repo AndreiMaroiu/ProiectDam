@@ -41,6 +41,7 @@ namespace Gameplay.Managers
             InitEvents();
 
             _spawner.Spawn();
+            _roomEvent.StartRoom = _spawner.Traverser.Start.Room;
             RoomBehaviour behaviour = GetActiveBehaviour();
 
             SetPlayerPos(behaviour);
@@ -135,16 +136,16 @@ namespace Gameplay.Managers
         {
             if (_levelSaver != null && _levelSaver.ShouldLoad)
             {
-                int biomeIndex = _levelSaver.SaveData.PlayerData.LayerPos.Biome;
-                TileType[,] layer = behaviour.Layers[biomeIndex];
+                int layerIndex = _levelSaver.SaveData.PlayerData.LayerPos.Biome;
+                TileType[,] layer = behaviour.Layers[layerIndex];
                 var pos = _levelSaver.SaveData.PlayerData.LayerPos.Position;
-                layer[pos.X, pos.Y] = TileType.Player;
+                layer[pos.X, pos.Y] = TileType.Player; // todo: this may not be needed in future
                 _player.LayerPosition = new LayerPosition(pos, layer);
                 _player.transform.position = _levelSaver.SaveData.PlayerData.PlayerPos;
 
-                _currentLayerEvent.Value = biomeIndex;
-                behaviour.ChangedLayer(biomeIndex);
-                _biomeEvent.Value = _roomBehaviourEvent.Value.Layers.GetBiome(biomeIndex);
+                _currentLayerEvent.Value = layerIndex;
+                behaviour.ChangedLayer(layerIndex);
+                _biomeEvent.Value = _roomBehaviourEvent.Value.Layers.GetBiome(layerIndex);
             }
             else
             {
@@ -202,7 +203,7 @@ namespace Gameplay.Managers
             {
                 _player.MakePlayerRed();
                 _canChangeLayer = false;
-                Handheld.Vibrate();
+                VibrationManager.Instance.TryVibrate();
             }
         }
 

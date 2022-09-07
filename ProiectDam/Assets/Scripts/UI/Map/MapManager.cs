@@ -84,7 +84,7 @@ namespace UI.Map
 
         private void GenerateMap()
         {
-            Room start = _currentRoom.Value;
+            Room start = _currentRoom.StartRoom;
             _traverser = new RoomTraverser<RoomUIBehaviour>(start);
 
             _width = start.Pos;
@@ -118,8 +118,11 @@ namespace UI.Map
                     return;
                 }
 
-                RectTransform clone = Instantiate(door, _traverser[room.LastRoom.Pos].transform);
-                clone.anchoredPosition = Utils.GetWorldDirection(room.Direction) * _cellSize / 2;
+                RectTransform prevClone = Instantiate(door, _traverser[room.LastRoom.Pos].transform);
+                prevClone.anchoredPosition = Utils.GetWorldDirection(room.Direction) * _cellSize / 2;
+
+                RectTransform currentClone = Instantiate(door, _traverser[room.Pos].transform);
+                currentClone.anchoredPosition = Utils.GetWorldDirection(room.Direction + 180) * _cellSize / 2;
             });
 
             OnRoomChanged();

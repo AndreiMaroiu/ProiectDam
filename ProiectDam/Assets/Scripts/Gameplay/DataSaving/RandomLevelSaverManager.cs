@@ -1,6 +1,5 @@
 using Core.DataSaving;
 using Core.Events;
-using Gameplay.Events;
 using Gameplay.Generation;
 using Gameplay.Player;
 using UnityEngine;
@@ -37,8 +36,6 @@ namespace Gameplay.DataSaving
 
         public override void Save() // todo: add string file
         {
-            // todo: write to file
-
             Debug.Log("saving level data");
 
             SaveData = new LevelSaveData()
@@ -53,6 +50,7 @@ namespace Gameplay.DataSaving
                     Energy = _player.Energy,
                     Score = _player.Score,
                     Coins = _player.Money,
+                    IsFliped = _player.IsFlipped,
                     LayerPos = new LayerPositionData()
                     {
                         Biome = _currentLayerEvent.Value,
@@ -83,6 +81,6 @@ namespace Gameplay.DataSaving
                 _loaded = true;
                 _saveData = value;
             }
-            }
         }
+    }
 }

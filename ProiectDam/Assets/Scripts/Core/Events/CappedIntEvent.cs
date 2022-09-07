@@ -49,6 +49,12 @@ namespace Core.Events
             }
         }
 
+        public void Set(int current, int max)
+        {
+            MaxValue = max;
+            Value = current;
+        }
+
         public override string ToString()
             => $"{Value.ToString()}/{MaxValue.ToString()}";
     }

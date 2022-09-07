@@ -11,6 +11,8 @@ namespace Core.Events
 
         private Room _value;
 
+        public Room StartRoom { get; set; }
+
         public Room Value
         {
             get => _value;

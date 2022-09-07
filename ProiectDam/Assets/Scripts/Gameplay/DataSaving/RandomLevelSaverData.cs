@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Gameplay.DataSaving
 {
+    // todo: refactor into static class
     [CreateAssetMenu(fileName = "New Level Saver", menuName = "Scriptables/Level Saver")]
     public class RandomLevelSaverData : LevelSaverHandler
     {
@@ -18,11 +19,20 @@ namespace Gameplay.DataSaving
         {
             _shouldLoad = true;
             _saveFile = saveFile;
+            ForceSerialization();
         }
 
         public override void SetForNewScene()
         {
             _shouldLoad = false;
+            ForceSerialization();
+        }
+
+        private void ForceSerialization()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(this);
+#endif
         }
 
         //private void OnEnable()

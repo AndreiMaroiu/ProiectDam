@@ -567,6 +567,11 @@ PrefabInstance:
       propertyPath: orthographic size
       value: 11.555555
       objectReference: {fileID: 0}
+    - target: {fileID: 4109379796208687295, guid: 0df48db316dcf8d4db933b0b7329c4d6,
+        type: 3}
+      propertyPath: _levelSaver
+      value: 
+      objectReference: {fileID: 40433177}
     - target: {fileID: 4282981534008371921, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
       propertyPath: m_Name
@@ -835,7 +840,7 @@ PrefabInstance:
     - target: {fileID: 7855007954112815129, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 32
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7855007954112815129, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
