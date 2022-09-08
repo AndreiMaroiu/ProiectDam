@@ -1,24 +1,44 @@
+using Gameplay.DataSaving;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Gameplay.Generation
 {
-    public class Layers : IEnumerable<TileType[,]>
+    public class Layers : IEnumerable<Layers.LayerData>
     {
-        private readonly List<TileType[,]> _layers;
-        private readonly List<BiomeType> _biomes;
+        public struct LayerData
+        {
+            public LayerData(TileType[,] tiles, BiomeType biome)
+            {
+                Tiles = tiles;
+                Biome = biome;
+            }
+
+            public TileType[,] Tiles { get; }
+            public BiomeType Biome { get; }
+        }
+
+        private readonly List<LayerData> _layers;
         private readonly int _layerSize;
 
         public Layers(int layerSize, int numberOfLayers)
         {
-            _layers = new List<TileType[,]>(numberOfLayers);
-            _biomes = new List<BiomeType>(numberOfLayers);
+            _layers = new List<LayerData>(numberOfLayers);
             _layerSize = layerSize;
 
             for (int i = 0; i < numberOfLayers; i++)
             {
-                _layers.Add(new TileType[layerSize, layerSize]);
-                _biomes.Add(GetBiome(i, numberOfLayers));
+                _layers.Add(new LayerData(new TileType[layerSize, layerSize], GetBiome(i, numberOfLayers)));
+            }
+        }
+
+        public void SetFromSave(LayersSaveData saveData)
+        {
+            _layers.Clear();
+
+            foreach (var layer in saveData.Layers)
+            {
+                _layers.Add(new LayerData(layer.Layers, layer.Biome));
             }
         }
 
@@ -29,13 +49,13 @@ namespace Gameplay.Generation
         public int MiddleIndex => _layerSize / 2;
         public int MiddleLayerIndex => _layers.Count / 2;
 
-        public TileType[,] this[int layer] => _layers[layer];
+        public TileType[,] this[int layer] => _layers[layer].Tiles;
 
-        public TileType[,] Middle => _layers[_layers.Count / 2];
+        public TileType[,] Middle => _layers[_layers.Count / 2].Tiles;
 
-        public TileType[,] GetTiles(int layer) => _layers[layer];
+        public TileType[,] GetTiles(int layer) => _layers[layer].Tiles;
 
-        public BiomeType GetBiome(int index) => _biomes[index];
+        public BiomeType GetBiome(int index) => _layers[index].Biome;
 
         #endregion
 
@@ -55,10 +75,10 @@ namespace Gameplay.Generation
 
         #region Enumerators
 
-        public List<TileType[,]>.Enumerator GetEnumerator()
+        public List<LayerData>.Enumerator GetEnumerator()
             => _layers.GetEnumerator();
 
-        IEnumerator<TileType[,]> IEnumerable<TileType[,]>.GetEnumerator()
+        IEnumerator<LayerData> IEnumerable<LayerData>.GetEnumerator()
             => _layers.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator()

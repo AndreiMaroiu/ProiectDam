@@ -1,18 +1,32 @@
+using Gameplay.DataSaving;
+using System;
 using UnityEngine;
 using Utilities;
-using Core;
-using System;
 
 namespace Gameplay.Generation
 {
+    
+
     public class LayersSpawner
     {
+        public delegate GameObject TileGeneration(TileType tileType, BiomeType biomeType, int x, int y);
+
+        public delegate void AfterTileSpawnedAction(TileObject tile, BiomeType biomeType, int x, int y);
+
+        public enum GenerationStrategy
+        {
+            Random,
+            FromSave,
+        }
+
         private readonly float _cellSize;
         private readonly TileSettings _grassTiles;
         private readonly TileSettings _fireTiles;
         private readonly TileSettings _dungeonTiles;
 
         private Vector3 _offset;
+        private TileGeneration _generationStrategy;
+        private AfterTileSpawnedAction _afterTileSpawnedAction;
 
         public LayersSpawner(float cellSize, TileSettings grassTiles, TileSettings fireTiles, TileSettings dungeonTiles)
         {
@@ -21,6 +35,30 @@ namespace Gameplay.Generation
             _grassTiles = grassTiles;
             _fireTiles = fireTiles;
             _dungeonTiles = dungeonTiles;
+
+            _generationStrategy = RandomGeneration;
+        }
+
+        public LayersSaveData SaveData { get; set; }
+
+        /// <summary>
+        /// Set different tile generation strategy. By default it's random
+        /// </summary>
+        public void SetGenerationStrategy(GenerationStrategy strategy)
+        {
+            switch (strategy)
+            {
+                case GenerationStrategy.Random:
+                    _generationStrategy = RandomGeneration;
+                    _afterTileSpawnedAction = null;
+                    break;
+                case GenerationStrategy.FromSave:
+                    _generationStrategy = GenerateFromSave;
+                    _afterTileSpawnedAction = AfterTileLoaded;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void SpawnStatic(RoomBehaviour behaviour)
@@ -121,7 +159,7 @@ namespace Gameplay.Generation
         private GameObject SpawnTile(int i, int j, Transform where, BiomeType biome, TileType type)
         {
             Vector3 pos = Utils.GetVector3FromMatrixPos(i, j, _cellSize) - _offset;
-            GameObject tile = GetSettings(biome).GetTile(type);
+            GameObject tile = _generationStrategy(type, biome, i, j);
 
             if (tile.IsNotNull())
             {
@@ -150,6 +188,13 @@ namespace Gameplay.Generation
             }
 
             tile.LayerPosition = new LayerPosition(new Vector2Int(i, j), layer);
+
+            if (tile is IDataSavingObject data)
+            {
+                data.ObjectName = tile.name.Replace("(Clone)", "");
+            }
+
+            _afterTileSpawnedAction?.Invoke(tile, biome, i, j);
         }
 
         private void SpawnTileIf(int i, int j, Transform where, BiomeType biome, TileType type, TileType condition)
@@ -172,6 +217,54 @@ namespace Gameplay.Generation
         {
             int middlePos = layer.GetLength(0) / 2;
             _offset = Utils.GetVector3FromMatrixPos(middlePos, middlePos, _cellSize);
+        }
+
+        private GameObject RandomGeneration(TileType tileType, BiomeType biomeType, int x, int y)
+        {
+            return GetSettings(biomeType).GetTile(tileType);
+        }
+
+        private GameObject GenerateFromSave(TileType tileType, BiomeType biomeType, int x, int y)
+        {
+            LayerSaveData layer = SaveData.GetFromBiome(biomeType);
+            TileSettings tileSettings = GetSettings(biomeType);
+            Vector2IntPos key = new Vector2IntPos(x, y);
+
+            //if (!layer.DynamicObjects.ContainsKey(key))
+            //{
+            //    return null;
+            //}
+
+            string name = layer.DynamicObjects[key].ObjectName;
+
+            // todo: load data
+
+            GameObject tile = tileSettings.GetTileFromName(tileType, name);
+
+            if (tile == null)
+            {
+                Debug.LogError("null tile");
+                return null; // just for debugging
+            }
+
+            return tile;
+        }
+
+        private void AfterTileLoaded(TileObject tile, BiomeType biomeType, int x, int y)
+        {
+            if (tile is IDataSavingObject loadingObject)
+            {
+                LayerSaveData layer = SaveData.GetFromBiome(biomeType);
+                Vector2IntPos key = new Vector2IntPos(x, y);
+
+                if (!layer.DynamicObjects.ContainsKey(key))
+                {
+                    return;
+                }
+
+                ObjectSaveData saveData = layer.DynamicObjects[key];
+                loadingObject.LoadFromSave(saveData);
+            }
         }
 
         #endregion

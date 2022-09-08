@@ -1,3 +1,4 @@
+using Gameplay.DataSaving;
 using Gameplay.Generation;
 using Gameplay.Player;
 using System;
@@ -7,7 +8,7 @@ using Utilities;
 
 namespace Gameplay.Enemies
 {
-    public abstract class BaseEnemy : MovingObject
+    public abstract class BaseEnemy : MovingObject, IDataSavingObject
     {
         private static readonly Vector2Int[] Directions = { Vector2Int.down, Vector2Int.up, Vector2Int.left, Vector2Int.right };
 
@@ -92,5 +93,21 @@ namespace Gameplay.Enemies
                 Gizmos.color = lastColor;
             }
         }
+
+        #region IDataSavingObject
+
+        string IDataSavingObject.ObjectName { get; set; }
+        public abstract ObjectSaveData SaveData { get; set; }
+
+        protected string ObjectName => ((IDataSavingObject)this).ObjectName;
+
+        void IDataSavingObject.LoadFromSave(ObjectSaveData data)
+        {
+            LoadFromSave(data);
+        }
+
+        protected abstract void LoadFromSave(ObjectSaveData data);
+
+        #endregion
     }
 }

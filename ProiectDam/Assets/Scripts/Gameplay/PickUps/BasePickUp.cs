@@ -1,16 +1,30 @@
+using Gameplay.DataSaving;
 using Gameplay.Generation;
 using Gameplay.Player;
 using UnityEngine;
-using Utilities;
 
 namespace Gameplay.PickUps
 {
+    [System.Serializable]
+    public class PickUpSaveData : ObjectSaveData
+    {
+
+    }
+
     [RequireComponent(typeof(AudioSource))]
-    public class BasePickUp : TileObject, IInteractableEnter
+    public class BasePickUp : TileObject, IInteractableEnter, IDataSavingObject
     {
         [SerializeField] private Item _item;
 
         private AudioSource _audio;
+        private PickUpSaveData _saveData;
+
+        string IDataSavingObject.ObjectName { get; set; }
+
+        ObjectSaveData IDataSavingObject.SaveData => new PickUpSaveData()
+        {
+            ObjectName = ((IDataSavingObject)this).ObjectName
+        };
 
         private void Start()
         {
@@ -58,6 +72,11 @@ namespace Gameplay.PickUps
             Debug.Log("playing sound");
 
             return _item.Sound.length;
+        }
+
+        void IDataSavingObject.LoadFromSave(ObjectSaveData data)
+        {
+            // if needed in future
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Gameplay.Generation
         public int CurrentLayer => _currentLayer;
         public LayerBehaviour ActiveLayerBehaviour => _layersObjects[_currentLayer];
         public TileType[,] ActiveLayer => Layers.GetTiles(_currentLayer);
+        public LayerBehaviour[] LayerBehaviours => _layersObjects;
 
         private LayerBehaviour CreateEmptyObject(string name)
         {

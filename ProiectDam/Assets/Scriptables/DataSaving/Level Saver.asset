@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b6e3f42ed50ae141be8160c852e8c46, type: 3}
   m_Name: Level Saver
   m_EditorClassIdentifier: 
-  _seed: 0
-  _shouldLoad: 0
+  _shouldLoad: 1

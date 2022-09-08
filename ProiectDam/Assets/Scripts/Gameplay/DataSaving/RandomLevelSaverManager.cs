@@ -1,7 +1,9 @@
+using Core;
 using Core.DataSaving;
 using Core.Events;
 using Gameplay.Generation;
 using Gameplay.Player;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.DataSaving
@@ -42,6 +44,7 @@ namespace Gameplay.DataSaving
             {
                 Seed = _levelSpawner.Seed,
                 CurrentRoom = _roomEvent.Value.Pos,
+                Rooms = SaveRooms(),
                 PlayerData = new PlayerSaveData()
                 {
                     PlayerPos = _player.transform.position,
@@ -81,6 +84,50 @@ namespace Gameplay.DataSaving
                 _loaded = true;
                 _saveData = value;
             }
+        }
+
+        private Dictionary<Vector2IntPos, LayersSaveData> SaveRooms()
+        {
+            Dictionary<Vector2IntPos, LayersSaveData> rooms = new Dictionary<Vector2IntPos, LayersSaveData>();
+
+            // todo: refactor
+            _levelSpawner.Traverser.Traverse(room =>
+            {
+                LayersSaveData saveData = new LayersSaveData();
+                RoomBehaviour roomBehaviour = _levelSpawner.Traverser[room.Pos];
+
+                for (int i = 0; i < roomBehaviour.Layers.Count; i++)
+                {
+                    LayerSaveData layerSaveData = new LayerSaveData()
+                    {
+                        Layers = roomBehaviour.Layers.GetTiles(i),
+                        Biome = roomBehaviour.Layers.GetBiome(i),
+                    };
+
+                    IDataSavingObject[] dynamics = roomBehaviour.LayerBehaviours[i].GetDynamicObject();
+
+                    foreach (var dynamic in dynamics)
+                    {
+                        if (dynamic is TileObject tileObject)
+                        {
+                            Vector2IntPos pos = tileObject.LayerPosition.Position;
+
+                            if (layerSaveData.DynamicObjects.ContainsKey(pos))
+                            {
+                                Debug.LogError("key already defined in dynamic objects");
+                            }
+
+                            layerSaveData.DynamicObjects[pos] = dynamic.SaveData;
+                        }
+                    }
+
+                    saveData.Layers.Add(layerSaveData);
+                }
+
+                rooms[room.Pos] = saveData;
+            });
+
+            return rooms;
         }
     }
 }

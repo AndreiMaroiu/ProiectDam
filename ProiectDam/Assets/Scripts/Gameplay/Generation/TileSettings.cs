@@ -30,6 +30,26 @@ namespace Gameplay.Generation
             return null;
         }
 
+        public GameObject GetTileFromName(TileType type, string name)
+        {
+            GameObject[] list = GetList(type);
+
+            if (list == null)
+            {
+                return null;
+            }
+
+            foreach (var item in list)
+            {
+                if (item.name == name)
+                {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
         private GameObject[] GetList(TileType type) => type switch
         {
             TileType.None => _none,

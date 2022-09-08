@@ -1,3 +1,4 @@
+using Gameplay.DataSaving;
 using Gameplay.Enemies;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,11 @@ namespace Gameplay
         private void OnEnemyDeath(BaseEnemy enemy)
         {
             Enemies.Remove(enemy);
+        }
+
+        public IDataSavingObject[] GetDynamicObject()
+        {
+            return GetComponentsInChildren<IDataSavingObject>();
         }
     }
 }

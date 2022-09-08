@@ -74,19 +74,26 @@ namespace Gameplay.Generation
             }
             else // load layers
             {
-                SpawnStaticLayers();
+                SpawnLayersFromSave();
                 Debug.Log("spawn only static");
             }
         }
 
-        private void SpawnStaticLayers()
+        private void SpawnLayersFromSave()
         {
             LayersSpawner spawner = new LayersSpawner(_data.CellSize, _data.GrassTiles, _data.FireTiles, _data.DungeonTiles);
-
+            
             _traverser.TraverseUnique(room =>
             {
                 RoomBehaviour behaviour = _traverser[room.Pos];
+                var saveData = _levelSaver.SaveData.Rooms[room.Pos];
+                spawner.SaveData = saveData;
+
+                spawner.SetGenerationStrategy(LayersSpawner.GenerationStrategy.Random);
                 spawner.SpawnStatic(behaviour);
+                behaviour.Layers.SetFromSave(saveData);
+                spawner.SetGenerationStrategy(LayersSpawner.GenerationStrategy.FromSave);
+                spawner.SpawnDynamic(behaviour);
             });
         }
 

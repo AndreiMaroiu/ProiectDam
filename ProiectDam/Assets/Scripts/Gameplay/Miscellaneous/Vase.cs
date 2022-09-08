@@ -1,14 +1,28 @@
 using Gameplay.Generation;
 using UnityEngine;
+using Gameplay.DataSaving;
 
 namespace Gameplay
 {
-    public class Vase : KillableObject
+    [System.Serializable]
+    public class VaseSaveData : ObjectSaveData
+    {
+
+    }
+
+    public class Vase : KillableObject, IDataSavingObject
     {
         private const int StartHealth = 1;
 
         [SerializeField] private TileObject _coinPickUp;
         [SerializeField] private int _coinsSpawnChance;
+
+        public string ObjectName { get; set; }
+
+        public ObjectSaveData SaveData => new VaseSaveData()
+        {
+            ObjectName = this.ObjectName,
+        };
 
         protected override void OnDamage()
         {
@@ -43,6 +57,11 @@ namespace Gameplay
         private void Start()
         {
             InitHealth(StartHealth);
+        }
+
+        public void LoadFromSave(ObjectSaveData data)
+        {
+            
         }
     }
 }
