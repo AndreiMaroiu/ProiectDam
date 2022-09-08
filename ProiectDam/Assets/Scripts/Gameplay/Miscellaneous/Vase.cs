@@ -4,12 +4,6 @@ using Gameplay.DataSaving;
 
 namespace Gameplay
 {
-    [System.Serializable]
-    public class VaseSaveData : ObjectSaveData
-    {
-
-    }
-
     public class Vase : KillableObject, IDataSavingObject
     {
         private const int StartHealth = 1;

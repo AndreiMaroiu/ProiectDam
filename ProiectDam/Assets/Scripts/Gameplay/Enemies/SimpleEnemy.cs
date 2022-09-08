@@ -2,6 +2,7 @@ using Gameplay.DataSaving;
 using Gameplay.Generation;
 using Gameplay.Player;
 using UnityEngine;
+using Utilities;
 
 namespace Gameplay.Enemies
 {
@@ -16,8 +17,6 @@ namespace Gameplay.Enemies
         private Animator _animator;
         private SpriteRenderer _renderer;
         private Collider2D _collider;
-
-        private SimpleEnemySaveData _saveData;
 
         private void Start()
         {
@@ -37,7 +36,7 @@ namespace Gameplay.Enemies
             _animator.SetBool(HIT_ANIMATION, true);
         }
 
-        private void OnStopDamage()
+        public void OnStopDamage()
         {
             // play sound and animations
             _animator.SetBool(HIT_ANIMATION, false);
@@ -80,46 +79,32 @@ namespace Gameplay.Enemies
             _animator.SetBool(WALK_ANIMATION, false);
         }
 
-        #region Data Saving
-
-        public override ObjectSaveData SaveData
+        private void LoadSpriteRenderer()
         {
-            get
+            if (_renderer.IsNull())
             {
-                if (_saveData is null)
-                {
-                    _saveData = CreateSaveData();
-                }
-
-                return _saveData;
-            }
-            set
-            {
-                if (value is SimpleEnemySaveData data)
-                {
-                    _saveData = data;
-                }
+                _renderer = GetComponent<SpriteRenderer>();
             }
         }
 
+        #region Data Saving
+
+        public override ObjectSaveData SaveData => CreateSaveData();
+
         protected override void LoadFromSave(ObjectSaveData data)
         {
-
             if (data is SimpleEnemySaveData enemyData)
             {
-                SaveData = enemyData;
+                LoadSpriteRenderer();
 
                 Health = enemyData.Health;
-                //_renderer.flipX = enemyData.IsFlipped;
+                _renderer.flipX = enemyData.IsFlipped;
             }
         }
 
         private SimpleEnemySaveData CreateSaveData()
         {
-            if (_renderer is null)
-            {
-                _renderer = GetComponent<SpriteRenderer>();
-            }
+            LoadSpriteRenderer();
 
             return new SimpleEnemySaveData()
             {

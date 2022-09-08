@@ -1,6 +1,5 @@
 ﻿namespace Gameplay.DataSaving
 {
-
     public interface IDataSavingObject
     {
         public string ObjectName { get; set; }

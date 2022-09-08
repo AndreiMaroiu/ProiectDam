@@ -5,8 +5,6 @@ using Utilities;
 
 namespace Gameplay.Generation
 {
-    
-
     public class LayersSpawner
     {
         public delegate GameObject TileGeneration(TileType tileType, BiomeType biomeType, int x, int y);
@@ -134,13 +132,13 @@ namespace Gameplay.Generation
 
         private void SpawnForegroundIf(TileType[,] layer, Transform where, BiomeType biome, Func<TileType, bool> condition)
         {
-            // minus 2 is required because there is a wall border and a none border
+            // minus 1 is required because there is a wall border
             int size = layer.GetLength(0);
-            int sizeMinus = size - 2;
+            int sizeMinus = size - 1;
 
-            for (int i = 2; i < sizeMinus; i++)
+            for (int i = 1; i < sizeMinus; i++)
             {
-                for (int j = 2; j < sizeMinus; j++)
+                for (int j = 1; j < sizeMinus; j++)
                 {
                     TileType type = layer[i, j];
 
@@ -191,7 +189,7 @@ namespace Gameplay.Generation
 
             if (tile is IDataSavingObject data)
             {
-                data.ObjectName = tile.name.Replace("(Clone)", "");
+                data.ObjectName = tile.name.Replace("(Clone)", ""); // remove the clone from name after instantiate
             }
 
             _afterTileSpawnedAction?.Invoke(tile, biome, i, j);
@@ -227,27 +225,11 @@ namespace Gameplay.Generation
         private GameObject GenerateFromSave(TileType tileType, BiomeType biomeType, int x, int y)
         {
             LayerSaveData layer = SaveData.GetFromBiome(biomeType);
-            TileSettings tileSettings = GetSettings(biomeType);
             Vector2IntPos key = new Vector2IntPos(x, y);
-
-            //if (!layer.DynamicObjects.ContainsKey(key))
-            //{
-            //    return null;
-            //}
 
             string name = layer.DynamicObjects[key].ObjectName;
 
-            // todo: load data
-
-            GameObject tile = tileSettings.GetTileFromName(tileType, name);
-
-            if (tile == null)
-            {
-                Debug.LogError("null tile");
-                return null; // just for debugging
-            }
-
-            return tile;
+            return GetSettings(biomeType).GetTileFromName(tileType, name);
         }
 
         private void AfterTileLoaded(TileObject tile, BiomeType biomeType, int x, int y)

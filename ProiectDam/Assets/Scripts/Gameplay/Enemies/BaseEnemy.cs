@@ -97,7 +97,7 @@ namespace Gameplay.Enemies
         #region IDataSavingObject
 
         string IDataSavingObject.ObjectName { get; set; }
-        public abstract ObjectSaveData SaveData { get; set; }
+        public abstract ObjectSaveData SaveData { get; }
 
         protected string ObjectName => ((IDataSavingObject)this).ObjectName;
 

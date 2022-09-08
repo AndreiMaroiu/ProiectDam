@@ -5,12 +5,6 @@ using UnityEngine;
 
 namespace Gameplay.PickUps
 {
-    [System.Serializable]
-    public class PickUpSaveData : ObjectSaveData
-    {
-
-    }
-
     [RequireComponent(typeof(AudioSource))]
     public class BasePickUp : TileObject, IInteractableEnter, IDataSavingObject
     {
