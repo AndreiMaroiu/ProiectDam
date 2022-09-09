@@ -40,6 +40,11 @@ namespace Gameplay.Generation
             _data.RoomBehaviourEvent.Value = _traverser.Start;
         }
 
+        private void OnDestroy()
+        {
+            _levelSaver.Seed = Seed;
+        }
+
         private void SetSeed()
         {
             if (_levelSaver.ShouldLoad && _levelSaver.SaveData != null)
@@ -48,7 +53,7 @@ namespace Gameplay.Generation
             }
             else
             {
-                Seed = (int)DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                Seed = _levelSaver.Seed;
             }
 
             Debug.Log("seed: " + Seed.ToString());

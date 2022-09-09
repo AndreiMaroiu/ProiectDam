@@ -38,8 +38,6 @@ namespace Gameplay.DataSaving
 
         public override void Save() // todo: add string file
         {
-            Debug.Log("saving level data");
-
             SaveData = new LevelSaveData()
             {
                 Seed = _levelSpawner.Seed,
@@ -66,6 +64,11 @@ namespace Gameplay.DataSaving
         }
 
         public bool ShouldLoad => _handler.ShouldLoad;
+        public int Seed
+        {
+            get => _handler.Seed;
+            set => _handler.SetSeed(value);
+        }
 
         public LevelSaveData SaveData
         {
@@ -112,10 +115,12 @@ namespace Gameplay.DataSaving
                         {
                             Vector2IntPos pos = tileObject.LayerPosition.Position;
 
+                            #if UNITY_EDITOR
                             if (layerSaveData.DynamicObjects.ContainsKey(pos))
                             {
                                 Debug.LogError("key already defined in dynamic objects");
                             }
+                            #endif
 
                             layerSaveData.DynamicObjects[pos] = dynamic.SaveData;
                         }

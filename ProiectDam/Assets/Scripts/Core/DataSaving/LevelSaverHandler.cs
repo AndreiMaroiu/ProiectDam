@@ -2,10 +2,14 @@ using UnityEngine;
 
 namespace Core.DataSaving
 {
+    /// <summary>
+    /// Handler for a save manager for data transportation between scenes
+    /// </summary>
     public abstract class LevelSaverHandler : ScriptableObject
     {
         public abstract bool ShouldLoad { get; }
         public abstract string SaveFile { get; }
+        public abstract int Seed { get; }
 
         /// <summary>
         /// mark level saver to load level from a specified file
@@ -16,6 +20,11 @@ namespace Core.DataSaving
         /// mark level saver to not load data for a level
         /// </summary>
         public abstract void SetForNewScene();
+
+        /// <summary>
+        /// Set seed if you want to generate level random from seed, but not fully load all save data
+        /// </summary>
+        public abstract void SetSeed(int seed);
 
     }
 }

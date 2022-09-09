@@ -11,7 +11,6 @@ namespace Gameplay.PickUps
         [SerializeField] private Item _item;
 
         private AudioSource _audio;
-        private PickUpSaveData _saveData;
 
         string IDataSavingObject.ObjectName { get; set; }
 
