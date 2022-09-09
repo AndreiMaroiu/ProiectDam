@@ -63,6 +63,16 @@ namespace Gameplay.DataSaving
             Utilities.BinaryReader.Write(Application.persistentDataPath + "/Save.dat", SaveData);
         }
 
+        public override void SetUpForNewScene()
+        {
+            _handler.SetForNewScene();
+        }
+
+        public override void SaveOnlySeed()
+        {
+            _handler.SetSeed(_levelSpawner.Seed);
+        }
+
         public bool ShouldLoad => _handler.ShouldLoad;
         public int Seed
         {

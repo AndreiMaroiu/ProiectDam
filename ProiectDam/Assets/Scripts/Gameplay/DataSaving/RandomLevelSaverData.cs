@@ -14,8 +14,8 @@ namespace Gameplay.DataSaving
 
         [SerializeField] private bool _shouldLoad;
 
+        [SerializeField] private int _seed;
         private string _saveFile;
-        private int? _seed;
 
         #region Level Saver Handler
 
@@ -23,7 +23,7 @@ namespace Gameplay.DataSaving
 
         public override string SaveFile => _saveFile;
 
-        public override int Seed => _seed.Value;
+        public override int Seed => _seed;
 
         public override void Load(string saveFile)
         {
@@ -34,9 +34,9 @@ namespace Gameplay.DataSaving
 
         public override void SetForNewScene()
         {
-            _shouldLoad = false;
-            _seed = GenerateRandomSeed;
-            SaveState();
+            int seed = GenerateRandomSeed();
+            Debug.Log("Generated seed: " + seed.ToString());
+            SetSeed(seed);
         }
 
         public override void SetSeed(int seed)
@@ -47,6 +47,8 @@ namespace Gameplay.DataSaving
             _saveFile = null;
 
             SaveState();
+
+            Debug.Log("Seed was set with value: " + seed.ToString());
         }
 
         #endregion
@@ -71,30 +73,17 @@ namespace Gameplay.DataSaving
         {
             _saveFile = PlayerPrefs.GetString(SAVE_FILE_STR, defaultValue: null);
             _shouldLoad = ToBool(PlayerPrefs.GetInt(SHOULD_LOAD_STR, defaultValue: 0));
+            _seed = PlayerPrefs.GetInt(SEED_STR, GenerateRandomSeed());
 
-            if (PlayerPrefs.HasKey(SEED_STR))
-            {
-                _seed = PlayerPrefs.GetInt(SEED_STR);
-            }
-            else
-            {
-                _seed = GenerateRandomSeed;
-            }
+            SaveState();
         }
 
         private void SaveState()
         {
             PlayerPrefs.SetString(SAVE_FILE_STR, SaveFile);
             PlayerPrefs.SetInt(SHOULD_LOAD_STR, ToInt(ShouldLoad));
-
-            if (_seed is null)
-            {
-                PlayerPrefs.DeleteKey(SEED_STR);
-            }
-            else
-            {
-                PlayerPrefs.SetInt(SEED_STR, Seed);
-            }
+            PlayerPrefs.SetInt(SEED_STR, Seed);
+            PlayerPrefs.Save();
         }
 
         #endregion
@@ -105,7 +94,7 @@ namespace Gameplay.DataSaving
 
         private static int ToInt(bool b) => b ? 1 : 0;
 
-        private static int GenerateRandomSeed => (int)DateTimeOffset.Now.ToUnixTimeMilliseconds();
+        private static int GenerateRandomSeed() => (int)DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
         #endregion
     }

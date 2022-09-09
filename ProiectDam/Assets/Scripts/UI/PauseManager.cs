@@ -60,6 +60,29 @@ namespace UI
 
         public void OnRestartClick()
         {
+            _pauseCanvas.SetActive(false);
+
+            ModalWindows.ModalWindow.Show(new ModalWindows.ModalWindowData()
+            {
+                Header = "Are you sure you want to restart level?",
+                CloseAction = () => _pauseCanvas.SetActive(true),
+                OkText = "Restart",
+                OkAction = () =>
+                {
+                    RestartLevel();
+                    _saver.SaveOnlySeed();
+                },
+                AlternativeText = "Load new",
+                AlternativeAction = () =>
+                {
+                    RestartLevel();
+                    _saver.SetUpForNewScene();
+                }
+            });
+        }
+
+        private void RestartLevel()
+        {
             Time.timeScale = 1;
             _transition.SetTrigger("Start");
 
