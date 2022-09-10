@@ -20,11 +20,19 @@ namespace Gameplay.Merchant
         private Animator _animator;
         private PlayerController _player;
         private bool _canBuy = true;
+        private Item[] _itemsToShow;
+        private bool _isOpen = false;
 
         #region IInteractable
 
         public void OnInteract(PlayerController controller)
         {
+            if (_isOpen)
+            {
+                return;
+            }
+
+            _isOpen = true;
             _player = controller;
 
             string dialogLine = ChooseRandomDialog();
@@ -35,11 +43,16 @@ namespace Gameplay.Merchant
 
         public void OnPlayerLeave(PlayerController controller)
         {
+            if (!_isOpen)
+            {
+                return;
+            }
+
             StartCoroutine(ShowDialog("Bye!", 1.0f));
 
             _animator.SetTrigger("Hide");
-
             _player = null;
+            _isOpen = false;
         }
 
         #endregion
@@ -52,6 +65,7 @@ namespace Gameplay.Merchant
             _dialogCanvas.SetActive(false);
 
             _itemsEvent.OnItemBought += OnBuy;
+            _itemsToShow = GenerateRandomItemList();
         }
 
         private void OnDestroy()
@@ -76,7 +90,7 @@ namespace Gameplay.Merchant
                 return;
             }
 
-            _itemsEvent.ShowItems(_items.Items);
+            _itemsEvent.ShowItems(_itemsToShow);
         }
 
         #endregion
@@ -115,6 +129,21 @@ namespace Gameplay.Merchant
                 item.GetPickUp().OnInteract(_player);
                 _canBuy = false;
             }
+        }
+
+        private Item[] GenerateRandomItemList()
+        {
+            const int itemsCount = 3;
+            Item[] itemsToShow = new Item[itemsCount];
+
+            RandomPicker<Item> picker = new RandomPicker<Item>(_items.Items);
+
+            for (int i = 0; i < itemsCount; i++)
+            {
+                itemsToShow[i] = picker.Take();
+            }
+
+            return itemsToShow;
         }
     }
 }
