@@ -13,6 +13,8 @@ namespace Gameplay
 
         public string ObjectName { get; set; }
 
+        public override int Priority => 2;
+
         public ObjectSaveData SaveData => new VaseSaveData()
         {
             ObjectName = this.ObjectName,

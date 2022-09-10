@@ -4,6 +4,7 @@ namespace Gameplay
 {
     public abstract class KillableObject : TileObject
     {
+        public virtual int Priority { get; } = 1;
         public virtual int Health { get; set; }
         public virtual int MaxHealth { get; set; }
         public bool IsDead { get; private set; }

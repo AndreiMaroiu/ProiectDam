@@ -309,7 +309,7 @@ namespace Gameplay.Player
             KillableObject closest = null;
             foreach (KillableObject enemy in enemies)
             {
-                float distance = (enemy.transform.position - transform.position).sqrMagnitude;
+                float distance = (enemy.transform.position - transform.position).sqrMagnitude * enemy.Priority;
                 if (distance < min)
                 {
                     min = distance;
