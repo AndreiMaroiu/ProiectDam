@@ -12,8 +12,8 @@ namespace ModalWindows
     {
         public static ModalWindow Instance { get; private set; } = null;
 
-        private const int _transparentLevel = 81;
-        private const int _fullOpacityLevel = 255;
+        private const float _transparentLevel = 0.5f;
+        private const float _fullOpacityLevel = 1.0f;
 
         [SerializeField] private Canvas _window;
         [SerializeField] private bool _dontDestroyOnLoad;

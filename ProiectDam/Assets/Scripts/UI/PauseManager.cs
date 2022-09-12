@@ -62,12 +62,9 @@ namespace UI
 
         public void OnRestartClick()
         {
-            _pauseCanvas.SetActive(false);
-
             ModalWindows.ModalWindow.Show(new ModalWindows.ModalWindowData()
             {
                 Header = "Are you sure you want to restart level?",
-                CloseAction = () => _pauseCanvas.SetActive(true),
                 OkText = "Restart",
                 OkAction = () =>
                 {
@@ -79,7 +76,9 @@ namespace UI
                 {
                     RestartLevel();
                     _saver.SetUpForNewScene();
-                }
+                },
+                IsTransparent = false,
+                BackgroundColor = _modalColor,
             });
         }
 

@@ -122,7 +122,7 @@ namespace Gameplay.Managers
 
         private RoomBehaviour GetActiveBehaviour()
         {
-            if (_levelSaver.ShouldLoad)
+            if (_levelSaver != null && _levelSaver.ShouldLoad)
             {
                 RoomBehaviour roomBehaviour = _spawner.Traverser[_levelSaver.SaveData.CurrentRoom];
                 _roomBehaviourEvent.Value = roomBehaviour;

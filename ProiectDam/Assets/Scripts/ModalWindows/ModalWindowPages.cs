@@ -40,7 +40,7 @@ namespace ModalWindows
         public Action CloseAction { get; }
         public Action AlternativeAction => null;
         public bool CanClose { get; private set; } = false;
-        public bool IsTransparent { get; set; }
+        public bool IsTransparent { get; set; } = true;
         public Color BackgroundColor { get; set; } = Color.black;
 
         private void Next()
