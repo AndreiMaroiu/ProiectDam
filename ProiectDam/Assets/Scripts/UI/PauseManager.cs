@@ -8,9 +8,7 @@ namespace UI
 {
     public class PauseManager : MonoBehaviour
     {
-        public float LastTimeScale { get; set; }
-
-        public const float PausedScale = 0.0f;
+        private const float PausedScale = 0.0f;
 
         [SerializeField] private GameObject _pauseCanvas;
         [SerializeField] private GameObject _howToCanvas;
@@ -19,6 +17,8 @@ namespace UI
         [SerializeField] private GameObject _saveButton;
         [SerializeField] private LevelSaverManager _saver;
         [SerializeField] private Color _modalColor;
+
+        private float _lastTimeScale;
 
         void Awake()
         {
@@ -30,14 +30,14 @@ namespace UI
 
         public void OnPauseClick()
         {
-            LastTimeScale = Time.timeScale;
+            _lastTimeScale = Time.timeScale;
             Time.timeScale = PausedScale;
             _pauseCanvas.SetActive(true);
         }
 
         public void OnResumeClick()
         {
-            Time.timeScale = LastTimeScale;
+            Time.timeScale = _lastTimeScale;
             _pauseCanvas.SetActive(false);
         }
 
@@ -91,6 +91,24 @@ namespace UI
         }
 
         public void OnCloseClick()
+        {
+            ModalWindow.Show(new ModalWindowData()
+            {
+                Header = "Are you sure you want to leave?",
+                OkText = "Leave",
+                OkAction = LoadMainMenu,
+                AlternativeText = "Save & Quit",
+                AlternativeAction = () =>
+                {
+                    _saver.Save();
+                    LoadMainMenu();
+                },
+                IsTransparent = false,
+                BackgroundColor = _modalColor,
+            });
+        }
+
+        private void LoadMainMenu()
         {
             Time.timeScale = 1;
             _transition.SetTrigger("Start");
