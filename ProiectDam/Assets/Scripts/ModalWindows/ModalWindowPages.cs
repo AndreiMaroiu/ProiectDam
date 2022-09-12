@@ -12,7 +12,7 @@ namespace ModalWindows
 
         public ModalWindowPages(ModalWindowPageData[] pages, float timeScale)
         {
-#if DEBUG
+#if UNITY_EDITOR
             if (pages is null || pages.Length == 0)
             {
                 throw new Exception("Need at least one page!");
@@ -29,29 +29,19 @@ namespace ModalWindows
         }
 
         public ModalWindowPageData Current { get; private set; }
-
         public string Header => Current?.Header;
-
         public string Content => Current?.Content;
-
         public Sprite Image => Current?.Image;
-
         public string Footer => Current?.Footer;
-
         public string OkText => (_currentIndex > 0) ? "Previous" : null;
-
         public string AlternativeText => null;
-
         public string CloseText => (_currentIndex == _lastIndex) ? "Close" : "Next";
-
         public Action OkAction { get; }
-
         public Action CloseAction { get; }
-
         public Action AlternativeAction => null;
-
         public bool CanClose { get; private set; } = false;
-
+        public bool IsTransparent { get; set; }
+        public Color BackgroundColor { get; set; } = Color.black;
 
         private void Next()
         {

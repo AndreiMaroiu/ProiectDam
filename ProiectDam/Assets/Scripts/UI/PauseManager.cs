@@ -1,4 +1,5 @@
 using Core.DataSaving;
+using ModalWindows;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utilities;
@@ -17,6 +18,7 @@ namespace UI
         [SerializeField] private Animator _transition;
         [SerializeField] private GameObject _saveButton;
         [SerializeField] private LevelSaverManager _saver;
+        [SerializeField] private Color _modalColor;
 
         void Awake()
         {
@@ -100,6 +102,13 @@ namespace UI
         public void OnSaveClick()
         {
             _saver.Save();
+
+            ModalWindow.Show(new ModalWindowData()
+            {
+                Header = "Level saved successfully!",
+                IsTransparent = false,
+                BackgroundColor = _modalColor,
+            });
         }
     }
 }

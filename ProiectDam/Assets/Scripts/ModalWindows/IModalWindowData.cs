@@ -16,5 +16,7 @@ namespace ModalWindows
         public Action CloseAction { get; }
         public Action AlternativeAction { get; }
         public bool CanClose { get; }
+        public bool IsTransparent { get; }
+        public Color BackgroundColor { get; }
     }
 }

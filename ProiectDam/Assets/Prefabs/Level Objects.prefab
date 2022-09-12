@@ -1225,6 +1225,7 @@ MonoBehaviour:
   _transition: {fileID: 4635899894793198522}
   _saveButton: {fileID: 2689027634150063151}
   _saver: {fileID: 0}
+  _modalColor: {r: 0.09317646, g: 0.29678434, b: 0.44, a: 0}
 --- !u!114 &4109379794917434221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1668,6 +1669,7 @@ MonoBehaviour:
   _fillSquare: 0
   _spawner: {fileID: 0}
   _player: {fileID: 4109379796208687295}
+  _levelSaver: {fileID: 0}
   _roomEvent: {fileID: 11400000, guid: d1d78b254926b314d84ce8c10c8375c0, type: 2}
   _roomBehaviourEvent: {fileID: 11400000, guid: c546f3029682b1f46a1a1d15a38817fc,
     type: 2}

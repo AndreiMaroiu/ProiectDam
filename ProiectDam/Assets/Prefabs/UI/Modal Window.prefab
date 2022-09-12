@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.2901961}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1066,6 +1066,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _window: {fileID: 4710153762175455960}
   _dontDestroyOnLoad: 0
+  _windowBackground: {fileID: 4710153761896347750}
   _headerArea: {fileID: 4710153761591464380}
   _headerText: {fileID: 4710153763157516671}
   _contentArea: {fileID: 4710153762891080637}

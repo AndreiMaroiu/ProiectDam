@@ -12,8 +12,12 @@ namespace ModalWindows
     {
         public static ModalWindow Instance { get; private set; } = null;
 
+        private const int _transparentLevel = 81;
+        private const int _fullOpacityLevel = 255;
+
         [SerializeField] private Canvas _window;
         [SerializeField] private bool _dontDestroyOnLoad;
+        [SerializeField] private Image _windowBackground;
 
         [Header("Header")]
         [SerializeField] private GameObject _headerArea;
@@ -104,6 +108,10 @@ namespace ModalWindows
             _closeText.text = data.CloseText;
 
             _canClose = data.CanClose;
+
+            Color newColor = data.BackgroundColor;
+            newColor.a = data.IsTransparent ? _transparentLevel : _fullOpacityLevel;
+            _windowBackground.color = newColor;
         }
 
         private void Awake()
