@@ -1,9 +1,8 @@
-﻿namespace Gameplay.DataSaving
+namespace Gameplay.DataSaving
 {
-    public interface IDataSavingObject
+    public interface IDataSavingObject<T>
     {
-        public string ObjectName { get; set; }
-        public ObjectSaveData SaveData { get; }
-        public void LoadFromSave(ObjectSaveData data);
+        public void LoadFromSave(T saveData);
+        public T SaveData { get; }
     }
 }

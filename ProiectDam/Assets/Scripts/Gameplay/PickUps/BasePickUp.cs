@@ -6,17 +6,17 @@ using UnityEngine;
 namespace Gameplay.PickUps
 {
     [RequireComponent(typeof(AudioSource))]
-    public class BasePickUp : TileObject, IInteractableEnter, IDataSavingObject
+    public class BasePickUp : TileObject, IInteractableEnter, IDataSavingTile
     {
         [SerializeField] private Item _item;
 
         private AudioSource _audio;
 
-        string IDataSavingObject.ObjectName { get; set; }
+        string IDataSavingTile.ObjectName { get; set; }
 
-        ObjectSaveData IDataSavingObject.SaveData => new PickUpSaveData()
+        ObjectSaveData IDataSavingObject<ObjectSaveData>.SaveData => new PickUpSaveData()
         {
-            ObjectName = ((IDataSavingObject)this).ObjectName
+            ObjectName = ((IDataSavingTile)this).ObjectName
         };
 
         private void Start()
@@ -67,7 +67,7 @@ namespace Gameplay.PickUps
             return _item.Sound.length;
         }
 
-        void IDataSavingObject.LoadFromSave(ObjectSaveData data)
+        void IDataSavingObject<ObjectSaveData>.LoadFromSave(ObjectSaveData data)
         {
             // if needed in future
         }

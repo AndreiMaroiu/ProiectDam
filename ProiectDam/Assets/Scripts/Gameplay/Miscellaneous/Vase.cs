@@ -4,7 +4,7 @@ using Gameplay.DataSaving;
 
 namespace Gameplay
 {
-    public class Vase : KillableObject, IDataSavingObject
+    public class Vase : KillableObject, IDataSavingTile
     {
         private const int StartHealth = 1;
 

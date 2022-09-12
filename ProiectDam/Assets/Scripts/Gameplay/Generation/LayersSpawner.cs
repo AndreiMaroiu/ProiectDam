@@ -85,7 +85,7 @@ namespace Gameplay.Generation
 
             SpawnBackground(layer, where, biome);
             SpawnWalls(layer, where, biome);
-            SpawnForegroundIf(layer, where, biome, type => type.IsStatic());
+            SpawnForegroundIf(layer, where, biome, type => type.IsStatic() && type != TileType.None);
         }
 
         private void SpawnDynamicLayer(TileType[,] layer, Transform where, BiomeType biome)
@@ -187,7 +187,7 @@ namespace Gameplay.Generation
 
             tile.LayerPosition = new LayerPosition(new Vector2Int(i, j), layer);
 
-            if (tile is IDataSavingObject data)
+            if (tile is IDataSavingTile data)
             {
                 data.ObjectName = tile.name.Replace("(Clone)", ""); // remove the clone from name after instantiate
             }
@@ -234,7 +234,7 @@ namespace Gameplay.Generation
 
         private void AfterTileLoaded(TileObject tile, BiomeType biomeType, int x, int y)
         {
-            if (tile is IDataSavingObject loadingObject)
+            if (tile is IDataSavingTile loadingObject)
             {
                 LayerSaveData layer = SaveData.GetFromBiome(biomeType);
                 Vector2IntPos key = new Vector2IntPos(x, y);

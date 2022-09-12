@@ -99,6 +99,7 @@ namespace Gameplay.Enemies
 
                 Health = enemyData.Health;
                 _renderer.flipX = enemyData.IsFlipped;
+                _lastType = enemyData.LastTile;
             }
         }
 
@@ -111,6 +112,7 @@ namespace Gameplay.Enemies
                 ObjectName = this.ObjectName,
                 Health = this.Health,
                 IsFlipped = _renderer.flipX,
+                LastTile = _lastType,
             };
         }
 

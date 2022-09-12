@@ -25,9 +25,9 @@ namespace Gameplay
             Enemies.Remove(enemy);
         }
 
-        public IDataSavingObject[] GetDynamicObject()
+        public IDataSavingTile[] GetDynamicObject()
         {
-            return GetComponentsInChildren<IDataSavingObject>();
+            return GetComponentsInChildren<IDataSavingTile>();
         }
     }
 }

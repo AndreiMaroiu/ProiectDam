@@ -1,3 +1,4 @@
+using Gameplay.Generation;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,5 +11,7 @@ namespace Gameplay.DataSaving
         public int Health { get; set; }
 
         public bool IsFlipped { get; set; }
+
+        public TileType LastTile { get; set; }
     }
 }

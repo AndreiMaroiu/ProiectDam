@@ -8,7 +8,7 @@ using Utilities;
 
 namespace Gameplay.Enemies
 {
-    public abstract class BaseEnemy : MovingObject, IDataSavingObject
+    public abstract class BaseEnemy : MovingObject, IDataSavingTile
     {
         private static readonly Vector2Int[] Directions = { Vector2Int.down, Vector2Int.up, Vector2Int.left, Vector2Int.right };
 
@@ -96,12 +96,13 @@ namespace Gameplay.Enemies
 
         #region IDataSavingObject
 
-        string IDataSavingObject.ObjectName { get; set; }
+        string IDataSavingTile.ObjectName { get; set; }
+
         public abstract ObjectSaveData SaveData { get; }
 
-        protected string ObjectName => ((IDataSavingObject)this).ObjectName;
+        protected string ObjectName => ((IDataSavingTile)this).ObjectName;
 
-        void IDataSavingObject.LoadFromSave(ObjectSaveData data)
+        void IDataSavingObject<ObjectSaveData>.LoadFromSave(ObjectSaveData data)
         {
             LoadFromSave(data);
         }

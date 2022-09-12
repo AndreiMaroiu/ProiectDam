@@ -2,6 +2,7 @@ using Core;
 using Core.DataSaving;
 using Core.Events;
 using Gameplay.Generation;
+using Gameplay.Managers;
 using Gameplay.Player;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace Gameplay.DataSaving
         [SerializeField] private LevelSaverHandler _handler;
         [SerializeField] private IntEvent _currentLayerEvent;
         [SerializeField] private RoomEvent _roomEvent;
+        [SerializeField] private TurnManager _turnManager;
 
         private bool _loaded;
         private LevelSaveData _saveData;
@@ -43,6 +45,7 @@ namespace Gameplay.DataSaving
                 Seed = _levelSpawner.Seed,
                 CurrentRoom = _roomEvent.Value.Pos,
                 Rooms = SaveRooms(),
+                TurnManagerData = _turnManager.SaveData,
                 PlayerData = new PlayerSaveData()
                 {
                     PlayerPos = _player.transform.position,
@@ -117,7 +120,7 @@ namespace Gameplay.DataSaving
                         Biome = roomBehaviour.Layers.GetBiome(i),
                     };
 
-                    IDataSavingObject[] dynamics = roomBehaviour.LayerBehaviours[i].GetDynamicObject();
+                    IDataSavingTile[] dynamics = roomBehaviour.LayerBehaviours[i].GetDynamicObject();
 
                     foreach (var dynamic in dynamics)
                     {

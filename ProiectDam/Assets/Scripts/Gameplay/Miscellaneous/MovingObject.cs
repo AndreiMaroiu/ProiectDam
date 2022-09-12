@@ -13,8 +13,9 @@ namespace Gameplay
 
         protected float CellSize => _cellSize;
 
+        protected TileType _lastType;
+
         private TileType _tileType;
-        private TileType _lastType;
         private float _cellSize;
         private float _inverseMoveTime;
 

@@ -1,4 +1,5 @@
 using Core.Events;
+using Gameplay.DataSaving;
 using Gameplay.Enemies;
 using Gameplay.Events;
 using Gameplay.Player;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace Gameplay.Managers
 {
-    public class TurnManager : MonoBehaviour
+    public class TurnManager : MonoBehaviour, IDataSavingObject<TurnManagerSaveData>
     {
         [SerializeField] private PlayerController _player;
         [Header("Events")]
@@ -16,6 +17,8 @@ namespace Gameplay.Managers
         [SerializeField] private BoolEvent _playerTurn;
 
         private bool _wasRoomChanged = false;
+
+        #region Unity Events
 
         private void Awake()
         {
@@ -30,6 +33,24 @@ namespace Gameplay.Managers
             _currentBehaviour.OnValueChanged -= OnRoomChanged;
             _playerTurn.OnValueChanged -= OnPlayerMoveEnd;
         }
+
+        #endregion
+
+        #region IDataSaving
+
+        public string ObjectName { get; set; }
+
+        public TurnManagerSaveData SaveData => new TurnManagerSaveData()
+        {
+            WasRoomChanged = _wasRoomChanged
+        };
+
+        public void LoadFromSave(TurnManagerSaveData data)
+        {
+            _wasRoomChanged = data.WasRoomChanged;
+        }
+
+        #endregion
 
         private void OnRoomChanged()
         {
