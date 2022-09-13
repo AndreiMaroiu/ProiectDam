@@ -7,11 +7,14 @@ namespace UI
 {
     public class MainMenu : MonoBehaviour
     {
+        [Header("Canvases")]
         [SerializeField] private GameObject _mainCanvas;
         [SerializeField] private GameObject _howToCanvas;
         [SerializeField] private GameObject _optionsCanvas;
         [SerializeField] private GameObject _creditsCanvas;
         [SerializeField] private GameObject _statsCanvas;
+        [SerializeField] private GameObject _savesCanvas;
+        [Header("Utilities")]
         [SerializeField] private Animator _transition;
         [SerializeField] private LevelSaverHandler _saverHandler;
 
@@ -43,6 +46,7 @@ namespace UI
             _optionsCanvas.SetActive(false);
             _creditsCanvas.SetActive(false);
             _statsCanvas.SetActive(false);
+            _savesCanvas.SetActive(false);
         }
 
         public void OnHowToClick()
@@ -82,7 +86,21 @@ namespace UI
             Loader.TargetScene = Scenes.Tutorial;
         }
 
-        public void OnLoadLevelClick()
+        /// <summary>
+        /// View all saves panel
+        /// </summary>
+        public void OnLoadSavesClick()
+        {
+            _mainCanvas.SetActive(false);
+
+            _savesCanvas.SetActive(true);
+        }
+
+        /// <summary>
+        /// Load a level based on a save file
+        /// </summary>
+        /// <param name="saveNumber">Number of the save file</param>
+        public void OnLoadLevelClick(int saveNumber)
         {
             string saveFile = Application.persistentDataPath + "/Save.dat";
 

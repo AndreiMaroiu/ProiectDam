@@ -69,13 +69,13 @@ namespace Gameplay.Generation
         {
             if (!_levelSaver.ShouldLoad) // generate layers
             {
-                base.SpawnLayers();
+                SpawnLayers();
                 Debug.Log("Spawn from generated!");
             }
             else // load layers
             {
                 SpawnLayersFromSave();
-                Debug.Log("spawn only static");
+                Debug.Log("spawn from load");
             }
         }
 
@@ -109,6 +109,7 @@ namespace Gameplay.Generation
 
             distances[0].room.Type = RoomType.Start;
 
+            // todo: better checks
             if (distances.Count > 7)
             {
                 ChooseRoomRandom(RoomType.Healing);
