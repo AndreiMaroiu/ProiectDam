@@ -7,9 +7,9 @@
         public LayerPositionData LayerPos { get; set; }
         public bool IsFliped { get; set; }
 
-        public int Health { get; set; }
-        public int Energy { get; set; }
-        public int Bullets { get; set; }
+        public Vector2IntPos Health { get; set; }
+        public Vector2IntPos Energy { get; set; }
+        public Vector2IntPos Bullets { get; set; }
         public int Coins { get; set; }
         public int Score { get; set; }
     }

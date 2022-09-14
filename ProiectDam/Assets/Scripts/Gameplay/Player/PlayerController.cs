@@ -8,7 +8,7 @@ using Gameplay.DataSaving;
 
 namespace Gameplay.Player
 {
-    public class PlayerController : MovingObject
+    public class PlayerController : MovingObject, IDataSavingObject<PlayerSaveData>
     {
         #region Constants
 
@@ -49,8 +49,7 @@ namespace Gameplay.Player
         [SerializeField] private IntEvent _money;
         [SerializeField] private GameEvent _onMoveStared;
         [SerializeField] private GameEvent _onMoveEnded;
-        [Header("Data Saving")]
-        [SerializeField] private RandomLevelSaverManager _levelSaver;
+        [SerializeField] private IntEvent _currentLayerEvent;
 
         #endregion
 
@@ -131,30 +130,11 @@ namespace Gameplay.Player
 
         private void Awake()
         {
-            if (_levelSaver != null && _levelSaver.ShouldLoad) // set values from save data
-            {
-                PlayerSaveData saveData = _levelSaver.SaveData.PlayerData;
+            _energyEvent.Init(_startEnergy);
+            _healthEvent.Init(_startHealth);
+            _bulletsEvent.Init(_startBullets);
 
-                _energyEvent.Set(saveData.Energy, _startEnergy);
-                _healthEvent.Set(saveData.Health, _startHealth);
-                _bulletsEvent.Set(saveData.Bullets, _startBullets);
-
-                _money.Value = saveData.Coins;
-                _playerScore.Value = saveData.Score;
-
-                if (saveData.IsFliped)
-                {
-                    Flip();
-                }
-            }
-            else // set default values
-            {
-                _energyEvent.Init(_startEnergy);
-                _healthEvent.Init(_startHealth);
-                _bulletsEvent.Init(_startBullets);
-
-                _money.Value = 0;
-            }
+            _money.Value = 0;
         }
 
         private void Start()
@@ -479,6 +459,41 @@ namespace Gameplay.Player
             _playerTurn.Value = false;
             _onMoveEnded?.Invoke(this);
         }
+
+        #endregion
+
+        #region Data Saving
+
+        public void LoadFromSave(PlayerSaveData saveData)
+        {
+            _energyEvent.Set(saveData.Energy.X, saveData.Energy.Y);
+            _healthEvent.Set(saveData.Health.X, saveData.Health.Y);
+            _bulletsEvent.Set(saveData.Bullets.X, saveData.Bullets.Y);
+
+            _money.Value = saveData.Coins;
+            _playerScore.Value = saveData.Score;
+
+            if (saveData.IsFliped)
+            {
+                Flip();
+            }
+        }
+
+        public PlayerSaveData SaveData => new PlayerSaveData()
+        {
+            Health = new Vector2IntPos(Health, MaxHealth),
+            Energy = new Vector2IntPos(Energy, MaxEnergy),
+            Bullets = new Vector2IntPos(Bullets, MaxBullets),
+            Score = Score,
+            Coins = Money,
+            IsFliped = IsFlipped,
+            PlayerPos = transform.position,
+            LayerPos = new LayerPositionData()
+            {
+                Biome = _currentLayerEvent.Value,
+                Position = LayerPosition.Position,
+            }
+        };
 
         #endregion
     }

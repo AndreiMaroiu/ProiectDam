@@ -44,23 +44,9 @@ namespace Gameplay.DataSaving
             {
                 Seed = _levelSpawner.Seed,
                 CurrentRoom = _roomEvent.Value.Pos,
-                Rooms = SaveRooms(),
                 TurnManagerData = _turnManager.SaveData,
-                PlayerData = new PlayerSaveData()
-                {
-                    PlayerPos = _player.transform.position,
-                    Bullets = _player.Bullets,
-                    Health = _player.Health,
-                    Energy = _player.Energy,
-                    Score = _player.Score,
-                    Coins = _player.Money,
-                    IsFliped = _player.IsFlipped,
-                    LayerPos = new LayerPositionData()
-                    {
-                        Biome = _currentLayerEvent.Value,
-                        Position = _player.LayerPosition.Position,
-                    }
-                }
+                PlayerData = _player.SaveData,
+                Rooms = SaveRooms(),
             };
 
             Utilities.BinaryReader.Write(Application.persistentDataPath + "/Save.dat", SaveData);

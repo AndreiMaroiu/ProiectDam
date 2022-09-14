@@ -3,10 +3,8 @@
 namespace Gameplay.DataSaving
 {
     [System.Serializable]
-    public class Vector3Pos
+    public struct Vector3Pos
     {
-        public Vector3Pos() {}
-
         public Vector3Pos(Vector3 vec)
             => (X, Y, Z) = (vec.x, vec.y, vec.z);
 
