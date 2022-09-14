@@ -63,6 +63,7 @@ namespace Gameplay.DataSaving
         }
 
         public bool ShouldLoad => _handler.ShouldLoad;
+
         public int Seed
         {
             get => _handler.Seed;
@@ -92,46 +93,59 @@ namespace Gameplay.DataSaving
         {
             Dictionary<Vector2IntPos, LayersSaveData> rooms = new Dictionary<Vector2IntPos, LayersSaveData>();
 
-            // todo: refactor
             _levelSpawner.Traverser.Traverse(room =>
             {
-                LayersSaveData saveData = new LayersSaveData();
                 RoomBehaviour roomBehaviour = _levelSpawner.Traverser[room.Pos];
-
-                for (int i = 0; i < roomBehaviour.Layers.Count; i++)
-                {
-                    LayerSaveData layerSaveData = new LayerSaveData()
-                    {
-                        Layers = roomBehaviour.Layers.GetTiles(i),
-                        Biome = roomBehaviour.Layers.GetBiome(i),
-                    };
-
-                    IDataSavingTile[] dynamics = roomBehaviour.LayerBehaviours[i].GetDynamicObject();
-
-                    foreach (var dynamic in dynamics)
-                    {
-                        if (dynamic is TileObject tileObject)
-                        {
-                            Vector2IntPos pos = tileObject.LayerPosition.Position;
-
-                            #if UNITY_EDITOR
-                            if (layerSaveData.DynamicObjects.ContainsKey(pos))
-                            {
-                                Debug.LogError("key already defined in dynamic objects");
-                            }
-                            #endif
-
-                            layerSaveData.DynamicObjects[pos] = dynamic.SaveData;
-                        }
-                    }
-
-                    saveData.Layers.Add(layerSaveData);
-                }
+                LayersSaveData saveData = GenerateRoomSaveData(roomBehaviour);
 
                 rooms[room.Pos] = saveData;
             });
 
             return rooms;
+        }
+
+        private static LayersSaveData GenerateRoomSaveData(RoomBehaviour roomBehaviour)
+        {
+            LayersSaveData saveData = new LayersSaveData();
+
+            for (int i = 0; i < roomBehaviour.Layers.Count; i++)
+            {
+                LayerSaveData layerSaveData = GenerateLayerSaveData(roomBehaviour, i);
+
+                saveData.Layers.Add(layerSaveData);
+            }
+
+            return saveData;
+        }
+
+        private static LayerSaveData GenerateLayerSaveData(RoomBehaviour roomBehaviour, int i)
+        {
+            LayerSaveData layerSaveData = new LayerSaveData()
+            {
+                Layers = roomBehaviour.Layers.GetTiles(i),
+                Biome = roomBehaviour.Layers.GetBiome(i),
+            };
+
+            IDataSavingTile[] dynamics = roomBehaviour.LayerBehaviours[i].GetDynamicObject();
+
+            foreach (var dynamic in dynamics)
+            {
+                if (dynamic is TileObject tileObject)
+                {
+                    Vector2IntPos pos = tileObject.LayerPosition.Position;
+
+#if UNITY_EDITOR
+                    if (layerSaveData.DynamicObjects.ContainsKey(pos))
+                    {
+                        Debug.LogError($"Key already defined in dynamic objects for layer {i.ToString()} in room with pos: {roomBehaviour.Room.Pos.ToString()}");
+                    }
+#endif
+
+                    layerSaveData.DynamicObjects[pos] = dynamic.SaveData;
+                }
+            }
+
+            return layerSaveData;
         }
     }
 }

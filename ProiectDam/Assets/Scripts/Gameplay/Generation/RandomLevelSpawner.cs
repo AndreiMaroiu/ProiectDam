@@ -1,9 +1,7 @@
 using Core;
 using Core.Values;
 using Gameplay.DataSaving;
-using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Gameplay.Generation
 {
@@ -75,21 +73,20 @@ namespace Gameplay.Generation
             else // load layers
             {
                 SpawnLayersFromSave();
-                Debug.Log("spawn from load");
+                Debug.Log("Spawn from load");
             }
         }
 
         private void SpawnLayersFromSave()
         {
             LayersSpawner spawner = new LayersSpawner(_data.CellSize, _data.GrassTiles, _data.FireTiles, _data.DungeonTiles);
-            
+
             _traverser.TraverseUnique(room =>
             {
                 RoomBehaviour behaviour = _traverser[room.Pos];
                 LayersSaveData saveData = _levelSaver.SaveData.Rooms[room.Pos];
                 spawner.SaveData = saveData;
 
-                spawner.SetGenerationStrategy(LayersSpawner.GenerationStrategy.Random);
                 spawner.SpawnStatic(behaviour);
                 behaviour.Layers.SetFromSave(saveData);
                 spawner.SetGenerationStrategy(LayersSpawner.GenerationStrategy.FromSave);
@@ -109,13 +106,11 @@ namespace Gameplay.Generation
 
             distances[0].room.Type = RoomType.Start;
 
-            // todo: better checks
-            if (distances.Count > 7)
-            {
-                ChooseRoomRandom(RoomType.Healing);
-                ChooseRoomRandom(RoomType.Chest);
-                ChooseRoomRandom(RoomType.Merchant);
-            }
+            int totalUniqueRoomsCount = 2; // two unique rooms by default: start and end
+
+            ChooseRoomRandom(RoomType.Healing);
+            ChooseRoomRandom(RoomType.Chest);
+            ChooseRoomRandom(RoomType.Merchant);
 
             void Validate(Vector2Int pos, RoomType type)
             {
@@ -127,6 +122,11 @@ namespace Gameplay.Generation
 
             void ChooseRoomRandom(RoomType type)
             {
+                if (distances.Count <= totalUniqueRoomsCount) // cannot choose a new room
+                {
+                    return;
+                }
+
                 Room room;
                 int halfCount = distances.Count / 2;
                 int countMinus = distances.Count - 1;
@@ -138,6 +138,8 @@ namespace Gameplay.Generation
                 } while (room.Type != RoomType.Normal);
 
                 Validate(room.Pos, type);
+
+                ++totalUniqueRoomsCount;
             }
         }
     }

@@ -59,8 +59,14 @@ namespace Gameplay.Generation
             }
         }
 
+        /// <summary>
+        /// Spawn only static tiles. Generation strategy is always random
+        /// </summary>
+        /// <param name="behaviour"></param>
         public void SpawnStatic(RoomBehaviour behaviour)
         {
+            SetGenerationStrategy(GenerationStrategy.Random);
+
             Layers layers = behaviour.Layers;
 
             for (int i = 0; i < layers.Count; i++)
