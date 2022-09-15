@@ -1,5 +1,6 @@
 using Gameplay.DataSaving;
 using Gameplay.Player;
+using System.Collections;
 using UnityEngine;
 
 namespace Gameplay.Managers
@@ -9,8 +10,11 @@ namespace Gameplay.Managers
         [SerializeField] private PlayerController _player;
         [SerializeField] private RandomLevelSaverManager _saverManager;
 
-        private void Start()
+        private IEnumerator Start()
         {
+            // todo: refactor
+            yield return null;
+
             if (_saverManager.ShouldLoad)
             {
                 _player.LoadFromSave(_saverManager.SaveData.PlayerData);

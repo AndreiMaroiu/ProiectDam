@@ -178,8 +178,6 @@ namespace Gameplay.Player
                     StartCoroutine(TryMove(dir));
                 }
             }
-
-            AnimatePlayer();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -450,6 +448,8 @@ namespace Gameplay.Player
             _direction = direction;
             _energyEvent.Value -= _stats.EnergyPerMove;
             _onMoveStared?.Invoke(this);
+
+            AnimatePlayer();
         }
 
         protected override void OnStopMoving()
@@ -458,6 +458,8 @@ namespace Gameplay.Player
             _soundhandler.Stop();
             _playerTurn.Value = false;
             _onMoveEnded?.Invoke(this);
+
+            AnimatePlayer();
         }
 
         #endregion
@@ -484,7 +486,7 @@ namespace Gameplay.Player
             Health = new Vector2IntPos(Health, MaxHealth),
             Energy = new Vector2IntPos(Energy, MaxEnergy),
             Bullets = new Vector2IntPos(Bullets, MaxBullets),
-            Score = Score,
+            Score = _playerScore.Value,
             Coins = Money,
             IsFliped = IsFlipped,
             PlayerPos = transform.position,

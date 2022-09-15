@@ -1,7 +1,7 @@
 using Core.Events;
 using UnityEngine;
 
-namespace Gameplay
+namespace Gameplay.Managers
 {
     public class ScoreManager : MonoBehaviour
     {
