@@ -57,7 +57,7 @@ namespace Gameplay.Generation
                     where = _traverser[room.LastRoom.Pos].transform.position + direction;
                 }
 
-                SpawnRoom(room, where);
+                room.GameObject = SpawnRoom(room, where);
             });
         }
 
