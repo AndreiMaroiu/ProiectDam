@@ -98,6 +98,15 @@ namespace Gameplay.Player
             set => _energyEvent.Value = value;
         }
 
+        //public CappedIntEvent EnergyEvent => _energyEvent;
+        public GameEvent OnMoveStarted => _onMoveStared;
+
+        public bool UseEnergyOnMove
+        {
+            get;
+            set;
+        } = true;
+
         public int MaxEnergy
         {
             get => _energyEvent.MaxValue;
@@ -446,7 +455,12 @@ namespace Gameplay.Player
         protected override void OnMove(Vector2Int direction)
         {
             _direction = direction;
-            _energyEvent.Value -= _stats.EnergyPerMove;
+            
+            if(UseEnergyOnMove)
+            {
+                _energyEvent.Value -= _stats.EnergyPerMove;
+            }
+            
             _onMoveStared?.Invoke(this);
 
             AnimatePlayer();

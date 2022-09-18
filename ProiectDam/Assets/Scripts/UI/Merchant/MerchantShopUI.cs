@@ -17,10 +17,12 @@ namespace UI.Merchant
         [SerializeField] private GameObject _panel;
         [SerializeField] private ItemDescriptionUI _itemPrefab;
         [SerializeField] private Text _moneyText;
+        private float _lastTimeScale;
 
         private void Start()
         {
             _itemsEvent.OnItemShow += OnItemShow;
+            _lastTimeScale = Time.timeScale;
             ClosePanel();
         }
 
@@ -31,6 +33,8 @@ namespace UI.Merchant
 
         private void OnItemShow(IEnumerable<ItemDescription> descriptions)
         {
+            _lastTimeScale = Time.timeScale;
+            Time.timeScale = 0;
             ShowPanel();
             ClearPanel();
 
@@ -67,7 +71,7 @@ namespace UI.Merchant
                 Header = "Item bought!",
                 Image = item.Image,
                 Content = item.Name,
-            });
+            }, _lastTimeScale);
 
             ClosePanel();
 
@@ -85,6 +89,8 @@ namespace UI.Merchant
 
         public void ClosePanel()
         {
+            Debug.Log($"timescale: {_lastTimeScale}");
+            Time.timeScale = _lastTimeScale;
             _mainCanvas.SetActive(false);
         }
 
