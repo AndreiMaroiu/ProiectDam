@@ -495,16 +495,16 @@ namespace Gameplay.Player
             }
         }
 
-        public PlayerSaveData SaveData => new PlayerSaveData()
+        public PlayerSaveData SaveData => new()
         {
-            Health = new Vector2IntPos(Health, MaxHealth),
-            Energy = new Vector2IntPos(Energy, MaxEnergy),
-            Bullets = new Vector2IntPos(Bullets, MaxBullets),
+            Health = new(Health, MaxHealth),
+            Energy = new(Energy, MaxEnergy),
+            Bullets = new(Bullets, MaxBullets),
             Score = _playerScore.Value,
             Coins = Money,
             IsFliped = IsFlipped,
             PlayerPos = transform.position,
-            LayerPos = new LayerPositionData()
+            LayerPos = new()
             {
                 Biome = _currentLayerEvent.Value,
                 Position = LayerPosition.Position,

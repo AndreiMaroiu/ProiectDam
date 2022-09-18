@@ -303,7 +303,7 @@ TextureImporter:
       213: -773694643262547336
     second: magical-potions-items-tileset_99
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -324,6 +324,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -362,6 +363,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -389,6 +391,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -2512,6 +2526,107 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      magical-potions-items-tileset_4: 1281548872183585782
+      magical-potions-items-tileset_66: -4324428322533105047
+      magical-potions-items-tileset_51: 7004488431325560957
+      magical-potions-items-tileset_75: -299358474042679840
+      magical-potions-items-tileset_73: 1032626462051344488
+      magical-potions-items-tileset_79: -3694021441445547092
+      magical-potions-items-tileset_10: 678711669022620789
+      magical-potions-items-tileset_67: -4258554128794183721
+      magical-potions-items-tileset_50: 7666358190601589302
+      magical-potions-items-tileset_57: -1422941413109600886
+      magical-potions-items-tileset_5: 6284642072457556312
+      magical-potions-items-tileset_70: 6185818365378544134
+      magical-potions-items-tileset_80: 1908689591039409360
+      magical-potions-items-tileset_37: 2447981672207224604
+      magical-potions-items-tileset_6: -8247630347403442395
+      magical-potions-items-tileset_97: 518563408082959075
+      magical-potions-items-tileset_20: -891007566599757812
+      magical-potions-items-tileset_17: 1722719925028740036
+      magical-potions-items-tileset_96: -2643538620424406051
+      magical-potions-items-tileset_15: -4219018492494826806
+      magical-potions-items-tileset_23: -5401920130313047476
+      magical-potions-items-tileset_59: -5223049422735424162
+      magical-potions-items-tileset_7: 8592559920391683082
+      magical-potions-items-tileset_55: -4425701604904844849
+      magical-potions-items-tileset_3: 1371628056344953650
+      magical-potions-items-tileset_2: 5586943174218530051
+      magical-potions-items-tileset_31: 8162342118577748492
+      magical-potions-items-tileset_38: -3757605123073562885
+      magical-potions-items-tileset_41: 4823953825668519025
+      magical-potions-items-tileset_26: 2389246992892916305
+      magical-potions-items-tileset_13: -4119535421392819973
+      magical-potions-items-tileset_14: -6750919837061672841
+      magical-potions-items-tileset_39: 7248988573892399869
+      magical-potions-items-tileset_91: -6496074028654717666
+      magical-potions-items-tileset_53: -5715762420463205444
+      magical-potions-items-tileset_68: 7942354284544734925
+      magical-potions-items-tileset_27: 4059831697595524417
+      magical-potions-items-tileset_98: 5064638682589104948
+      magical-potions-items-tileset_30: 3529489563893477871
+      magical-potions-items-tileset_24: -3890137726084424290
+      magical-potions-items-tileset_42: 6662294044615694088
+      magical-potions-items-tileset_45: 6422034933760617649
+      magical-potions-items-tileset_9: -7652720727158037855
+      magical-potions-items-tileset_28: -3528888553151320073
+      magical-potions-items-tileset_84: 6604151128299241102
+      magical-potions-items-tileset_88: -4446877862331424282
+      magical-potions-items-tileset_71: 2301247741286265415
+      magical-potions-items-tileset_76: 1110363013325319419
+      magical-potions-items-tileset_78: -1032930917812837252
+      magical-potions-items-tileset_46: 6200406527303504730
+      magical-potions-items-tileset_36: -981466623815646962
+      magical-potions-items-tileset_16: 6454395067861821195
+      magical-potions-items-tileset_22: 2981072002525248872
+      magical-potions-items-tileset_58: -6793170397438613978
+      magical-potions-items-tileset_83: -3211812933760609086
+      magical-potions-items-tileset_94: -788336409505067257
+      magical-potions-items-tileset_49: -6725352167391161918
+      magical-potions-items-tileset_87: -6214191627407736845
+      magical-potions-items-tileset_11: 6020606478685851024
+      magical-potions-items-tileset_34: 10681070999992897
+      magical-potions-items-tileset_25: -7986719460229593377
+      magical-potions-items-tileset_29: 6625257740164528233
+      magical-potions-items-tileset_99: -773694643262547336
+      magical-potions-items-tileset_65: 1773219173225222990
+      magical-potions-items-tileset_82: -2989629774623720770
+      magical-potions-items-tileset_48: 1662565040969806284
+      magical-potions-items-tileset_63: 1939005776826263148
+      magical-potions-items-tileset_56: 2749121577144812511
+      magical-potions-items-tileset_72: -73480647916972211
+      magical-potions-items-tileset_32: -651927498557546083
+      magical-potions-items-tileset_35: 7463086954995539564
+      magical-potions-items-tileset_89: -7475279835739571507
+      magical-potions-items-tileset_85: 6788422025178857920
+      magical-potions-items-tileset_19: 9068078727085932012
+      magical-potions-items-tileset_8: -6866771270000338846
+      magical-potions-items-tileset_0: 7581609467746351499
+      magical-potions-items-tileset_52: 7544085395778925909
+      magical-potions-items-tileset_90: 4662224895483245582
+      magical-potions-items-tileset_47: 7824827787183850037
+      magical-potions-items-tileset_74: -5502053409094606984
+      magical-potions-items-tileset_77: -7428740363096319814
+      magical-potions-items-tileset_95: 5362877198297888277
+      magical-potions-items-tileset_18: -6834780800055704640
+      magical-potions-items-tileset_62: 8602081674404029295
+      magical-potions-items-tileset_12: -5804844788407144179
+      magical-potions-items-tileset_86: -548672436672467920
+      magical-potions-items-tileset_60: -6734559501053170228
+      magical-potions-items-tileset_69: 8527388290143808214
+      magical-potions-items-tileset_21: -2727507419165745163
+      magical-potions-items-tileset_1: 4184865220732063392
+      magical-potions-items-tileset_44: 2409147296755516875
+      magical-potions-items-tileset_40: 4269273949343435517
+      magical-potions-items-tileset_93: -3317451057949667511
+      magical-potions-items-tileset_33: -8608776247566305418
+      magical-potions-items-tileset_43: -7668995755952237054
+      magical-potions-items-tileset_64: -8833222445869026403
+      magical-potions-items-tileset_54: -796230528302893178
+      magical-potions-items-tileset_81: -8740365522346224552
+      magical-potions-items-tileset_92: -9125709854776126094
+      magical-potions-items-tileset_61: 3314553924703299663
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -168,7 +168,7 @@ TextureImporter:
       213: -3801580076016035425
     second: Full sheet (32x32) 1_54
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -189,6 +189,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -227,6 +228,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -254,6 +256,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -1432,6 +1446,62 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Full sheet (32x32) 1_51: 1015511858169883070
+      Full sheet (32x32) 1_7: -6206965351834050329
+      Full sheet (32x32) 1_40: -2263456572410191929
+      Full sheet (32x32) 1_23: 3350256255632631259
+      Full sheet (32x32) 1_16: -6886841026094348291
+      Full sheet (32x32) 1_15: -1839283920635878156
+      Full sheet (32x32) 1_5: 3017112991875257968
+      Full sheet (32x32) 1_11: 5889012399479094021
+      Full sheet (32x32) 1_39: 1522175737189911472
+      Full sheet (32x32) 1_41: -3382725344594100674
+      Full sheet (32x32) 1_28: 3150463267521497050
+      Full sheet (32x32) 1_9: -1143882111468091635
+      Full sheet (32x32) 1_0: 2744750211747602765
+      Full sheet (32x32) 1_42: -1765195293821247599
+      Full sheet (32x32) 1_4: 591505358414658751
+      Full sheet (32x32) 1_52: 7368484734659127907
+      Full sheet (32x32) 1_44: -1821754091791273217
+      Full sheet (32x32) 1_37: -763690614405171430
+      Full sheet (32x32) 1_24: 8275921898237370307
+      Full sheet (32x32) 1_18: 4453054636099823317
+      Full sheet (32x32) 1_34: -4665387098615163330
+      Full sheet (32x32) 1_50: -1008842850822711141
+      Full sheet (32x32) 1_30: -151704299516799776
+      Full sheet (32x32) 1_46: 7164042956036372052
+      Full sheet (32x32) 1_54: -3801580076016035425
+      Full sheet (32x32) 1_14: -4030662330354272420
+      Full sheet (32x32) 1_17: -990106550575820624
+      Full sheet (32x32) 1_1: -9153702395640990877
+      Full sheet (32x32) 1_36: 2075440863055747198
+      Full sheet (32x32) 1_12: -3774238976154384512
+      Full sheet (32x32) 1_22: 4242714862968826995
+      Full sheet (32x32) 1_2: 2602211902343173858
+      Full sheet (32x32) 1_31: 3657976430592845520
+      Full sheet (32x32) 1_29: -7923136354759881772
+      Full sheet (32x32) 1_38: -1179564277708351720
+      Full sheet (32x32) 1_45: 5363816573630011966
+      Full sheet (32x32) 1_25: 5699706482322463673
+      Full sheet (32x32) 1_49: -1999147556084747243
+      Full sheet (32x32) 1_20: 2222306471049002825
+      Full sheet (32x32) 1_43: -1771886289065836277
+      Full sheet (32x32) 1_53: -7297813929853868858
+      Full sheet (32x32) 1_6: 1728998454921898112
+      Full sheet (32x32) 1_19: 5993463166983695214
+      Full sheet (32x32) 1_27: -824711733419552353
+      Full sheet (32x32) 1_33: 7963935615955840875
+      Full sheet (32x32) 1_21: 1897228791055445597
+      Full sheet (32x32) 1_47: -2727747738179081075
+      Full sheet (32x32) 1_8: 4252627375732228854
+      Full sheet (32x32) 1_32: -5325662515673241430
+      Full sheet (32x32) 1_13: 8521175401927363873
+      Full sheet (32x32) 1_35: -868156577063747265
+      Full sheet (32x32) 1_10: -4342137735384336258
+      Full sheet (32x32) 1_3: 3531636430834389074
+      Full sheet (32x32) 1_26: 7915144240912460961
+      Full sheet (32x32) 1_48: 3882600094785304934
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

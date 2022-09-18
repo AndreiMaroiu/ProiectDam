@@ -75,7 +75,7 @@ TextureImporter:
       213: 1855946540677639431
     second: crawlAnimation_23
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -96,6 +96,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -134,6 +135,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -161,6 +163,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -688,6 +702,31 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      crawlAnimation_7: -7452272126249587032
+      crawlAnimation_6: -4511802151828554713
+      crawlAnimation_12: 6028366424143263593
+      crawlAnimation_0: 4077342685090447335
+      crawlAnimation_8: -8254989648175706442
+      crawlAnimation_22: 4923686269880849593
+      crawlAnimation_17: -9069195602790044024
+      crawlAnimation_11: 8898811968623515509
+      crawlAnimation_23: 1855946540677639431
+      crawlAnimation_15: 673266246502343385
+      crawlAnimation_4: -4350474790683142135
+      crawlAnimation_16: -6927492989538064840
+      crawlAnimation_2: -3821605333225011968
+      crawlAnimation_1: 5795797005771843182
+      crawlAnimation_21: -1482251754460012593
+      crawlAnimation_10: 8300294698253347121
+      crawlAnimation_20: 1230158323609635640
+      crawlAnimation_13: -1754059700813371673
+      crawlAnimation_18: 8824388398139512522
+      crawlAnimation_19: -2264704321903106367
+      crawlAnimation_5: -2594561961273801874
+      crawlAnimation_14: -7660070144644968714
+      crawlAnimation_9: 5915354530972034618
+      crawlAnimation_3: -5149856088171702295
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

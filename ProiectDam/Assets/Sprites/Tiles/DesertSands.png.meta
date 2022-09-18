@@ -237,7 +237,7 @@ TextureImporter:
       213: -3563758484434415285
     second: DesertSands_77
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -258,6 +258,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -296,6 +297,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -323,6 +325,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -1984,6 +1998,85 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      DesertSands_4: 4850793344826532649
+      DesertSands_71: 156237103987933182
+      DesertSands_43: 541827880520834259
+      DesertSands_46: -6589814860894997630
+      DesertSands_70: 7272164307329589005
+      DesertSands_75: -3754974693739852223
+      DesertSands_19: 306278745198519928
+      DesertSands_61: -4089470333872440901
+      DesertSands_17: -3131143913128783753
+      DesertSands_5: -4283969026097000375
+      DesertSands_26: 239029433482244730
+      DesertSands_1: 2356770506421439841
+      DesertSands_20: 5628122007911881015
+      DesertSands_18: 3628188700605596890
+      DesertSands_23: 6196695762130463263
+      DesertSands_2: -8694696535194250069
+      DesertSands_51: -4762938765224387731
+      DesertSands_41: -5316884867487947346
+      DesertSands_54: -4951375820156089180
+      DesertSands_53: 7238462971334801154
+      DesertSands_3: 8172844412838133584
+      DesertSands_45: -7973648731615503837
+      DesertSands_66: -2572925985066683906
+      DesertSands_11: -2319458768124957167
+      DesertSands_38: -1460818384979707007
+      DesertSands_16: -4653313716613880024
+      DesertSands_24: 6490637938270224149
+      DesertSands_60: -7807862453930652856
+      DesertSands_77: -3563758484434415285
+      DesertSands_22: -469461271268034990
+      DesertSands_29: 2755280712170584767
+      DesertSands_42: 5803448313752911909
+      DesertSands_44: 8175424615216148636
+      DesertSands_55: -1107181660019741264
+      DesertSands_34: 3842208429797592133
+      DesertSands_73: -4408889875256150628
+      DesertSands_58: 7183884072404598201
+      DesertSands_62: 2785460072609976441
+      DesertSands_76: -603451531505773127
+      DesertSands_0: 877139077230795778
+      DesertSands_27: -231647773708192604
+      DesertSands_47: 3097918828333471002
+      DesertSands_8: -5102133731616327794
+      DesertSands_13: -6636542596892069108
+      DesertSands_33: 5928887458385433847
+      DesertSands_32: 312856502866525032
+      DesertSands_28: 3812717840547327860
+      DesertSands_72: 1011552235674047464
+      DesertSands_69: -2947100530432603599
+      DesertSands_57: 1426564560537434928
+      DesertSands_65: -4161370380436751413
+      DesertSands_50: -1655125084586459225
+      DesertSands_12: 407224235320099642
+      DesertSands_59: -2351952539950741710
+      DesertSands_9: -7026425764349363768
+      DesertSands_37: -4532859056936923809
+      DesertSands_63: -8925390601974575646
+      DesertSands_52: -4362992882564054462
+      DesertSands_49: -1593218329858681054
+      DesertSands_67: 7278889541528849457
+      DesertSands_64: -8089098028171549469
+      DesertSands_35: -5839443118297280921
+      DesertSands_74: -4441460268306473678
+      DesertSands_36: 8139787957035220288
+      DesertSands_31: -5874780916030542060
+      DesertSands_68: 524880514763169729
+      DesertSands_40: 2310205203691143728
+      DesertSands_48: 6934566840900540163
+      DesertSands_10: 9194741635601652979
+      DesertSands_7: 4138325319342093731
+      DesertSands_14: 7900622425528666373
+      DesertSands_25: 7062060563165976109
+      DesertSands_15: -3211510550614670432
+      DesertSands_39: 8428356657313600406
+      DesertSands_6: -2664543921757994996
+      DesertSands_30: 7718090244702368504
+      DesertSands_21: 2137592377491004379
+      DesertSands_56: 3605879160875830930
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -87,7 +87,7 @@ TextureImporter:
       213: 523404876565251516
     second: Icon_spritesheet01_27
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -108,6 +108,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -146,6 +147,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -173,6 +175,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -784,6 +798,35 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Icon_spritesheet01_4: -8288651211804498993
+      Icon_spritesheet01_18: 7152249574036753259
+      Icon_spritesheet01_1: -8709064446883971866
+      Icon_spritesheet01_25: 247899632506814680
+      Icon_spritesheet01_27: 523404876565251516
+      Icon_spritesheet01_2: -7715589643225986936
+      Icon_spritesheet01_16: -1257488033341199115
+      Icon_spritesheet01_14: 7552896486398421500
+      Icon_spritesheet01_19: 9137448981115043081
+      Icon_spritesheet01_7: 5647497208335613103
+      Icon_spritesheet01_22: 3936926958700608960
+      Icon_spritesheet01_20: -2695397364269724548
+      Icon_spritesheet01_15: -5023916325371629909
+      Icon_spritesheet01_11: 8240928482833724327
+      Icon_spritesheet01_5: -1803420068931504301
+      Icon_spritesheet01_8: -3806675537162090662
+      Icon_spritesheet01_13: -2364238441321647861
+      Icon_spritesheet01_23: 1362743707216536760
+      Icon_spritesheet01_6: -1644660153543753146
+      Icon_spritesheet01_9: 6517252613385287194
+      Icon_spritesheet01_17: -8410041942345665424
+      Icon_spritesheet01_12: -1232036199622600660
+      Icon_spritesheet01_24: -1861740420018059203
+      Icon_spritesheet01_3: -3693896141859286134
+      Icon_spritesheet01_0: 3036295414544005930
+      Icon_spritesheet01_10: 8566124607364257700
+      Icon_spritesheet01_21: -5777914516100301596
+      Icon_spritesheet01_26: 235104359586983275
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

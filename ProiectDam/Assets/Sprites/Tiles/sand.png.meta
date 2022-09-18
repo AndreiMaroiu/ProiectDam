@@ -327,7 +327,7 @@ TextureImporter:
       213: -493821297644823020
     second: sand_107
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -348,6 +348,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -386,6 +387,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -413,6 +415,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -2704,6 +2718,115 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      sand_81: 5255692512338902987
+      sand_74: 8400164859443223263
+      sand_78: -5448251769708542255
+      sand_42: 8159375336160241515
+      sand_13: 6496501752664036759
+      sand_45: -3836815859846004764
+      sand_72: 2075093952888877873
+      sand_18: 3347868445947137204
+      sand_68: 3812365261872158773
+      sand_98: 4144028091348498136
+      sand_16: -5021085490659415874
+      sand_38: -300019604769244653
+      sand_107: -493821297644823020
+      sand_105: 4677655734797876093
+      sand_23: -469803081223691602
+      sand_97: -3666599896792487609
+      sand_102: -4012949286176338448
+      sand_57: -8130528591387715043
+      sand_66: -2203872971306914574
+      sand_36: -2816954127094308954
+      sand_100: 8145873859609459025
+      sand_69: 7156456548997237180
+      sand_6: -5208840736160344916
+      sand_52: -4526544981374512637
+      sand_0: 4360390788417139489
+      sand_49: -7553413781007151174
+      sand_30: 5147848698470786032
+      sand_34: 2613757966875179890
+      sand_9: 7147706812949010814
+      sand_17: -301482029705008975
+      sand_73: 5642677630014465849
+      sand_87: -354965500685173300
+      sand_25: -7982121097935168531
+      sand_43: 3961361052996356585
+      sand_60: 3103547459704193229
+      sand_27: -4266841552259910239
+      sand_7: -2395829283879305415
+      sand_88: -9053532193057000824
+      sand_58: -8198504955374824744
+      sand_55: 6684594570432809019
+      sand_70: -7717347553591904750
+      sand_8: -6118453146159910627
+      sand_103: -6804923239225755009
+      sand_4: -4879936915944305487
+      sand_94: -2177334806237968637
+      sand_2: 8363470912824194618
+      sand_86: 9205712010441966682
+      sand_33: 3811115375000535129
+      sand_35: 223317209275191724
+      sand_92: 7689319559640718494
+      sand_75: -3711789249437766868
+      sand_32: 5763410940831677450
+      sand_47: 1827202043559974425
+      sand_50: -503419805824184519
+      sand_37: -4875767934785968033
+      sand_44: 4450115126991876987
+      sand_93: 7291689434598073728
+      sand_71: 5976025059576778573
+      sand_41: 7853687058213013268
+      sand_82: -8544448069833473766
+      sand_95: 4014752539838353578
+      sand_5: 3873693989045737049
+      sand_28: 7359823385409021409
+      sand_53: -4098645411762568297
+      sand_46: -9143011868556245310
+      sand_10: -4674977733493773419
+      sand_15: 3887684718818787849
+      sand_12: 2341174088569508392
+      sand_26: -6298806362410332827
+      sand_106: -2355696124439373158
+      sand_90: -1796575218121856518
+      sand_101: -4644801843234578180
+      sand_1: 5804625333536067221
+      sand_67: 4130582254701830133
+      sand_79: -2685913617693277820
+      sand_85: -1790524664247390558
+      sand_39: 5113168179707339972
+      sand_3: 4640418506762625372
+      sand_104: 4216434120442793014
+      sand_14: 2363717366907432664
+      sand_29: 4671389407648162838
+      sand_21: -8075225671417649117
+      sand_11: -7257371996624634434
+      sand_31: 5743421430898349016
+      sand_54: 1674121922811956512
+      sand_76: 2598130804121374950
+      sand_40: 7656324412887241001
+      sand_61: 7544940293693728660
+      sand_59: 6744150823651379716
+      sand_19: 5726966970861077588
+      sand_96: -8529505569840511283
+      sand_91: -7475470654150589454
+      sand_83: -5175794378547954997
+      sand_63: 7239583237504715181
+      sand_56: -6752182475635122596
+      sand_64: -8341956291962862686
+      sand_99: -4345467343786563975
+      sand_48: -3928476402923343798
+      sand_24: 1092943506184554513
+      sand_80: -7356537659284627681
+      sand_22: -2669741539476063257
+      sand_20: -6225729356647724669
+      sand_62: -3269183205600754587
+      sand_89: 4861308276310242627
+      sand_65: -2532498339278257748
+      sand_84: -5014743480136776539
+      sand_77: 929338951224059719
+      sand_51: 392749737635812888
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

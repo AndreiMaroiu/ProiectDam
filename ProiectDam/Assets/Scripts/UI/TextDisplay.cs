@@ -10,7 +10,7 @@ namespace UI
     [RequireComponent(typeof(Text)), ExecuteInEditMode]
     public class TextDisplay : MonoBehaviour
     {
-        private static readonly Regex Regex = new Regex(@"{\d+}");
+        private static readonly Regex Regex = new(@"{\d+}");
 
         [SerializeField] private Value[] _values;
 
@@ -34,7 +34,7 @@ namespace UI
         {
             string text = _text.text;
 
-            _text.text = string.Format(text, (object[])_values);
+            _text.text = string.Format(text, (object[])_values); // cast to get rid of heap allocation
         }
 
 #if UNITY_EDITOR
