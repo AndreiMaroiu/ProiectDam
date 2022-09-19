@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 592847a8023f4584e9ee044b886205bb, type: 3}
   m_Name: Free Energy Pickup
   m_EditorClassIdentifier: 
-  _name: 
-  _cost: 0
-  _image: {fileID: 0}
-  _description: 
+  _name: Free Energy
+  _cost: 1
+  _image: {fileID: 5993463166983695214, guid: d7550d5e62229cb48857ef3b8b52d94a, type: 3}
+  _description: Free energy for limited moves
   _sound: {fileID: 0}
   _type:
-    _type: BulletsBoost
-  _points: 1
+    _type: FreeEnergy
+  _points: 25

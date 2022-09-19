@@ -47,6 +47,7 @@ namespace Gameplay.Generation
             TileType.Enemy => false,
             TileType.Breakable => false,
             TileType.PickUp => false,
+            TileType.Chest => false,
             _ => true,
         };
     }

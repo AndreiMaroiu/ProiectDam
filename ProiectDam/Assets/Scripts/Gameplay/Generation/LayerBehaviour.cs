@@ -27,7 +27,7 @@ namespace Gameplay
 
         public IDataSavingTile[] GetDynamicObject()
         {
-            return GetComponentsInChildren<IDataSavingTile>();
+            return GetComponentsInChildren<IDataSavingTile>(includeInactive: true);
         }
     }
 }

@@ -1,10 +1,10 @@
 using UnityEngine;
 using Core.Values;
+using Gameplay.DataSaving;
 
 namespace Gameplay
 {
-    [RequireComponent(typeof(SpriteRenderer))]
-    public class ChestBehaviour : PressableObject
+    public class ChestBehaviour : PressableObject, IDataSavingTile
     {
         [SerializeField] private ChestHelper _helper;
         [SerializeField] private Sprite _openedChestImage;
@@ -14,23 +14,37 @@ namespace Gameplay
         private SpriteRenderer _renderer;
         private bool _wasOpened = false;
 
+        public string ObjectName { get; set; }
+
+        public ObjectSaveData SaveData => new ChestSaveData()
+        {
+            ObjectName = ObjectName,
+            WasOpened = _wasOpened
+        };
+
+        public void LoadFromSave(ObjectSaveData saveData)
+        {
+            if (saveData is ChestSaveData data)
+            {
+                _wasOpened = data.WasOpened;
+            }
+        }
+
         public override void OnClick()
         {
             if (!_helper.CanInteract || _wasOpened)
             {
-                Debug.Log("Cannot interact with chest!");
                 return;
             }
 
-            Debug.Log("Chest opened!");
-
             _renderer.sprite = _openedChestImage;
 
-            Vector3 direction = (transform.parent.position - _helper.Controller.transform.position);
+            // todo: better spawn position
+            Vector3 direction = (transform.position - _helper.Controller.transform.position);
             direction.z = 0;
             direction.Normalize();
 
-            Vector3 where = transform.parent.position + direction * _cellSize.Value;
+            Vector3 where = transform.position + direction * _cellSize.Value;
             Instantiate(_pickUps[Random.Range(0, _pickUps.Length)], where, Quaternion.identity);
 
             _wasOpened = true;
@@ -38,7 +52,7 @@ namespace Gameplay
 
         private void Start()
         {
-            _renderer = GetComponent<SpriteRenderer>();
+            _renderer = GetComponentInChildren<SpriteRenderer>();
         }
     }
 }

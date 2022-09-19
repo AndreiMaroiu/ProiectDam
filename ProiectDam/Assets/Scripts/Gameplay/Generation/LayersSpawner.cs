@@ -233,9 +233,14 @@ namespace Gameplay.Generation
             LayerSaveData layer = SaveData.GetFromBiome(biomeType);
             Vector2IntPos key = new Vector2IntPos(x, y);
 
-            string name = layer.DynamicObjects[key].ObjectName;
+            if (layer.DynamicObjects.ContainsKey(key))
+            {
+                string name = layer.DynamicObjects[key].ObjectName;
+                return GetSettings(biomeType).GetTileFromName(tileType, name);
+            }
 
-            return GetSettings(biomeType).GetTileFromName(tileType, name);
+            Debug.LogWarning("null tile!");
+            return null;
         }
 
         private void AfterTileLoaded(TileObject tile, BiomeType biomeType, int x, int y)
