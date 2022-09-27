@@ -1,7 +1,7 @@
 ﻿using System;
 using Random = UnityEngine.Random;
 
-public class RandomPicker<T>
+public struct RandomPicker<T>
 {
     private readonly T[] _elems;
     private int _max;
@@ -10,7 +10,7 @@ public class RandomPicker<T>
     {
         _elems = new T[elems.Length];
         Array.Copy(elems, _elems, elems.Length);
-        Reset();
+        _max = _elems.Length;
     }
 
     public int MaxSize => _elems.Length;

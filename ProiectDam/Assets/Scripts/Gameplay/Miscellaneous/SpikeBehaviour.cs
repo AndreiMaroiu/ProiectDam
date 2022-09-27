@@ -1,7 +1,8 @@
+using Core.Events;
+using Core.Values;
 using System.Collections;
 using UnityEngine;
 using Utilities;
-using Core.Values;
 
 namespace Gameplay
 {
@@ -10,6 +11,7 @@ namespace Gameplay
     {
         [SerializeField] private Sprite _activatedSprite;
         [SerializeField] private IntValue _damage;
+        [SerializeField] private BoolEvent _playerTurn;
         [Header("Animation")]
         [SerializeField] private float _animationTime = 0.5f;
         [SerializeField] private float _waitTime = 0.3f;
@@ -17,12 +19,40 @@ namespace Gameplay
         private SpriteRenderer _renderer;
         private Sprite _original;
         private bool _canHit;
+        private int? _turnCounter;
 
         private void Start()
         {
             _renderer = GetComponent<SpriteRenderer>();
             _original = _renderer.sprite;
-            
+            _playerTurn.OnValueChanged += OnTurnChange;
+        }
+
+        private void OnTurnChange()
+        {
+            if (!_turnCounter.HasValue)
+            {
+                return;
+            }
+
+            // spikes must wait 3 turn to activate again
+            // 3 turn means:
+            //      -> killable enters (attack)                     : 0
+            //      -> killable turn ends                           : 1
+            //      -> killable exits                               : 2
+            //      -> killable turn ends                           : 3
+            _turnCounter++;
+
+            if (_turnCounter == 3) 
+            {
+                _canHit = true;
+                _turnCounter = null;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            _playerTurn.OnValueChanged -= OnTurnChange;
         }
 
         private void OnEnable()
@@ -44,6 +74,8 @@ namespace Gameplay
             {
                 killableObject.TakeDamage(_damage);
                 StartCoroutine(StartAnimation());
+                _turnCounter = 0;
+                _canHit = false;
             }
         }
 

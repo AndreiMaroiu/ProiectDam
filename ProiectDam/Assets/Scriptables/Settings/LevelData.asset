@@ -15,9 +15,9 @@ MonoBehaviour:
   _distance: 22
   _room: {fileID: 7429537751118044895, guid: 832ba3f17f6eb0349b812fe006b76bf1, type: 3}
   _door: {fileID: 7657129850124124019, guid: 44d13e7040070884198d2fc299f5feb3, type: 3}
-  _dungeonTiles: {fileID: 11400000, guid: 4b4a54c4462bdfc4ba584ddc662a78be, type: 2}
-  _fireTiles: {fileID: 11400000, guid: 8c275f89ed314fd4abb63683d8e489b1, type: 2}
-  _grassTiles: {fileID: 11400000, guid: b4cff7305604cf743a72a5a99d07769d, type: 2}
+  _dungeonTiles: {fileID: 11400000, guid: 7897dc702e12aef4a9da8fa7a96a80e6, type: 2}
+  _fireTiles: {fileID: 11400000, guid: d9b13f3bca3f37b43ac197e7b237e055, type: 2}
+  _grassTiles: {fileID: 11400000, guid: aeb116db2e15bd343975658e25a57c02, type: 2}
   _cellSize: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
   _cellCount: 9
   _roomBehaviourEvent: {fileID: 11400000, guid: c546f3029682b1f46a1a1d15a38817fc,

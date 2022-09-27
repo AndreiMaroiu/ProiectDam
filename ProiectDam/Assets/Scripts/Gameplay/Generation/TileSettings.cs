@@ -5,26 +5,26 @@ namespace Gameplay.Generation
     [CreateAssetMenu(fileName = "New Tile Settings", menuName = "Scriptables/Settings/Tile Settings")]
     public class TileSettings : ScriptableObject
     {
-        [SerializeField] private GameObject[] _none;
-        [SerializeField] private GameObject[] _wall;
-        [SerializeField] private GameObject[] _enemy;
-        [SerializeField] private GameObject[] _door;
-        [SerializeField] private GameObject[] _chest;
-        [SerializeField] private GameObject[] _heal;
-        [SerializeField] private GameObject[] _trap;
-        [SerializeField] private GameObject[] _pickUp;
-        [SerializeField] private GameObject[] _obstacle;
-        [SerializeField] private GameObject[] _breakable;
-        [SerializeField] private GameObject[] _portal;
-        [SerializeField] private GameObject[] _merchant;
+        [SerializeField] private TileData[] _none;
+        [SerializeField] private TileData[] _wall;
+        [SerializeField] private TileData[] _enemy;
+        [SerializeField] private TileData[] _door;
+        [SerializeField] private TileData[] _chest;
+        [SerializeField] private TileData[] _heal;
+        [SerializeField] private TileData[] _trap;
+        [SerializeField] private TileData[] _pickUp;
+        [SerializeField] private TileData[] _obstacle;
+        [SerializeField] private TileData[] _breakable;
+        [SerializeField] private TileData[] _portal;
+        [SerializeField] private TileData[] _merchant;
 
         public GameObject GetTile(TileType type)
         {
-            GameObject[] _list = GetList(type);
+            TileData[] _list = GetList(type);
 
             if (_list != null && _list.Length > 0)
             {
-                return _list[Random.Range(0, _list.Length)];
+                return _list[Random.Range(0, _list.Length)].Prefab;
             }
 
             return null;
@@ -32,7 +32,7 @@ namespace Gameplay.Generation
 
         public GameObject GetTileFromName(TileType type, string name)
         {
-            GameObject[] list = GetList(type);
+            TileData[] list = GetList(type);
 
             if (list == null)
             {
@@ -41,16 +41,16 @@ namespace Gameplay.Generation
 
             foreach (var item in list)
             {
-                if (item.name == name)
+                if (item.Prefab.name == name)
                 {
-                    return item;
+                    return item.Prefab;
                 }
             }
 
             return null;
         }
 
-        private GameObject[] GetList(TileType type) => type switch
+        private TileData[] GetList(TileType type) => type switch
         {
             TileType.None => _none,
             TileType.Wall => _wall,

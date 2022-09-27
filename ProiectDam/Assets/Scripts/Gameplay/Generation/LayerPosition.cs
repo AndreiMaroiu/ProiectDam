@@ -46,5 +46,26 @@ namespace Gameplay.Generation
             Vector2Int pos = Position + dir;
             return Layer[pos.x, pos.y];
         }
+
+        public static bool operator == (LayerPosition left, LayerPosition right)
+            => left._layer == right._layer && left.Position == right.Position;
+
+        public static bool operator !=(LayerPosition left, LayerPosition right)
+            => left._layer != right._layer || left.Position != right.Position;
+
+        public override bool Equals(object other)
+        {
+            if (other is LayerPosition layerPos)
+            {
+                return this == layerPos;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

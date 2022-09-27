@@ -9,41 +9,114 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c0ff5a24f9a4b54b9d7bf11bc7c0920, type: 3}
+  m_Script: {fileID: 11500000, guid: 27258d04f1ff4e1438056b1d7a553443, type: 3}
   m_Name: FireTiles
   m_EditorClassIdentifier: 
   _none:
-  - {fileID: 1466878652918677954, guid: 070cd4bcfffb20540b35a4aa09994452, type: 3}
-  - {fileID: 4197119846752616082, guid: ac45e130c4e2a934898974e62d84ec0d, type: 3}
-  - {fileID: 2795611793146036396, guid: f68136961f6a0b34a9586732d1200989, type: 3}
-  - {fileID: 5960718015070195858, guid: a1376ddf17635dc47a5b96d8eb56b513, type: 3}
+  - _prefab: {fileID: 1466878652918677954, guid: 070cd4bcfffb20540b35a4aa09994452,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
+  - _prefab: {fileID: 4197119846752616082, guid: ac45e130c4e2a934898974e62d84ec0d,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
+  - _prefab: {fileID: 2795611793146036396, guid: f68136961f6a0b34a9586732d1200989,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
+  - _prefab: {fileID: 5960718015070195858, guid: a1376ddf17635dc47a5b96d8eb56b513,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
   _wall:
-  - {fileID: 7603886771782275034, guid: 10f09fdba4d93224e93df4cf3cb6b6a9, type: 3}
+  - _prefab: {fileID: 7603886771782275034, guid: 10f09fdba4d93224e93df4cf3cb6b6a9,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
   _enemy:
-  - {fileID: 3405772353389896854, guid: 0ede92900d66e7c41be952af4f9d4b94, type: 3}
-  - {fileID: 4506473171506505353, guid: 02532e903a7169d4bb23219d1fdba964, type: 3}
-  - {fileID: 3315774591173551085, guid: b26e1de7566101947af2f7d9852bcff6, type: 3}
-  - {fileID: 1500245301518716129, guid: 9eb1d5169aca0924fbbaec1b483e245c, type: 3}
+  - _prefab: {fileID: 3405772353389896854, guid: 0ede92900d66e7c41be952af4f9d4b94,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
+  - _prefab: {fileID: 4506473171506505353, guid: 02532e903a7169d4bb23219d1fdba964,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
+  - _prefab: {fileID: 3315774591173551085, guid: b26e1de7566101947af2f7d9852bcff6,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
+  - _prefab: {fileID: 1500245301518716129, guid: 9eb1d5169aca0924fbbaec1b483e245c,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
   _door:
-  - {fileID: 1610797193751527803, guid: 44d13e7040070884198d2fc299f5feb3, type: 3}
+  - _prefab: {fileID: 1610797193751527803, guid: 44d13e7040070884198d2fc299f5feb3,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
   _chest:
-  - {fileID: 2055102311959635369, guid: 99597c7b4aa47494fb2b6061505735da, type: 3}
+  - _prefab: {fileID: 5103085370490182207, guid: 6fda3b807af98694b81380c37b3ee07f,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
   _heal:
-  - {fileID: 1337655539291230482, guid: dbff91d7cf19bc34daf9256a9637d2df, type: 3}
+  - _prefab: {fileID: 1337655539291230482, guid: dbff91d7cf19bc34daf9256a9637d2df,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
   _trap:
-  - {fileID: 6182598759413703565, guid: 26f2cc17671c1fa45a7ec6e3bc0eabf5, type: 3}
+  - _prefab: {fileID: 6182598759413703565, guid: 26f2cc17671c1fa45a7ec6e3bc0eabf5,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
   _pickUp:
-  - {fileID: 5244361343789919635, guid: b9f9962775564384793ea37e74690334, type: 3}
-  - {fileID: 2725781087358859865, guid: b1865ca7b4c56be409a438ff5f95f0b8, type: 3}
+  - _prefab: {fileID: 2725781087358859865, guid: b1865ca7b4c56be409a438ff5f95f0b8,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
+  - _prefab: {fileID: 5244361343789919635, guid: b9f9962775564384793ea37e74690334,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
   _obstacle:
-  - {fileID: 7164206830066975854, guid: 9121cb8c870b29c438bcd95decb83214, type: 3}
-  - {fileID: 8258725449374077283, guid: 985a758ed9d7f3347be84f75944b46b6, type: 3}
-  - {fileID: 7073643945006248555, guid: 32dfc8426b7ecf245a07cf2f8cb39bba, type: 3}
-  - {fileID: 2473727910534505370, guid: 09b4f44ad9cae624e89c5e36814caed0, type: 3}
-  - {fileID: 2955135658419645162, guid: 5cb34e07445a2da43b9fadbcd53a7436, type: 3}
+  - _prefab: {fileID: 2955135658419645162, guid: 5cb34e07445a2da43b9fadbcd53a7436,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
+  - _prefab: {fileID: 7164206830066975854, guid: 9121cb8c870b29c438bcd95decb83214,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
+  - _prefab: {fileID: 8258725449374077283, guid: 985a758ed9d7f3347be84f75944b46b6,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
+  - _prefab: {fileID: 7073643945006248555, guid: 32dfc8426b7ecf245a07cf2f8cb39bba,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
+  - _prefab: {fileID: 2473727910534505370, guid: 09b4f44ad9cae624e89c5e36814caed0,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
+  - _prefab: {fileID: 5986671675407286285, guid: 3f384930b6031af44a06653afc6173da,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
   _breakable:
-  - {fileID: 6624150824593996783, guid: b4abda3122fe462409bfbd7afafe2517, type: 3}
+  - _prefab: {fileID: 6624150824593996783, guid: b4abda3122fe462409bfbd7afafe2517,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
   _portal:
-  - {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055, type: 3}
+  - _prefab: {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
   _merchant:
-  - {fileID: 7068375410405565471, guid: 68f6faeda2b864d4ca6b0cabb52c4a99, type: 3}
+  - _prefab: {fileID: 7068375410405565471, guid: 68f6faeda2b864d4ca6b0cabb52c4a99,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1

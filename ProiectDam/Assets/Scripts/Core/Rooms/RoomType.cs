@@ -2,16 +2,17 @@ using static Core.RoomType;
 
 namespace Core
 {
+    [System.Flags]
     public enum RoomType
     {
-        Empty,
-        Normal,
-        Start,
-        End,
-        Healing,
-        Chest,
-        Wall,
-        Merchant
+        Empty = 0,
+        Normal = 1 << 0,
+        Start = 1 << 1,
+        End = 1 << 2,
+        Healing = 1 << 3,
+        Chest = 1 << 4,
+        Wall = 1 << 5,
+        Merchant = 1 << 6,
     }
 
     public static class RoomTypeExtension

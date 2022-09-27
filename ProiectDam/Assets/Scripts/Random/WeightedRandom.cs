@@ -1,6 +1,6 @@
 using Random = UnityEngine.Random;
 
-public class WeightedRandom<T>
+public struct WeightedRandom<T>
 {
     private readonly int[] _weights;
     private readonly T[] _elems;

@@ -1,3 +1,5 @@
+using System;
+
 namespace Gameplay.Generation
 {
     public enum TileType
