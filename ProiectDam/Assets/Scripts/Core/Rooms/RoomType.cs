@@ -29,5 +29,8 @@ namespace Core
             Merchant => nameof(Merchant),
             _ => default,
         };
+
+        public static bool FastHasFlag(this RoomType current, RoomType flag)
+            => (current & flag) == flag;
     }
 }

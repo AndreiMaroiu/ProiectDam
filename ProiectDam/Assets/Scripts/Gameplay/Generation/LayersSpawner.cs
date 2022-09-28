@@ -1,3 +1,4 @@
+using Core;
 using Gameplay.DataSaving;
 using System;
 using UnityEngine;
@@ -7,22 +8,24 @@ namespace Gameplay.Generation
 {
     public class LayersSpawner
     {
-        public delegate GameObject TileGeneration(TileType tileType, BiomeType biomeType, int x, int y);
-
-        public delegate void AfterTileSpawnedAction(TileObject tile, BiomeType biomeType, int x, int y);
-
         public enum GenerationStrategy
         {
             Random,
             FromSave,
         }
 
+        // delegates
+        private delegate GameObject TileGeneration(TileType tileType, BiomeType biomeType, int x, int y);
+        private delegate void AfterTileSpawnedAction(TileObject tile, BiomeType biomeType, int x, int y);
+
+        // private fields
         private readonly float _cellSize;
         private readonly TileSettings _grassTiles;
         private readonly TileSettings _fireTiles;
         private readonly TileSettings _dungeonTiles;
 
         private Vector3 _offset;
+        private RoomType _currentRoomType;
         private TileGeneration _generationStrategy;
         private AfterTileSpawnedAction _afterTileSpawnedAction;
 
@@ -66,6 +69,7 @@ namespace Gameplay.Generation
         public void SpawnStatic(RoomBehaviour behaviour)
         {
             SetGenerationStrategy(GenerationStrategy.Random);
+            _currentRoomType = behaviour.Room.Type;
 
             Layers layers = behaviour.Layers;
 
@@ -78,6 +82,7 @@ namespace Gameplay.Generation
         public void SpawnDynamic(RoomBehaviour behaviour)
         {
             Layers layers = behaviour.Layers;
+            _currentRoomType = behaviour.Room.Type;
 
             for (int i = 0; i < layers.Count; i++)
             {
@@ -225,7 +230,7 @@ namespace Gameplay.Generation
 
         private GameObject RandomGeneration(TileType tileType, BiomeType biomeType, int x, int y)
         {
-            return GetSettings(biomeType).GetTile(tileType);
+            return GetSettings(biomeType).GetTile(tileType, _currentRoomType);
         }
 
         private GameObject GenerateFromSave(TileType tileType, BiomeType biomeType, int x, int y)

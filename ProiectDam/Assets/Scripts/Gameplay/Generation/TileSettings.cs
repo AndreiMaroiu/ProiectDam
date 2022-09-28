@@ -1,3 +1,5 @@
+using Core;
+using System;
 using UnityEngine;
 
 namespace Gameplay.Generation
@@ -18,13 +20,23 @@ namespace Gameplay.Generation
         [SerializeField] private TileData[] _portal;
         [SerializeField] private TileData[] _merchant;
 
-        public GameObject GetTile(TileType type)
-        {
-            TileData[] _list = GetList(type);
+        private RoomType _currentRoomType;
+        private Func<int, TileData, int> _tileChanceGetter;
 
-            if (_list != null && _list.Length > 0)
+        private void OnEnable()
+        {
+            _tileChanceGetter = GetTileChance; // get rid of heap allocation
+        }
+
+        public GameObject GetTile(TileType type, RoomType roomType)
+        {
+            _currentRoomType = roomType;
+            TileData[] list = GetList(type);
+
+            if (list != null && list.Length > 0)
             {
-                return _list[Random.Range(0, _list.Length)].Prefab;
+                WeightedRandom<TileData> random = new(list, _tileChanceGetter);
+                return random.Take()?.Prefab;
             }
 
             return null;
@@ -66,5 +78,15 @@ namespace Gameplay.Generation
             TileType.Breakable => _breakable,
             _ => null,
         };
+
+        private int GetTileChance(int i, TileData elem)
+        {
+            if (elem.Flags.FastHasFlag(_currentRoomType))
+            {
+                return elem.SpawnChance;
+            }
+
+            return 0;
+        }
     }
 }
