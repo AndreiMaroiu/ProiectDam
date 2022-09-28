@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace EditorScripts
 {
-    public class ShowPopupExample : EditorWindow
+    public class TileSettingsHelpingWindow : EditorWindow
     {
         public static void Show(Object target)
         {
-            ShowPopupExample window = ScriptableObject.CreateInstance<ShowPopupExample>();
+            TileSettingsHelpingWindow window = ScriptableObject.CreateInstance<TileSettingsHelpingWindow>();
             window.Init(target);
 
             window.Show();
@@ -19,6 +19,7 @@ namespace EditorScripts
         private SerializedObject target;
         private int _selectedIndex;
         private int _optionsIndex;
+        private int _tileDataOption;
         private Vector2 _scrollPos;
         private bool _forceExpand;
 
@@ -31,11 +32,6 @@ namespace EditorScripts
         private void OnGUI()
         {
             CenterHorizontal(() => GUILayout.Label("TileSettings helper", EditorStyles.boldLabel));
-
-            if (_selectedIndex > TileSettingsSerializationInfo.Instance.DisplayNames.Length)
-            {
-                _selectedIndex = 0;
-            }
 
             _optionsIndex = EditorGUILayout.Popup("Action", _optionsIndex, _options);
             _selectedIndex = EditorGUILayout.Popup("Tile Type", _selectedIndex, TileSettingsSerializationInfo.Instance.DisplayNames);
@@ -52,23 +48,64 @@ namespace EditorScripts
 
             EditorGUILayout.PropertyField(prop);
 
-            EditorGUILayout.EndScrollView();
-
             switch (_optionsIndex)
             {
                 case 0: // drag and drop
+                    EditorGUILayout.EndScrollView();
                     CenterHorizontal(() => GUILayout.Label("Drag Anywhere"));
                     HandleDragAndDrop(prop);
                     break;
                 case 1: // set all fields
-                    CenterHorizontal(() => GUILayout.Label("Edit all elements in array"));
-                    // todo: edit all fields
-                    break;
-                default:
+                    HandleSet(prop);
+                    EditorGUILayout.EndScrollView();
                     break;
             }
 
             target.ApplyModifiedProperties();
+        }
+
+        private void HandleSet(SerializedProperty prop)
+        {
+            if (prop.arraySize < 1)
+            {
+                CenterHorizontal(() => GUILayout.Label("No data to set!"));
+                return;
+            }
+
+            CenterHorizontal(() => GUILayout.Label("Edit all elements in array"));
+            _tileDataOption = EditorGUILayout.Popup("Tile Data field", _tileDataOption, TileDataSerializationInfo.Instance.DisplayNames);
+
+            string internalFieldName = TileDataSerializationInfo.Instance.InternalNames[_tileDataOption];
+
+            var firstProp = prop.GetArrayElementAtIndex(0).FindPropertyRelative(internalFieldName);
+
+            EditorGUILayout.PropertyField(firstProp);
+
+            if (GUILayout.Button("Apply changes!"))
+            {
+                for (int i = 1; i < prop.arraySize; i++)
+                {
+                    SerializedProperty current = prop.GetArrayElementAtIndex(i);
+                    SerializedProperty field = current.FindPropertyRelative(internalFieldName);
+
+                    switch (field.type)
+                    {
+                        case "int":
+                            field.intValue = firstProp.intValue;
+                            break;
+                        case "Enum":
+                            field.enumValueFlag = firstProp.enumValueFlag;
+                            break;
+                        case "PPtr<$GameObject>":
+                            Debug.LogWarning("Should not set value for this type!");
+                            break;
+                        default:
+                            break;
+                    }
+
+                    Debug.Log(field.type);
+                }
+            }
         }
 
         private void HandleDragAndDrop(SerializedProperty prop)

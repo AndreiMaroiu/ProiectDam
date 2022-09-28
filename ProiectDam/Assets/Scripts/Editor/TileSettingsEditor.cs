@@ -14,7 +14,7 @@ namespace EditorScripts
 
             if (GUILayout.Button("Show drag and drop options"))
             {
-                ShowPopupExample.Show(target);
+                TileSettingsHelpingWindow.Show(target);
             }
         }
     }
