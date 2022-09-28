@@ -14,9 +14,13 @@ namespace EditorScripts
             window.Show();
         }
 
-        private SerializedObject target;
+        private static readonly string[] _options = new string[] { "Drag and Drop Tiles", "Set All Fields" };
 
+        private SerializedObject target;
         private int _selectedIndex;
+        private int _optionsIndex;
+        private Vector2 _scrollPos;
+        private bool _forceExpand;
 
         private void Init(Object target)
         {
@@ -26,18 +30,17 @@ namespace EditorScripts
 
         private void OnGUI()
         {
-            GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            GUILayout.Label("Drag and drop window", EditorStyles.boldLabel);
-            GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
+            CenterHorizontal(() => GUILayout.Label("TileSettings helper", EditorStyles.boldLabel));
 
             if (_selectedIndex > TileSettingsSerializationInfo.Instance.DisplayNames.Length)
             {
                 _selectedIndex = 0;
             }
 
+            _optionsIndex = EditorGUILayout.Popup("Action", _optionsIndex, _options);
             _selectedIndex = EditorGUILayout.Popup("Tile Type", _selectedIndex, TileSettingsSerializationInfo.Instance.DisplayNames);
+            _forceExpand = EditorGUILayout.Toggle("Force expand", _forceExpand);
+            _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos);
 
             if (target is null)
             {
@@ -45,8 +48,31 @@ namespace EditorScripts
             }
 
             SerializedProperty prop = target.FindProperty(TileSettingsSerializationInfo.Instance.InternalNames[_selectedIndex]);
+            prop.isExpanded = _forceExpand || prop.isExpanded;
+
             EditorGUILayout.PropertyField(prop);
 
+            EditorGUILayout.EndScrollView();
+
+            switch (_optionsIndex)
+            {
+                case 0: // drag and drop
+                    CenterHorizontal(() => GUILayout.Label("Drag Anywhere"));
+                    HandleDragAndDrop(prop);
+                    break;
+                case 1: // set all fields
+                    CenterHorizontal(() => GUILayout.Label("Edit all elements in array"));
+                    // todo: edit all fields
+                    break;
+                default:
+                    break;
+            }
+
+            target.ApplyModifiedProperties();
+        }
+
+        private void HandleDragAndDrop(SerializedProperty prop)
+        {
             switch (Event.current.type)
             {
                 case EventType.DragUpdated:
@@ -56,11 +82,6 @@ namespace EditorScripts
                     HandleDragPerformed(target, prop);
                     break;
             }
-
-            GUILayout.Label("Drag here");
-
-            target.ApplyModifiedProperties();
-            
         }
 
         private void HandleDragUpdated()
@@ -113,6 +134,15 @@ namespace EditorScripts
             }
 
             return true;
+        }
+
+        private static void CenterHorizontal(System.Action action)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            action();
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
         }
     }
 }
