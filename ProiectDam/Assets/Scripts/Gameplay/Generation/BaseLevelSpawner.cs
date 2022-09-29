@@ -179,7 +179,7 @@ namespace Gameplay.Generation
 
             door.Set(movePoint, other, room, layerPosition);
 
-            door.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg));
+            door.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg));
         }
 
         /// <summary>
