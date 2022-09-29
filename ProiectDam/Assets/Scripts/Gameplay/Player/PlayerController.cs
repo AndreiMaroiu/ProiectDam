@@ -5,6 +5,8 @@ using UnityEngine;
 using Utilities;
 using Core.Values;
 using Gameplay.DataSaving;
+using Gameplay.PickUps;
+using System.Linq;
 
 namespace Gameplay.Player
 {
@@ -64,6 +66,8 @@ namespace Gameplay.Player
         private Collider2D _collider;
 
         private SwipeDetector _swipeDetector;
+
+        private List<AbstractPickUp> _persistentPickups;
 
         #endregion
 
@@ -150,6 +154,7 @@ namespace Gameplay.Player
             _bulletsEvent.Init(_startBullets);
 
             _money.Value = 0;
+            _playerScore.Value = 0;
         }
 
         private void Start()
@@ -160,6 +165,7 @@ namespace Gameplay.Player
             _collider = GetComponent<Collider2D>();
 
             _swipeDetector = new SwipeDetector();
+            _persistentPickups = new List<AbstractPickUp>();
             _swipeDetector.OnSwipe += OnSwipe;
 
             _onMeleeAttack.OnEvent += OnMeleeAttack;
@@ -426,6 +432,16 @@ namespace Gameplay.Player
             _playerScore.Value += score;
         }
 
+        public void AddPickUp(AbstractPickUp pickUp)
+        {
+            _persistentPickups.Add(pickUp);
+        }
+
+        public void RemovePickup(AbstractPickUp pickUp)
+        {
+            _persistentPickups.Remove(pickUp);
+        }
+
         #endregion
 
         #region Overrides
@@ -500,6 +516,8 @@ namespace Gameplay.Player
                 Flip();
             }
 
+            saveData.PersistentPickUps.ForEach(x => PickUpFactory.Instance.GetPickUp(x.Name, x.Boost).OnInteract(this));
+
             _loaded = true;
         }
 
@@ -516,7 +534,8 @@ namespace Gameplay.Player
             {
                 Biome = _currentLayerEvent.Value,
                 Position = LayerPosition.Position,
-            }
+            },
+            PersistentPickUps = _persistentPickups.Select(x => PickUpFactory.Instance.GetSaveData(x)).ToList()
         };
 
         #endregion

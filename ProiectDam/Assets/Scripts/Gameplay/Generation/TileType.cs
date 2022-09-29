@@ -16,7 +16,7 @@ namespace Gameplay.Generation
         Portal,
         Player,
         Merchant,
-        Breakable,
+        DynamicObstacle,
     }
 
     public static class TileTypeExtension
@@ -47,7 +47,7 @@ namespace Gameplay.Generation
         public static bool IsStatic(this TileType tile) => tile switch
         {
             TileType.Enemy => false,
-            TileType.Breakable => false,
+            TileType.DynamicObstacle => false,
             TileType.PickUp => false,
             TileType.Chest => false,
             _ => true,

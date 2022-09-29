@@ -113,11 +113,11 @@ MonoBehaviour:
       type: 3}
     _flags: -1
     _spawnChance: 1
-  _breakable:
+  _dynamicObstacles:
   - _prefab: {fileID: 7492388303378191110, guid: 7bfd5331433e49b4394ee9557fded5bf,
       type: 3}
-    _flags: -1
-    _spawnChance: 1
+    _flags: 0
+    _spawnChance: 0
   _portal:
   - _prefab: {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055,
       type: 3}

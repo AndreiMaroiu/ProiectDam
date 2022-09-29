@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 using System.Reflection;
+using Gameplay.DataSaving;
 
 namespace Gameplay.PickUps
 {
@@ -31,5 +32,12 @@ namespace Gameplay.PickUps
 
         public AbstractPickUp GetPickUp(string pickUpType, int value) 
             => Activator.CreateInstance(_pickUps[pickUpType], value) as AbstractPickUp;
+
+        public PersistentPickUpSaveData GetSaveData(AbstractPickUp pickUp)
+            => new()
+            {
+                Name = pickUp.GetType().Name,
+                Boost = (int)pickUp.GetType().GetField("_boost", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(pickUp),
+            };
     }
 }

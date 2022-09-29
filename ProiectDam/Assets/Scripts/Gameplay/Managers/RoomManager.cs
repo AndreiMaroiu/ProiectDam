@@ -116,7 +116,7 @@ namespace Gameplay.Managers
             TileType.Portal => Color.black,
             TileType.Player => Color.cyan,
             TileType.Merchant => new Color(11, 83, 69), // dark cyan
-            TileType.Breakable => new Color(121, 85, 72), // light brown
+            TileType.DynamicObstacle => new Color(121, 85, 72), // light brown
             _ => Color.clear,
         };
 

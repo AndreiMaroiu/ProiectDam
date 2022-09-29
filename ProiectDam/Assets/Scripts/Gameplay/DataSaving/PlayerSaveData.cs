@@ -1,4 +1,6 @@
-﻿namespace Gameplay.DataSaving
+﻿using System.Collections.Generic;
+
+namespace Gameplay.DataSaving
 {
     [System.Serializable]
     public class PlayerSaveData
@@ -12,5 +14,6 @@
         public Vector2IntPos Bullets { get; set; }
         public int Coins { get; set; }
         public int Score { get; set; }
+        public List<PersistentPickUpSaveData> PersistentPickUps { get; set; }
     }
 }

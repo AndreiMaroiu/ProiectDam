@@ -136,7 +136,7 @@ MonoBehaviour:
       type: 3}
     _flags: -1
     _spawnChance: 1
-  _breakable:
+  _dynamicObstacles:
   - _prefab: {fileID: 1708417578382376831, guid: 71919aed78238734cb6d17c3d7cc102a,
       type: 3}
     _flags: -1

@@ -16,7 +16,7 @@ namespace Gameplay.Generation
         [SerializeField] private TileData[] _trap;
         [SerializeField] private TileData[] _pickUp;
         [SerializeField] private TileData[] _obstacle;
-        [SerializeField] private TileData[] _breakable;
+        [SerializeField] private TileData[] _dynamicObstacles;
         [SerializeField] private TileData[] _portal;
         [SerializeField] private TileData[] _merchant;
 
@@ -75,7 +75,7 @@ namespace Gameplay.Generation
             TileType.Obstacle => _obstacle,
             TileType.Portal => _portal,
             TileType.Merchant => _merchant,
-            TileType.Breakable => _breakable,
+            TileType.DynamicObstacle => _dynamicObstacles,
             _ => null,
         };
 

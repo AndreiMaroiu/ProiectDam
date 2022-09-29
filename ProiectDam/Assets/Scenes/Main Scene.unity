@@ -279,13 +279,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 136520281}
   _saverManager: {fileID: 40433177}
-  _datas:
-  - _prefab: {fileID: 0}
-    _flags: 0
-    _spawnChance: 0
-  - _prefab: {fileID: 0}
-    _flags: 0
-    _spawnChance: 0
 --- !u!114 &865060424
 MonoBehaviour:
   m_ObjectHideFlags: 0
