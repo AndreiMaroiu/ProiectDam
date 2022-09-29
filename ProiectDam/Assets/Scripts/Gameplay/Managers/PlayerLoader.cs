@@ -11,11 +11,8 @@ namespace Gameplay.Managers
         [SerializeField] private PlayerController _player;
         [SerializeField] private RandomLevelSaverManager _saverManager;
 
-        private IEnumerator Start()
+        private void Start()
         {
-            // todo: refactor
-            yield return null;
-
             if (_saverManager.ShouldLoad)
             {
                 _player.LoadFromSave(_saverManager.SaveData.PlayerData);

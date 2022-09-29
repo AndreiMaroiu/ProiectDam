@@ -55,6 +55,7 @@ namespace Gameplay.Player
 
         #region Private Fields
 
+        private bool _loaded = false;
         private bool _canInteract = true;
         private Vector2 _direction;
         private Animator _animator;
@@ -139,6 +140,11 @@ namespace Gameplay.Player
 
         private void Awake()
         {
+            if (_loaded)
+            {
+                return;
+            }
+
             _energyEvent.Init(_startEnergy);
             _healthEvent.Init(_startHealth);
             _bulletsEvent.Init(_startBullets);
@@ -493,6 +499,8 @@ namespace Gameplay.Player
             {
                 Flip();
             }
+
+            _loaded = true;
         }
 
         public PlayerSaveData SaveData => new()

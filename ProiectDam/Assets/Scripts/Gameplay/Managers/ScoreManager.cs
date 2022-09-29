@@ -10,7 +10,6 @@ namespace Gameplay.Managers
 
         private void Start()
         {
-            _scoreEvent.Value = 0;
             _globalDeathEvent.OnEvent += OnDeath;
         }
 
