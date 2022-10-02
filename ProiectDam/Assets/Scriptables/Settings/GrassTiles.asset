@@ -113,11 +113,19 @@ MonoBehaviour:
       type: 3}
     _flags: -1
     _spawnChance: 1
+  - _prefab: {fileID: 1767931643493762754, guid: 1141b06695b41ca4cb3b8cbf526ffb80,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
+  - _prefab: {fileID: 2725840095575944006, guid: 473812a4b11442046ac367b3afce9525,
+      type: 3}
+    _flags: -1
+    _spawnChance: 1
   _dynamicObstacles:
   - _prefab: {fileID: 7492388303378191110, guid: 7bfd5331433e49b4394ee9557fded5bf,
       type: 3}
-    _flags: 0
-    _spawnChance: 0
+    _flags: -1
+    _spawnChance: 1
   _portal:
   - _prefab: {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055,
       type: 3}

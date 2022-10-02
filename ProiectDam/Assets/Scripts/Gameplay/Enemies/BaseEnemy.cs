@@ -41,8 +41,12 @@ namespace Gameplay.Enemies
             float min = float.MaxValue;
             Vector2Int result = Vector2Int.zero;
 
-            foreach (Vector2Int direction in Directions)
+            RandomPicker<Vector2Int> picker = new(Directions, createCopy: false);
+
+            while (picker.CanTake)
             {
+                Vector2Int direction = picker.Take();
+
                 Vector2Int pos = direction + LayerPosition.Position;
 
                 if (!layer[pos.x, pos.y].CanMove() || _lastPosition.HasValue && _lastPosition.Value == pos)

@@ -36,6 +36,8 @@ namespace Gameplay.Generation
             SpawnDoors();
 
             _data.RoomBehaviourEvent.Value = _traverser.Start;
+
+            Random.InitState((int)System.DateTimeOffset.Now.ToUnixTimeMilliseconds());
         }
 
         private void SetSeed()

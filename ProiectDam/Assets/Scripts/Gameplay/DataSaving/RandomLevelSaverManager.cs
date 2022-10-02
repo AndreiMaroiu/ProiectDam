@@ -28,7 +28,6 @@ namespace Gameplay.DataSaving
                 if (read)
                 {
                     SaveData = data;
-                    _loaded = true;
                 }
                 else
                 {
@@ -73,18 +72,17 @@ namespace Gameplay.DataSaving
         {
             get
             {
-                if (!_loaded)
+                if (!_loaded && _handler.ShouldLoad)
                 {
                     Init();
                 }
 
                 return _saveData;
             }
-
             private set
             {
-                _loaded = true;
                 _saveData = value;
+                _loaded = true;
             }
         }
 
@@ -119,7 +117,7 @@ namespace Gameplay.DataSaving
 
         private static LayerSaveData GenerateLayerSaveData(RoomBehaviour roomBehaviour, int i)
         {
-            LayerSaveData layerSaveData = new LayerSaveData()
+            LayerSaveData layerSaveData = new()
             {
                 Layers = roomBehaviour.Layers.GetTiles(i),
                 Biome = roomBehaviour.Layers.GetBiome(i),

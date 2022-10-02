@@ -108,8 +108,8 @@ MonoBehaviour:
   _dynamicObstacles:
   - _prefab: {fileID: 6624150824593996783, guid: b4abda3122fe462409bfbd7afafe2517,
       type: 3}
-    _flags: 0
-    _spawnChance: 0
+    _flags: -1
+    _spawnChance: 1
   _portal:
   - _prefab: {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055,
       type: 3}

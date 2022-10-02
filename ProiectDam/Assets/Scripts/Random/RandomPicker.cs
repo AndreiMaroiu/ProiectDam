@@ -6,10 +6,18 @@ public struct RandomPicker<T>
     private readonly T[] _elems;
     private int _max;
 
-    public RandomPicker(T[] elems)
+    public RandomPicker(T[] elems, bool createCopy = true)
     {
-        _elems = new T[elems.Length];
-        Array.Copy(elems, _elems, elems.Length);
+        if (createCopy)
+        {
+            _elems = new T[elems.Length];
+            Array.Copy(elems, _elems, elems.Length);
+        }
+        else
+        {
+            _elems = elems;
+        }
+
         _max = _elems.Length;
     }
 
@@ -17,7 +25,7 @@ public struct RandomPicker<T>
 
     public void Reset() => _max = _elems.Length;
 
-    public bool CanTake => _max >= 0;
+    public bool CanTake => _max > 0;
 
     public T Take()
     {

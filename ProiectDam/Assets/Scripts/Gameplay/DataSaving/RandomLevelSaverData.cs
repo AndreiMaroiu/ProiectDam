@@ -13,8 +13,8 @@ namespace Gameplay.DataSaving
         private const string SEED_STR = "GenerationSeed";
 
         [SerializeField] private bool _shouldLoad;
-
         [SerializeField] private int _seed;
+
         private string _saveFile;
 
         #region Level Saver Handler
