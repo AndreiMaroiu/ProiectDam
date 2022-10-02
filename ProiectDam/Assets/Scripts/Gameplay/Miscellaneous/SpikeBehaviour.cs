@@ -72,11 +72,23 @@ namespace Gameplay
 
             if (killableObject.IsNotNull())
             {
-                killableObject.TakeDamage(_damage);
-                StartCoroutine(StartAnimation());
-                _turnCounter = 0;
-                _canHit = false;
+                if (killableObject is MovingObject moving)
+                {
+                    StartCoroutine(WaitToStopMoving(moving));
+                }
+                else
+                {
+                    DealDamage(killableObject);
+                }
             }
+        }
+
+        private void DealDamage(KillableObject killable)
+        {
+            killable.TakeDamage(_damage);
+            _turnCounter = 0;
+            _canHit = false;
+            StartCoroutine(StartAnimation());
         }
 
         private IEnumerator StartAnimation()
@@ -91,6 +103,13 @@ namespace Gameplay
         {
             yield return new WaitForSeconds(0.5f);
             _canHit = true;
+        }
+
+        private IEnumerator WaitToStopMoving(MovingObject moving)
+        {
+            yield return new WaitWhile(() => moving.IsMoving);
+
+            DealDamage(moving);
         }
     }
 }
