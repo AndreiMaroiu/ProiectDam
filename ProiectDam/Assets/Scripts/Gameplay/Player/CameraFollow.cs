@@ -20,7 +20,7 @@ namespace Gameplay.Player
         {
             Vector3 position = _roomEvent.Value.transform.position;
             Vector3 target = new Vector3(position.x, position.y, transform.position.z);
-            transform.position = Vector3.SmoothDamp(transform.position, target, ref _velocity, _smoothTime); ;
+            transform.position = Vector3.SmoothDamp(transform.position, target, ref _velocity, _smoothTime);
         }
     }
 }
