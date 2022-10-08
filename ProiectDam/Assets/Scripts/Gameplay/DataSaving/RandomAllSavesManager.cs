@@ -26,7 +26,7 @@ namespace Gameplay.DataSaving
         {
             get
             {
-                if (!_loaded)
+                if (!_loaded || _summaries is null)
                 {
                     Init();
                 }
