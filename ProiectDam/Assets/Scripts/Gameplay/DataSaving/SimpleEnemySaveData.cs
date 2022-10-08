@@ -1,12 +1,9 @@
 using Gameplay.Generation;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Gameplay.DataSaving
 {
     [System.Serializable]
-    public class SimpleEnemySaveData : ObjectSaveData
+    public sealed class SimpleEnemySaveData : ObjectSaveData
     {
         public int Health { get; set; }
 

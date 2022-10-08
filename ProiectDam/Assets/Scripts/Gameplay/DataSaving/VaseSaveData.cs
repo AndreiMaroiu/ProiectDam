@@ -1,7 +1,7 @@
 ﻿namespace Gameplay.DataSaving
 {
     [System.Serializable]
-    public class VaseSaveData : ObjectSaveData
+    public sealed class VaseSaveData : ObjectSaveData
     {
 
     }

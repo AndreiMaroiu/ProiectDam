@@ -53,6 +53,7 @@ namespace Gameplay.Managers
             _currentLayerEvent.Value = behaviour.CurrentLayer;
             _layersNumberEvent.Value = behaviour.Layers.Count;
             _roomEvent.Value = behaviour.Room;
+            behaviour.Room.Discovered = true;
         }
 
         private void InitEvents()
@@ -163,6 +164,8 @@ namespace Gameplay.Managers
             _roomEvent.Value = room.Room;
             _currentLayerEvent.Value = room.CurrentLayer;
             _layersNumberEvent.Value = room.Layers.Count;
+
+            room.Room.Discovered = true;
         }
 
         private void OnLayerChanged()

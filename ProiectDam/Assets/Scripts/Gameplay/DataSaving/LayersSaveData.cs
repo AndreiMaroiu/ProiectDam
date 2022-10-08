@@ -4,9 +4,10 @@ using System.Collections.Generic;
 namespace Gameplay.DataSaving
 {
     [System.Serializable]
-    public class LayersSaveData
+    public sealed class LayersSaveData
     {
-        public List<LayerSaveData> Layers { get; set; } = new List<LayerSaveData>();
+        public List<LayerSaveData> Layers { get; set; } = new();
+        public bool IsDiscovered { get; set; }
 
         public LayerSaveData GetFromBiome(BiomeType biome)
         {

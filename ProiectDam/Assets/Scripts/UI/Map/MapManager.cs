@@ -101,8 +101,9 @@ namespace UI.Map
                 }
 
                 RoomUIBehaviour clone = Instantiate(_roomPrefab, _map.transform);
+
                 clone.Rect.anchoredPosition = pos;
-                clone.gameObject.SetActive(false);
+                clone.gameObject.SetActive(room.Discovered);
                 clone.Set(_icons.GetIcon(room.Type));
 
                 _traverser[room.Pos] = clone;

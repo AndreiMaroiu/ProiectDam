@@ -6,7 +6,7 @@ namespace Gameplay.DataSaving
 {
     // todo: refactor, maybe move the seed data in another scriptable
     [CreateAssetMenu(fileName = "New Level Saver", menuName = "Scriptables/Level Saver")]
-    public class RandomLevelSaverData : LevelSaverHandler
+    public sealed class RandomLevelSaverData : LevelSaverHandler
     {
         private const string SAVE_FILE_STR = "GenerationSaveFile";
         private const string SHOULD_LOAD_STR = "ShouldLoad";

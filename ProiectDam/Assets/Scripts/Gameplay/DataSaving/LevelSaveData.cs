@@ -3,7 +3,7 @@
 namespace Gameplay.DataSaving
 {
     [System.Serializable]
-    public class LevelSaveData
+    public sealed class LevelSaveData
     {
         public int Seed { get; set; }
         

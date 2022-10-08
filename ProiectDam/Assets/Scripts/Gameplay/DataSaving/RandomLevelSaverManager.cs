@@ -8,10 +8,11 @@ using UnityEngine;
 
 namespace Gameplay.DataSaving
 {
-    public class RandomLevelSaverManager : LevelSaverManager
+    public sealed class RandomLevelSaverManager : LevelSaverManager
     {
         [SerializeField] private PlayerController _player;
         [SerializeField] private RandomLevelSpawner _levelSpawner;
+        [SerializeField] private RandomAllSavesManager _allSaves;
         [SerializeField] private LevelSaverHandler _handler;
         [SerializeField] private IntEvent _currentLayerEvent;
         [SerializeField] private RoomEvent _roomEvent;
@@ -24,8 +25,9 @@ namespace Gameplay.DataSaving
         {
             if (_handler.ShouldLoad)
             {
-                bool read = Utilities.BinaryReader.TryRead(_handler.SaveFile, out LevelSaveData data);
-                if (read)
+                var data = _allSaves.GetSave(_handler.SaveFile);
+
+                if (data is not null)
                 {
                     SaveData = data;
                 }
@@ -38,7 +40,7 @@ namespace Gameplay.DataSaving
 
         public override void Save() // todo: add string file
         {
-            SaveData = new LevelSaveData()
+            SaveData = new()
             {
                 Seed = _levelSpawner.Seed,
                 CurrentRoom = _roomEvent.Value.Pos,
@@ -47,7 +49,11 @@ namespace Gameplay.DataSaving
                 Rooms = SaveRooms(),
             };
 
-            Utilities.BinaryReader.Write(Application.persistentDataPath + "/Save.dat", SaveData);
+            string savePath = _handler.SaveFile is null or "" ? _allSaves.GetSaveFilePath(0) : _handler.SaveFile;
+
+            _allSaves.TrySaveData(SaveData, savePath);
+
+            Debug.Log("Save path: " + savePath);
         }
 
         public override void SetUpForNewScene()
@@ -88,7 +94,7 @@ namespace Gameplay.DataSaving
 
         private Dictionary<Vector2IntPos, LayersSaveData> SaveRooms()
         {
-            Dictionary<Vector2IntPos, LayersSaveData> rooms = new Dictionary<Vector2IntPos, LayersSaveData>();
+            Dictionary<Vector2IntPos, LayersSaveData> rooms = new();
 
             _levelSpawner.Traverser.Traverse(room =>
             {
@@ -103,7 +109,10 @@ namespace Gameplay.DataSaving
 
         private static LayersSaveData GenerateRoomSaveData(RoomBehaviour roomBehaviour)
         {
-            LayersSaveData saveData = new LayersSaveData();
+            LayersSaveData saveData = new()
+            {
+                IsDiscovered = roomBehaviour.Room.Discovered
+            };
 
             for (int i = 0; i < roomBehaviour.Layers.Count; i++)
             {

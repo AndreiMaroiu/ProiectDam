@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Core
 {
-    public class Room
+    public sealed class Room
     {
         private readonly Vector2Int _pos;
         private readonly int _direction;
@@ -11,6 +11,7 @@ namespace Core
         private readonly List<Room> _neighbours;
 
         public RoomType Type { get; set; }
+        public bool Discovered { get; set; }
         public int Direction => _direction;
         public Vector2Int Pos => _pos;
 

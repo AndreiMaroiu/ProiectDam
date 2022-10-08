@@ -17,6 +17,7 @@ namespace UI
         [Header("Utilities")]
         [SerializeField] private Animator _transition;
         [SerializeField] private LevelSaverHandler _saverHandler;
+        [SerializeField] private AllSavesHandler _allSavesHandler;
 
         private void Awake()
         {
@@ -102,7 +103,7 @@ namespace UI
         /// <param name="saveNumber">Number of the save file</param>
         public void OnLoadLevelClick(int saveNumber)
         {
-            string saveFile = Application.persistentDataPath + "/Save.dat";
+            string saveFile = _allSavesHandler.GetSaveFilePath(saveNumber);
 
             if (!File.Exists(saveFile))
             {

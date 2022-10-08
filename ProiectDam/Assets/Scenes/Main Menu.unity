@@ -1613,6 +1613,7 @@ MonoBehaviour:
   _savesCanvas: {fileID: 226881501}
   _transition: {fileID: 801044320}
   _saverHandler: {fileID: 11400000, guid: 412537028d3cbf44fbc7d53c95864586, type: 2}
+  _allSavesHandler: {fileID: 11400000, guid: bba1a9d637df1ef43b2d9fba5c696b33, type: 2}
 --- !u!4 &440890525
 Transform:
   m_ObjectHideFlags: 0

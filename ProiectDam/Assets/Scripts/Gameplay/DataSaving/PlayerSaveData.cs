@@ -3,7 +3,7 @@
 namespace Gameplay.DataSaving
 {
     [System.Serializable]
-    public class PlayerSaveData
+    public sealed class PlayerSaveData
     {
         public Vector3Pos PlayerPos { get; set; }
         public LayerPositionData LayerPos { get; set; }

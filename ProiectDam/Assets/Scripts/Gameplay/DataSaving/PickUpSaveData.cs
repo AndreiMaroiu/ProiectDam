@@ -1,7 +1,7 @@
 ﻿namespace Gameplay.DataSaving
 {
     [System.Serializable]
-    public class PickUpSaveData : ObjectSaveData
+    public sealed class PickUpSaveData : ObjectSaveData
     {
 
     }

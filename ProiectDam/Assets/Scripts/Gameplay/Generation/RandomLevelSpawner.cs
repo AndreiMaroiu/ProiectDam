@@ -93,6 +93,8 @@ namespace Gameplay.Generation
                 behaviour.Layers.SetFromSave(saveData);
                 spawner.SetGenerationStrategy(LayersSpawner.GenerationStrategy.FromSave);
                 spawner.SpawnDynamic(behaviour);
+
+                room.Discovered = saveData.IsDiscovered;
             });
         }
 
