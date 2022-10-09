@@ -32,12 +32,16 @@ namespace Utilities
 
         public bool TryVibrate()
         {
+#if !PLATFORM_WEBGL
             if (CanVibrate)
             {
                 Handheld.Vibrate();
             }
 
             return CanVibrate;
+#else
+            return false;
+#endif
         }
     }
 }
