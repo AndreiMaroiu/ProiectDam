@@ -1,16 +1,16 @@
 using Core;
-using Gameplay.Enemies;
 using UnityEngine;
 
 namespace Gameplay.Generation
 {
+    /// <summary>
+    /// Behavior that handles both layers and doors logic
+    /// </summary>
     public sealed class RoomBehaviour : MonoBehaviour
     {
         private LayerBehaviour[] _layersObjects;
-        private BaseEnemy[] _enemies;
         private DoorBehaviour[] _doors;
 
-        private int _enemiesCount;
         private Room _room;
         private Layers _layers;
         private int _currentLayer;
@@ -24,7 +24,7 @@ namespace Gameplay.Generation
 
         private LayerBehaviour CreateEmptyObject(string name)
         {
-            GameObject result = new GameObject(name);
+            GameObject result = new(name);
             LayerBehaviour behaviour = result.AddComponent<LayerBehaviour>();
 
             result.transform.parent = transform;
@@ -39,7 +39,7 @@ namespace Gameplay.Generation
             _layers = layers;
             _layersObjects = new LayerBehaviour[layers.Count];
 
-            for(int i = 0; i < layers.Count; i++)
+            for (int i = 0; i < layers.Count; i++)
             {
                 _layersObjects[i] = CreateEmptyObject($"Layer {i.ToString()}");
                 _layersObjects[i].gameObject.SetActive(false);
@@ -61,17 +61,11 @@ namespace Gameplay.Generation
             _layersObjects[layer].gameObject.SetActive(true);
         }
 
-        public void OnRoomEnter()
-        {
-            // trigger event for current room behaviour
-        }
-
-        public Transform GetTransform(int index) 
+        public Transform GetTransform(int index)
             => _layersObjects[index].transform;
 
         public void Scan()
         {
-            ScanForEnemies();
             ScanForDoors();
         }
 
@@ -79,33 +73,10 @@ namespace Gameplay.Generation
         {
             _doors = GetComponentsInChildren<DoorBehaviour>();
 
-            UpdateDoors(isLocked: true);
+            UpdateDoors(isLocked: false); // doors are open by default
         }
 
-        private void ScanForEnemies()
-        {
-            _enemies = GetComponentsInChildren<BaseEnemy>();
-            _enemiesCount = _enemies.Length;
-
-            foreach (BaseEnemy enemy in _enemies)
-            {
-                enemy.OnDeathEvent += OnEnemyDeath;
-            }
-        }
-
-        private void OnEnemyDeath(BaseEnemy enemy)
-        {
-            --_enemiesCount;
-
-            if (_enemiesCount > 0)
-            {
-                return;
-            }
-
-            UpdateDoors(isLocked: false);
-        }
-
-        private void UpdateDoors(bool isLocked)
+        public void UpdateDoors(bool isLocked)
         {
             foreach (DoorBehaviour door in _doors)
             {

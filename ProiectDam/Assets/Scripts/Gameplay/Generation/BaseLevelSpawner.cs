@@ -175,9 +175,13 @@ namespace Gameplay.Generation
             door.transform.localPosition = spawnDirection * (_data.CellCount / 2);
 
             TileType[,] layer = room.Layers[room.CurrentLayer];
-            LayerPosition layerPosition = new LayerPosition(GetLayerPosition(direction, layer) - direction, layer);
+            LayerPosition layerPosition = new(GetLayerPosition(direction, layer) - direction, layer);
 
             door.Set(movePoint, other, room, layerPosition);
+            door.LayerPosition = new(GetLayerPosition(direction, layer), layer)
+            {
+                TileType = TileType.Door,
+            };
 
             door.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg));
         }
@@ -194,6 +198,16 @@ namespace Gameplay.Generation
             SpawnDoors();
 
             _data.RoomBehaviourEvent.Value = _traverser.Start;
+        }
+
+        protected void ScanRooms()
+        {
+            _traverser.TraverseUnique(room =>
+            {
+                RoomBehaviour behaviour = _traverser[room.Pos];
+
+                behaviour.Scan();
+            });
         }
     }
 }

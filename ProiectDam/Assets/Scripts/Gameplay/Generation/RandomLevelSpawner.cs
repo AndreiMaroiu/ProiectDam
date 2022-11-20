@@ -34,6 +34,7 @@ namespace Gameplay.Generation
             SetDoorPositions();
             SpawnOrLoadLayers();
             SpawnDoors();
+            ScanRooms();
 
             _data.RoomBehaviourEvent.Value = _traverser.Start;
 
