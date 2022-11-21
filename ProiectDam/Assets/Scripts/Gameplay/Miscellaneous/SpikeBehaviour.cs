@@ -20,6 +20,7 @@ namespace Gameplay
         private Sprite _original;
         private bool _canHit;
         private int? _turnCounter;
+        private KillableObject _lastKillable;
 
         private void Start()
         {
@@ -35,12 +36,12 @@ namespace Gameplay
                 return;
             }
 
-            // spikes must wait 3 turn to activate again
+            // spikes must wait 3 turn to activate again or another killable must collide
             // 3 turn means:
-            //      -> killable enters (attack)                     : 0
-            //      -> killable turn ends                           : 1
-            //      -> killable exits                               : 2
-            //      -> killable turn ends                           : 3
+            //      -> killable enters (attack)         : 0
+            //      -> killable turn ends               : 1
+            //      -> killable exits                   : 2
+            //      -> killable turn ends               : 3
             _turnCounter++;
 
             if (_turnCounter == 3) 
@@ -63,18 +64,18 @@ namespace Gameplay
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!_canHit)
-            {
-                return;
-            }
-
             KillableObject killableObject = collision.gameObject.GetComponent<KillableObject>();
 
             if (killableObject.IsNotNull())
             {
+                if (!ReferenceEquals(killableObject, _lastKillable))
+                {
+                    _canHit = true;
+                }
+
                 if (killableObject is MovingObject moving)
                 {
-                    StartCoroutine(WaitToStopMoving(moving));
+                    StartCoroutine(WaitToStopMovingAndHit(moving));
                 }
                 else
                 {
@@ -85,9 +86,15 @@ namespace Gameplay
 
         private void DealDamage(KillableObject killable)
         {
+            if (!_canHit)
+            {
+                return;
+            }
+
             killable.TakeDamage(_damage);
             _turnCounter = 0;
             _canHit = false;
+            _lastKillable = killable;
             StartCoroutine(StartAnimation());
         }
 
@@ -105,7 +112,7 @@ namespace Gameplay
             _canHit = true;
         }
 
-        private IEnumerator WaitToStopMoving(MovingObject moving)
+        private IEnumerator WaitToStopMovingAndHit(MovingObject moving)
         {
             yield return new WaitWhile(() => moving.IsMoving);
 
