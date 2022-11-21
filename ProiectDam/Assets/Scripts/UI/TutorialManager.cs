@@ -12,13 +12,15 @@ namespace UI
         [SerializeField] private GameEvent _onGlobalKillEvent;
         [SerializeField] private RoomEvent _OnRoomEvent;
         [SerializeField] private GameEvent _onPlayerMoveEnded;
+        [SerializeField] private DoorsEvent _doorsEvent;
         [Header("Settings")]
         [SerializeField] private float _roomMessageWaitTime;
         [Header("Icons")]
         [SerializeField] private Sprite _loopIcon;
 
-        private bool _normalEntered;
+        private NormalEnteredState _normalEntered;
         private bool _endEntered;
+        private bool _enemyKilled;
 
 
         private void Start()
@@ -41,9 +43,13 @@ namespace UI
         {
             switch (_OnRoomEvent.Value.Type)
             {
-                case RoomType.Normal when _normalEntered is false:
+                case RoomType.Normal when _normalEntered is NormalEnteredState.Unvisited:
                     StartCoroutine(ShowNormalRoomMessage());
-                    _normalEntered = true;
+                    _normalEntered = NormalEnteredState.FirstTime;
+                    break;
+                case RoomType.Normal when _normalEntered is NormalEnteredState.FirstTime:
+                    StartCoroutine(ShowNormalSecondTime());
+                    _normalEntered = NormalEnteredState.Visited;
                     break;
                 case RoomType.End when _endEntered is false:
                     StartCoroutine(ShowEndRoomMessage());
@@ -52,6 +58,20 @@ namespace UI
                 default:
                     break;
             }
+        }
+
+        private IEnumerator ShowNormalSecondTime()
+        {
+            yield return new WaitForSeconds(_roomMessageWaitTime);
+
+            ModalWindow.ShowDialog(new ModalWindowData()
+            {
+                Header = _enemyKilled ? "You did great!" : "Don't be shy around monters",
+                Content = "Try to kill all enemies to move to the other room",
+                Footer = "Also you get run points for each enemy killed!",
+            });
+
+            _doorsEvent.LockDoors(UnlockCondition.AllEnemiesKilled);
         }
 
         private IEnumerator ShowNormalRoomMessage()
@@ -93,6 +113,8 @@ namespace UI
                 Header = "Enemy killed!",
                 Content = "Congratiolations, you killed your first enemy!"
             });
+
+            _enemyKilled = true;
         }
 
         private void ShowWelcomeMessage()
@@ -115,6 +137,13 @@ namespace UI
                 Content = "Beware when you move you use your energy points.\n" +
                 "When your energy reaches 0 you lose!",
             });
+        }
+
+        private enum NormalEnteredState : byte
+        {
+            Unvisited = 0,
+            FirstTime,
+            Visited
         }
     }
 }

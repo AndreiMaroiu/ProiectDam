@@ -1,13 +1,19 @@
 using Gameplay.DataSaving;
 using Gameplay.Enemies;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Gameplay
+namespace Gameplay.Generation
 {
     public class LayerBehaviour : MonoBehaviour
     {
+        private DoorBehaviour[] _doors;
+
         public List<BaseEnemy> Enemies { get; } = new List<BaseEnemy>();
+        public event Action OnAllEnemiesKilled;
+
+        public bool HasDoors => _doors is not null || _doors.Length > 0;
 
         private void Start()
         {
@@ -20,14 +26,39 @@ namespace Gameplay
             }
         }
 
-        private void OnEnemyDeath(BaseEnemy enemy)
+        public void UpdateDoors(bool isLocked)
         {
-            Enemies.Remove(enemy);
+            if (!HasDoors)
+            {
+                return;
+            }
+            
+            foreach (DoorBehaviour door in _doors)
+            {
+                door.IsLocked = isLocked;
+            }
         }
 
         public IDataSavingTile[] GetDynamicObject()
         {
             return GetComponentsInChildren<IDataSavingTile>(includeInactive: true);
+        }
+
+        private void OnEnemyDeath(BaseEnemy enemy)
+        {
+            Enemies.Remove(enemy);
+
+            if (Enemies.Count == 0)
+            {
+                OnAllEnemiesKilled?.Invoke();
+            }
+        }
+
+        public void ScanForDoors()
+        {
+            _doors = GetComponentsInChildren<DoorBehaviour>();
+
+            UpdateDoors(isLocked: false); // doors are open by default
         }
     }
 }

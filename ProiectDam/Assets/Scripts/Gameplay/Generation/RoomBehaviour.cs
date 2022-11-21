@@ -9,7 +9,6 @@ namespace Gameplay.Generation
     public sealed class RoomBehaviour : MonoBehaviour
     {
         private LayerBehaviour[] _layersObjects;
-        private DoorBehaviour[] _doors;
 
         private Room _room;
         private Layers _layers;
@@ -66,21 +65,9 @@ namespace Gameplay.Generation
 
         public void Scan()
         {
-            ScanForDoors();
-        }
-
-        private void ScanForDoors()
-        {
-            _doors = GetComponentsInChildren<DoorBehaviour>();
-
-            UpdateDoors(isLocked: false); // doors are open by default
-        }
-
-        public void UpdateDoors(bool isLocked)
-        {
-            foreach (DoorBehaviour door in _doors)
+            foreach (var layer in _layersObjects)
             {
-                door.IsLocked = isLocked;
+                layer.ScanForDoors();
             }
         }
     }
