@@ -224,7 +224,6 @@ GameObject:
   - component: {fileID: 319214017}
   - component: {fileID: 319214020}
   - component: {fileID: 319214019}
-  - component: {fileID: 319214018}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -248,22 +247,6 @@ Transform:
   m_Father: {fileID: 1034954739}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &319214018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 319214016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f145fbdf68affa4fa7662ecd7e68c73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _grass: {fileID: 21300000, guid: 744d16e8817113b4ca368a4739334aa5, type: 3}
-  _fire: {fileID: 21300000, guid: dfbe486d4bcc81048aea4be39e75ee0b, type: 3}
-  _dungeon: {fileID: 21300000, guid: b51ad4b923ada4f4cba288d7391df9be, type: 3}
-  _currentBiome: {fileID: 11400000, guid: 1b459c8b1d65f814db434e14a43778b8, type: 2}
 --- !u!114 &319214019
 MonoBehaviour:
   m_ObjectHideFlags: 0

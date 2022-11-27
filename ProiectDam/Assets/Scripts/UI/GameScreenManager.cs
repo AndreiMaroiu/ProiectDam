@@ -12,8 +12,7 @@ namespace UI
         [SerializeField] private Button _weaponButton;
         [SerializeField] private Button _meleeButton;
         [Header("Events")]
-        [SerializeField] private IntEvent _layersCountEvent;
-        [SerializeField] private IntEvent _currentLayerEvent;
+        [SerializeField] private LayerEvent _layersEvent;
         [SerializeField] private BoolEvent _previewActive;
         [SerializeField] private BoolEvent _playerTurn;
         [SerializeField] private GameEvent _meleeEvent;
@@ -28,8 +27,8 @@ namespace UI
 
         private void Start()
         {
-            _layersCountEvent.OnValueChanged += OnLayersCountChanged;
-            _currentLayerEvent.OnValueChanged += OnCurrentLayerChanged;
+            _layersEvent.LayerCount.OnValueChanged += OnLayersCountChanged;
+            _layersEvent.CurrentLayer.OnValueChanged += OnCurrentLayerChanged;
             _layerSlider.onValueChanged.AddListener(OnSliderChanged);
 
             _previewActive.OnValueChanged += OnPreviewChanged;
@@ -43,34 +42,29 @@ namespace UI
             OnLayersCountChanged();
         }
 
-        private void OnLayersCountChanged()
+        private void OnLayersCountChanged(int newValue = 0)
         {
-            _layerSlider.maxValue = _layersCountEvent.Value - 1;
-            _layerSlider.value = _currentLayerEvent.Value;
-            if (_layersCountEvent.Value > 1)
-            {
-                _previewButton.gameObject.SetActive(true);
-                _previewLabel.gameObject.SetActive(true);
-            }
-            else
-            {
-                _previewButton.gameObject.SetActive(false);
-                _previewLabel.gameObject.SetActive(false);
-            }
+            _layerSlider.maxValue = _layersEvent.LayerCount - 1;
+            _layerSlider.value = _layersEvent.CurrentLayer;
+
+            bool shouldShow = _layersEvent.LayerCount > 1;
+
+            _previewButton.gameObject.SetActive(shouldShow);
+            _previewLabel.gameObject.SetActive(shouldShow);
         }
 
-        private void OnCurrentLayerChanged()
+        private void OnCurrentLayerChanged(int newValue)
         {
-            _layerSlider.value = _currentLayerEvent.Value;
+            _layerSlider.value = _layersEvent.CurrentLayer;
         }
 
         private void OnSliderChanged(float value)
         {
-            _currentLayerEvent.Value = Mathf.RoundToInt(value);
+            _layersEvent.CurrentLayer.Value = Mathf.RoundToInt(value);
             _layerSlider.value = Mathf.RoundToInt(value);
         }
 
-        private void OnPreviewChanged()
+        private void OnPreviewChanged(bool newValue)
         {
             if (_previewActive.Value && _playerTurn.Value)
             {
@@ -98,8 +92,8 @@ namespace UI
 
         private void OnDestroy()
         {
-            _layersCountEvent.OnValueChanged -= OnLayersCountChanged;
-            _currentLayerEvent.OnValueChanged -= OnCurrentLayerChanged;
+            _layersEvent.LayerCount.OnValueChanged -= OnLayersCountChanged;
+            _layersEvent.CurrentLayer.OnValueChanged -= OnCurrentLayerChanged;
             _layerSlider.onValueChanged.RemoveListener(OnSliderChanged);
             _previewActive.OnValueChanged -= OnPreviewChanged;
         }

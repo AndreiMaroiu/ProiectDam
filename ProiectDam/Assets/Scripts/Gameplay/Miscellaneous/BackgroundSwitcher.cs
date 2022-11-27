@@ -1,5 +1,5 @@
-using Gameplay.Events;
-using Gameplay.Generation;
+using Core.Events;
+using Core.Values;
 using UnityEngine;
 
 namespace Gameplay
@@ -11,25 +11,25 @@ namespace Gameplay
         [SerializeField] private Sprite _fire;
         [SerializeField] private Sprite _dungeon;
         [Header("Events")]
-        [SerializeField] private BiomeEvent _currentBiome;
+        [SerializeField] private LayerEvent _layerEvent;
 
         private SpriteRenderer _renderer;
 
         private void Awake()
         {
-            _currentBiome.OnValueChanged += OnBiomeChanged;
+            _layerEvent.CurrentBiome.OnValueChanged += OnBiomeChanged;
 
             _renderer = GetComponent<SpriteRenderer>();
         }
 
         private void OnDestroy()
         {
-            _currentBiome.OnValueChanged -= OnBiomeChanged;
+            _layerEvent.CurrentBiome.OnValueChanged -= OnBiomeChanged;
         }
 
-        private void OnBiomeChanged()
+        private void OnBiomeChanged(BiomeType biomeType)
         {
-            Sprite sprite = _currentBiome.Value switch
+            Sprite sprite = biomeType switch
             {
                 BiomeType.Fire => _fire,
                 BiomeType.Grassland => _grass,

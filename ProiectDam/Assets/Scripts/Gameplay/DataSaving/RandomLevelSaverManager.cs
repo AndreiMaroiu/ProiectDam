@@ -14,7 +14,6 @@ namespace Gameplay.DataSaving
         [SerializeField] private RandomLevelSpawner _levelSpawner;
         [SerializeField] private RandomAllSavesManager _allSaves;
         [SerializeField] private LevelSaverHandler _handler;
-        [SerializeField] private IntEvent _currentLayerEvent;
         [SerializeField] private RoomEvent _roomEvent;
         [SerializeField] private TurnManager _turnManager;
 

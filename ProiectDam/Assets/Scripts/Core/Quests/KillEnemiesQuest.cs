@@ -17,10 +17,12 @@ namespace Core.Quests
         {
             
         }
+
         public void OnEnable()
         {
             Debug.Log("quest enable");
         }
+
         public void Awake()
         {
             Debug.Log("quest awake");

@@ -1,14 +1,11 @@
 using Core.Events;
-using Gameplay.Enemies;
 using Gameplay.Events;
 using Gameplay.Generation;
 using Gameplay.Player;
-using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utilities;
-using Gameplay.DataSaving;
 
 namespace Gameplay.Managers
 {
@@ -20,23 +17,23 @@ namespace Gameplay.Managers
         [SerializeField] private bool _fillSquare;
 #endif
         [Header("Game objects")]
-        [SerializeField] private BaseLevelSpawner _spawner;
-        [SerializeField] private PlayerController _player;
-        [Tooltip("Leave empty if no level saver is needed")]
-        [SerializeField] private RandomLevelSaverManager _levelSaver;
+        [SerializeField] protected BaseLevelSpawner _spawner;
+        [SerializeField] protected PlayerController _player;
         [Header("Events")]
-        [SerializeField] private RoomEvent _roomEvent;
-        [SerializeField] private RoomBehaviourEvent _roomBehaviourEvent;
-        [SerializeField] private IntEvent _layersNumberEvent;
-        [SerializeField] private IntEvent _currentLayerEvent;
-        [SerializeField] private BiomeEvent _biomeEvent;
-        [SerializeField] private BoolEvent _previewEvent;
-        [SerializeField] private BoolEvent _playerTurn;
+        [SerializeField] protected RoomEvent _roomEvent;
+        [SerializeField] protected RoomBehaviourEvent _roomBehaviourEvent;
+        [SerializeField] protected LayerEvent _layerEvent;
+        [SerializeField] protected BoolEvent _previewEvent;
+        [SerializeField] protected BoolEvent _playerTurn;
 
         private int _lastLayer;
-        private bool _canChangeLayer = true;
 
-        public void Awake()
+        public bool IsSameLayer { get; protected set; }
+        public bool CanSwitchLayer { get; protected set; } = true;
+
+        #region Unity Events
+
+        private void Awake()
         {
             InitEvents();
 
@@ -47,27 +44,23 @@ namespace Gameplay.Managers
             SetPlayerPos(behaviour);
 
             _roomBehaviourEvent.OnValueChanged += OnRoomChanged;
-            _currentLayerEvent.OnValueChanged += OnLayerChanged;
+            _layerEvent.CurrentLayer.OnValueChanged += OnLayerChanged;
             _previewEvent.OnValueChanged += OnPreviewChanged;
 
-            _currentLayerEvent.Value = behaviour.CurrentLayer;
-            _layersNumberEvent.Value = behaviour.Layers.Count;
+            _layerEvent.CurrentLayer.Value = behaviour.CurrentLayer;
+            _layerEvent.LayerCount.Value = behaviour.Layers.Count;
             _roomEvent.Value = behaviour.Room;
             behaviour.Room.Discovered = true;
-        }
-
-        private void InitEvents()
-        {
-            _previewEvent.Value = false;
-            _playerTurn.Value = true;
         }
 
         private void OnDestroy()
         {
             _roomBehaviourEvent.OnValueChanged -= OnRoomChanged;
-            _currentLayerEvent.OnValueChanged -= OnLayerChanged;
+            _layerEvent.CurrentLayer.OnValueChanged -= OnLayerChanged;
             _previewEvent.OnValueChanged -= OnPreviewChanged;
         }
+
+        #endregion
 
 #if UNITY_EDITOR
 
@@ -101,8 +94,6 @@ namespace Gameplay.Managers
             }
         }
 
-#endif
-
         private Color GetGizmoColor(TileType tile) => tile switch
         {
             TileType.None => Color.white,
@@ -121,40 +112,25 @@ namespace Gameplay.Managers
             _ => Color.clear,
         };
 
-        private RoomBehaviour GetActiveBehaviour()
-        {
-            if (_levelSaver != null && _levelSaver.ShouldLoad)
-            {
-                RoomBehaviour roomBehaviour = _spawner.Traverser[_levelSaver.SaveData.CurrentRoom];
-                _roomBehaviourEvent.Value = roomBehaviour;
-                return roomBehaviour;
-            }
+#endif
 
+        private void InitEvents()
+        {
+            _previewEvent.Value = false;
+            _playerTurn.Value = true;
+        }
+
+        protected virtual RoomBehaviour GetActiveBehaviour()
+        {
             return _roomBehaviourEvent.Value;
         }
 
-        private void SetPlayerPos(RoomBehaviour behaviour)
+        protected virtual void SetPlayerPos(RoomBehaviour behaviour)
         {
-            if (_levelSaver != null && _levelSaver.ShouldLoad)
-            {
-                int layerIndex = _levelSaver.SaveData.PlayerData.LayerPos.Biome;
-                TileType[,] layer = behaviour.Layers[layerIndex];
-                var pos = _levelSaver.SaveData.PlayerData.LayerPos.Position;
-                layer[pos.X, pos.Y] = TileType.Player; // todo: this may not be needed in future
-                _player.LayerPosition = new LayerPosition(pos, layer);
-                _player.transform.position = _levelSaver.SaveData.PlayerData.PlayerPos;
-
-                _currentLayerEvent.Value = layerIndex;
-                behaviour.ChangedLayer(layerIndex);
-                _biomeEvent.Value = _roomBehaviourEvent.Value.Layers.GetBiome(layerIndex);
-            }
-            else
-            {
-                TileType[,] layer = behaviour.Layers[behaviour.CurrentLayer];
-                int middle = layer.GetLength(0) / 2;
-                layer[middle, middle] = TileType.Player;
-                _player.LayerPosition = new LayerPosition(new Vector2Int(middle, middle), layer);
-            }
+            TileType[,] layer = behaviour.Layers[behaviour.CurrentLayer];
+            int middle = layer.GetLength(0) / 2;
+            layer[middle, middle] = TileType.Player;
+            _player.LayerPosition = new(new Vector2Int(middle, middle), layer);
         }
 
         private void OnRoomChanged()
@@ -162,21 +138,18 @@ namespace Gameplay.Managers
             RoomBehaviour room = _roomBehaviourEvent;
 
             _roomEvent.Value = room.Room;
-            _currentLayerEvent.Value = room.CurrentLayer;
-            _layersNumberEvent.Value = room.Layers.Count;
+            _layerEvent.CurrentLayer.Value = room.CurrentLayer;
+            _layerEvent.LayerCount.Value = room.Layers.Count;
 
             room.Room.Discovered = true;
         }
 
-        private void OnLayerChanged()
+        private void OnLayerChanged(int layer = 0)
         {
-            int layer = _currentLayerEvent.Value;
-
             _roomBehaviourEvent.Value.ChangedLayer(layer);
+            _layerEvent.CurrentBiome.Value = _roomBehaviourEvent.Value.Layers.GetBiome(layer);
 
             ChangePlayerColor();
-
-            _biomeEvent.Value = _roomBehaviourEvent.Value.Layers.GetBiome(layer);
         }
 
         private void ChangePlayerColor()
@@ -186,45 +159,47 @@ namespace Gameplay.Managers
                 return;
             }
 
-            if (_lastLayer == _currentLayerEvent.Value)
+            if (_lastLayer == _layerEvent.CurrentLayer)
             {
                 _player.MakePlayerTransparent();
-                _canChangeLayer = true;
+                CanSwitchLayer = true;
+                IsSameLayer = true;
                 return;
             }
 
             RoomBehaviour behaviour = _roomBehaviourEvent.Value;
             Vector2Int playerPos = _player.LayerPosition.Position;
-            TileType[,] previewLayer = behaviour.Layers.GetTiles(_currentLayerEvent.Value);
+            TileType[,] previewLayer = behaviour.Layers.GetTiles(_layerEvent.CurrentLayer);
+            IsSameLayer = false;
 
             if (previewLayer[playerPos.x, playerPos.y] is TileType.None)
             {
                 _player.MakePlayerGreen();
-                _canChangeLayer = true;
+                CanSwitchLayer = true;
             }
             else
             {
                 _player.MakePlayerRed();
-                _canChangeLayer = false;
+                CanSwitchLayer = false;
                 VibrationManager.Instance.TryVibrate();
             }
         }
 
-        private void OnPreviewChanged()
+        private void OnPreviewChanged(bool preview)
         {
-            if (_previewEvent)
+            if (preview)
             {
-                _lastLayer = _currentLayerEvent.Value;
+                _lastLayer = _layerEvent.CurrentLayer;
                 return;
             }
 
             // exits preview
-            if (!_canChangeLayer)
+            if (!CanSwitchLayer)
             {
-                _currentLayerEvent.Value = _lastLayer;
+                _layerEvent.CurrentLayer.Value = _lastLayer;
             }
 
-            _player.LayerPosition.Layer = _roomBehaviourEvent.Value.Layers[_currentLayerEvent.Value];
+            _player.LayerPosition.Layer = _roomBehaviourEvent.Value.Layers[_layerEvent.CurrentLayer];
             _player.MakePlayerWhite();
         }
 

@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bf942d7769bc514689f406ef95c80a7, type: 3}
-  m_Name: Biome Event
+  m_Script: {fileID: 11500000, guid: af490276e36ac1a4ea33cf62a6b739b0, type: 3}
+  m_Name: LayerEvent
   m_EditorClassIdentifier: 

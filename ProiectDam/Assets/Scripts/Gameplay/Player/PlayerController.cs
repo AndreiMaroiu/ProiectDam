@@ -51,7 +51,7 @@ namespace Gameplay.Player
         [SerializeField] private IntEvent _money;
         [SerializeField] private GameEvent _onMoveStared;
         [SerializeField] private GameEvent _onMoveEnded;
-        [SerializeField] private IntEvent _currentLayerEvent;
+        [SerializeField] private LayerEvent _layerEvent;
 
         #endregion
 
@@ -532,7 +532,7 @@ namespace Gameplay.Player
             PlayerPos = transform.position,
             LayerPos = new()
             {
-                Biome = _currentLayerEvent.Value,
+                Biome = _layerEvent.CurrentLayer,
                 Position = LayerPosition.Position,
             },
             PersistentPickUps = _persistentPickups.Select(x => PickUpFactory.Instance.GetSaveData(x)).ToList()

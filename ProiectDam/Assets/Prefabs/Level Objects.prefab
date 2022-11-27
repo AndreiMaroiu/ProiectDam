@@ -1231,8 +1231,7 @@ MonoBehaviour:
   _previewButton: {fileID: 1277355536813613902}
   _weaponButton: {fileID: 1277355536420852651}
   _meleeButton: {fileID: 1277355535954662856}
-  _layersCountEvent: {fileID: 11400000, guid: 330704b39e3231044b034c8de1f16651, type: 2}
-  _currentLayerEvent: {fileID: 11400000, guid: cd608015f91a1fa43a5cf68ae0e14b9e, type: 2}
+  _layersEvent: {fileID: 11400000, guid: 7bddafb6a683dae4a96e712e19d2fcb6, type: 2}
   _previewActive: {fileID: 11400000, guid: 0a850cb0818136d4188c5b364870105d, type: 2}
   _playerTurn: {fileID: 11400000, guid: 69dd59b851979e44887a9df5080b5552, type: 2}
   _meleeEvent: {fileID: 11400000, guid: 9ac3f7dbbe869d74b8ad26d6e787b8d3, type: 2}
@@ -1707,13 +1706,10 @@ MonoBehaviour:
   _fillSquare: 0
   _spawner: {fileID: 0}
   _player: {fileID: 4109379796208687295}
-  _levelSaver: {fileID: 0}
   _roomEvent: {fileID: 11400000, guid: d1d78b254926b314d84ce8c10c8375c0, type: 2}
   _roomBehaviourEvent: {fileID: 11400000, guid: c546f3029682b1f46a1a1d15a38817fc,
     type: 2}
-  _layersNumberEvent: {fileID: 11400000, guid: 330704b39e3231044b034c8de1f16651, type: 2}
-  _currentLayerEvent: {fileID: 11400000, guid: cd608015f91a1fa43a5cf68ae0e14b9e, type: 2}
-  _biomeEvent: {fileID: 11400000, guid: 1b459c8b1d65f814db434e14a43778b8, type: 2}
+  _layerEvent: {fileID: 11400000, guid: 7bddafb6a683dae4a96e712e19d2fcb6, type: 2}
   _previewEvent: {fileID: 11400000, guid: 0a850cb0818136d4188c5b364870105d, type: 2}
   _playerTurn: {fileID: 11400000, guid: 69dd59b851979e44887a9df5080b5552, type: 2}
 --- !u!114 &4109379795122538376
@@ -2928,7 +2924,7 @@ MonoBehaviour:
   _grass: {fileID: 21300000, guid: 744d16e8817113b4ca368a4739334aa5, type: 3}
   _fire: {fileID: 21300000, guid: 555e975c7137eb54484e284e3be8c97e, type: 3}
   _dungeon: {fileID: 21300000, guid: b51ad4b923ada4f4cba288d7391df9be, type: 3}
-  _currentBiome: {fileID: 11400000, guid: 1b459c8b1d65f814db434e14a43778b8, type: 2}
+  _layerEvent: {fileID: 11400000, guid: 7bddafb6a683dae4a96e712e19d2fcb6, type: 2}
 --- !u!1 &4109379795855656488
 GameObject:
   m_ObjectHideFlags: 0
@@ -8444,6 +8440,12 @@ PrefabInstance:
       propertyPath: _deathTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 47525207141400157, guid: 1292ef2264e73a94fb25f52ed02eb628,
+        type: 3}
+      propertyPath: _layerEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 7bddafb6a683dae4a96e712e19d2fcb6,
+        type: 2}
     - target: {fileID: 47525207141400157, guid: 1292ef2264e73a94fb25f52ed02eb628,
         type: 3}
       propertyPath: _onMoveEnded

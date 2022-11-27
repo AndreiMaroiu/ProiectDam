@@ -1,4 +1,4 @@
-namespace Gameplay.Generation
+﻿namespace Core.Values
 {
     public enum BiomeType : byte
     {

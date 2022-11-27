@@ -29,7 +29,7 @@ namespace Gameplay
             _playerTurn.OnValueChanged += OnTurnChange;
         }
 
-        private void OnTurnChange()
+        private void OnTurnChange(bool playerTurn)
         {
             if (!_turnCounter.HasValue)
             {

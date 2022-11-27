@@ -1,10 +1,6 @@
 using Core.Events;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using ModalWindows;
-using Utilities;
-using GameStatistics;
 
 namespace UI
 {
@@ -113,7 +109,7 @@ namespace UI
             _bulletsText.text = _bullets.ToString();
         }
 
-        private void OnScoreChange()
+        private void OnScoreChange(int score = 0)
         {
             _scoreText.text = _scoreEvent.Value.ToString();
         }

@@ -40,7 +40,7 @@ namespace Gameplay.Managers
 
         public string ObjectName { get; set; }
 
-        public TurnManagerSaveData SaveData => new TurnManagerSaveData()
+        public TurnManagerSaveData SaveData => new()
         {
             WasRoomChanged = _wasRoomChanged
         };
@@ -57,9 +57,9 @@ namespace Gameplay.Managers
             _wasRoomChanged = true;
         }
 
-        private void OnPlayerMoveEnd()
+        private void OnPlayerMoveEnd(bool playerTurn)
         {
-            if (!_playerTurn)
+            if (!playerTurn)
             {
                 StartCoroutine(ProcessEnemies());
             }
@@ -80,8 +80,6 @@ namespace Gameplay.Managers
             {
                 BaseEnemy enemy = enemies[i];
                 yield return enemy.OnEnemyTurn(_player);
-                //enemy.OnEnemyTurn(_player);
-                //yield return new WaitUntil(() => enemy.IsDead || !enemy.IsMoving);
             }
 
             _playerTurn.Value = true;

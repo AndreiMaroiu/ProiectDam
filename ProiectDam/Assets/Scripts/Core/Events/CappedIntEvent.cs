@@ -21,6 +21,11 @@ namespace Core.Events
 
             set
             {
+                if (_value == value)
+                {
+                    return;
+                }
+
                 _value = value;
 
                 if (_value > _maxValue)
@@ -44,6 +49,11 @@ namespace Core.Events
 
             set
             {
+                if (_maxValue == value)
+                {
+                    return;
+                }
+
                 _maxValue = value;
                 OnMaxValueChanged?.Invoke();
             }

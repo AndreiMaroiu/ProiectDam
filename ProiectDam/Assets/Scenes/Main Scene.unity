@@ -156,7 +156,6 @@ MonoBehaviour:
   _levelSpawner: {fileID: 43972255}
   _allSaves: {fileID: 11400000, guid: bba1a9d637df1ef43b2d9fba5c696b33, type: 2}
   _handler: {fileID: 11400000, guid: 412537028d3cbf44fbc7d53c95864586, type: 2}
-  _currentLayerEvent: {fileID: 11400000, guid: cd608015f91a1fa43a5cf68ae0e14b9e, type: 2}
   _roomEvent: {fileID: 11400000, guid: d1d78b254926b314d84ce8c10c8375c0, type: 2}
   _turnManager: {fileID: 904153693}
 --- !u!4 &40433178
@@ -315,7 +314,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 4109379795961699509}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 4109379795961699510}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 758f985f3be71f04ca764d9b685b1011, type: 3}
@@ -838,7 +837,7 @@ PrefabInstance:
     - target: {fileID: 7161502621323392761, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 520
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7161502621323392761, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
@@ -918,7 +917,7 @@ PrefabInstance:
     - target: {fileID: 7855007954112815129, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 32
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7855007954112815129, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
@@ -945,5 +944,35 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4109379795122538382, guid: 0df48db316dcf8d4db933b0b7329c4d6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0df48db316dcf8d4db933b0b7329c4d6, type: 3}
+--- !u!1 &4109379795961699510 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4109379795122538383, guid: 0df48db316dcf8d4db933b0b7329c4d6,
+    type: 3}
+  m_PrefabInstance: {fileID: 4109379795961699509}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4109379795961699511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4109379795961699510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12a05e7166ccdd14795ef7772eee5971, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _drawGizmos: 1
+  _fillSquare: 0
+  _spawner: {fileID: 43972255}
+  _player: {fileID: 136520281}
+  _roomEvent: {fileID: 11400000, guid: d1d78b254926b314d84ce8c10c8375c0, type: 2}
+  _roomBehaviourEvent: {fileID: 11400000, guid: c546f3029682b1f46a1a1d15a38817fc,
+    type: 2}
+  _layerEvent: {fileID: 11400000, guid: 7bddafb6a683dae4a96e712e19d2fcb6, type: 2}
+  _previewEvent: {fileID: 11400000, guid: 0a850cb0818136d4188c5b364870105d, type: 2}
+  _playerTurn: {fileID: 11400000, guid: 69dd59b851979e44887a9df5080b5552, type: 2}
+  _levelSaver: {fileID: 40433177}
