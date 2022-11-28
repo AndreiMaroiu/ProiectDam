@@ -1,11 +1,12 @@
 using Core.Events;
 using Core.Values;
 using UnityEngine;
+using Core.Events.Binding;
 
 namespace Gameplay
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    public class BackgroundSwitcher : MonoBehaviour
+    public class BackgroundSwitcher : BaseBindableBehaviour
     {
         [SerializeField] private Sprite _grass;
         [SerializeField] private Sprite _fire;
@@ -17,14 +18,9 @@ namespace Gameplay
 
         private void Awake()
         {
-            _layerEvent.CurrentBiome.OnValueChanged += OnBiomeChanged;
+            Bind(_layerEvent.CurrentBiome, OnBiomeChanged);
 
             _renderer = GetComponent<SpriteRenderer>();
-        }
-
-        private void OnDestroy()
-        {
-            _layerEvent.CurrentBiome.OnValueChanged -= OnBiomeChanged;
         }
 
         private void OnBiomeChanged(BiomeType biomeType)
