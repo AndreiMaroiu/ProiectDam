@@ -13,5 +13,7 @@ namespace Core.Events
     {
         T Value { get; set; }
         event Action<T> OnValueChanged;
+        bool Bind(Action<T> target);
+        bool UnBind(Action<T> target);
     }
 }

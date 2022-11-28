@@ -1,26 +1,26 @@
 using UnityEngine;
 
-namespace Core.Events
+namespace Core.Events.Binding
 {
-    public class Binder : MonoBehaviour
+    public sealed class Binder : MonoBehaviour
     {
         [SerializeField] private ScriptableObject _event;
         [SerializeField] private MonoBehaviour _target;
 
         private void OnValidate()
         {
-            //bool isBindSource = _event is not null and IBindSource;
-            //bool isBindTarget = _target is not null and IBindTarget;
+            bool isBindSource = _event != null && _event is IBindSource;
+            bool isBindTarget = _target != null && _target is IBindTarget;
 
-            //if (isBindSource is false)
-            //{
-            //    Debug.LogError("Event is not implement from IBindSource");
-            //}
+            if (isBindSource is false)
+            {
+                Debug.LogError("Event is not implement from IBindSource");
+            }
 
-            //if (isBindTarget is false)
-            //{
-            //    Debug.LogError("Target does not implement from IBindTarget");
-            //}
+            if (isBindTarget is false)
+            {
+                Debug.LogError("Target does not implement from IBindTarget");
+            }
         }
 
         private void Start()

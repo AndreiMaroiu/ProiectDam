@@ -1,3 +1,4 @@
+using Core.Events.Binding;
 using Core.Values;
 using UnityEngine;
 

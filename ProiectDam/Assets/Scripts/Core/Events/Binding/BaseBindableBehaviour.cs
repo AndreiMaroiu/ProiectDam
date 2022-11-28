@@ -1,22 +1,22 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Core.Events
+namespace Core.Events.Binding
 {
     public class BaseBindableBehaviour : MonoBehaviour
     {
-        protected event Action OnDestroy;
+        protected event Action OnDestroyEvent;
 
         public void Bind<T>(IBindable<T> source, Action<T> action)
         {
             source.OnValueChanged += action;
 
-            OnDestroy += () => source.OnValueChanged -= action;
+            OnDestroyEvent += () => source.OnValueChanged -= action;
         }
 
-        protected void Destroy()
+        protected virtual void OnDestroy()
         {
-            OnDestroy?.Invoke();
+            OnDestroyEvent?.Invoke();
         }
     }
 }

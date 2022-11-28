@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Core.Events
+namespace Core.Events.Binding
 {
     public class BindableValue<T> : IBindable<T>
     {
@@ -37,6 +37,18 @@ namespace Core.Events
             return false;
         }
 
+        public bool Bind(Action<T> @event)
+        {
+            OnValueChanged += @event;
+            return true;
+        }
+
+        public bool UnBind(Action<T> @event)
+        {
+            OnValueChanged -= @event;
+            return true;
+        }
+
         bool IBindable.UnBind(IBindTarget target)
         {
             if (target is IBindTarget<T> t)
@@ -53,7 +65,5 @@ namespace Core.Events
 
         public override string ToString()
             => Value.ToString();
-
-
     }
 }
