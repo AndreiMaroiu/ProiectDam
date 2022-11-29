@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Events
+namespace Core.Events.Binding
 {
     public interface IBindable
     {

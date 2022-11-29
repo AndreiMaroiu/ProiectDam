@@ -1,4 +1,4 @@
-﻿namespace Core.Events
+﻿namespace Core.Events.Binding
 {
     public interface IBindTarget
     {

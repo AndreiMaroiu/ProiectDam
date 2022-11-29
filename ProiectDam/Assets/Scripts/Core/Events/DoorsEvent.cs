@@ -1,17 +1,23 @@
 using System;
 using UnityEngine;
+using Core.Events.Binding;
 
 namespace Core.Events
 {
-    [CreateAssetMenu(fileName = "New Doors Event", menuName = "Scriptables/Doors Event")]
-    public class DoorsEvent : ScriptableObject
+    [CreateAssetMenu(fileName = "New Doors Event", menuName = "Scriptables/Events/Doors Event")]
+    public class DoorsEvent : ScriptableObject, IBindSource
     {
-        public event Action<UnlockCondition> OnLock;
+        private readonly BindableEvent<UnlockCondition> _bindable = new();
 
-        public void LockDoors(UnlockCondition unlockCondition)
+        public IBindable Bindable => _bindable;
+
+        public event Action<UnlockCondition> OnLock
         {
-            OnLock?.Invoke(unlockCondition);
+            add => _bindable.OnValueChanged += value;
+            remove => _bindable.OnValueChanged -= value;
         }
+
+        public void LockDoors(UnlockCondition unlockCondition) => _bindable.Invoke(unlockCondition);
     }
 
     public enum UnlockCondition
