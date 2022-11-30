@@ -1,12 +1,12 @@
 using Core.Events;
-using Gameplay.Generation;
-using System.Collections.Generic;
-using UnityEngine;
-using Utilities;
 using Core.Values;
 using Gameplay.DataSaving;
+using Gameplay.Generation;
 using Gameplay.PickUps;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
+using Utilities;
 
 namespace Gameplay.Player
 {
@@ -164,8 +164,8 @@ namespace Gameplay.Player
             _renderers = GetComponentsInChildren<SpriteRenderer>();
             _collider = GetComponent<Collider2D>();
 
-            _swipeDetector = new SwipeDetector();
-            _persistentPickups = new List<AbstractPickUp>();
+            _swipeDetector = new();
+            _persistentPickups = new();
             _swipeDetector.OnSwipe += OnSwipe;
 
             _onMeleeAttack.OnEvent += OnMeleeAttack;
@@ -259,6 +259,7 @@ namespace Gameplay.Player
             }
 
             _canInteract = false;
+            CanHit = false;
 
             foreach (KillableObject enemy in GetNearbyEnemies(Directions, _cellSizeValue.Value))
             {
@@ -275,11 +276,15 @@ namespace Gameplay.Player
         private void OnMeleeEnd()
         {
             _animator.SetBool(MELEE_ANIMATION, false);
+            _canInteract = true;
+            CanHit = true;
         }
 
         private void OnShootEnd()
         {
             _animator.SetBool(SHOOT_ANIMATION, false);
+            _canInteract = true;
+            CanHit = true;
         }
 
         private void OnRangedAttack(object sender)
@@ -297,6 +302,7 @@ namespace Gameplay.Player
 
             // play shoot animation and sound
             _canInteract = false;
+            CanHit = false;
 
             _bulletsEvent.Value -= _stats.BulletCount;
             _animator.SetBool(SHOOT_ANIMATION, true);
@@ -331,13 +337,11 @@ namespace Gameplay.Player
                     transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
                 }
             }
-
-            _canInteract = true;
         }
 
         private List<KillableObject> GetNearbyEnemies(Vector2[] directions, float distance)
         {
-            List<KillableObject> result = new List<KillableObject>();
+            List<KillableObject> result = new();
 
             _collider.enabled = false;
 
@@ -477,12 +481,12 @@ namespace Gameplay.Player
         protected override void OnMove(Vector2Int direction)
         {
             _direction = direction;
-            
-            if(UseEnergyOnMove)
+
+            if (UseEnergyOnMove)
             {
                 _energyEvent.Value -= _stats.EnergyPerMove;
             }
-            
+
             _onMoveStared?.Invoke(this);
 
             AnimatePlayer();

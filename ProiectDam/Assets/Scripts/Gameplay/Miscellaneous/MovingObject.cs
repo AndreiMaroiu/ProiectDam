@@ -28,6 +28,7 @@ namespace Gameplay
         {
             CanMove = true;
             IsMoving = false;
+            CanHit = true;
         }
 
         protected void SetMove(float moveTime, float cellSize, TileType tileType)
@@ -52,6 +53,7 @@ namespace Gameplay
             Vector3 endPosition = transform.position + (new Vector3(direction.x, direction.y) * _cellSize);
             CanMove = false;
             IsMoving = true;
+            CanHit = false;
             OnMove(direction);
 
             while (transform.position != endPosition && !CanMove && !IsDead)

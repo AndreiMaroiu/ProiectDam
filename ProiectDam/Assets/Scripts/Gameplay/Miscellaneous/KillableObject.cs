@@ -8,6 +8,7 @@ namespace Gameplay
         public virtual int Health { get; set; }
         public virtual int MaxHealth { get; set; }
         public bool IsDead { get; private set; }
+        public bool CanHit { get; protected set; } = true;
 
         public virtual int Score
         {
@@ -30,7 +31,7 @@ namespace Gameplay
 
         public void TakeDamage(int damage)
         {
-            if (IsDead)
+            if (!CanHit || IsDead)
             {
                 return;
             }
