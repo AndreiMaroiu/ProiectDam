@@ -5,7 +5,7 @@ namespace GameStatistics
 {
     public class StatisticsManager
     {
-        public static StatisticsManager Instance { get; } = new StatisticsManager();
+        public static StatisticsManager Instance { get; } = new();
 
         private readonly string _statsPath;
         private readonly string _moneyPath;
@@ -18,9 +18,9 @@ namespace GameStatistics
 
         #region Public Methods
 
-        public StatsHandler<Statistics> LoadStats() => Load<Statistics>(_statsPath);
+        public StatsHandler<Statistics> LoadStats() => LoadHandler<Statistics>(_statsPath);
 
-        public StatsHandler<PlayerMoney> LoadMoney() => Load<PlayerMoney>(_moneyPath);
+        public StatsHandler<PlayerMoney> LoadMoney() => LoadHandler<PlayerMoney>(_moneyPath);
 
         public void Save(Statistics stats) => Save(stats, _statsPath);
 
@@ -35,10 +35,16 @@ namespace GameStatistics
             BinaryReader.Write(path, data);
         }
 
-        private StatsHandler<T> Load<T>(string path) where T : new()
+        public StatsHandler<T> LoadHandler<T>(string path) where T : new()
         {
             BinaryReader.TryRead(path, out T result);
-            return new StatsHandler<T>(result, this, path);
+            return new(result, this, path);
+        }
+
+        public T Read<T>(string path) where T : new()
+        {
+            BinaryReader.TryRead(path, out T result);
+            return result;
         }
 
         #endregion

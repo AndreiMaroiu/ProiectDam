@@ -2,6 +2,7 @@ using Core.Events;
 using Core.Items;
 using Gameplay.PickUps;
 using Gameplay.Player;
+using GameStatistics;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,12 +17,14 @@ namespace Gameplay.Merchant
         [SerializeField] private VerticalLayoutGroup _layout;
         [SerializeField] private ShopItems _items;
         [SerializeField] private ItemsEvent _itemsEvent;
+        [SerializeField] private MerchantDialogs _dialogs;
 
         private Animator _animator;
         private PlayerController _player;
         private bool _canBuy = true;
         private Item[] _itemsToShow;
         private bool _isOpen = false;
+        private StatsHandler<MerchantData> _saveData;
 
         #region IInteractable
 
@@ -66,11 +69,14 @@ namespace Gameplay.Merchant
 
             _itemsEvent.OnItemBought += OnBuy;
             _itemsToShow = GenerateRandomItemList();
+            _saveData = StatisticsManager.Instance.LoadHandler<MerchantData>(Application.persistentDataPath + "/MerchantData.dat");
         }
 
         private void OnDestroy()
         {
             _itemsEvent.OnItemBought -= OnBuy;
+
+            _saveData?.Dispose();
         }
 
         #endregion
@@ -97,14 +103,7 @@ namespace Gameplay.Merchant
 
         private string ChooseRandomDialog()
         {
-            int value = Random.Range(0, 10);
-
-            if (value < 5)
-            {
-                return "Hi!";
-            }
-
-            return "Hello!";
+            return _dialogs.GetRandomDialog(_saveData.Data.FriendshipLevel);
         }
 
         private IEnumerator ShowDialog(string dialogText, float openDuration = 1.0f)
@@ -128,6 +127,8 @@ namespace Gameplay.Merchant
             {
                 item.GetPickUp().OnInteract(_player);
                 _canBuy = false;
+
+                _saveData.Data.Increment();
             }
         }
 

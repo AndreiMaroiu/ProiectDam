@@ -19,7 +19,12 @@ namespace GameStatistics
 
         public T Data => _data;
 
-        public void Dispose() => _manager.Save(_data, _path);
+        public void Dispose()
+        {
+            _manager.Save(_data, _path);
+
+            _disposed = true;
+        }
 
         public static implicit operator T(StatsHandler<T> handler) => handler.Data;
 

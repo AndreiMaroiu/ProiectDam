@@ -1,6 +1,6 @@
 namespace Gameplay.Merchant
 {
-    public enum FriendshipLevel
+    public enum FriendshipLevel : byte
     {
         NeverMet,
         JustKnowing,

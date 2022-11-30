@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1871644553926837463}
   m_RootOrder: 0
@@ -101,6 +102,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7068375410405565441}
   m_RootOrder: 0
@@ -134,6 +136,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -100}
   m_LocalScale: {x: 0.0076923077, y: 0.0076923077, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1871644553926837463}
   m_Father: {fileID: 7068375410405565441}
@@ -233,6 +236,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8853240686454251448}
   - {fileID: 6054503912737991485}
@@ -315,6 +319,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.73, y: -8.52, z: 0}
   m_LocalScale: {x: 1.3, y: 1.3, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7790582133398865600}
   - {fileID: 6019679756721875689}
@@ -332,6 +337,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -375,7 +381,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &47061202396009587
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -388,6 +394,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -410,6 +417,7 @@ MonoBehaviour:
   _layout: {fileID: 2499447281525619941}
   _items: {fileID: 11400000, guid: f64308481d2000a439747f98284433ca, type: 2}
   _itemsEvent: {fileID: 11400000, guid: 6d3cf23a9b82c024d876020433bed7d5, type: 2}
+  _dialogs: {fileID: 11400000, guid: 7d2f65fba5714fb4aae59c6cc354fa74, type: 2}
 --- !u!61 &4206508290919236223
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -563,6 +571,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1871644553926837463}
   m_RootOrder: 1

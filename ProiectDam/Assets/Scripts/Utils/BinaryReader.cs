@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using UnityEngine;
 
 namespace Utilities
 {
@@ -11,7 +8,7 @@ namespace Utilities
         public static void Write<T>(string path, T data)
         {
             using FileStream file = File.Create(path);
-            BinaryFormatter bf = new BinaryFormatter();
+            BinaryFormatter bf = new();
 
             bf.Serialize(file, data);
         }
@@ -24,10 +21,18 @@ namespace Utilities
                 return false;
             }
 
-            using FileStream file = File.OpenRead(path);
-            BinaryFormatter bf = new BinaryFormatter();
-            result = (T)bf.Deserialize(file);
-            return true;
+            try
+            {
+                using FileStream file = File.OpenRead(path);
+                BinaryFormatter bf = new();
+                result = (T)bf.Deserialize(file);
+                return true;
+            }
+            catch (System.Exception)
+            {
+                result = new T();
+                return false;
+            }
         }
     }
 }
