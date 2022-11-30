@@ -6,7 +6,7 @@ namespace Core.Events
 {
     public abstract class BaseEvent<T> : ScriptableObject, IBindSource
     {
-        private BindableValue<T> _value = new();
+        private readonly BindableValue<T> _value = new();
 
         public event Action<T> OnValueChanged
         {
@@ -20,7 +20,9 @@ namespace Core.Events
             set => _value.Value = value;
         }
 
-        public IBindable Bindable => _value;
+        IBindable IBindSource.Bindable => _value;
+
+        public IBindable<T> Bindable => _value;
 
         public static implicit operator T(BaseEvent<T> @event)
             => @event.Value;

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Core.Events.Binding
 {
@@ -12,6 +13,13 @@ namespace Core.Events.Binding
             source.OnValueChanged += action;
 
             OnDestroyEvent += () => source.OnValueChanged -= action;
+        }
+
+        public void Bind<T>(UnityEvent<T> source, UnityAction<T> action)
+        {
+            source.AddListener(action);
+
+            OnDestroyEvent += () => source.RemoveListener(action);
         }
 
         protected virtual void OnDestroy()

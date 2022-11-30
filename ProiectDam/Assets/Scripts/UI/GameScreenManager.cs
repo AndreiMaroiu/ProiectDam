@@ -1,10 +1,11 @@
 using Core.Events;
 using UnityEngine;
 using UnityEngine.UI;
+using Core.Events.Binding;
 
 namespace UI
 {
-    public class GameScreenManager : MonoBehaviour
+    public class GameScreenManager : BaseBindableBehaviour
     {
         [Header("Objects")]
         [SerializeField] private Slider _layerSlider;
@@ -27,11 +28,10 @@ namespace UI
 
         private void Start()
         {
-            _layersEvent.LayerCount.OnValueChanged += OnLayersCountChanged;
-            _layersEvent.CurrentLayer.OnValueChanged += OnCurrentLayerChanged;
-            _layerSlider.onValueChanged.AddListener(OnSliderChanged);
-
-            _previewActive.OnValueChanged += OnPreviewChanged;
+            Bind(_layersEvent.LayerCount, OnLayersCountChanged);
+            Bind(_layersEvent.CurrentLayer, OnCurrentLayerChanged);
+            Bind(_previewActive.Bindable, OnPreviewChanged);
+            Bind(_layerSlider.onValueChanged, OnSliderChanged);
 
             _layerSlider.gameObject.SetActive(false);
             _previewButton.gameObject.SetActive(false);
@@ -88,14 +88,6 @@ namespace UI
         public void OnPreviewClick()
         {
             _previewActive.Value = !_previewActive.Value;
-        }
-
-        private void OnDestroy()
-        {
-            _layersEvent.LayerCount.OnValueChanged -= OnLayersCountChanged;
-            _layersEvent.CurrentLayer.OnValueChanged -= OnCurrentLayerChanged;
-            _layerSlider.onValueChanged.RemoveListener(OnSliderChanged);
-            _previewActive.OnValueChanged -= OnPreviewChanged;
         }
 
         public void OnWeaponClick()
