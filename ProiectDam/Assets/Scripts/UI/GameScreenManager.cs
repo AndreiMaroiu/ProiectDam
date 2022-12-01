@@ -1,5 +1,6 @@
 using Core.Events;
 using Core.Events.Binding;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,8 @@ namespace UI
         [SerializeField] private Text _previewText;
         [SerializeField] private Text _previewLabel;
 
+        private List<ButtonEvent.ButtonInfo> _buttonInfos;
+
         public float LastTimeScale { get; set; }
 
         public const float StoppedScale = 0.0f;
@@ -46,6 +49,8 @@ namespace UI
             LastTimeScale = Time.timeScale;
 
             OnLayersCountChanged();
+
+            _buttonInfos = new();
         }
 
         private void OnShowButton(ButtonEvent.ButtonInfo info)
@@ -53,12 +58,27 @@ namespace UI
             _middleButton.onClick.AddListener(info.Action);
             _middleButtonText.text = info.Name;
             _middleButton.gameObject.SetActive(true);
+
+            _buttonInfos.Add(info);
         }
 
-        private void OnCloseButton(object obj)
+        private void OnCloseButton(ButtonEvent.ButtonInfo info)
         {
             _middleButton.onClick.RemoveAllListeners();
-            _middleButton.gameObject.SetActive(false);
+            _buttonInfos.Remove(info);
+
+            if (_buttonInfos.Count == 0)
+            {
+                _middleButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                var peek = _buttonInfos[0];
+                //Debug.Assert(peek != info);
+
+                _middleButton.onClick.AddListener(peek.Action);
+                _middleButtonText.text = peek.Name;
+            }
         }
 
         private void OnLayersCountChanged(int newValue = 0)

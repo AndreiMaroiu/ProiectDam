@@ -23,7 +23,7 @@ namespace Gameplay
 
                 if (value is false)
                 {
-                    _buttonEvent.Close();
+                    _buttonEvent.Close("Open chest", OnClick);
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace Gameplay
 
             if (CanClick)
             {
-                _buttonEvent.Close();
+                _buttonEvent.Close("Open chest", OnClick);
             }
         }
     }
