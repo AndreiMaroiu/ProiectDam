@@ -56,7 +56,14 @@ public struct WeightedRandom<T>
 
         for (resultIndex = 0; resultIndex < _elems.Length; resultIndex++)
         {
-            sum += _weightGetter(resultIndex, _elems[resultIndex]);
+            int weight = _weightGetter(resultIndex, _elems[resultIndex]);
+
+            if (weight is 0)
+            {
+                continue;
+            }
+
+            sum += weight;
 
             if (sum >= target)
             {
