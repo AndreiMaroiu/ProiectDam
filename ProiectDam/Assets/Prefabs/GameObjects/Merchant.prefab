@@ -418,6 +418,7 @@ MonoBehaviour:
   _items: {fileID: 11400000, guid: f64308481d2000a439747f98284433ca, type: 2}
   _itemsEvent: {fileID: 11400000, guid: 6d3cf23a9b82c024d876020433bed7d5, type: 2}
   _dialogs: {fileID: 11400000, guid: 7d2f65fba5714fb4aae59c6cc354fa74, type: 2}
+  _buttonEvent: {fileID: 11400000, guid: 705363b5c6906064ab5829e50adbb9a8, type: 2}
 --- !u!61 &4206508290919236223
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -578,7 +579,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 10, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5717071649590364918

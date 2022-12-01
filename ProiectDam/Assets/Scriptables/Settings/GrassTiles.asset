@@ -126,6 +126,10 @@ MonoBehaviour:
       type: 3}
     _flags: -1
     _spawnChance: 1
+  - _prefab: {fileID: 1665517871435703881, guid: 4baed7a1a01c2664480dc1ee7c057efe,
+      type: 3}
+    _flags: 64
+    _spawnChance: 1
   _portal:
   - _prefab: {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055,
       type: 3}

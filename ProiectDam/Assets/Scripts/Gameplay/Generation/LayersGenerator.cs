@@ -8,11 +8,15 @@ namespace Gameplay.Generation
     {
         #region Constants
 
-        private static readonly TileType[] ObjectsTypes = { TileType.None, 
-            TileType.Enemy, TileType.PickUp, TileType.Obstacle, TileType.Trap };
+        private static readonly TileType[] ObjectsTypes = 
+        { 
+            TileType.None, TileType.Enemy, TileType.PickUp, TileType.Obstacle, TileType.Trap 
+        };
 
-        private static readonly HashSet<TileType> ObstaclesTypes = new HashSet<TileType>()
-        { TileType.Enemy, TileType.Obstacle, TileType.Trap };
+        private static readonly HashSet<TileType> ObstaclesTypes = new()
+        { 
+            TileType.Enemy, TileType.Obstacle, TileType.Trap, TileType.DynamicObstacle 
+        };
 
         #endregion
 
@@ -39,7 +43,7 @@ namespace Gameplay.Generation
 
         private Layers GenerateEmpty()
         {
-            Layers layers = new Layers(_layerSize, 1);
+            Layers layers = new(_layerSize, 1);
 
             GenerateBorder(layers.GetTiles(0));
 
@@ -49,8 +53,11 @@ namespace Gameplay.Generation
         private Layers GenerateMerchant()
         {
             Layers layers = GenerateEmpty();
-            int middle = layers.MiddleIndex;
-            layers.GetTiles(0)[middle + Random.Range(-2, 3), middle + Random.Range(-2, 3)] = TileType.Merchant;
+            TileType[,] layer = layers.GetTiles(0);
+
+            SetType(layer, TileType.Merchant);
+            SetType(layer, TileType.DynamicObstacle);
+            SetType(layer, TileType.DynamicObstacle);
 
             return layers;
         }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Core.Values;
 using Gameplay.DataSaving;
+using Core.Events;
 
 namespace Gameplay
 {
@@ -10,6 +11,7 @@ namespace Gameplay
         [SerializeField] private Sprite _openedChestImage;
         [SerializeField] private GameObject[] _pickUps;
         [SerializeField] private FloatValue _cellSize;
+        [SerializeField] private ButtonEvent _buttonEvent;
 
         private SpriteRenderer _renderer;
         private bool _wasOpened = false;
@@ -27,6 +29,7 @@ namespace Gameplay
             if (saveData is ChestSaveData data)
             {
                 _wasOpened = data.WasOpened;
+                _helper.CanClick = _wasOpened;
             }
         }
 
@@ -42,17 +45,19 @@ namespace Gameplay
             // todo: better spawn position
             Vector3 direction = (transform.position - _helper.Controller.transform.position);
             direction.z = 0;
-            direction.Normalize();
 
-            Vector3 where = transform.position + direction * _cellSize.Value;
+            Vector3 where = transform.position + direction;
             Instantiate(_pickUps[Random.Range(0, _pickUps.Length)], where, Quaternion.identity);
 
             _wasOpened = true;
+            _helper.CanClick = false;
         }
 
         private void Start()
         {
             _renderer = GetComponentInChildren<SpriteRenderer>();
+            _helper.OnClick = OnClick;
+            _helper.CanClick = true;
         }
     }
 }

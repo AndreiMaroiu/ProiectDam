@@ -11,7 +11,7 @@ namespace Core.Events
         public event Action<T> OnValueChanged
         {
             add => _value.OnValueChanged += value;
-            remove => _value.OnValueChanged += value;
+            remove => _value.OnValueChanged -= value;
         }
 
         public T Value

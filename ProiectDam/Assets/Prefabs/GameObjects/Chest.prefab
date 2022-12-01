@@ -72,6 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68a5ca37ce0897b48aa20a6dbf09c8be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buttonEvent: {fileID: 11400000, guid: 705363b5c6906064ab5829e50adbb9a8, type: 2}
 --- !u!212 &7070042377968384714
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -203,3 +204,4 @@ MonoBehaviour:
   - {fileID: 5244361343789919635, guid: b9f9962775564384793ea37e74690334, type: 3}
   - {fileID: 1337655539291230482, guid: dbff91d7cf19bc34daf9256a9637d2df, type: 3}
   _cellSize: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
+  _buttonEvent: {fileID: 0}

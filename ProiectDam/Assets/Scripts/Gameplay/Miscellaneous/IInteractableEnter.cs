@@ -12,4 +12,9 @@ namespace Gameplay
     {
         public void OnPlayerLeave(PlayerController controller);
     }
+
+    public interface IInteractable : IInteractableEnter, IInteractableLeave
+    {
+
+    }
 }

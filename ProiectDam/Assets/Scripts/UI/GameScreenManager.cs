@@ -1,7 +1,7 @@
 using Core.Events;
+using Core.Events.Binding;
 using UnityEngine;
 using UnityEngine.UI;
-using Core.Events.Binding;
 
 namespace UI
 {
@@ -12,12 +12,15 @@ namespace UI
         [SerializeField] private Button _previewButton;
         [SerializeField] private Button _weaponButton;
         [SerializeField] private Button _meleeButton;
+        [SerializeField] private Button _middleButton;
+        [SerializeField] private Text _middleButtonText;
         [Header("Events")]
         [SerializeField] private LayerEvent _layersEvent;
         [SerializeField] private BoolEvent _previewActive;
         [SerializeField] private BoolEvent _playerTurn;
         [SerializeField] private GameEvent _meleeEvent;
         [SerializeField] private GameEvent _shootEvent;
+        [SerializeField] private ButtonEvent _buttonEvent;
         [Header("Texts")]
         [SerializeField] private Text _previewText;
         [SerializeField] private Text _previewLabel;
@@ -32,14 +35,30 @@ namespace UI
             Bind(_layersEvent.CurrentLayer, OnCurrentLayerChanged);
             Bind(_previewActive.Bindable, OnPreviewChanged);
             Bind(_layerSlider.onValueChanged, OnSliderChanged);
+            Bind(_buttonEvent.OnShowBindable, OnShowButton);
+            Bind(_buttonEvent.OnCloseBindable, OnCloseButton);
 
             _layerSlider.gameObject.SetActive(false);
             _previewButton.gameObject.SetActive(false);
             _previewLabel.gameObject.SetActive(false);
+            _middleButton.gameObject.SetActive(false);
 
             LastTimeScale = Time.timeScale;
 
             OnLayersCountChanged();
+        }
+
+        private void OnShowButton(ButtonEvent.ButtonInfo info)
+        {
+            _middleButton.onClick.AddListener(info.Action);
+            _middleButtonText.text = info.Name;
+            _middleButton.gameObject.SetActive(true);
+        }
+
+        private void OnCloseButton(object obj)
+        {
+            _middleButton.onClick.RemoveAllListeners();
+            _middleButton.gameObject.SetActive(false);
         }
 
         private void OnLayersCountChanged(int newValue = 0)
@@ -76,7 +95,7 @@ namespace UI
                 _previewText.text = "ON";
             }
             else
-            { 
+            {
                 _layerSlider.gameObject.SetActive(false);
                 _weaponButton.gameObject.SetActive(true);
                 _meleeButton.gameObject.SetActive(true);

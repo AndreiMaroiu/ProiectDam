@@ -12,7 +12,7 @@ public class RandomTests
     [Test]
     public void WeightedRandomSingleElementTest()
     {
-        TileData[] elems = new TileData[]
+        TileData[] elems =
         {
             new()
             {
@@ -48,7 +48,7 @@ public class RandomTests
     [Test]
     public void WeightedRandomTest()
     {
-        TileData[] elems = new TileData[]
+        TileData[] elems =
         {
             new()
             {

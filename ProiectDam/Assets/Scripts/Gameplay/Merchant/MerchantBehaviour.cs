@@ -18,6 +18,7 @@ namespace Gameplay.Merchant
         [SerializeField] private ShopItems _items;
         [SerializeField] private ItemsEvent _itemsEvent;
         [SerializeField] private MerchantDialogs _dialogs;
+        [SerializeField] private ButtonEvent _buttonEvent;
 
         private Animator _animator;
         private PlayerController _player;
@@ -42,6 +43,8 @@ namespace Gameplay.Merchant
             StartCoroutine(ShowDialog(dialogLine, 2.0f));
 
             _animator.SetTrigger("Open");
+
+            _buttonEvent.Show("Buy", OnClick);
         }
 
         public void OnPlayerLeave(PlayerController controller)
@@ -56,6 +59,8 @@ namespace Gameplay.Merchant
             _animator.SetTrigger("Hide");
             _player = null;
             _isOpen = false;
+
+            _buttonEvent.Close(this);
         }
 
         #endregion
