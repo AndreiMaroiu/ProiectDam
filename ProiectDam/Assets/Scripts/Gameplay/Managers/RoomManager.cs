@@ -133,10 +133,8 @@ namespace Gameplay.Managers
             _player.LayerPosition = new(new Vector2Int(middle, middle), layer);
         }
 
-        private void OnRoomChanged()
+        private void OnRoomChanged(RoomBehaviour room)
         {
-            RoomBehaviour room = _roomBehaviourEvent;
-
             _roomEvent.Value = room.Room;
             _layerEvent.CurrentLayer.Value = room.CurrentLayer;
             _layerEvent.LayerCount.Value = room.Layers.Count;

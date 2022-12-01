@@ -39,9 +39,9 @@ namespace UI
             _onPlayerMoveEnded.OnEvent -= ShowMoveMessage;
         }
 
-        private void OnRoomEnter()
+        private void OnRoomEnter(Room room)
         {
-            switch (_OnRoomEvent.Value.Type)
+            switch (room.Type)
             {
                 case RoomType.Normal when _normalEntered is NormalEnteredState.Unvisited:
                     StartCoroutine(ShowNormalRoomMessage());
@@ -71,7 +71,7 @@ namespace UI
                 Footer = "Also you get run points for each enemy killed!",
             });
 
-            _doorsEvent.LockDoors(UnlockCondition.AllEnemiesKilled);
+            _doorsEvent.LockDoors(DoorsEvent.UnlockCondition.AllEnemiesKilled);
         }
 
         private IEnumerator ShowNormalRoomMessage()

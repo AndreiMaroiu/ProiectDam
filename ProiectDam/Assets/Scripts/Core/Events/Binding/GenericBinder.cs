@@ -4,33 +4,22 @@ using UnityEngine.Events;
 
 namespace Core.Events.Binding
 {
-    public abstract class Binder<T> : MonoBehaviour
+    public abstract class Binder<TEvent, T> : MonoBehaviour where TEvent : IBindSource<T>
     {
-        [SerializeField] private BaseEvent<T> _event;
+        [SerializeField] private TEvent _event;
         [SerializeField] private UnityEvent<T> _target;
 
         private Action<T> _action;
 
         protected virtual void Start()
         {
-            _action = value => _target.Invoke(value);
-            bool succes = _event.Bindable.Bind(_action);
-
-            if (succes is false)
-            {
-                Debug.LogError("Could not bind source to target!");
-            }
-
+            _action = _target.Invoke;
+            _event.Bindable.OnValueChanged += _action;
         }
 
         protected virtual void OnDestroy()
         {
-            bool succes = _event.Bindable.UnBind(_action);
-
-            if (succes is false)
-            {
-                Debug.LogError("Could not unbind source to target!");
-            }
+            _event.Bindable.OnValueChanged -= _action;
         }
     }
 }

@@ -5,11 +5,13 @@ using Core.Events.Binding;
 namespace Core.Events
 {
     [CreateAssetMenu(fileName = "New Game Event", menuName = "Scriptables/Events/Game Event")]
-    public class GameEvent : ScriptableObject, IBindSource
+    public sealed class GameEvent : ScriptableObject, IBindSource<object>
     {
         private readonly BindableEvent<object> _bindable = new();
 
-        public IBindable Bindable => _bindable;
+        public IBindable<object> Bindable => _bindable;
+
+        IBindable IBindSource.SimpleBindable => _bindable;
 
         public event Action<object> OnEvent
         {

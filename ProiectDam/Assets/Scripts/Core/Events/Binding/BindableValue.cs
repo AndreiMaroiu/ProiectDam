@@ -37,18 +37,6 @@ namespace Core.Events.Binding
             return false;
         }
 
-        public bool Bind(Action<T> @event)
-        {
-            OnValueChanged += @event;
-            return true;
-        }
-
-        public bool UnBind(Action<T> @event)
-        {
-            OnValueChanged -= @event;
-            return true;
-        }
-
         bool IBindable.UnBind(IBindTarget target)
         {
             if (target is IBindTarget<T> t)

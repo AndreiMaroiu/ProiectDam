@@ -12,7 +12,5 @@ namespace Core.Events.Binding
     public interface IBindable<T> : IBindable
     {
         event Action<T> OnValueChanged;
-        bool Bind(Action<T> target);
-        bool UnBind(Action<T> target);
     }
 }

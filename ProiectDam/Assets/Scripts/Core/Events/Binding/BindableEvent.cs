@@ -10,12 +10,6 @@ namespace Core.Events.Binding
 
         public void Invoke(T value) => OnValueChanged?.Invoke(value);
 
-        public bool Bind(Action<T> target)
-        {
-            OnValueChanged += target;
-            return true;
-        }
-
         public bool Bind(IBindTarget target)
         {
             if (target is IBindTarget<T> t)
@@ -25,12 +19,6 @@ namespace Core.Events.Binding
             }
 
             return false;
-        }
-
-        public bool UnBind(Action<T> target)
-        {
-            OnValueChanged -= target;
-            return true;
         }
 
         public bool UnBind(IBindTarget target)

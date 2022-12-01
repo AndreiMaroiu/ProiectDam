@@ -2,6 +2,7 @@ using Core.Events;
 using Gameplay.DataSaving;
 using Gameplay.Enemies;
 using Gameplay.Events;
+using Gameplay.Generation;
 using Gameplay.Player;
 using System.Collections;
 using System.Collections.Generic;
@@ -52,7 +53,7 @@ namespace Gameplay.Managers
 
         #endregion
 
-        private void OnRoomChanged()
+        private void OnRoomChanged(RoomBehaviour room)
         {
             _wasRoomChanged = true;
         }

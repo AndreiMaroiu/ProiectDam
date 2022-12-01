@@ -1,6 +1,7 @@
 using Core.Events;
 using Gameplay.Events;
 using UnityEngine;
+using static Core.Events.DoorsEvent;
 
 namespace Gameplay.Managers
 {
@@ -28,6 +29,11 @@ namespace Gameplay.Managers
             {
                 behaviour.UpdateDoors(false);
             };
+        }
+
+        private void OnDestroy()
+        {
+            _onDoorBlock.OnLock -= OnDoorsBlock;
         }
     }
 }

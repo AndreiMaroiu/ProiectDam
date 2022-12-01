@@ -22,6 +22,13 @@ namespace Core.Events.Binding
             OnDestroyEvent += () => source.RemoveListener(action);
         }
 
+        public void Bind<T>(IBindSource<T> source, Action<T> action)
+        {
+            source.Bindable.OnValueChanged += action;
+
+            OnDestroyEvent += () => source.Bindable.OnValueChanged -= action;
+        }
+
         protected virtual void OnDestroy()
         {
             OnDestroyEvent?.Invoke();

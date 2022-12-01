@@ -37,7 +37,7 @@ namespace Gameplay.Managers
             _roomEvent.OnValueChanged -= OnRoomChanged;
         }
 
-        private void OnRoomChanged()
+        private void OnRoomChanged(RoomBehaviour room)
         {
             if (_lastRoom.IsNotNull())
             {

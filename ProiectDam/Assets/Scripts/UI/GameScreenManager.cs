@@ -36,7 +36,7 @@ namespace UI
         {
             Bind(_layersEvent.LayerCount, OnLayersCountChanged);
             Bind(_layersEvent.CurrentLayer, OnCurrentLayerChanged);
-            Bind(_previewActive.Bindable, OnPreviewChanged);
+            Bind(_previewActive, OnPreviewChanged);
             Bind(_layerSlider.onValueChanged, OnSliderChanged);
             Bind(_buttonEvent.OnShowBindable, OnShowButton);
             Bind(_buttonEvent.OnCloseBindable, OnCloseButton);

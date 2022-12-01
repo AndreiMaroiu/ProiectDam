@@ -6,7 +6,7 @@ using UnityEngine.Events;
 namespace Core.Events
 {
     [CreateAssetMenu(fileName = "New Button Event", menuName = "Scriptables/Events/ButtonEvent")]
-    public class ButtonEvent : ScriptableObject
+    public sealed class ButtonEvent : ScriptableObject
     {
         private readonly BindableEvent<ButtonInfo> _showEvent = new();
         private readonly BindableEvent<ButtonInfo> _closeEvent = new();

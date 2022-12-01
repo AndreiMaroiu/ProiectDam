@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.Events
 {
-    public abstract class BaseEvent<T> : ScriptableObject, IBindSource
+    public abstract class BaseEvent<T> : ScriptableObject, IBindSource<T>
     {
         private readonly BindableValue<T> _value = new();
 
@@ -20,7 +20,7 @@ namespace Core.Events
             set => _value.Value = value;
         }
 
-        IBindable IBindSource.Bindable => _value;
+        IBindable IBindSource.SimpleBindable => _value;
 
         public IBindable<T> Bindable => _value;
 

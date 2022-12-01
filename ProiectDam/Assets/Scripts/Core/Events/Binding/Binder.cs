@@ -27,7 +27,7 @@ namespace Core.Events.Binding
         {
             if (_event is IBindSource bindSource)
             {
-                bool succes = bindSource.Bindable.Bind(_target as IBindTarget);
+                bool succes = bindSource.SimpleBindable.Bind(_target as IBindTarget);
 
                 if (succes is false)
                 {
@@ -40,7 +40,7 @@ namespace Core.Events.Binding
         {
             if (_event is IBindSource bindSource)
             {
-                bool succes = bindSource.Bindable.UnBind(_target as IBindTarget);
+                bool succes = bindSource.SimpleBindable.UnBind(_target as IBindTarget);
 
                 if (succes is false)
                 {

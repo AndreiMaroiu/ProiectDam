@@ -39,17 +39,17 @@ namespace UI.Map
             _currentRoom.OnValueChanged -= OnRoomChanged;
         }
 
-        private void OnRoomChanged()
+        private void OnRoomChanged(Room room = null)
         {
             if (_currentRect.IsNotNull())
             {
                 _currentRect.GetComponent<Image>().color = Color.gray;
             }
 
-            RoomUIBehaviour room = _traverser[_currentRoom.Value.Pos];
-            room.SetActive(Color.white);
+            RoomUIBehaviour behaviour = _traverser[_currentRoom.Value.Pos];
+            behaviour.SetActive(Color.white);
 
-            _currentRect = room;
+            _currentRect = behaviour;
 
             CheckBounds();
         }

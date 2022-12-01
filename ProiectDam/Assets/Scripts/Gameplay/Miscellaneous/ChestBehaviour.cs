@@ -14,28 +14,26 @@ namespace Gameplay
         [SerializeField] private ButtonEvent _buttonEvent;
 
         private SpriteRenderer _renderer;
-        private bool _wasOpened = false;
 
         public string ObjectName { get; set; }
 
         public ObjectSaveData SaveData => new ChestSaveData()
         {
             ObjectName = ObjectName,
-            WasOpened = _wasOpened
+            WasOpened = !_helper.CanClick
         };
 
         public void LoadFromSave(ObjectSaveData saveData)
         {
             if (saveData is ChestSaveData data)
             {
-                _wasOpened = data.WasOpened;
-                _helper.CanClick = _wasOpened;
+                _helper.CanClick = !data.WasOpened;
             }
         }
 
         public override void OnClick()
         {
-            if (!_helper.CanInteract || _wasOpened)
+            if (!_helper.CanInteract || !_helper.CanClick)
             {
                 return;
             }
@@ -49,7 +47,6 @@ namespace Gameplay
             Vector3 where = transform.position + direction;
             Instantiate(_pickUps[Random.Range(0, _pickUps.Length)], where, Quaternion.identity);
 
-            _wasOpened = true;
             _helper.CanClick = false;
         }
 

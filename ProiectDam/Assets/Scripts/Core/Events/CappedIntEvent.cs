@@ -7,7 +7,7 @@ namespace Core.Events
     /// Can be used to represent int values with a maximum value
     /// </summary>
     [CreateAssetMenu(fileName = "New Capped Int Event", menuName = "Scriptables/Events/Capped Int Event")]
-    public class CappedIntEvent : ScriptableObject
+    public sealed class CappedIntEvent : ScriptableObject
     {
         public event Action OnValueChanged;
         public event Action OnMaxValueChanged;
