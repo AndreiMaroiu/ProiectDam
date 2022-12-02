@@ -6,7 +6,7 @@ using Utilities;
 
 namespace Gameplay.Enemies
 {
-    public sealed class SimpleEnemy : BaseEnemy
+    public class SimpleEnemy : BaseEnemy
     {
         private const string WALK_ANIMATION = "Walk";
         private const string MELEE_ANIMATION = "Melee";

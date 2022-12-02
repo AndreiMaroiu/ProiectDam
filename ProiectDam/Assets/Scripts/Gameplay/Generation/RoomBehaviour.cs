@@ -70,5 +70,13 @@ namespace Gameplay.Generation
                 layer.ScanForDoors();
             }
         }
+
+        public void UpdateDoors(bool isLocked)
+        {
+            foreach (var layer in _layersObjects)
+            {
+                layer.UpdateDoors(isLocked);
+            }
+        }
     }
 }

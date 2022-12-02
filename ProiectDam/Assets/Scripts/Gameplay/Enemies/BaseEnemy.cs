@@ -21,7 +21,7 @@ namespace Gameplay.Enemies
 
         public abstract void OnAttack(PlayerController player);
 
-        public IEnumerator OnEnemyTurn(PlayerController player)
+        public virtual IEnumerator OnEnemyTurn(PlayerController player)
         {
             if ((LayerPosition.Position - player.LayerPosition.Position).sqrMagnitude == 1)
             {
@@ -34,7 +34,7 @@ namespace Gameplay.Enemies
             yield return TryMove(direction);
         }
 
-        private Vector2Int GetMoveDirection(PlayerController player)
+        protected Vector2Int GetMoveDirection(PlayerController player)
         {
             TileType[,] layer = LayerPosition.Layer;
 

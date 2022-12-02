@@ -108,6 +108,7 @@ namespace Gameplay.Generation
             var duplicates = _generator.CalculateDuplicates();
             var distances = _generator.Distances;
             Validate(distances[^1].room.Pos, RoomType.End);
+            Validate(distances[^1].room.LastRoom.Pos, RoomType.Boss);
 
             distances[0].room.Type = RoomType.Start;
 

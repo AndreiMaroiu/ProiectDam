@@ -13,6 +13,7 @@ namespace Core
         Chest = 1 << 4,
         Wall = 1 << 5,
         Merchant = 1 << 6,
+        Boss = 1 << 7
     }
 
     public static class RoomTypeExtension
@@ -27,6 +28,7 @@ namespace Core
             Chest => nameof(Chest),
             Wall => nameof(Wall),
             Merchant => nameof(Merchant),
+            Boss => nameof(Boss),
             _ => default,
         };
 

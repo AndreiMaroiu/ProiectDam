@@ -25,6 +25,7 @@ namespace Gameplay.Managers
         [SerializeField] protected LayerEvent _layerEvent;
         [SerializeField] protected BoolEvent _previewEvent;
         [SerializeField] protected BoolEvent _playerTurn;
+        [SerializeField] protected IntEvent _keysEvent;
 
         private int _lastLayer;
 
@@ -46,6 +47,7 @@ namespace Gameplay.Managers
             _roomBehaviourEvent.OnValueChanged += OnRoomChanged;
             _layerEvent.CurrentLayer.OnValueChanged += OnLayerChanged;
             _previewEvent.OnValueChanged += OnPreviewChanged;
+            _keysEvent.OnValueChanged += OnKeysChanged;
 
             _layerEvent.CurrentLayer.Value = behaviour.CurrentLayer;
             _layerEvent.LayerCount.Value = behaviour.Layers.Count;
@@ -58,6 +60,7 @@ namespace Gameplay.Managers
             _roomBehaviourEvent.OnValueChanged -= OnRoomChanged;
             _layerEvent.CurrentLayer.OnValueChanged -= OnLayerChanged;
             _previewEvent.OnValueChanged -= OnPreviewChanged;
+            _keysEvent.OnValueChanged -= OnKeysChanged;
         }
 
         #endregion
@@ -140,6 +143,11 @@ namespace Gameplay.Managers
             _layerEvent.LayerCount.Value = room.Layers.Count;
 
             room.Room.Discovered = true;
+
+            if (room.Room.Type is Core.RoomType.Boss && _keysEvent.Value is 0)
+            {
+                room.UpdateDoors(isLocked: true);
+            }
         }
 
         private void OnLayerChanged(int layer = 0)
@@ -199,6 +207,19 @@ namespace Gameplay.Managers
 
             _player.LayerPosition.Layer = _roomBehaviourEvent.Value.Layers[_layerEvent.CurrentLayer];
             _player.MakePlayerWhite();
+        }
+
+        private void OnKeysChanged(int keys)
+        {
+            if (_roomEvent.Value.Type is not Core.RoomType.Boss)
+            {
+                return;
+            }
+
+            if (keys == _roomBehaviourEvent.Value.Layers.Count)
+            {
+                _roomBehaviourEvent.Value.UpdateDoors(isLocked: false);
+            }
         }
 
 #if UNITY_EDITOR

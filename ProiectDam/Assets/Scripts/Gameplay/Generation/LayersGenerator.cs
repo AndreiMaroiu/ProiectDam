@@ -38,6 +38,7 @@ namespace Gameplay.Generation
             RoomType.Healing => GenerateHeal(),
             RoomType.Chest => GenerateChest(),
             RoomType.Merchant => GenerateMerchant(),
+            RoomType.Boss => GenerateBoss(),
             _ => GenerateEmpty(),
         };
 
@@ -58,6 +59,20 @@ namespace Gameplay.Generation
             SetType(layer, TileType.Merchant);
             SetType(layer, TileType.DynamicObstacle);
             SetType(layer, TileType.DynamicObstacle);
+
+            return layers;
+        }
+
+        private Layers GenerateBoss()
+        {
+            Layers layers = new(_layerSize, 3);
+
+            foreach (var layer in layers)
+            {
+                GenerateBorder(layer.Tiles);
+                SetType(layer.Tiles, TileType.Enemy);
+                SpawnTiles(layer.Tiles, GetPositions(layer.Tiles), Random.Range(3, 6), TileType.Obstacle);
+            }
 
             return layers;
         }
