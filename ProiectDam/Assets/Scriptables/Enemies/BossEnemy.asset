@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b18102e42b540747a514ab552216f2c, type: 3}
   m_Name: BossEnemy
   m_EditorClassIdentifier: 
-  _damage: 0
-  _startHealth: 1
-  _moveTime: 0
-  _cellSizeValue: {fileID: 0}
-  _globalDeathEvent: {fileID: 0}
+  _damage: 2
+  _startHealth: 5
+  _moveTime: 0.3
+  _cellSizeValue: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
+  _globalDeathEvent: {fileID: 11400000, guid: 3a69f05b5ff99064eac93dd2ec9d5272, type: 2}

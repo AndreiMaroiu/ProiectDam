@@ -419,9 +419,9 @@ namespace Gameplay.Player
             transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
         }
 
-        private void OnEnergyChanged()
+        private void OnEnergyChanged(int value)
         {
-            if (_energyEvent.Value <= 0)
+            if (value <= 0)
             {
                 OnDeath();
             }

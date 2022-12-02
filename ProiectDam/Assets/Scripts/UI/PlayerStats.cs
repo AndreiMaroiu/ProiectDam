@@ -60,36 +60,36 @@ namespace UI
             _scoreEvent.OnValueChanged -= OnScoreChange;
         }
 
-        private void OnEnergyChange()
+        private void OnEnergyChange(int value = 0)
         {
             _energySlider.value = _energy.Value;
             UpdateEnergyText();
         }
 
-        private void OnMaxEnergyChange()
+        private void OnMaxEnergyChange(int value = 0)
         {
             _energySlider.maxValue = _energy.MaxValue;
             UpdateEnergyText();
         }
 
-        private void OnHealthChange()
+        private void OnHealthChange(int value = 0)
         {
             _healthSlider.value = _health.Value;
             UpdateHealthText();
         }
 
-        private void OnMaxHealthChange()
+        private void OnMaxHealthChange(int value = 0)
         {
             _healthSlider.maxValue = _health.MaxValue;
             UpdateHealthText();
         }
 
-        private void OnBulletsChange()
+        private void OnBulletsChange(int value = 0)
         {
             UpdateBulletsText();
         }
 
-        private void OnMaxBulletsChange()
+        private void OnMaxBulletsChange(int value = 0)
         {
             UpdateBulletsText();
         }

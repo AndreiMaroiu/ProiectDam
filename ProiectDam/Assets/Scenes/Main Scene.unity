@@ -975,4 +975,5 @@ MonoBehaviour:
   _layerEvent: {fileID: 11400000, guid: 7bddafb6a683dae4a96e712e19d2fcb6, type: 2}
   _previewEvent: {fileID: 11400000, guid: 0a850cb0818136d4188c5b364870105d, type: 2}
   _playerTurn: {fileID: 11400000, guid: 69dd59b851979e44887a9df5080b5552, type: 2}
+  _keysEvent: {fileID: 11400000, guid: 50ba3d89f76e4c74b999d39e8b87dcc4, type: 2}
   _levelSaver: {fileID: 40433177}
