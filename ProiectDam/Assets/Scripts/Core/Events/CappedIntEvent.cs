@@ -8,20 +8,28 @@ namespace Core.Events
     /// Can be used to represent int values with a maximum value
     /// </summary>
     [CreateAssetMenu(fileName = "New Capped Int Event", menuName = "Scriptables/Events/Capped Int Event")]
-    public sealed class CappedIntEvent : ScriptableObject
+    public sealed class CappedIntEvent : ScriptableObject, IBindSource<(int value, int max)>
     {
         private readonly BindableValue<int> _valueEvent = new();
         private readonly BindableValue<int> _maxValueEvent = new();
+        private readonly BindableEvent<(int value, int max)> _allEvent = new();
 
         public event Action<int> OnValueChanged
         {
             add => _valueEvent.OnValueChanged += value;
             remove => _valueEvent.OnValueChanged -= value;
         }
+
         public event Action<int> OnMaxValueChanged
         {
             add => _maxValueEvent.OnValueChanged += value;
             remove => _maxValueEvent.OnValueChanged -= value;
+        }
+
+        public event Action<(int value, int max)> OnAllValuesChanged
+        {
+            add => _allEvent.OnValueChanged += value;
+            remove => _allEvent.OnValueChanged -= value;
         }
 
         public int Value
@@ -48,6 +56,10 @@ namespace Core.Events
         public IBindable<int> ValueBindable => _valueEvent;
         public IBindable<int> MaxValueBindable => _maxValueEvent;
 
+        public IBindable<(int value, int max)> Bindable => _allEvent;
+
+        public IBindable SimpleBindable => _allEvent;
+
         public void Init(int value)
         {
             MaxValue = value;
@@ -58,6 +70,23 @@ namespace Core.Events
         {
             MaxValue = max;
             Value = current;
+        }
+
+        private void OnEnable()
+        {
+            _valueEvent.OnValueChanged += TriggerAll;
+            _maxValueEvent.OnValueChanged += TriggerAll;
+        }
+
+        private void TriggerAll(int _)
+        {
+            _allEvent.Invoke((Value, MaxValue));
+        }
+
+        private void OnDisable()
+        {
+            _valueEvent.OnValueChanged -= TriggerAll;
+            _maxValueEvent.OnValueChanged -= TriggerAll;
         }
 
         public override string ToString()
