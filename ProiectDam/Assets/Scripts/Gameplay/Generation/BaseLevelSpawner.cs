@@ -1,6 +1,7 @@
 using Core;
 using Core.Values;
 using Gameplay.Events;
+using Gameplay.Player;
 using UnityEngine;
 using Utilities;
 
@@ -10,6 +11,7 @@ namespace Gameplay.Generation
     {
         [SerializeField] protected LevelGeneratorData _data;
         [SerializeField] protected Vector2Int _enemiesRange;
+        [SerializeField] protected PlayerController _player;
 
         protected RoomTraverser<RoomBehaviour> _traverser;
 
@@ -196,6 +198,8 @@ namespace Gameplay.Generation
             SetDoorPositions();
             SpawnLayers();
             SpawnDoors();
+            ScanRooms();
+            SpawnPlayer();
 
             _data.RoomBehaviourEvent.Value = _traverser.Start;
         }
@@ -208,6 +212,16 @@ namespace Gameplay.Generation
 
                 behaviour.Scan();
             });
+        }
+
+        protected virtual void SpawnPlayer()
+        {
+            RoomBehaviour start = _traverser.Start;
+
+            TileType[,] layer = start.Layers[start.CurrentLayer];
+            int middle = layer.GetLength(0) / 2;
+            layer[middle, middle] = TileType.Player;
+            _player.LayerPosition = new(new Vector2Int(middle, middle), layer);
         }
     }
 }

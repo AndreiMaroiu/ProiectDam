@@ -27,6 +27,8 @@ namespace Gameplay.Merchant
         private bool _isOpen = false;
         private StatsHandler<MerchantData> _saveData;
 
+        private ButtonEvent.ButtonInfo _buttonInfo;
+
         #region IInteractable
 
         public void OnInteract(PlayerController controller)
@@ -44,7 +46,7 @@ namespace Gameplay.Merchant
 
             _animator.SetTrigger("Open");
 
-            _buttonEvent.Show("Buy", OnClick);
+            _buttonEvent.Show(_buttonInfo);
         }
 
         public void OnPlayerLeave(PlayerController controller)
@@ -60,7 +62,7 @@ namespace Gameplay.Merchant
             _player = null;
             _isOpen = false;
 
-            _buttonEvent.Close("Buy", OnClick);
+            _buttonEvent.Close(_buttonInfo);
         }
 
         #endregion
@@ -75,6 +77,7 @@ namespace Gameplay.Merchant
             _itemsEvent.OnItemBought += OnBuy;
             _itemsToShow = GenerateRandomItemList();
             _saveData = StatisticsManager.Instance.LoadHandler<MerchantData>(Application.persistentDataPath + "/MerchantData.dat");
+            _buttonInfo = new("Buy", OnClick);
         }
 
         private void OnDestroy()

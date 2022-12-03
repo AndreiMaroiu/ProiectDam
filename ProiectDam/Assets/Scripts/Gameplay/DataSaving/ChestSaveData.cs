@@ -1,6 +1,6 @@
 using Gameplay.DataSaving;
 
-namespace Gameplay
+namespace Gameplay.DataSaving
 {
     [System.Serializable]
     public sealed class ChestSaveData : ObjectSaveData

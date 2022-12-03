@@ -1,7 +1,7 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Utilities;
-using System;
 
 namespace ModalWindows
 {
@@ -39,9 +39,9 @@ namespace ModalWindows
         [SerializeField] private Text _okText;
         [SerializeField] private Text _alternativeText;
 
-        private Action _closeAction = null;
-        private Action _okAction = null;
-        private Action _alternativeAction = null;
+        private UnityAction _closeAction = null;
+        private UnityAction _okAction = null;
+        private UnityAction _alternativeAction = null;
 
         private float? _lastTimeScale = null;
         private bool _canClose = true;

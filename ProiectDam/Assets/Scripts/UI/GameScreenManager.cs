@@ -55,7 +55,22 @@ namespace UI
 
         private void OnShowButton(ButtonEvent.ButtonInfo info)
         {
-            _middleButton.onClick.AddListener(info.Action);
+            if (info.Important)
+            {
+                _middleButton.onClick.AddListener(() =>
+                {
+                    ModalWindows.ModalWindow.ShowDialog(new ModalWindows.ModalWindowData()
+                    {
+                        Header = "Are you sure you want to continue?",
+                        OkAction = info.Action
+                    });
+                });
+            }
+            else
+            {
+                _middleButton.onClick.AddListener(info.Action);
+            }
+
             _middleButtonText.text = info.Name;
             _middleButton.gameObject.SetActive(true);
 

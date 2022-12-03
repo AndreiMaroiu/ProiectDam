@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ModalWindows
 {
@@ -12,9 +12,9 @@ namespace ModalWindows
         public string OkText { get; }
         public string AlternativeText { get; }
         public string CloseText { get; }
-        public Action OkAction { get; }
-        public Action CloseAction { get; }
-        public Action AlternativeAction { get; }
+        public UnityAction OkAction { get; }
+        public UnityAction CloseAction { get; }
+        public UnityAction AlternativeAction { get; }
         public bool CanClose { get; }
         public bool IsTransparent { get; }
         public Color BackgroundColor { get; }

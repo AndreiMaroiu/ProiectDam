@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ModalWindows
 {
@@ -36,9 +37,9 @@ namespace ModalWindows
         public string OkText => (_currentIndex > 0) ? "Previous" : null;
         public string AlternativeText => null;
         public string CloseText => (_currentIndex == _lastIndex) ? "Close" : "Next";
-        public Action OkAction { get; }
-        public Action CloseAction { get; }
-        public Action AlternativeAction => null;
+        public UnityAction OkAction { get; }
+        public UnityAction CloseAction { get; }
+        public UnityAction AlternativeAction => null;
         public bool CanClose { get; private set; } = false;
         public bool IsTransparent { get; set; } = true;
         public Color BackgroundColor { get; set; } = Color.black;

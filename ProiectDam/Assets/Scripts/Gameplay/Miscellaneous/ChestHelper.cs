@@ -5,14 +5,25 @@ using UnityEngine.Events;
 
 namespace Gameplay
 {
-    public class ChestHelper : MonoBehaviour, IInteractableEnter, IInteractableLeave
+    public sealed class ChestHelper : MonoBehaviour, IInteractableEnter, IInteractableLeave
     {
         [SerializeField] private ButtonEvent _buttonEvent;
         private bool _canClick;
+        private UnityAction onClick;
+        private ButtonEvent.ButtonInfo _buttonInfo;
 
         public bool CanInteract { get; private set; }
         public PlayerController Controller { get; private set; }
-        public UnityAction OnClick { get; set; }
+        public UnityAction OnClick 
+        {
+            get => onClick; 
+            set
+            {
+                onClick = value;
+                _buttonInfo = new("Open chest", OnClick, true);
+            }
+        }
+
 
         public bool CanClick
         {
@@ -23,7 +34,7 @@ namespace Gameplay
 
                 if (value is false)
                 {
-                    _buttonEvent.Close("Open chest", OnClick);
+                    _buttonEvent.Close(_buttonInfo);
                 }
             }
         }
@@ -35,7 +46,7 @@ namespace Gameplay
 
             if (CanClick)
             {
-                _buttonEvent.Show("Open chest", OnClick);
+                _buttonEvent.Show(_buttonInfo);
             }
         }
 
@@ -45,7 +56,7 @@ namespace Gameplay
 
             if (CanClick)
             {
-                _buttonEvent.Close("Open chest", OnClick);
+                _buttonEvent.Close(_buttonInfo);
             }
         }
     }

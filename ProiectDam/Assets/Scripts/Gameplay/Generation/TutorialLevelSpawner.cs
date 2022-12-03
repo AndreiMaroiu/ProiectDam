@@ -16,6 +16,7 @@ namespace Gameplay.Generation
             SpawnLayers();
             SpawnDoors();
             ScanRooms();
+            SpawnPlayer();
 
             _data.RoomBehaviourEvent.Value = _traverser.Start;
         }

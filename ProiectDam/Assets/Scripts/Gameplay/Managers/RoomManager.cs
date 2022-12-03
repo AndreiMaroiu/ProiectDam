@@ -9,7 +9,7 @@ using Utilities;
 
 namespace Gameplay.Managers
 {
-    public class RoomManager : MonoBehaviour
+    public sealed class RoomManager : MonoBehaviour
     {
 #if UNITY_EDITOR
         [Header("Gizmos")]
@@ -17,20 +17,20 @@ namespace Gameplay.Managers
         [SerializeField] private bool _fillSquare;
 #endif
         [Header("Game objects")]
-        [SerializeField] protected BaseLevelSpawner _spawner;
-        [SerializeField] protected PlayerController _player;
+        [SerializeField] private BaseLevelSpawner _spawner;
+        [SerializeField] private PlayerController _player;
         [Header("Events")]
-        [SerializeField] protected RoomEvent _roomEvent;
-        [SerializeField] protected RoomBehaviourEvent _roomBehaviourEvent;
-        [SerializeField] protected LayerEvent _layerEvent;
-        [SerializeField] protected BoolEvent _previewEvent;
-        [SerializeField] protected BoolEvent _playerTurn;
-        [SerializeField] protected IntEvent _keysEvent;
+        [SerializeField] private RoomEvent _roomEvent;
+        [SerializeField] private RoomBehaviourEvent _roomBehaviourEvent;
+        [SerializeField] private LayerEvent _layerEvent;
+        [SerializeField] private BoolEvent _previewEvent;
+        [SerializeField] private BoolEvent _playerTurn;
+        [SerializeField] private IntEvent _keysEvent;
 
         private int _lastLayer;
 
-        public bool IsSameLayer { get; protected set; }
-        public bool CanSwitchLayer { get; protected set; } = true;
+        public bool IsSameLayer { get; private set; }
+        public bool CanSwitchLayer { get; private set; } = true;
 
         #region Unity Events
 
@@ -41,8 +41,6 @@ namespace Gameplay.Managers
             _spawner.Spawn();
             _roomEvent.StartRoom = _spawner.Traverser.Start.Room;
             RoomBehaviour behaviour = GetActiveBehaviour();
-
-            SetPlayerPos(behaviour);
 
             _roomBehaviourEvent.OnValueChanged += OnRoomChanged;
             _layerEvent.CurrentLayer.OnValueChanged += OnLayerChanged;
@@ -123,17 +121,9 @@ namespace Gameplay.Managers
             _playerTurn.Value = true;
         }
 
-        protected virtual RoomBehaviour GetActiveBehaviour()
+        private RoomBehaviour GetActiveBehaviour()
         {
             return _roomBehaviourEvent.Value;
-        }
-
-        protected virtual void SetPlayerPos(RoomBehaviour behaviour)
-        {
-            TileType[,] layer = behaviour.Layers[behaviour.CurrentLayer];
-            int middle = layer.GetLength(0) / 2;
-            layer[middle, middle] = TileType.Player;
-            _player.LayerPosition = new(new Vector2Int(middle, middle), layer);
         }
 
         private void OnRoomChanged(RoomBehaviour room)

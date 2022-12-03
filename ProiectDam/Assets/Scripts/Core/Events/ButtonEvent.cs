@@ -23,33 +23,35 @@ namespace Core.Events
             remove => _closeEvent.OnValueChanged -= value;
         }
 
-        public void Show(string name, UnityAction action) => _showEvent.Invoke(new(name, action));
+        public void Show(ButtonInfo info) => _showEvent.Invoke(info);
 
-        public void Close(string name, UnityAction action) => _closeEvent.Invoke(new(name, action));
+        public void Close(ButtonInfo info) => _closeEvent.Invoke(info);
 
         public IBindable<ButtonInfo> OnShowBindable => _showEvent;
         public IBindable<ButtonInfo> OnCloseBindable => _closeEvent;
 
-        public readonly struct ButtonInfo : IEquatable<ButtonInfo>
+        public class ButtonInfo : IEquatable<ButtonInfo>
         {
-            public ButtonInfo(string name, UnityAction action)
+            public ButtonInfo(string name, UnityAction action, bool important = false)
             {
                 Name = name;
                 Action = action;
+                Important = important;
             }
 
             public string Name { get; }
             public UnityAction Action { get; }
+            public bool Important { get; }
 
             public static bool operator ==(in ButtonInfo left, in ButtonInfo right)
-                => left.Name == right.Name && left.Action == right.Action;
+                => left.Name == right.Name && left.Important == right.Important && left.Action == right.Action;
 
             public static bool operator !=(in ButtonInfo left, in ButtonInfo right)
-                => left.Name != right.Name || left.Action != right.Action;
+                => !(left == right);
 
             public override int GetHashCode()
             {
-                return HashCode.Combine(Name, Action);
+                return HashCode.Combine(Name, Action, Important);
             }
 
             public override bool Equals(object obj)

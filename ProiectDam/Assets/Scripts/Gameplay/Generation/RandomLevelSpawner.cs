@@ -1,4 +1,5 @@
 using Core;
+using Core.Events;
 using Core.Values;
 using Gameplay.DataSaving;
 using UnityEngine;
@@ -15,6 +16,8 @@ namespace Gameplay.Generation
         [SerializeField] private IntValue _maxtrixSize;
         [SerializeField] private int _maxRoomCount;
         [SerializeField] private int _maxRoomNeighbours;
+        [Header("Events")]
+        [SerializeField] private LayerEvent _layerEvent;
         [Header("Data Saving")]
         [SerializeField] private RandomLevelSaverManager _levelSaver;
 
@@ -35,10 +38,15 @@ namespace Gameplay.Generation
             SpawnOrLoadLayers();
             SpawnDoors();
             ScanRooms();
-
-            _data.RoomBehaviourEvent.Value = _traverser.Start;
+            SpawnPlayer();
+            SetCurrentRoom();
 
             Random.InitState((int)System.DateTimeOffset.Now.ToUnixTimeMilliseconds());
+        }
+
+        private void SetCurrentRoom()
+        {
+            _data.RoomBehaviourEvent.Value = _levelSaver.ShouldLoad ? _traverser[_levelSaver.SaveData.CurrentRoom] : _traverser.Start;
         }
 
         private void SetSeed()
@@ -146,6 +154,28 @@ namespace Gameplay.Generation
                 Validate(room.Pos, type);
 
                 ++totalUniqueRoomsCount;
+            }
+        }
+
+        protected override void SpawnPlayer()
+        {
+            if (_levelSaver.ShouldLoad)
+            {
+                RoomBehaviour behaviour = _traverser[_levelSaver.SaveData.CurrentRoom];
+                int layerIndex = _levelSaver.SaveData.PlayerData.LayerPos.Biome;
+                TileType[,] layer = behaviour.Layers[layerIndex];
+                var pos = _levelSaver.SaveData.PlayerData.LayerPos.Position;
+                layer[pos.X, pos.Y] = TileType.Player; // todo: this may not be needed in future
+                _player.LayerPosition = new(pos, layer);
+                _player.transform.position = _levelSaver.SaveData.PlayerData.PlayerPos;
+
+                _layerEvent.CurrentLayer.Value = layerIndex;
+                behaviour.ChangedLayer(layerIndex);
+                _layerEvent.CurrentBiome.Value = behaviour.Layers.GetBiome(layerIndex);
+            }
+            else
+            {
+                base.SpawnPlayer();
             }
         }
     }
