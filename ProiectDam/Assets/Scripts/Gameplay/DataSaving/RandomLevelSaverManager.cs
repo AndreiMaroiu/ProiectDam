@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Gameplay.DataSaving
 {
-    public sealed class RandomLevelSaverManager : LevelSaverManager
+    public sealed class RandomLevelSaverManager : MonoBehaviour
     {
         [SerializeField] private PlayerController _player;
         [SerializeField] private RandomLevelSpawner _levelSpawner;
@@ -16,6 +16,7 @@ namespace Gameplay.DataSaving
         [SerializeField] private LevelSaverHandler _handler;
         [SerializeField] private RoomEvent _roomEvent;
         [SerializeField] private TurnManager _turnManager;
+        [SerializeField] private SaveEvent _saveEvent;
 
         private bool _loaded;
         private LevelSaveData _saveData;
@@ -37,7 +38,39 @@ namespace Gameplay.DataSaving
             }
         }
 
-        public override void Save() // todo: add string file
+        #region Unity Events
+
+        private void Start()
+        {
+            _saveEvent.OnEvent += OnSave;
+        }
+
+        private void OnDestroy()
+        {
+            _saveEvent.OnEvent -= OnSave;
+        }
+
+        #endregion
+
+        private void OnSave(SaveType type)
+        {
+            switch (type)
+            {
+                case SaveType.Save:
+                    Save();
+                    break;
+                case SaveType.SaveSeed:
+                    SaveOnlySeed();
+                    break;
+                case SaveType.DontSave:
+                    SetUpForNewScene();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void Save() // todo: add string file
         {
             SaveData = new()
             {
@@ -55,12 +88,12 @@ namespace Gameplay.DataSaving
             Debug.Log("Save path: " + savePath);
         }
 
-        public override void SetUpForNewScene()
+        public void SetUpForNewScene()
         {
             _handler.SetForNewScene();
         }
 
-        public override void SaveOnlySeed()
+        public void SaveOnlySeed()
         {
             _handler.SetSeed(_levelSpawner.Seed);
         }

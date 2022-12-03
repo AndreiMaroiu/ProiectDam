@@ -1,4 +1,5 @@
 using Core.DataSaving;
+using Core.Events;
 using ModalWindows;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,8 +16,9 @@ namespace UI
         [SerializeField] private GameObject _optionsCanvas;
         [SerializeField] private Animator _transition;
         [SerializeField] private GameObject _saveButton;
-        [SerializeField] private LevelSaverManager _saver;
         [SerializeField] private Color _modalColor;
+        [Tooltip("Leave empty if no saving is needed")]
+        [SerializeField] private SaveEvent _saveEvent;
 
         private float _lastTimeScale;
 
@@ -25,7 +27,7 @@ namespace UI
             _pauseCanvas.SetActive(false);
             _howToCanvas.SetActive(false);
             _optionsCanvas.SetActive(false);
-            _saveButton.SetActive(_saver != null);
+            _saveButton.SetActive(_saveEvent != null);
         }
 
         public void OnPauseClick()
@@ -69,13 +71,13 @@ namespace UI
                 OkAction = () =>
                 {
                     RestartLevel();
-                    _saver.SaveOnlySeed();
+                    _saveEvent.Invoke(SaveType.SaveSeed);
                 },
                 AlternativeText = "Load new",
                 AlternativeAction = () =>
                 {
                     RestartLevel();
-                    _saver.SetUpForNewScene();
+                    _saveEvent.Invoke(SaveType.DontSave);
                 },
                 IsTransparent = false,
                 BackgroundColor = _modalColor,
@@ -92,20 +94,26 @@ namespace UI
 
         public void OnCloseClick()
         {
-            ModalWindow.Show(new ModalWindowData()
+            ModalWindowData data = new()
             {
                 Header = "Are you sure you want to leave?",
                 OkText = "Leave",
                 OkAction = LoadMainMenu,
-                AlternativeText = "Save & Quit",
-                AlternativeAction = () =>
-                {
-                    _saver.Save();
-                    LoadMainMenu();
-                },
                 IsTransparent = false,
                 BackgroundColor = _modalColor,
-            });
+            };
+
+            if (_saveEvent != null)
+            {
+                data.AlternativeText = "Save & Quit";
+                data.AlternativeAction = () =>
+                {
+                    _saveEvent.Invoke(SaveType.Save);
+                    LoadMainMenu();
+                };
+            }
+
+            ModalWindow.Show(data);
         }
 
         private void LoadMainMenu()
@@ -118,7 +126,7 @@ namespace UI
 
         public void OnSaveClick()
         {
-            _saver.Save();
+            _saveEvent.Invoke(SaveType.Save);
 
             ModalWindow.Show(new ModalWindowData()
             {

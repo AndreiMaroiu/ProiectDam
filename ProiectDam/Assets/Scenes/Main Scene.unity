@@ -158,6 +158,7 @@ MonoBehaviour:
   _handler: {fileID: 11400000, guid: 412537028d3cbf44fbc7d53c95864586, type: 2}
   _roomEvent: {fileID: 11400000, guid: d1d78b254926b314d84ce8c10c8375c0, type: 2}
   _turnManager: {fileID: 904153693}
+  _saveEvent: {fileID: 11400000, guid: d6396cf79818c944da5bc2602f4cad03, type: 2}
 --- !u!4 &40433178
 Transform:
   m_ObjectHideFlags: 0
@@ -606,6 +607,12 @@ PrefabInstance:
       propertyPath: _saver
       value: 
       objectReference: {fileID: 40433177}
+    - target: {fileID: 4109379794917434210, guid: 0df48db316dcf8d4db933b0b7329c4d6,
+        type: 3}
+      propertyPath: _saveEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: d6396cf79818c944da5bc2602f4cad03,
+        type: 2}
     - target: {fileID: 4109379795122538382, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
       propertyPath: _spawner
@@ -839,7 +846,7 @@ PrefabInstance:
     - target: {fileID: 7161502621323392761, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 520
       objectReference: {fileID: 0}
     - target: {fileID: 7161502621323392761, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}

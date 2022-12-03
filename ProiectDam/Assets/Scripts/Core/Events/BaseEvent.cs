@@ -1,33 +1,23 @@
-using Core.Events.Binding;
-using System;
+﻿using System;
 using UnityEngine;
+using Core.Events.Binding;
 
 namespace Core.Events
 {
-    public abstract class BaseEvent<T> : ScriptableObject, IBindSource<T>
+    public class BaseEvent<T> : ScriptableObject, IBindSource<T>
     {
-        private readonly BindableValue<T> _value = new();
+        private readonly BindableEvent<T> _bindable = new();
 
-        public event Action<T> OnValueChanged
+        public IBindable<T> Bindable => _bindable;
+
+        IBindable IBindSource.SimpleBindable => _bindable;
+
+        public event Action<T> OnEvent
         {
-            add => _value.OnValueChanged += value;
-            remove => _value.OnValueChanged -= value;
+            add => _bindable.OnValueChanged += value;
+            remove => _bindable.OnValueChanged -= value;
         }
 
-        public T Value
-        {
-            get => _value.Value;
-            set => _value.Value = value;
-        }
-
-        IBindable IBindSource.SimpleBindable => _value;
-
-        public IBindable<T> Bindable => _value;
-
-        public static implicit operator T(BaseEvent<T> @event)
-            => @event.Value;
-
-        public override string ToString()
-            => Value.ToString();
+        public void Invoke(T args) => _bindable.Invoke(args);
     }
 }
