@@ -12,7 +12,7 @@ namespace UI
     {
         private static readonly Regex Regex = new(@"{\d+}");
 
-        [SerializeField] private Value[] _values;
+        [SerializeField] private ScriptableObject[] _values;
 
         private Text _text;
 
@@ -57,8 +57,8 @@ namespace UI
                 return;
             }
 
-            Value[] lastValues = _values;
-            _values = new Value[count];
+            ScriptableObject[] lastValues = _values;
+            _values = new ScriptableObject[count];
 
             Array.Copy(lastValues, _values, Math.Min(lastValues.Length, count));
 

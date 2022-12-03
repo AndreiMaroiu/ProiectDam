@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Core.Values
 {
     [CreateAssetMenu(fileName = "NewStringValue", menuName = "Scriptables/Values/String Value")]
-    public class StringValue : Value
+    public class StringValue : ScriptableObject
     {
         [SerializeField, TextArea] private string _value;
 
