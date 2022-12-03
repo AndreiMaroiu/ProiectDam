@@ -5,25 +5,22 @@ using UnityEngine.Events;
 
 namespace Gameplay
 {
-    public sealed class ChestHelper : MonoBehaviour, IInteractableEnter, IInteractableLeave
+    [RequireComponent(typeof(Collider2D))]
+    public sealed class InteractionHelper : MonoBehaviour, IInteractableEnter, IInteractableLeave
     {
         [SerializeField] private ButtonEvent _buttonEvent;
-        private bool _canClick;
-        private UnityAction onClick;
-        private ButtonEvent.ButtonInfo _buttonInfo;
+        private bool _canClick = true;
 
-        public bool CanInteract { get; private set; }
+        public bool IsInteracting { get; private set; }
         public PlayerController Controller { get; private set; }
-        public UnityAction OnClick 
-        {
-            get => onClick; 
-            set
-            {
-                onClick = value;
-                _buttonInfo = new("Open chest", OnClick, true);
-            }
-        }
+        public UnityAction OnClick { get; set; }
+        public ButtonEvent.ButtonInfo ButtonInfo { get; set; }
 
+        public void Set(UnityAction onClick, string buttonText, bool important = false)
+        {
+            OnClick = onClick;
+            ButtonInfo = new(buttonText, onClick, important);
+        }
 
         public bool CanClick
         {
@@ -34,29 +31,29 @@ namespace Gameplay
 
                 if (value is false)
                 {
-                    _buttonEvent.Close(_buttonInfo);
+                    _buttonEvent.Close(ButtonInfo);
                 }
             }
         }
 
         public void OnInteract(PlayerController controller)
         {
-            CanInteract = true;
+            IsInteracting = true;
             Controller = controller;
 
             if (CanClick)
             {
-                _buttonEvent.Show(_buttonInfo);
+                _buttonEvent.Show(ButtonInfo);
             }
         }
 
         public void OnPlayerLeave(PlayerController controller)
         {
-            CanInteract = false;
+            IsInteracting = false;
 
             if (CanClick)
             {
-                _buttonEvent.Close(_buttonInfo);
+                _buttonEvent.Close(ButtonInfo);
             }
         }
     }

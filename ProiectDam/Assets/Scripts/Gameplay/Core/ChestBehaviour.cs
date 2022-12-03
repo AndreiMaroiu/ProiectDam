@@ -7,7 +7,7 @@ namespace Gameplay
 {
     public class ChestBehaviour : PressableObject, IDataSavingTile
     {
-        [SerializeField] private ChestHelper _helper;
+        [SerializeField] private InteractionHelper _helper;
         [SerializeField] private Sprite _openedChestImage;
         [SerializeField] private GameObject[] _pickUps;
         [SerializeField] private FloatValue _cellSize;
@@ -33,7 +33,7 @@ namespace Gameplay
 
         public override void OnClick()
         {
-            if (!_helper.CanInteract || !_helper.CanClick)
+            if (!_helper.IsInteracting || !_helper.CanClick)
             {
                 return;
             }
@@ -53,7 +53,7 @@ namespace Gameplay
         private void Start()
         {
             _renderer = GetComponentInChildren<SpriteRenderer>();
-            _helper.OnClick = OnClick;
+            _helper.Set(OnClick, "Open chest");
             _helper.CanClick = true;
         }
     }
