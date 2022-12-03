@@ -1,13 +1,15 @@
 using Core;
+using UnityEngine;
 
 namespace Gameplay.Generation
 {
     public class TutorialLevelSpawner : BaseLevelSpawner
     {
+        [SerializeField] private RoomType[] _rooms;
+
         public override void Spawn()
         {
-            Room start = new TutorialLevelGenerator().Generate(RoomType.Start, RoomType.Normal,
-                RoomType.Normal, RoomType.End);
+            Room start = new TutorialLevelGenerator().Generate(_rooms);
             _traverser = new RoomTraverser<RoomBehaviour>(start);
 
             SpawnRoomAssets();
