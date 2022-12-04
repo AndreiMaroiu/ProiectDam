@@ -1,10 +1,9 @@
 ﻿using Core.Events;
 using Core.Events.Binding;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace EditorScripts
+namespace EditorScripts.Events
 {
     [CustomEditor(typeof(CappedIntEvent)), CanEditMultipleObjects]
     public class CappedIntEventEditor : Editor
@@ -21,7 +20,7 @@ namespace EditorScripts
             if (GUILayout.Button("Apply change"))
             {
                 CappedIntEvent @event = (CappedIntEvent)target;
-                
+
                 (@event.ValueBindable as BindableValue<int>).Invoke();
                 (@event.MaxValueBindable as BindableValue<int>).Invoke();
             }

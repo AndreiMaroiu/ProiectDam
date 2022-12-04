@@ -3,7 +3,7 @@ using Core.Events.Binding;
 using UnityEditor;
 using UnityEngine;
 
-namespace EditorScripts
+namespace EditorScripts.Events
 {
     [CanEditMultipleObjects]
     public class BaseEventEditor<TEvent, T> : Editor where TEvent : BaseValueEvent<T>
@@ -24,17 +24,5 @@ namespace EditorScripts
                 (@event.Bindable as BindableValue<T>).Invoke();
             }
         }
-    }
-
-    [CustomEditor(typeof(IntEvent))]
-    public class IntEventEditor : BaseEventEditor<IntEvent, int>
-    {
-
-    }
-
-    [CustomEditor(typeof(BoolEvent))]
-    public class BoolEventEditor : BaseEventEditor<BoolEvent, bool>
-    {
-
     }
 }
