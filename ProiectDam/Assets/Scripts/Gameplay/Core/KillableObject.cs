@@ -8,7 +8,7 @@ namespace Gameplay
         public virtual int Priority { get; } = 1;
         public virtual int Health { get; set; }
         public virtual int MaxHealth { get; set; }
-        public bool IsDead { get; private set; }
+        public bool IsDead => Health <= 0;
         public bool CanHit { get; protected set; } = true;
 
         public virtual int Score
@@ -42,7 +42,6 @@ namespace Gameplay
 
             if (Health <= 0)
             {
-                IsDead = true;
                 OnDeath();
             }
         }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4645854058912919067}
   - component: {fileID: 7568054677802389457}
   - component: {fileID: 8428044947700798359}
+  - component: {fileID: -2103521492970958484}
   m_Layer: 8
   m_Name: BossKeyPickUp
   m_TagString: Untagged
@@ -214,3 +215,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-2103521492970958484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5033479279856646670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d86bfb7796109f74e8d5754b32d35e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _distance: 0.1
+  _speed: 3
