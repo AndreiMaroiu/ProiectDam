@@ -63,20 +63,20 @@ namespace ModalWindows
 
         public void OnClose()
         {
-            TryClose();
             _closeAction?.Invoke();
+            TryClose();
         }
 
         public void OnOk()
         {
-            TryClose();
             _okAction?.Invoke();
+            TryClose();
         }
 
         public void OnAlternative()
         {
-            TryClose();
             _alternativeAction?.Invoke();
+            TryClose();
         }
 
         private void SetWindow(IModalWindowData data, float? lastTimeScale = null)
