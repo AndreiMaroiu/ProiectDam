@@ -10,8 +10,8 @@ namespace Core.Events
     [CreateAssetMenu(fileName = "New Capped Int Event", menuName = "Scriptables/Events/Capped Int Event")]
     public sealed class CappedIntEvent : ScriptableObject, IBindSource<(int value, int max)>
     {
-        private readonly BindableValue<int> _valueEvent = new();
-        private readonly BindableValue<int> _maxValueEvent = new();
+        [SerializeField] private BindableValue<int> _valueEvent = new();
+        [SerializeField] private BindableValue<int> _maxValueEvent = new();
         private readonly BindableEvent<(int value, int max)> _allEvent = new();
 
         public event Action<int> OnValueChanged

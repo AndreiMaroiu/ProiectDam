@@ -6,7 +6,7 @@ namespace Core.Events
 {
     public abstract class BaseValueEvent<T> : ScriptableObject, IBindSource<T>
     {
-        private readonly BindableValue<T> _value = new();
+        [SerializeField] private BindableValue<T> _value = new();
 
         public event Action<T> OnValueChanged
         {

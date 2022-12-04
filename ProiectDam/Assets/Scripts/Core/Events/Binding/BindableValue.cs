@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Core.Events.Binding
 {
+    [Serializable]
     public class BindableValue<T> : IBindable<T>
     {
-        private T _value;
+        [SerializeField] private T _value;
 
         public T Value
         {
@@ -47,6 +49,8 @@ namespace Core.Events.Binding
 
             return false;
         }
+
+        public void Invoke() => OnValueChanged.Invoke(Value);
 
         public static implicit operator T(BindableValue<T> value)
             => value.Value;
