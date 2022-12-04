@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace Gameplay.Generation
 {
-    public sealed class LayerPosition
+    public sealed class LayerPosition : IEquatable<LayerPosition>
     {
         private TileType[,] _layer;
 
@@ -37,7 +38,10 @@ namespace Gameplay.Generation
             set => Layer[Position.x, Position.y] = value;
         }
 
-        public void Move(Vector2Int dir) => Position += dir;
+        public void Move(Vector2Int dir)
+        {
+            Position += dir;
+        }
 
         public void Clear() => TileType = TileType.None;
 
@@ -66,6 +70,11 @@ namespace Gameplay.Generation
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public bool Equals(LayerPosition other)
+        {
+            return this == other;
         }
     }
 }

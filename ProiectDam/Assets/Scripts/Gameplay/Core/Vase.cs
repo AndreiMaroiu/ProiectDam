@@ -20,7 +20,7 @@ namespace Gameplay
             ObjectName = this.ObjectName,
         };
 
-        protected override void OnDamage()
+        protected override void OnDamage(MonoBehaviour dealer)
         {
 
         }

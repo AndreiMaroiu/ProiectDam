@@ -54,7 +54,7 @@ namespace Gameplay
                 return;
             }
 
-            killable.TakeDamage(_damage);
+            killable.TakeDamage(_damage, this);
             StartCoroutine(StartAnimation());
         }
 

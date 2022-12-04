@@ -1259,8 +1259,8 @@ MonoBehaviour:
   _optionsCanvas: {fileID: 365374867292876355}
   _transition: {fileID: 4635899894793198522}
   _saveButton: {fileID: 2689027634150063151}
-  _saver: {fileID: 0}
   _modalColor: {r: 0.09317646, g: 0.29678434, b: 0.44, a: 0}
+  _saveEvent: {fileID: 0}
 --- !u!114 &4109379794917434221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8445,6 +8445,12 @@ PrefabInstance:
       propertyPath: _deathTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 47525207141400157, guid: 1292ef2264e73a94fb25f52ed02eb628,
+        type: 3}
+      propertyPath: _keysEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 50ba3d89f76e4c74b999d39e8b87dcc4,
+        type: 2}
     - target: {fileID: 47525207141400157, guid: 1292ef2264e73a94fb25f52ed02eb628,
         type: 3}
       propertyPath: _layerEvent

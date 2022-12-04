@@ -50,7 +50,7 @@ namespace Gameplay
                 yield break;
             }
 
-            Vector3 endPosition = transform.position + (new Vector3(direction.x, direction.y) * _cellSize);
+            Vector3 endPosition = PositionInDirection(direction);//transform.position + (new Vector3(direction.x, direction.y) * _cellSize);
             CanMove = false;
             IsMoving = true;
             CanHit = false;
@@ -77,6 +77,11 @@ namespace Gameplay
 
             StopMoving();
             OnStopMoving();
+        }
+
+        protected Vector3 PositionInDirection(Vector2Int direction)
+        {
+            return transform.position + (new Vector3(direction.x, direction.y) * _cellSize);
         }
     }
 }

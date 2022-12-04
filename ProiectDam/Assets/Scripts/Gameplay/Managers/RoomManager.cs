@@ -25,7 +25,7 @@ namespace Gameplay.Managers
         [SerializeField] private LayerEvent _layerEvent;
         [SerializeField] private BoolEvent _previewEvent;
         [SerializeField] private BoolEvent _playerTurn;
-        [SerializeField] private IntEvent _keysEvent;
+        [SerializeField] private CappedIntEvent _keysEvent;
 
         private int _lastLayer;
 
@@ -50,6 +50,7 @@ namespace Gameplay.Managers
             _layerEvent.CurrentLayer.Value = behaviour.CurrentLayer;
             _layerEvent.LayerCount.Value = behaviour.Layers.Count;
             _roomEvent.Value = behaviour.Room;
+            _keysEvent.Set(0, 3);
             behaviour.Room.Discovered = true;
         }
 

@@ -1,4 +1,5 @@
 using Gameplay.Generation;
+using UnityEngine;
 
 namespace Gameplay
 {
@@ -29,7 +30,7 @@ namespace Gameplay
             Health = health;
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, MonoBehaviour dealer)
         {
             if (!CanHit || IsDead)
             {
@@ -37,7 +38,7 @@ namespace Gameplay
             }
 
             Health -= damage;
-            OnDamage();
+            OnDamage(dealer);
 
             if (Health <= 0)
             {
@@ -46,7 +47,7 @@ namespace Gameplay
             }
         }
 
-        protected abstract void OnDamage();
+        protected abstract void OnDamage(MonoBehaviour dealer);
         protected abstract void OnDeath();
         public abstract void OnDeathFinished();
     }

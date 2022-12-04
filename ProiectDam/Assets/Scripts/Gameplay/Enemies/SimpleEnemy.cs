@@ -18,7 +18,7 @@ namespace Gameplay.Enemies
         private SpriteRenderer _renderer;
         private Collider2D _collider;
 
-        private void Start()
+        protected virtual void Start()
         {
             _animator = GetComponent<Animator>();
             _soundhandler = GetComponent<EnemySoundHandler>();
@@ -29,7 +29,7 @@ namespace Gameplay.Enemies
             SetMove(_data.MoveTime, _data.CellSizeValue, TileType.Enemy);
         }
 
-        protected override void OnDamage()
+        protected override void OnDamage(MonoBehaviour dealer)
         {
             // play sound and animations
             _soundhandler.PlayHit();

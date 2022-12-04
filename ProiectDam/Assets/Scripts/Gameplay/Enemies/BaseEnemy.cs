@@ -25,7 +25,7 @@ namespace Gameplay.Enemies
         {
             if ((LayerPosition.Position - player.LayerPosition.Position).sqrMagnitude == 1)
             {
-                player.TakeDamage(_data.Damage);
+                player.TakeDamage(_data.Damage, this);
                 OnAttack(player);
                 yield break;
             }
@@ -67,7 +67,7 @@ namespace Gameplay.Enemies
             return result;
         }
 
-        public sealed override void OnDeathFinished()
+        public override void OnDeathFinished()
         {
             OnDeathEvent?.Invoke(this);
             LayerPosition?.Clear();

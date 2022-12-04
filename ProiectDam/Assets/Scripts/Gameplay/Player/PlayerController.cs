@@ -52,6 +52,7 @@ namespace Gameplay.Player
         [SerializeField] private GameEvent _onMoveStared;
         [SerializeField] private GameEvent _onMoveEnded;
         [SerializeField] private LayerEvent _layerEvent;
+        [SerializeField] private CappedIntEvent _keysEvent;
 
         #endregion
 
@@ -103,7 +104,6 @@ namespace Gameplay.Player
             set => _energyEvent.Value = value;
         }
 
-        //public CappedIntEvent EnergyEvent => _energyEvent;
         public GameEvent OnMoveStarted => _onMoveStared;
 
         public bool UseEnergyOnMove
@@ -134,6 +134,12 @@ namespace Gameplay.Player
         {
             get => _money;
             set => _money.Value = value;
+        }
+
+        public int Keys
+        {
+            get => _keysEvent.Value;
+            set => _keysEvent.Value = value;
         }
 
         public bool IsFlipped => transform.localScale.x < 0;
@@ -263,7 +269,7 @@ namespace Gameplay.Player
 
             foreach (KillableObject enemy in GetNearbyEnemies(Directions, _cellSizeValue.Value))
             {
-                enemy.TakeDamage(_meleeDamage);
+                enemy.TakeDamage(_meleeDamage, this);
             }
 
             // play melee attack animation and sound
@@ -324,7 +330,7 @@ namespace Gameplay.Player
 
             if (closest.IsNotNull())
             {
-                closest.TakeDamage(_rangedDamage);
+                closest.TakeDamage(_rangedDamage, this);
 
                 float xPlayer = transform.position.x;
                 float XEnemy = closest.transform.position.x;
@@ -450,7 +456,7 @@ namespace Gameplay.Player
 
         #region Overrides
 
-        protected override void OnDamage()
+        protected override void OnDamage(MonoBehaviour dealer)
         {
             _animator.SetBool(HIT_ANIMATION, true);
 
