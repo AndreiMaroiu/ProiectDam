@@ -83,31 +83,34 @@ namespace EditorScripts
 
             EditorGUILayout.PropertyField(firstProp);
 
-            if (GUILayout.Button("Apply changes!"))
+            if (GUILayout.Button("Apply changes to all"))
             {
                 for (int i = 1; i < prop.arraySize; i++)
                 {
-                    SerializedProperty current = prop.GetArrayElementAtIndex(i);
-                    SerializedProperty field = current.FindPropertyRelative(internalFieldName);
-
-                    switch (field.type)
-                    {
-                        case "int":
-                            field.intValue = firstProp.intValue;
-                            break;
-                        case "Enum":
-                            field.enumValueFlag = firstProp.enumValueFlag;
-                            break;
-                        case "PPtr<$GameObject>":
-                            Debug.LogWarning("Should not set value for this type!");
-                            break;
-                        default:
-                            break;
-                    }
-
-                    Debug.Log(field.type);
+                    SetField(prop, internalFieldName, firstProp, i);
                 }
             }
+        }
+
+        private static void SetField(SerializedProperty prop, string internalFieldName, SerializedProperty firstProp, int i)
+        {
+            SerializedProperty current = prop.GetArrayElementAtIndex(i);
+            SerializedProperty field = current.FindPropertyRelative(internalFieldName);
+
+            switch (field.propertyType)
+            {
+                case SerializedPropertyType.Integer:
+                    field.intValue = firstProp.intValue;
+                    break;
+                case SerializedPropertyType.Enum:
+                    field.enumValueFlag = firstProp.enumValueFlag;
+                    break;
+                default:
+                    Debug.LogWarning($"Should not set value for {field.propertyType} type!");
+                    break;
+            }
+
+            Debug.Log(field.type);
         }
 
         private void HandleDragAndDrop(SerializedProperty prop)

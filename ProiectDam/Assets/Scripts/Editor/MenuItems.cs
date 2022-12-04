@@ -1,11 +1,8 @@
 #if UNITY_EDITOR
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-using UnityEditor;
 using System.IO;
+using UnityEditor;
+using UnityEngine;
 
 namespace EditorScripts
 {

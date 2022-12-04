@@ -1,4 +1,6 @@
-﻿using Core.Events.Binding;
+﻿#if UNITY_EDITOR
+
+using Core.Events.Binding;
 using Core.Values;
 using UnityEditor;
 
@@ -10,3 +12,5 @@ namespace EditorScripts.Events
 
     }
 }
+
+#endif
