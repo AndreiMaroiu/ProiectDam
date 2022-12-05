@@ -1,14 +1,25 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Controls.Notifications;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PixelizerUI.Views;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
 namespace PixelizerUI.ViewModels
 {
+    public partial class Notif : ObservableObject
+    {
+        [ObservableProperty]
+        private Notification _content;
+
+        [ObservableProperty]
+        private bool _visibility;
+    }
+
     public partial class MainWindowViewModel : ObservableObject
     {
         [ObservableProperty]
@@ -28,6 +39,9 @@ namespace PixelizerUI.ViewModels
 
         [ObservableProperty]
         private int _factor = 5;
+
+        [ObservableProperty]
+        private Notif _activeNotification = new();
 
         public MainWindowViewModel()
         {
@@ -127,6 +141,9 @@ namespace PixelizerUI.ViewModels
             catch (System.Exception)
             {
                 Debug.WriteLine("Could create image!");
+
+                ActiveNotification.Content = new Notification("Error", "Could not locate image", NotificationType.Error, TimeSpan.FromSeconds(2));
+                ActiveNotification.Visibility = true;
             }
         }
 
@@ -139,7 +156,7 @@ namespace PixelizerUI.ViewModels
             }
 
             const string processPath = "./python-exe/main.exe";
-            
+
             Process process = new()
             {
                 StartInfo = new ProcessStartInfo()

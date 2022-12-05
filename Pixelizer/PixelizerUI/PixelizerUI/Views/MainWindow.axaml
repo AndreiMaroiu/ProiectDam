@@ -26,45 +26,50 @@
 					MaterialOpacity="0.65" />
 			</ExperimentalAcrylicBorder.Material>
 		</ExperimentalAcrylicBorder>
-		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
-			<StackPanel VerticalAlignment="Center" Spacing="10" Margin="15, 0">
-				<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
-					<TextBlock HorizontalAlignment="Left">Input Path:</TextBlock>
-					<StackPanel Orientation="Horizontal" Spacing="5">
-						<TextBox Text="{Binding InputImage}" Watermark="Input file path" HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="140"></TextBox>
-						<Button Command="{Binding OpenDialogCommand}" HorizontalAlignment="Center" Height="35" Width="35">
-							<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
-						</Button>
+		<Panel>
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+				<StackPanel VerticalAlignment="Center" Spacing="10" Margin="15, 0">
+					<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
+						<TextBlock HorizontalAlignment="Left">Input Path:</TextBlock>
+						<StackPanel Orientation="Horizontal" Spacing="5">
+							<TextBox Text="{Binding InputImage}" Watermark="Input file path" HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="140"></TextBox>
+							<Button Command="{Binding OpenDialogCommand}" HorizontalAlignment="Center" Height="35" Width="35">
+								<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
+							</Button>
+						</StackPanel>
 					</StackPanel>
-				</StackPanel>
-				<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
-					<TextBlock HorizontalAlignment="Left">Output Path:</TextBlock>
-					<StackPanel Orientation="Horizontal" Spacing="5">
-						<TextBox Text="{Binding OutputPath}" Watermark="Output path" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="140"/>
-						<Button Command="{Binding ChooseOutputCommand}" HorizontalAlignment="Center" Height="35" Width="35">
-							<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
-						</Button>
+					<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
+						<TextBlock HorizontalAlignment="Left">Output Path:</TextBlock>
+						<StackPanel Orientation="Horizontal" Spacing="5">
+							<TextBox Text="{Binding OutputPath}" Watermark="Output path" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="140"/>
+							<Button Command="{Binding ChooseOutputCommand}" HorizontalAlignment="Center" Height="35" Width="35">
+								<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
+							</Button>
+						</StackPanel>
 					</StackPanel>
-				</StackPanel>
-				<StackPanel>
-					<StackPanel Orientation="Horizontal" Spacing="5">
-						<TextBlock>Pixelize Factor:</TextBlock>
-						<TextBlock Text="{Binding Factor}"></TextBlock>
+					<StackPanel>
+						<StackPanel Orientation="Horizontal" Spacing="5">
+							<TextBlock>Pixelize Factor:</TextBlock>
+							<TextBlock Text="{Binding Factor}"></TextBlock>
+						</StackPanel>
+						<Slider Minimum="1" Maximum="50" Value="{Binding Factor}"></Slider>
 					</StackPanel>
-					<Slider Minimum="1" Maximum="50" Value="{Binding Factor}"></Slider>
-				</StackPanel>
 
 
-				<Button Command="{Binding PixelizeCommand}" HorizontalAlignment="Center" MinWidth="140">
-					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
-						<avalonia:MaterialIcon Kind="DeathStarVariant"></avalonia:MaterialIcon>
-						<TextBlock>Pixelize</TextBlock>
-					</StackPanel>
-				</Button>
+					<Button Command="{Binding PixelizeCommand}" HorizontalAlignment="Center" MinWidth="140">
+						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+							<avalonia:MaterialIcon Kind="DeathStarVariant"></avalonia:MaterialIcon>
+							<TextBlock>Pixelize</TextBlock>
+						</StackPanel>
+					</Button>
+				</StackPanel>
+				<Panel >
+					<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}"></Image>
+				</Panel>
 			</StackPanel>
-			<Panel >
-				<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}"></Image>
-			</Panel>
-		</StackPanel>
+			<NotificationCard MaxHeight="100" VerticalAlignment="Bottom"  IsVisible="{Binding ActiveNotification.Visibility}">
+				<TextBlock Margin="10">Error</TextBlock>
+			</NotificationCard>
+		</Panel>
 	</Panel>
 </Window>
