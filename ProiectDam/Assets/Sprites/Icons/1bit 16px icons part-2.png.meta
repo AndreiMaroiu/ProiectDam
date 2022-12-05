@@ -1763,6 +1763,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -11086,34 +11098,34 @@ TextureImporter:
       1bit 16px icons part-2_377: -2061094453287841252
       1bit 16px icons part-2_351: 253849355887311284
       1bit 16px icons part-2_59: -4578300474271195214
+      1bit 16px icons part-2_386: 6594657994995586184
       1bit 16px icons part-2_32: 4294932465182533783
-      1bit 16px icons part-2_42: 6611760214855121139
       1bit 16px icons part-2_359: 8648594073051015259
-      1bit 16px icons part-2_89: 2053055794778547971
+      1bit 16px icons part-2_42: 6611760214855121139
       1bit 16px icons part-2_140: 5375541448199078350
       1bit 16px icons part-2_317: -6310215069593385070
+      1bit 16px icons part-2_89: 2053055794778547971
       1bit 16px icons part-2_83: -182645310206967625
       1bit 16px icons part-2_208: 8824224316397622144
       1bit 16px icons part-2_160: -917936138510227811
       1bit 16px icons part-2_272: -5216363368025996689
+      1bit 16px icons part-2_417: 5546463941099697843
       1bit 16px icons part-2_227: -6498689514335878699
       1bit 16px icons part-2_94: 4526597017332892118
       1bit 16px icons part-2_233: 7779813377552484020
-      1bit 16px icons part-2_386: 6594657994995586184
       1bit 16px icons part-2_231: -8254948779239180876
-      1bit 16px icons part-2_417: 5546463941099697843
       1bit 16px icons part-2_440: 5783998058199417942
       1bit 16px icons part-2_31: 5476574212964250810
       1bit 16px icons part-2_383: 1153619558605632028
       1bit 16px icons part-2_381: 5578782633528636584
       1bit 16px icons part-2_17: 4197776089831863350
       1bit 16px icons part-2_130: -2413617622448090966
-      1bit 16px icons part-2_185: -6945759209614926554
       1bit 16px icons part-2_248: 2583289476316580950
-      1bit 16px icons part-2_353: -4908943596600632812
       1bit 16px icons part-2_422: 8121979455585271634
-      1bit 16px icons part-2_58: -2694362304030956388
+      1bit 16px icons part-2_185: -6945759209614926554
       1bit 16px icons part-2_437: -1660323286482394272
+      1bit 16px icons part-2_58: -2694362304030956388
+      1bit 16px icons part-2_353: -4908943596600632812
       1bit 16px icons part-2_40: -3277010113418679664
       1bit 16px icons part-2_346: 6498205187028830911
       1bit 16px icons part-2_82: -7715762834902932111
@@ -11141,8 +11153,8 @@ TextureImporter:
       1bit 16px icons part-2_330: -847149179964545553
       1bit 16px icons part-2_45: 8895099987333137228
       1bit 16px icons part-2_270: -8956673127393313940
-      1bit 16px icons part-2_110: 7017924660163386225
       1bit 16px icons part-2_324: 1659351025569551391
+      1bit 16px icons part-2_110: 7017924660163386225
       1bit 16px icons part-2_223: -2187255313777825993
       1bit 16px icons part-2_69: 5212304612244475205
       1bit 16px icons part-2_240: 5520374794061422649
@@ -11224,9 +11236,9 @@ TextureImporter:
       1bit 16px icons part-2_258: 8526852646780022798
       1bit 16px icons part-2_350: 8940724793672397256
       1bit 16px icons part-2_194: -2038711977915101572
+      1bit 16px icons part-2_295: 2628739417129391867
       1bit 16px icons part-2_210: -7113269653032674128
       1bit 16px icons part-2_412: -7984218089348576243
-      1bit 16px icons part-2_295: 2628739417129391867
       1bit 16px icons part-2_87: -3233879330752519512
       1bit 16px icons part-2_14: 3297560019415471227
       1bit 16px icons part-2_13: -8036628035440944333
@@ -11253,8 +11265,8 @@ TextureImporter:
       1bit 16px icons part-2_173: 8106849128562816125
       1bit 16px icons part-2_389: 3926468867288541694
       1bit 16px icons part-2_268: 7545394588859348611
-      1bit 16px icons part-2_301: 2468480516568331726
       1bit 16px icons part-2_369: 8938331408788348827
+      1bit 16px icons part-2_301: 2468480516568331726
       1bit 16px icons part-2_119: -9156594321131375295
       1bit 16px icons part-2_66: 7141169037249470098
       1bit 16px icons part-2_16: -5925977917771559026
@@ -11270,14 +11282,14 @@ TextureImporter:
       1bit 16px icons part-2_135: -9002024772918584913
       1bit 16px icons part-2_39: 2463997980210862287
       1bit 16px icons part-2_259: 5412686702942764098
-      1bit 16px icons part-2_107: -3224769224078753863
       1bit 16px icons part-2_326: 3146091577626830853
+      1bit 16px icons part-2_107: -3224769224078753863
       1bit 16px icons part-2_290: 2156541532290339798
       1bit 16px icons part-2_188: 1667460172372984816
       1bit 16px icons part-2_424: 6634994936092720404
       1bit 16px icons part-2_6: -7757597089973076739
-      1bit 16px icons part-2_44: 1847730513765195206
       1bit 16px icons part-2_357: -1964245345446591662
+      1bit 16px icons part-2_44: 1847730513765195206
       1bit 16px icons part-2_144: -2252633925358754748
       1bit 16px icons part-2_181: 8836996320229595670
       1bit 16px icons part-2_282: 6366088052320101885
@@ -11295,25 +11307,25 @@ TextureImporter:
       1bit 16px icons part-2_86: -2375796143934393691
       1bit 16px icons part-2_132: -2488915221548560646
       1bit 16px icons part-2_55: -6011974093556265322
-      1bit 16px icons part-2_315: 9038027674289893291
+      1bit 16px icons part-2_311: -2439869058246481220
       1bit 16px icons part-2_34: 1096903091359316691
       1bit 16px icons part-2_10: 2293000410874089437
-      1bit 16px icons part-2_311: -2439869058246481220
+      1bit 16px icons part-2_376: 8384463198594136398
       1bit 16px icons part-2_169: 3002268303660635006
       1bit 16px icons part-2_191: -4924167843418996106
       1bit 16px icons part-2_161: -7456719206225066661
       1bit 16px icons part-2_192: 8711070809137745560
       1bit 16px icons part-2_363: -7005917990487706457
-      1bit 16px icons part-2_376: 8384463198594136398
+      1bit 16px icons part-2_315: 9038027674289893291
       1bit 16px icons part-2_205: 5357538163270155083
       1bit 16px icons part-2_239: -5859355000510456915
       1bit 16px icons part-2_261: 8229529126479563759
       1bit 16px icons part-2_221: 4927373697594583810
       1bit 16px icons part-2_434: 5407323357579708406
       1bit 16px icons part-2_52: -4343320764944642614
+      1bit 16px icons part-2_397: 8280955347830111318
       1bit 16px icons part-2_0: -3234955350083806611
       1bit 16px icons part-2_237: 1443435533371299690
-      1bit 16px icons part-2_397: 8280955347830111318
       1bit 16px icons part-2_316: -4480675425067319104
       1bit 16px icons part-2_224: 361237209581500866
       1bit 16px icons part-2_148: -7932645602025661389

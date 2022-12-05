@@ -23,8 +23,8 @@ namespace EditorScripts.Events
             {
                 CappedIntEvent @event = (CappedIntEvent)target;
 
-                (@event.ValueBindable as BindableValue<int>).Invoke();
                 (@event.MaxValueBindable as BindableValue<int>).Invoke();
+                (@event.ValueBindable as BindableValue<int>).Invoke();
             }
         }
     }

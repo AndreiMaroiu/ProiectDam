@@ -1,0 +1,62 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PixelizerUI.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="PixelizerUI.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="PixelizerUI"
+		TransparencyLevelHint="AcrylicBlur"
+		Background="Transparent"
+		ExtendClientAreaToDecorationsHint="True">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Panel>
+		<ExperimentalAcrylicBorder IsHitTestVisible="False">
+			<ExperimentalAcrylicBorder.Material>
+				<ExperimentalAcrylicMaterial
+					BackgroundSource="Digger"
+					TintColor="Black"
+					TintOpacity="1"
+					MaterialOpacity="0.65" />
+			</ExperimentalAcrylicBorder.Material>
+		</ExperimentalAcrylicBorder>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+			<StackPanel VerticalAlignment="Center" Spacing="10">
+				<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
+					<TextBlock HorizontalAlignment="Left">Input Path:</TextBlock>
+					<StackPanel Orientation="Horizontal" Spacing="5">
+						<TextBox Text="{Binding InputImage}" Watermark="Input file path" HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="140"></TextBox>
+						<Button Command="{Binding OpenDialogCommand}" HorizontalAlignment="Center" Height="35" Width="35">
+							<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
+						</Button>
+					</StackPanel>
+				</StackPanel>
+				<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
+					<TextBlock HorizontalAlignment="Left">Output Path:</TextBlock>
+					<StackPanel Orientation="Horizontal" Spacing="5">
+						<TextBox Text="{Binding OutputPath}" Watermark="Output path" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="140"/>
+						<Button Command="{Binding ChooseOutputCommand}" HorizontalAlignment="Center" Height="35" Width="35">
+							<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
+						</Button>
+					</StackPanel>
+				</StackPanel>
+				
+				<Button Command="{Binding PixelizeCommand}" HorizontalAlignment="Center" MinWidth="140">
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<avalonia:MaterialIcon Kind="DeathStarVariant"></avalonia:MaterialIcon>
+						<TextBlock>Pixelize</TextBlock>
+					</StackPanel>
+				</Button>
+			</StackPanel>
+			<StackPanel >
+				<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}"></Image>
+			</StackPanel>
+		</StackPanel>
+	</Panel>
+</Window>
