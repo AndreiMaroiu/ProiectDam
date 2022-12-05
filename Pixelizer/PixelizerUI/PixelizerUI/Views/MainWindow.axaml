@@ -27,7 +27,7 @@
 			</ExperimentalAcrylicBorder.Material>
 		</ExperimentalAcrylicBorder>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
-			<StackPanel VerticalAlignment="Center" Spacing="10">
+			<StackPanel VerticalAlignment="Center" Spacing="10" Margin="15, 0">
 				<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
 					<TextBlock HorizontalAlignment="Left">Input Path:</TextBlock>
 					<StackPanel Orientation="Horizontal" Spacing="5">
@@ -46,17 +46,25 @@
 						</Button>
 					</StackPanel>
 				</StackPanel>
-				
+				<StackPanel>
+					<StackPanel Orientation="Horizontal" Spacing="5">
+						<TextBlock>Pixelize Factor:</TextBlock>
+						<TextBlock Text="{Binding Factor}"></TextBlock>
+					</StackPanel>
+					<Slider Minimum="1" Maximum="50" Value="{Binding Factor}"></Slider>
+				</StackPanel>
+
+
 				<Button Command="{Binding PixelizeCommand}" HorizontalAlignment="Center" MinWidth="140">
-					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
 						<avalonia:MaterialIcon Kind="DeathStarVariant"></avalonia:MaterialIcon>
 						<TextBlock>Pixelize</TextBlock>
 					</StackPanel>
 				</Button>
 			</StackPanel>
-			<StackPanel >
+			<Panel >
 				<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}"></Image>
-			</StackPanel>
+			</Panel>
 		</StackPanel>
 	</Panel>
 </Window>

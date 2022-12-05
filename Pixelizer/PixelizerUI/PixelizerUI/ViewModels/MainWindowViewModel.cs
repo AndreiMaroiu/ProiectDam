@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PixelizerUI.Views;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace PixelizerUI.ViewModels
@@ -24,6 +25,9 @@ namespace PixelizerUI.ViewModels
 
         [ObservableProperty]
         private double _height;
+
+        [ObservableProperty]
+        private int _factor = 5;
 
         public MainWindowViewModel()
         {
@@ -64,6 +68,8 @@ namespace PixelizerUI.ViewModels
             SaveFileDialog dialog = new()
             {
                 Title = "Output location",
+                DefaultExtension = ".png",
+                InitialFileName = "output",
                 Filters =
                 {
                     new FileDialogFilter()
@@ -127,7 +133,27 @@ namespace PixelizerUI.ViewModels
         [RelayCommand]
         public async Task Pixelize()
         {
+            if (string.IsNullOrWhiteSpace(OutputPath) || string.IsNullOrWhiteSpace(InputImage))
+            {
+                return;
+            }
 
+            const string processPath = "./python-exe/main.exe";
+            
+            Process process = new()
+            {
+                StartInfo = new ProcessStartInfo()
+                {
+                    FileName = Path.GetFullPath(processPath),
+                    Arguments = $"\"{InputImage}\" \"{OutputPath}\" {Factor}",
+                }
+            };
+
+            if (process.Start())
+            {
+                await process.WaitForExitAsync();
+                Image = new Bitmap(OutputPath);
+            }
         }
 
         public MainWindow MainWindow { get; set; }
