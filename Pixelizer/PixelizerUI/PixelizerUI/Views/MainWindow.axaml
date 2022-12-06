@@ -32,7 +32,7 @@
 					<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
 						<TextBlock HorizontalAlignment="Left">Input Path:</TextBlock>
 						<StackPanel Orientation="Horizontal" Spacing="5">
-							<TextBox Text="{Binding InputPath}" Watermark="Input file path" HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="140"></TextBox>
+							<TextBox Text="{Binding InputPath}" Watermark="Input file path" HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="180"></TextBox>
 							<Button Command="{Binding OpenDialogCommand}" HorizontalAlignment="Center" Height="35" Width="35">
 								<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
 							</Button>
@@ -41,7 +41,7 @@
 					<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
 						<TextBlock HorizontalAlignment="Left">Output Path:</TextBlock>
 						<StackPanel Orientation="Horizontal" Spacing="5">
-							<TextBox Text="{Binding OutputPath}" Watermark="Output path" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="140"/>
+							<TextBox Text="{Binding OutputPath}" Watermark="Output path" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="180"/>
 							<Button Command="{Binding ChooseOutputCommand}" HorizontalAlignment="Center" Height="35" Width="35">
 								<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
 							</Button>
