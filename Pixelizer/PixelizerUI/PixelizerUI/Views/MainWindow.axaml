@@ -32,7 +32,7 @@
 					<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
 						<TextBlock HorizontalAlignment="Left">Input Path:</TextBlock>
 						<StackPanel Orientation="Horizontal" Spacing="5">
-							<TextBox Text="{Binding InputImage}" Watermark="Input file path" HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="140"></TextBox>
+							<TextBox Text="{Binding InputPath}" Watermark="Input file path" HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="140"></TextBox>
 							<Button Command="{Binding OpenDialogCommand}" HorizontalAlignment="Center" Height="35" Width="35">
 								<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
 							</Button>
@@ -48,13 +48,16 @@
 						</StackPanel>
 					</StackPanel>
 					<StackPanel>
+						<TextBlock>Pixelize Factor:</TextBlock>
 						<StackPanel Orientation="Horizontal" Spacing="5">
-							<TextBlock>Pixelize Factor:</TextBlock>
-							<TextBlock Text="{Binding Factor}"></TextBlock>
+							<Slider Minimum="1" Maximum="50" Value="{Binding Factor}" Width="100"></Slider>
+							<NumericUpDown Value="{Binding Factor}" Height="20" Width="110" VerticalContentAlignment="Center"
+										   HorizontalContentAlignment="Center"
+										   Minimum="1" Maximum="50" AllowSpin="True"
+										   >
+							</NumericUpDown>					
 						</StackPanel>
-						<Slider Minimum="1" Maximum="50" Value="{Binding Factor}"></Slider>
 					</StackPanel>
-
 
 					<Button Command="{Binding PixelizeCommand}" HorizontalAlignment="Center" MinWidth="140">
 						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
@@ -62,14 +65,29 @@
 							<TextBlock>Pixelize</TextBlock>
 						</StackPanel>
 					</Button>
+					<ToggleSwitch HorizontalAlignment="Center" IsEnabled="{Binding WasPixelized}" OnContent="Normal" OffContent="Pixelized" IsChecked="{Binding IsComparing}">
+						
+					</ToggleSwitch>
 				</StackPanel>
-				<Panel >
-					<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}"></Image>
+				<Panel>
+					<Panel>
+						<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Left" IsVisible="{Binding !IsComparing}"/>
+						<Image Source="{Binding InputImage}" Width="{Binding Width}" Height="{Binding Height}" IsVisible="{Binding IsComparing}" HorizontalAlignment="Right"/>
+					</Panel>
 				</Panel>
 			</StackPanel>
-			<NotificationCard MaxHeight="100" VerticalAlignment="Bottom"  IsVisible="{Binding ActiveNotification.Visibility}">
-				<TextBlock Margin="10">Error</TextBlock>
-			</NotificationCard>
+
+			<StackPanel Orientation="Vertical" VerticalAlignment="Bottom">
+				<ListBox Items="{Binding Notifications}" IsHitTestVisible="False" Background="Transparent">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<NotificationCard BorderBrush="Red">
+								<TextBlock Margin="10" Text="{Binding Message}"></TextBlock>
+							</NotificationCard>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</StackPanel>
 		</Panel>
 	</Panel>
 </Window>

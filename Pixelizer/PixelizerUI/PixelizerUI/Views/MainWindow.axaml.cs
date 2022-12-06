@@ -1,4 +1,6 @@
 using Avalonia.Controls;
+using Avalonia.Controls.Notifications;
+using PixelizerUI.ViewModels;
 
 namespace PixelizerUI.Views
 {

@@ -1,10 +1,12 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 using Avalonia.Media.Imaging;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PixelizerUI.Views;
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -23,13 +25,16 @@ namespace PixelizerUI.ViewModels
     public partial class MainWindowViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string _inputImage;
+        private string _inputPath;
 
         [ObservableProperty]
         private string _outputPath;
 
         [ObservableProperty]
         private Bitmap _image;
+
+        [ObservableProperty]
+        private Bitmap _inputImage;
 
         [ObservableProperty]
         private double _width;
@@ -41,7 +46,12 @@ namespace PixelizerUI.ViewModels
         private int _factor = 5;
 
         [ObservableProperty]
-        private Notif _activeNotification = new();
+        private bool _isComparing;
+
+        [ObservableProperty]
+        private bool _wasPixelized = false;
+
+        public ObservableCollection<Notification> Notifications { get; } = new();
 
         public MainWindowViewModel()
         {
@@ -72,7 +82,7 @@ namespace PixelizerUI.ViewModels
 
             if (result is not null && result.Length is 1)
             {
-                InputImage = result[0];
+                InputPath = result[0];
             }
         }
 
@@ -131,7 +141,7 @@ namespace PixelizerUI.ViewModels
             }
         }
 
-        partial void OnInputImageChanged(string value)
+        partial void OnInputPathChanged(string value)
         {
             try
             {
@@ -142,15 +152,23 @@ namespace PixelizerUI.ViewModels
             {
                 Debug.WriteLine("Could create image!");
 
-                ActiveNotification.Content = new Notification("Error", "Could not locate image", NotificationType.Error, TimeSpan.FromSeconds(2));
-                ActiveNotification.Visibility = true;
+                Notification notif = new("Error", $"Path: {value} is not a valid image", NotificationType.Error);
+                Notifications.Add(notif);
+
+                DispatcherTimer timer = new(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, (sender, args) =>
+                {
+                    Notifications.Remove(notif);
+                    (sender as DispatcherTimer).Stop();
+                });
+
+                timer.Start();
             }
         }
 
         [RelayCommand]
         public async Task Pixelize()
         {
-            if (string.IsNullOrWhiteSpace(OutputPath) || string.IsNullOrWhiteSpace(InputImage))
+            if (string.IsNullOrWhiteSpace(OutputPath) || string.IsNullOrWhiteSpace(InputPath))
             {
                 return;
             }
@@ -162,7 +180,7 @@ namespace PixelizerUI.ViewModels
                 StartInfo = new ProcessStartInfo()
                 {
                     FileName = Path.GetFullPath(processPath),
-                    Arguments = $"\"{InputImage}\" \"{OutputPath}\" {Factor}",
+                    Arguments = $"\"{InputPath}\" \"{OutputPath}\" {Factor}",
                 }
             };
 
@@ -170,6 +188,15 @@ namespace PixelizerUI.ViewModels
             {
                 await process.WaitForExitAsync();
                 Image = new Bitmap(OutputPath);
+                WasPixelized = true;
+            }
+        }
+
+        partial void OnIsComparingChanged(bool value)
+        {
+            if (value)
+            {
+                InputImage = new Bitmap(InputPath);
             }
         }
 
