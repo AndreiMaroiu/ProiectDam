@@ -12,9 +12,9 @@
 		Background="Transparent"
 		ExtendClientAreaToDecorationsHint="True">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
 
 	<Panel>
 		<ExperimentalAcrylicBorder IsHitTestVisible="False">
@@ -55,7 +55,7 @@
 										   HorizontalContentAlignment="Center"
 										   Minimum="1" Maximum="50" AllowSpin="True"
 										   >
-							</NumericUpDown>					
+							</NumericUpDown>
 						</StackPanel>
 					</StackPanel>
 
@@ -65,14 +65,18 @@
 							<TextBlock>Pixelize</TextBlock>
 						</StackPanel>
 					</Button>
-					<ToggleSwitch HorizontalAlignment="Center" IsEnabled="{Binding WasPixelized}" OnContent="Normal" OffContent="Pixelized" IsChecked="{Binding IsComparing}">
-						
+					<ToggleSwitch HorizontalAlignment="Center" IsEnabled="{Binding WasPixelized}" OnContent="Comparing" OffContent="Compare" IsChecked="{Binding IsComparing}">
+
 					</ToggleSwitch>
+					<Slider Name="WidthSlider" Minimum="0" Maximum="{Binding Width}" IsEnabled="{Binding IsComparing}"></Slider>
 				</StackPanel>
 				<Panel>
 					<Panel>
-						<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Left" IsVisible="{Binding !IsComparing}"/>
-						<Image Source="{Binding InputImage}" Width="{Binding Width}" Height="{Binding Height}" IsVisible="{Binding IsComparing}" HorizontalAlignment="Right"/>
+						<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Right"/>
+						<Viewbox Stretch="UniformToFill" Width="{Binding #WidthSlider.Value}" HorizontalAlignment="Left">
+							<Image Source="{Binding InputImage}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Left"/>
+						</Viewbox>
+
 					</Panel>
 				</Panel>
 			</StackPanel>
