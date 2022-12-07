@@ -51,6 +51,9 @@ namespace PixelizerUI.ViewModels
         [ObservableProperty]
         private bool _wasPixelized = false;
 
+        [ObservableProperty]
+        private int _widthSliderValue;
+
         public ObservableCollection<Notification> Notifications { get; } = new();
 
         public MainWindowViewModel()
@@ -197,6 +200,10 @@ namespace PixelizerUI.ViewModels
             if (value)
             {
                 InputImage = new Bitmap(InputPath);
+            }
+            else
+            {
+                WidthSliderValue = 0;
             }
         }
 

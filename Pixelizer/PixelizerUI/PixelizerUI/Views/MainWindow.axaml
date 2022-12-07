@@ -68,12 +68,12 @@
 					<ToggleSwitch HorizontalAlignment="Center" IsEnabled="{Binding WasPixelized}" OnContent="Comparing" OffContent="Compare" IsChecked="{Binding IsComparing}">
 
 					</ToggleSwitch>
-					<Slider Name="WidthSlider" Minimum="0" Maximum="{Binding Width}" IsEnabled="{Binding IsComparing}"></Slider>
+					<Slider Name="WidthSlider" Value="{Binding WidthSliderValue}" Minimum="0" Maximum="{Binding Width}" IsEnabled="{Binding IsComparing}"></Slider>
 				</StackPanel>
 				<Panel>
 					<Panel>
 						<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Right"/>
-						<Viewbox Stretch="UniformToFill" Width="{Binding #WidthSlider.Value}" HorizontalAlignment="Left">
+						<Viewbox Stretch="UniformToFill" Width="{Binding WidthSliderValue}" HorizontalAlignment="Left">
 							<Image Source="{Binding InputImage}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Left"/>
 						</Viewbox>
 
