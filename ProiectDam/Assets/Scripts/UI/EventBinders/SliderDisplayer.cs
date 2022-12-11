@@ -4,13 +4,17 @@ using UnityEngine.UI;
 
 namespace UI.EventBinders
 {
+    [RequireComponent(typeof(Slider))]
     public class SliderDisplayer : MonoBehaviour
     {
         [SerializeField] private CappedIntEvent _source;
-        [SerializeField] private Slider _target;
+        
+        private Slider _target;
 
         private void Start()
         {
+            _target = GetComponent<Slider>();
+
             _source.OnValueChanged += OnValueChanged;
             _source.OnMaxValueChanged += OnMaxValueChanged;
 

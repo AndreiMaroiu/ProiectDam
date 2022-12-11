@@ -17,6 +17,7 @@
 	</Design.DataContext>
 
 	<Panel>
+		<!--App Border-->
 		<ExperimentalAcrylicBorder IsHitTestVisible="False">
 			<ExperimentalAcrylicBorder.Material>
 				<ExperimentalAcrylicMaterial
@@ -26,6 +27,8 @@
 					MaterialOpacity="0.65" />
 			</ExperimentalAcrylicBorder.Material>
 		</ExperimentalAcrylicBorder>
+		
+		<!--Main Content-->
 		<Panel>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
 				<StackPanel VerticalAlignment="Center" Spacing="10" Margin="15, 0">
@@ -81,6 +84,7 @@
 				</Panel>
 			</StackPanel>
 
+			<!--Notifications-->
 			<StackPanel Orientation="Vertical" VerticalAlignment="Bottom">
 				<ListBox Items="{Binding Notifications}" IsHitTestVisible="False" Background="Transparent">
 					<ListBox.ItemTemplate>
