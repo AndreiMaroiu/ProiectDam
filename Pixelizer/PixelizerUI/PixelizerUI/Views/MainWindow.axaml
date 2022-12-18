@@ -16,6 +16,12 @@
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
 
+	<Window.Styles>
+		<Style Selector="Window[WindowState=Maximized]">
+			<Setter Property="Padding" Value="8"></Setter>
+		</Style>
+	</Window.Styles>
+
 	<Panel>
 		<!--App Border-->
 		<ExperimentalAcrylicBorder IsHitTestVisible="False">
@@ -74,10 +80,10 @@
 					<Slider Name="WidthSlider" Value="{Binding WidthSliderValue}" Minimum="0" Maximum="{Binding Width}" IsEnabled="{Binding IsComparing}"></Slider>
 				</StackPanel>
 				<Panel>
-					<Panel>
+					<Panel IsHitTestVisible="False">
 						<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Right"/>
 						<Viewbox Stretch="UniformToFill" Width="{Binding WidthSliderValue}" HorizontalAlignment="Left">
-							<Image Source="{Binding InputImage}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Left"/>
+							<Image Source="{Binding InputImage}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
 						</Viewbox>
 
 					</Panel>
