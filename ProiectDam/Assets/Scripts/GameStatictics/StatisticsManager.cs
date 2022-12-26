@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using BinaryReader = Utilities.BinaryReader;
 
@@ -10,6 +12,8 @@ namespace GameStatistics
         private readonly string _statsPath;
         private readonly string _moneyPath;
 
+        private readonly Dictionary<Type, object> _shared = new();
+
         public StatisticsManager()
         {
             _statsPath = Application.persistentDataPath + "/Statistics.dat";
@@ -18,13 +22,32 @@ namespace GameStatistics
 
         #region Public Methods
 
-        public StatsHandler<Statistics> LoadStats() => LoadHandler<Statistics>(_statsPath);
+        public PersistentHandler<Statistics> LoadStats() => LoadHandler<Statistics>(_statsPath);
 
-        public StatsHandler<PlayerMoney> LoadMoney() => LoadHandler<PlayerMoney>(_moneyPath);
+        public PersistentHandler<PlayerMoney> LoadMoney() => LoadHandler<PlayerMoney>(_moneyPath);
 
         public void Save(Statistics stats) => Save(stats, _statsPath);
 
         public void Save(PlayerMoney money) => Save(money, _moneyPath);
+
+        public PersistentHandler<T> LoadShared<T>() where T : new()
+        {
+            if (_shared.ContainsKey(typeof(T)))
+            {
+                return new PersistentHandler<T>((T)_shared[typeof(T)], GetPersistentPath(typeof(T)));
+            }
+            else
+            {
+                var handler = LoadHandler<T>(GetPersistentPath(typeof(T)));
+                _shared[typeof(T)] = handler.Data;
+                return handler;
+            }
+        }
+
+        private static string GetPersistentPath(Type type)
+        {
+            return $"{Application.persistentDataPath}/{type.Name}.dat";
+        }
 
         #endregion
 
@@ -35,16 +58,10 @@ namespace GameStatistics
             BinaryReader.Write(path, data);
         }
 
-        public StatsHandler<T> LoadHandler<T>(string path) where T : new()
+        internal PersistentHandler<T> LoadHandler<T>(string path) where T : new()
         {
             BinaryReader.TryRead(path, out T result);
-            return new(result, this, path);
-        }
-
-        public T Read<T>(string path) where T : new()
-        {
-            BinaryReader.TryRead(path, out T result);
-            return result;
+            return new(result, path);
         }
 
         #endregion

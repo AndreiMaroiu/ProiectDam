@@ -56,6 +56,8 @@
 							</Button>
 						</StackPanel>
 					</StackPanel>
+
+					<Button Command="{Binding TryNativePixelize}">Try Create from buffer</Button>
 					<StackPanel>
 						<TextBlock>Pixelize Factor:</TextBlock>
 						<StackPanel Orientation="Horizontal" Spacing="5">

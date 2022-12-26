@@ -25,7 +25,7 @@ namespace Gameplay.Merchant
         private bool _canBuy = true;
         private Item[] _itemsToShow;
         private bool _isOpen = false;
-        private StatsHandler<MerchantData> _saveData;
+        private PersistentHandler<MerchantData> _saveData;
 
         private ButtonEvent.ButtonInfo _buttonInfo;
 
@@ -76,7 +76,7 @@ namespace Gameplay.Merchant
 
             _itemsEvent.OnItemBought += OnBuy;
             _itemsToShow = GenerateRandomItemList();
-            _saveData = StatisticsManager.Instance.LoadHandler<MerchantData>(Application.persistentDataPath + "/MerchantData.dat");
+            _saveData = StatisticsManager.Instance.LoadShared<MerchantData>();
             _buttonInfo = new("Buy", OnClick);
         }
 

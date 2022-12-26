@@ -9,5 +9,6 @@
     <Application.Styles>
         <FluentTheme Mode="Dark"/>
 		<StyleInclude Source="avares://Material.Icons.Avalonia/App.xaml" />
+		<StyleInclude Source="avares://FluentAvalonia.UI.Windowing/Styles/FAWindowingStyles.axaml" />
     </Application.Styles>
 </Application>

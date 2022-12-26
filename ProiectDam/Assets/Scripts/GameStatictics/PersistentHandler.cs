@@ -2,18 +2,16 @@ using System;
 
 namespace GameStatistics
 {
-    public class StatsHandler<T> : IDisposable
+    public class PersistentHandler<T> : IDisposable
     {
-        private readonly StatisticsManager _manager;
         private readonly string _path;
         private readonly T _data;
 
         private bool _disposed;
 
-        internal StatsHandler(T data, StatisticsManager manager, string savePath)
+        internal PersistentHandler(T data, string savePath)
         {
             _data = data;
-            _manager = manager;
             _path = savePath;
         }
 
@@ -21,14 +19,14 @@ namespace GameStatistics
 
         public void Dispose()
         {
-            _manager.Save(_data, _path);
+            StatisticsManager.Instance.Save(_data, _path);
 
             _disposed = true;
         }
 
-        public static implicit operator T(StatsHandler<T> handler) => handler.Data;
+        public static implicit operator T(PersistentHandler<T> handler) => handler.Data;
 
-        ~StatsHandler()
+        ~PersistentHandler()
         {
             if (_disposed)
             {

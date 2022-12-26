@@ -30,7 +30,7 @@ namespace Gameplay.Managers
         {
             _eventTriggered = true;
 
-            using StatsHandler<Statistics> stats = StatisticsManager.Instance.LoadStats();
+            using PersistentHandler<Statistics> stats = StatisticsManager.Instance.LoadStats();
 
             stats.Data.AddLoss();
 
@@ -52,7 +52,7 @@ namespace Gameplay.Managers
             float timeScale = Time.timeScale;
             string footer = null;
 
-            using StatsHandler<Statistics> stats = StatisticsManager.Instance.LoadStats();
+            using PersistentHandler<Statistics> stats = StatisticsManager.Instance.LoadStats();
             stats.Data.AddWin();
             
             if (_scoreEvent > stats.Data.Highscore)
