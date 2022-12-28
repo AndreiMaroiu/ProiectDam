@@ -1,9 +1,6 @@
 ﻿using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.ReactiveUI;
 using System;
-using FluentAvalonia.UI;
-using FluentAvalonia.UI.Windowing;
 
 namespace PixelizerUI
 {
@@ -21,6 +18,6 @@ namespace PixelizerUI
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .LogToTrace()
-                .UseFAWindowing();
+                .UseReactiveUI();
     }
 }

@@ -15,15 +15,6 @@ using System.Threading.Tasks;
 
 namespace PixelizerUI.ViewModels
 {
-    public partial class Notif : ObservableObject
-    {
-        [ObservableProperty]
-        private Notification _content;
-
-        [ObservableProperty]
-        private bool _visibility;
-    }
-
     public partial class MainWindowViewModel : ObservableObject
     {
         [ObservableProperty]
@@ -61,6 +52,8 @@ namespace PixelizerUI.ViewModels
         public MainWindowViewModel()
         {
             TopLevel.ClientSizeProperty.Changed.Subscribe(new Observer(this));
+
+            Reset();
         }
 
         [RelayCommand]
@@ -148,25 +141,21 @@ namespace PixelizerUI.ViewModels
 
         partial void OnInputPathChanged(string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                return;
+            }
+
             try
             {
                 Image = new Bitmap(value);
                 Resize();
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 Debug.WriteLine("Could create image!");
 
-                Notification notif = new("Error", $"Path: {value} is not a valid image", NotificationType.Error);
-                Notifications.Add(notif);
-
-                DispatcherTimer timer = new(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, (sender, args) =>
-                {
-                    Notifications.Remove(notif);
-                    (sender as DispatcherTimer).Stop();
-                });
-
-                timer.Start();
+                MainWindow.Manager.Show(new Notification("Error", $"Path: {value} is not a valid image", NotificationType.Error));
             }
         }
 
@@ -175,35 +164,22 @@ namespace PixelizerUI.ViewModels
         {
             if (string.IsNullOrWhiteSpace(OutputPath) || string.IsNullOrWhiteSpace(InputPath))
             {
+                MainWindow.Manager.Show(new Notification("Cannot pixelize", "Input or Output path are not valid", NotificationType.Error));
                 return;
             }
 
-            const string processPath = "./python-exe/main.exe";
+            InputImage = new Bitmap(InputPath);
 
-            Process process = new()
-            {
-                StartInfo = new ProcessStartInfo()
-                {
-                    FileName = Path.GetFullPath(processPath),
-                    Arguments = $"\"{InputPath}\" \"{OutputPath}\" {Factor}",
-                }
-            };
+            var result = await Dispatcher.UIThread.InvokeAsync(TryNativePixelize);
 
-            if (process.Start())
-            {
-                await process.WaitForExitAsync();
-                Image = new Bitmap(OutputPath);
-                WasPixelized = true;
-            }
+            Image = result;
+
+            WasPixelized = true;
         }
 
         partial void OnIsComparingChanged(bool value)
         {
-            if (value)
-            {
-                InputImage = new Bitmap(InputPath);
-            }
-            else
+            if (!value)
             {
                 WidthSliderValue = 0;
             }
@@ -211,72 +187,45 @@ namespace PixelizerUI.ViewModels
 
         public MainWindow MainWindow { get; set; }
 
-        [RelayCommand]
-        public unsafe void TryNativePixelize()
+        
+        private unsafe Bitmap TryNativePixelize()
         {
-            using var memoryStream = new MemoryStream();
-            Image.Save(memoryStream);
+            using MemoryStream memoryStream = new();
+            InputImage.Save(memoryStream);
             memoryStream.Seek(0, SeekOrigin.Begin);
-            var writeableBitmap = WriteableBitmap.Decode(memoryStream);
+            WriteableBitmap writeableBitmap = WriteableBitmap.Decode(memoryStream);
             using ILockedFramebuffer buffer = writeableBitmap.Lock();
             PixelFormat format = buffer.Format;
             Debug.Assert(format is PixelFormat.Bgra8888);
 
             PixelMatrix matrix = new(buffer.Address, buffer.Size);
 
-            for (int i = 0; i < Image.PixelSize.Height; i++)
+            uint blockSize = (uint)Factor;
+
+            for (uint row = 0, endRow = blockSize; row < Image.PixelSize.Height; row += blockSize, endRow += blockSize)
             {
-                for (int j = 0; j < Image.PixelSize.Width; j++)
+                for (uint column = 0, endColumn = blockSize; column < Image.PixelSize.Width; column += blockSize, endColumn += blockSize)
                 {
-                    int* pixelColor = matrix[i, j];
-
-                    var color = NativeColor.FromInt(pixelColor);
-
-                    *pixelColor = new NativeColor()
-                    {
-                        Red = color.Red,
-                        Alpha = byte.MaxValue,
-                    }.ToInt();
+                    matrix.AverageColor(row, endRow, column, endColumn);
                 }
             }
 
-            //writeableBitmap.Save(OutputPath);
+            writeableBitmap.Save(OutputPath);
 
-            Image = writeableBitmap;
+            MainWindow.Manager.Show(new Notification("Image Pixelized!", "Image was pixelized with succes!", NotificationType.Success));
 
-            //using var memoryStream = new MemoryStream();
-            //Image.Save(memoryStream);
-            //memoryStream.Seek(0, SeekOrigin.Begin);
-            //var writeableBitmap = WriteableBitmap.Decode(memoryStream);
-            //using var lockedBitmap = writeableBitmap.Lock();
+            return writeableBitmap;
+        }
 
-            //byte* bmpPtr = (byte*)lockedBitmap.Address;
-            //int width = writeableBitmap.PixelSize.Width;
-            //int height = writeableBitmap.PixelSize.Height;
-            //byte* tempPtr;
-
-            //for (int row = 0; row < height; row++)
-            //{
-            //    for (int col = 0; col < width; col++)
-            //    {
-            //        tempPtr = bmpPtr;
-            //        byte red = *bmpPtr++;
-            //        byte green = *bmpPtr++;
-            //        byte blue = *bmpPtr++;
-            //        byte alpha = *bmpPtr++;
-
-            //        byte result = (byte)(0.2126 * red + 0.7152 * green + 0.0722 * blue);
-            //        // byte result = (byte)((red + green + blue) / 3);
-
-            //        bmpPtr = tempPtr;
-            //        *bmpPtr++ = result; // red
-            //        *bmpPtr++ = result; // green
-            //        *bmpPtr++ = result; // blue
-            //        *bmpPtr++ = alpha; // alpha
-            //    }
-            //}
-
-            //Image = writeableBitmap;
+        [RelayCommand]
+        public void Reset()
+        {
+            InputPath = string.Empty;
+            OutputPath = string.Empty;
+            InputImage = null;
+            Image = null;
+            Factor = 5;
+            WasPixelized = false;
         }
     }
 }

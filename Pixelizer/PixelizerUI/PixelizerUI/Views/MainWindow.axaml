@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+		xmlns:ui="using:FluentAvalonia.UI.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="PixelizerUI.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
@@ -35,75 +36,103 @@
 		</ExperimentalAcrylicBorder>
 		
 		<!--Main Content-->
-		<Panel>
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
-				<StackPanel VerticalAlignment="Center" Spacing="10" Margin="15, 0">
-					<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
-						<TextBlock HorizontalAlignment="Left">Input Path:</TextBlock>
-						<StackPanel Orientation="Horizontal" Spacing="5">
-							<TextBox Text="{Binding InputPath}" Watermark="Input file path" HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="180"></TextBox>
-							<Button Command="{Binding OpenDialogCommand}" HorizontalAlignment="Center" Height="35" Width="35">
-								<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
-							</Button>
-						</StackPanel>
-					</StackPanel>
-					<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
-						<TextBlock HorizontalAlignment="Left">Output Path:</TextBlock>
-						<StackPanel Orientation="Horizontal" Spacing="5">
-							<TextBox Text="{Binding OutputPath}" Watermark="Output path" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="180"/>
-							<Button Command="{Binding ChooseOutputCommand}" HorizontalAlignment="Center" Height="35" Width="35">
-								<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
-							</Button>
-						</StackPanel>
-					</StackPanel>
+		<SplitView IsPaneOpen="True" OpenPaneLength="275" DisplayMode="Inline" PaneBackground="#2f2f2f">
+			<SplitView.Pane>
+				<DockPanel>
+					<!--Menu Items-->
+					<Menu DockPanel.Dock="Top" HorizontalAlignment="Left" VerticalAlignment="Top">
+						<MenuItem Header="File">
+							<MenuItem.Icon>
+								<avalonia:MaterialIcon Kind="Settings"></avalonia:MaterialIcon>
+							</MenuItem.Icon>
+							<MenuItem Header="Clear" Command="{Binding ResetCommand}">
+								<MenuItem.Icon>
+									<avalonia:MaterialIcon Kind="Autorenew"></avalonia:MaterialIcon>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Edit">
+							<MenuItem Header="Copy Output Image">
+								<MenuItem.Icon>
+									<avalonia:MaterialIcon Kind="ContentCopy"></avalonia:MaterialIcon>
+								</MenuItem.Icon>
+							</MenuItem>
+							<Separator></Separator>
+							<MenuItem Header="Paste Input Image">
+								<MenuItem.Icon>
+									<avalonia:MaterialIcon Kind="ContentPaste"></avalonia:MaterialIcon>
+								</MenuItem.Icon>
+							</MenuItem>
+						</MenuItem>
+					</Menu>
 
-					<Button Command="{Binding TryNativePixelize}">Try Create from buffer</Button>
-					<StackPanel>
-						<TextBlock>Pixelize Factor:</TextBlock>
-						<StackPanel Orientation="Horizontal" Spacing="5">
-							<Slider Minimum="1" Maximum="50" Value="{Binding Factor}" Width="100"></Slider>
-							<NumericUpDown Value="{Binding Factor}" Height="20" Width="110" VerticalContentAlignment="Center"
-										   HorizontalContentAlignment="Center"
-										   Minimum="1" Maximum="50" AllowSpin="True"
+					<!--Options Panel-->
+					<StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Spacing="10" Margin="25, 0">
+
+						<!--Input Path-->
+						<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
+							<TextBlock HorizontalAlignment="Left">Input Path:</TextBlock>
+							<StackPanel Orientation="Horizontal" Spacing="5">
+								<TextBox Text="{Binding InputPath}" Watermark="Input file path" HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="180"></TextBox>
+								<Button Command="{Binding OpenDialogCommand}" HorizontalAlignment="Center" Height="35" Width="35">
+									<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
+								</Button>
+							</StackPanel>
+						</StackPanel>
+
+						<!--Output Path-->
+						<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
+							<TextBlock HorizontalAlignment="Left">Output Path:</TextBlock>
+							<StackPanel Orientation="Horizontal" Spacing="5">
+								<TextBox Text="{Binding OutputPath}" Watermark="Output path" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="180"/>
+								<Button Command="{Binding ChooseOutputCommand}" HorizontalAlignment="Center" Height="35" Width="35">
+									<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
+								</Button>
+							</StackPanel>
+						</StackPanel>
+
+						<!--Pixel Factor-->
+						<StackPanel>
+							<TextBlock>Pixelize Factor:</TextBlock>
+							<StackPanel Orientation="Horizontal" Spacing="5">
+								<Slider Minimum="1" Maximum="50" Value="{Binding Factor}" Width="100"></Slider>
+								<NumericUpDown Value="{Binding Factor}" Height="20" Width="110" VerticalContentAlignment="Center"
+											   HorizontalContentAlignment="Center"
+											   Minimum="1" Maximum="50" AllowSpin="True"
 										   >
-							</NumericUpDown>
+								</NumericUpDown>
+							</StackPanel>
 						</StackPanel>
+
+						<!--Pixelize Command-->
+						<Button Command="{Binding PixelizeCommand}" HorizontalAlignment="Center" MinWidth="140">
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+								<avalonia:MaterialIcon Kind="DeathStarVariant"></avalonia:MaterialIcon>
+								<TextBlock>Pixelize</TextBlock>
+							</StackPanel>
+						</Button>
+
+						<!--Comparing Images Options-->
+						<ToggleSwitch HorizontalAlignment="Center" IsEnabled="{Binding WasPixelized}" OnContent="Comparing" OffContent="Compare" IsChecked="{Binding IsComparing}"/>
+
+						<Slider Name="WidthSlider" Value="{Binding WidthSliderValue}" Minimum="0" Maximum="{Binding Width}" IsEnabled="{Binding IsComparing}"></Slider>
 					</StackPanel>
+				</DockPanel>
+				
+					
+			</SplitView.Pane>
 
-					<Button Command="{Binding PixelizeCommand}" HorizontalAlignment="Center" MinWidth="140">
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
-							<avalonia:MaterialIcon Kind="DeathStarVariant"></avalonia:MaterialIcon>
-							<TextBlock>Pixelize</TextBlock>
-						</StackPanel>
-					</Button>
-					<ToggleSwitch HorizontalAlignment="Center" IsEnabled="{Binding WasPixelized}" OnContent="Comparing" OffContent="Compare" IsChecked="{Binding IsComparing}">
+			<!--Images Panel-->
+			<Panel>
+				<Panel IsHitTestVisible="False">
 
-					</ToggleSwitch>
-					<Slider Name="WidthSlider" Value="{Binding WidthSliderValue}" Minimum="0" Maximum="{Binding Width}" IsEnabled="{Binding IsComparing}"></Slider>
-				</StackPanel>
-				<Panel>
-					<Panel IsHitTestVisible="False">
-						<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Right"/>
-						<Viewbox Stretch="UniformToFill" Width="{Binding WidthSliderValue}" HorizontalAlignment="Left">
-							<Image Source="{Binding InputImage}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
-						</Viewbox>
+					<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Right"/>
+					<Viewbox Stretch="UniformToFill" Width="{Binding WidthSliderValue}" HorizontalAlignment="Left">
+						<Image Source="{Binding InputImage}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+					</Viewbox>
 
-					</Panel>
 				</Panel>
-			</StackPanel>
-
-			<!--Notifications-->
-			<StackPanel Orientation="Vertical" VerticalAlignment="Bottom">
-				<ListBox Items="{Binding Notifications}" IsHitTestVisible="False" Background="Transparent">
-					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<NotificationCard BorderBrush="Red">
-								<TextBlock Margin="10" Text="{Binding Message}"></TextBlock>
-							</NotificationCard>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
-			</StackPanel>
-		</Panel>
+			</Panel>
+		</SplitView>
 	</Panel>
 </Window>

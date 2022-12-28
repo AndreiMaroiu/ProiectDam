@@ -1,15 +1,9 @@
-﻿using Avalonia.Media;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace PixelizerUI.Models
 {
     [DebuggerDisplay("b: {Blue} g: {Green} r: {Red} a: {Alpha}")]
-    internal unsafe struct NativeColor
+    public unsafe struct NativeColor
     {
         public byte Blue { get; set; }
         public byte Green { get; set; }
@@ -21,10 +15,10 @@ namespace PixelizerUI.Models
             int result = 0;
             byte* temp = (byte*)&result;
 
-            *temp++ = Blue;
-            *temp++ = Green;
-            *temp++ = Red;
-            *temp++ = Alpha;
+            temp[0] = Blue;
+            temp[1] = Green;
+            temp[2] = Red;
+            temp[3] = Alpha;
 
             return result;
         }
@@ -35,10 +29,10 @@ namespace PixelizerUI.Models
 
             return new NativeColor()
             {
-                Blue = *current++,
-                Green = *current++,
-                Red = *current++,
-                Alpha = *current++,
+                Blue = current[0],
+                Green = current[1],
+                Red = current[2],
+                Alpha = current[3],
             };
         }
     }

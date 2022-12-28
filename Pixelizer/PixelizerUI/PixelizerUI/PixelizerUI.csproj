@@ -31,8 +31,8 @@
 		<PackageReference Include="Material.Icons.Avalonia" Version="1.2.0" />
 		<PackageReference Include="XamlNameReferenceGenerator" Version="1.5.1" />
 	</ItemGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	<!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 	  <Exec Command="if not exist $(ProjectDir)$(OutDir)python-exe mkdir $(ProjectDir)$(OutDir)python-exe" />
 	  <Exec Command="xcopy /e /y $(SolutionDir)\..\python-exe  $(ProjectDir)$(OutDir)python-exe" />
-	</Target>
+	</Target>-->
 </Project>
