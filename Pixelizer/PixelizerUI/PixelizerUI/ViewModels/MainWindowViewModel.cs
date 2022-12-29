@@ -1,16 +1,17 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
+using Avalonia.Input;
 using Avalonia.Media.Imaging;
-using Avalonia.Platform;
+using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PixelizerUI.Models;
 using PixelizerUI.Views;
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace PixelizerUI.ViewModels
@@ -47,7 +48,7 @@ namespace PixelizerUI.ViewModels
         [ObservableProperty]
         private int _widthSliderValue;
 
-        public ObservableCollection<Notification> Notifications { get; } = new();
+        public MainWindow MainWindow { get; set; }
 
         public MainWindowViewModel()
         {
@@ -59,57 +60,55 @@ namespace PixelizerUI.ViewModels
         [RelayCommand]
         public async Task OpenDialog()
         {
-            OpenFileDialog dialog = new()
+            var result = await MainWindow.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
             {
                 AllowMultiple = false,
                 Title = "Input file location",
-                Filters =
+                FileTypeFilter = new List<FilePickerFileType>
                 {
-                    new FileDialogFilter()
+                    new FilePickerFileType("photos")
                     {
-                        Extensions =
+                        Patterns = new List<string>()
                         {
-                            "png",
-                            "jpg"
-                        }
+                            "*.png",
+                            "*.jpg"
+                        },
                     }
-                }
-            };
+                },
+            });
 
-            string[] result = await dialog.ShowAsync(MainWindow);
-
-            if (result is not null && result.Length is 1)
+            if (result is not null && result.Count is 1)
             {
-                InputPath = result[0];
+                result[0].TryGetUri(out var uri);
+                InputPath = uri.LocalPath;
             }
         }
 
         [RelayCommand]
         public async Task ChooseOutput()
         {
-            SaveFileDialog dialog = new()
+            IStorageFile result = await MainWindow.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions()
             {
                 Title = "Output location",
                 DefaultExtension = ".png",
-                InitialFileName = "output",
-                Filters =
+                SuggestedFileName = "output",
+                ShowOverwritePrompt = true,
+                FileTypeChoices = new List<FilePickerFileType>
                 {
-                    new FileDialogFilter()
+                    new FilePickerFileType("photos")
                     {
-                        Extensions =
+                        Patterns = new List<string>()
                         {
-                            "png",
-                            "jpg"
+                            "*.png",
+                            "*.jpg",
                         }
                     }
                 }
-            };
+            });
 
-            string result = await dialog.ShowAsync(MainWindow);
-
-            if (string.IsNullOrEmpty(result) is false)
+            if (result is not null && result.TryGetUri(out Uri uri))
             {
-                OutputPath = result;
+                OutputPath = uri.LocalPath;
             }
         }
 
@@ -172,9 +171,18 @@ namespace PixelizerUI.ViewModels
 
             var result = await Dispatcher.UIThread.InvokeAsync(TryNativePixelize);
 
-            Image = result;
+            if (!result.IsSuccesul)
+            {
+                MainWindow.Manager.Show(new Notification("Error!", "Image pixelization failed!", NotificationType.Error));
+                return;
+            }
 
+            MainWindow.Manager.Show(new Notification("Image Pixelized!", "Image was pixelized with succes!", NotificationType.Success));
+
+            Image = result.UnscaledResult;
             WasPixelized = true;
+
+            _ = Task.Run(() => result.Result.Save(OutputPath));
         }
 
         partial void OnIsComparingChanged(bool value)
@@ -185,40 +193,21 @@ namespace PixelizerUI.ViewModels
             }
         }
 
-        public MainWindow MainWindow { get; set; }
-
-        
-        private unsafe Bitmap TryNativePixelize()
+        private async Task<PixelizeResult> TryNativePixelize()
         {
-            using MemoryStream memoryStream = new();
-            InputImage.Save(memoryStream);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            WriteableBitmap writeableBitmap = WriteableBitmap.Decode(memoryStream);
-            using ILockedFramebuffer buffer = writeableBitmap.Lock();
-            PixelFormat format = buffer.Format;
-            Debug.Assert(format is PixelFormat.Bgra8888);
-
-            PixelMatrix matrix = new(buffer.Address, buffer.Size);
-
-            uint blockSize = (uint)Factor;
-
-            for (uint row = 0, endRow = blockSize; row < Image.PixelSize.Height; row += blockSize, endRow += blockSize)
+            try
             {
-                for (uint column = 0, endColumn = blockSize; column < Image.PixelSize.Width; column += blockSize, endColumn += blockSize)
-                {
-                    matrix.AverageColor(row, endRow, column, endColumn);
-                }
+                var algorithm = new Pixelizer(Factor);
+                return await algorithm.PixelizeAsync(InputImage);
             }
-
-            writeableBitmap.Save(OutputPath);
-
-            MainWindow.Manager.Show(new Notification("Image Pixelized!", "Image was pixelized with succes!", NotificationType.Success));
-
-            return writeableBitmap;
+            catch (Exception)
+            {
+                return PixelizeResult.Failed;
+            }
         }
 
         [RelayCommand]
-        public void Reset()
+        private void Reset()
         {
             InputPath = string.Empty;
             OutputPath = string.Empty;
@@ -226,6 +215,34 @@ namespace PixelizerUI.ViewModels
             Image = null;
             Factor = 5;
             WasPixelized = false;
+        }
+
+        [RelayCommand]
+        private void ClearOnlyOutput()
+        {
+            OutputPath = string.Empty;
+            WasPixelized = false;
+
+            if (InputImage is not null)
+            {
+                Image = InputImage;
+                InputImage = null;
+            }
+        }
+
+        [RelayCommand]
+        private async Task PasteImage()
+        {
+            if (Application.Current!.Clipboard is { } clipboard)
+            {
+                object data = await clipboard.GetDataAsync(DataFormats.FileNames);
+
+                if (data is List<string> fileNames && fileNames.Count > 0)
+                {
+                    Image = new Bitmap(fileNames[0]);
+                    Resize();
+                }
+            }
         }
     }
 }

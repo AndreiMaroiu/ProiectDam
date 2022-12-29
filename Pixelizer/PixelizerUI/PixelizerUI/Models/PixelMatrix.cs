@@ -1,9 +1,5 @@
 ﻿using Avalonia;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PixelizerUI.Models
 {
@@ -24,13 +20,13 @@ namespace PixelizerUI.Models
             set => *(_array + (i * _size.Width + j)) = value.ToInt();
         }
 
-        public NativeColor this[int i, int j]
-        {
-            get => NativeColor.FromInt(_array + (i * _size.Width + j));
-            set => *(_array + (i * _size.Width + j)) = value.ToInt();
-        }
+        public int GetIntAt(uint i, uint j)
+            => *(_array + (i * _size.Width + j));
 
-        public void AverageColor (uint startRow, uint endRow, uint startColumn, uint endColumn)
+        public void SetIntAt(int value, uint i, uint j)
+            => *(_array + (i * _size.Width + j)) = value;
+
+        public NativeColor AverageColor(uint startRow, uint endRow, uint startColumn, uint endColumn)
         {
             ulong red = 0;
             ulong green = 0;
@@ -54,7 +50,7 @@ namespace PixelizerUI.Models
                 }
             }
 
-            var average = new NativeColor()
+            NativeColor average = new NativeColor()
             {
                 Red = (byte)(red / count),
                 Green = (byte)(green / count),
@@ -62,13 +58,17 @@ namespace PixelizerUI.Models
                 Alpha = (byte)(alpha / count)
             };
 
+            int averageAsInt = average.ToInt();
+
             for (uint i = startRow; i < endRow; i++)
             {
                 for (uint j = startColumn; j < endColumn; j++)
                 {
-                    this[i, j] = average;
+                    SetIntAt(averageAsInt, i, j);
                 }
             }
+
+            return average;
         }
     }
 }

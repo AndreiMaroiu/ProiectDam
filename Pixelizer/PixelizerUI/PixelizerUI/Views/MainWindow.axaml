@@ -45,9 +45,14 @@
 							<MenuItem.Icon>
 								<avalonia:MaterialIcon Kind="Settings"></avalonia:MaterialIcon>
 							</MenuItem.Icon>
-							<MenuItem Header="Clear" Command="{Binding ResetCommand}">
+							<MenuItem Header="Clear all" Command="{Binding ResetCommand}">
 								<MenuItem.Icon>
 									<avalonia:MaterialIcon Kind="Autorenew"></avalonia:MaterialIcon>
+								</MenuItem.Icon>
+							</MenuItem>
+							<MenuItem Header="Clear output only" Command="{Binding ClearOnlyOutputCommand}">
+								<MenuItem.Icon>
+									<avalonia:MaterialIcon Kind="Output"></avalonia:MaterialIcon>
 								</MenuItem.Icon>
 							</MenuItem>
 						</MenuItem>
@@ -58,11 +63,13 @@
 								</MenuItem.Icon>
 							</MenuItem>
 							<Separator></Separator>
-							<MenuItem Header="Paste Input Image">
+							<MenuItem Header="Paste Input Image"  Command="{Binding PasteImageCommand}">
 								<MenuItem.Icon>
 									<avalonia:MaterialIcon Kind="ContentPaste"></avalonia:MaterialIcon>
 								</MenuItem.Icon>
 							</MenuItem>
+						</MenuItem>
+						<MenuItem Header="Settings">
 						</MenuItem>
 					</Menu>
 
@@ -118,19 +125,15 @@
 						<Slider Name="WidthSlider" Value="{Binding WidthSliderValue}" Minimum="0" Maximum="{Binding Width}" IsEnabled="{Binding IsComparing}"></Slider>
 					</StackPanel>
 				</DockPanel>
-				
-					
 			</SplitView.Pane>
 
 			<!--Images Panel-->
 			<Panel>
 				<Panel IsHitTestVisible="False">
-
-					<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Right"/>
+					<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Left"/>
 					<Viewbox Stretch="UniformToFill" Width="{Binding WidthSliderValue}" HorizontalAlignment="Left">
 						<Image Source="{Binding InputImage}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
 					</Viewbox>
-
 				</Panel>
 			</Panel>
 		</SplitView>
