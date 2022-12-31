@@ -1,5 +1,7 @@
 ﻿using Avalonia;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PixelizerUI.Models
 {
@@ -50,7 +52,7 @@ namespace PixelizerUI.Models
                 }
             }
 
-            NativeColor average = new NativeColor()
+            NativeColor average = new()
             {
                 Red = (byte)(red / count),
                 Green = (byte)(green / count),
@@ -69,6 +71,35 @@ namespace PixelizerUI.Models
             }
 
             return average;
+        }
+
+        public NativeColor MostCommonColor(uint startRow, uint endRow, uint startColumn, uint endColumn)
+        {
+            Dictionary<int, uint> mostCommon = new();
+
+            for (uint i = startRow; i < endRow; i++)
+            {
+                for (uint j = startColumn; j < endColumn; j++)
+                {
+                    int color = GetIntAt(i, j);
+
+                    mostCommon.TryGetValue(color, out uint result);
+                    mostCommon[color] = result++;
+                }
+            }
+
+            int resultColor = mostCommon.MaxBy(pair => pair.Value).Key;
+            NativeColor nativeColor = NativeColor.FromInt(&resultColor);
+
+            for (uint i = startRow; i < endRow; i++)
+            {
+                for (uint j = startColumn; j < endColumn; j++)
+                {
+                    SetIntAt(resultColor, i, j);
+                }
+            }
+
+            return nativeColor;
         }
     }
 }

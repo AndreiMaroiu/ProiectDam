@@ -1,5 +1,4 @@
 ﻿using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 using Avalonia.Input;
 using Avalonia.Media.Imaging;
@@ -8,7 +7,7 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PixelizerUI.Models;
-using PixelizerUI.Views;
+using PixelizerUI.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,41 +17,37 @@ namespace PixelizerUI.ViewModels
 {
     public partial class MainWindowViewModel : ObservableObject
     {
-        [ObservableProperty]
-        private string _inputPath;
+        [ObservableProperty] private string _inputPath;
+        [ObservableProperty] private string _outputPath;
+        [ObservableProperty] private Bitmap _image;
+        [ObservableProperty] private Bitmap _inputImage;
+        [ObservableProperty] private double _width;
+        [ObservableProperty] private double _height;
+        [ObservableProperty] private int _factor = 5;
+        [ObservableProperty] private bool _isComparing;
+        [ObservableProperty] private bool _wasPixelized = false;
+        [ObservableProperty] private int _widthSliderValue;
 
-        [ObservableProperty]
-        private string _outputPath;
+        private readonly IStorageProvider _storageProvider;
+        private readonly INotificationManager _notificationManager;
+        private readonly ClientSizeService _clientSizeService;
 
-        [ObservableProperty]
-        private Bitmap _image;
+        private PixelizeResult _lastResult;
 
-        [ObservableProperty]
-        private Bitmap _inputImage;
-
-        [ObservableProperty]
-        private double _width;
-
-        [ObservableProperty]
-        private double _height;
-
-        [ObservableProperty]
-        private int _factor = 5;
-
-        [ObservableProperty]
-        private bool _isComparing;
-
-        [ObservableProperty]
-        private bool _wasPixelized = false;
-
-        [ObservableProperty]
-        private int _widthSliderValue;
-
-        public MainWindow MainWindow { get; set; }
+        public PixelizeSettingsViewModel PixelizeSettings { get; } = new();
 
         public MainWindowViewModel()
         {
-            TopLevel.ClientSizeProperty.Changed.Subscribe(new Observer(this));
+
+        }
+
+        public MainWindowViewModel(IStorageProvider storageProvider, INotificationManager notificationManager, ClientSizeService clientSizeService) : this()
+        {
+            clientSizeService.OnSizeChanged += _ => Resize();
+
+            _storageProvider = storageProvider;
+            _notificationManager = notificationManager;
+            _clientSizeService = clientSizeService;
 
             Reset();
         }
@@ -60,7 +55,7 @@ namespace PixelizerUI.ViewModels
         [RelayCommand]
         public async Task OpenDialog()
         {
-            var result = await MainWindow.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
+            var result = await _storageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
             {
                 AllowMultiple = false,
                 Title = "Input file location",
@@ -87,7 +82,7 @@ namespace PixelizerUI.ViewModels
         [RelayCommand]
         public async Task ChooseOutput()
         {
-            IStorageFile result = await MainWindow.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions()
+            IStorageFile result = await _storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions()
             {
                 Title = "Output location",
                 DefaultExtension = ".png",
@@ -119,15 +114,17 @@ namespace PixelizerUI.ViewModels
                 return;
             }
 
-            if (MainWindow.ClientSize.Height < Image.Size.Height)
+            Size size = _clientSizeService.ClientSize;
+
+            if (size.Height < Image.Size.Height)
             {
-                double multiplier = (Image.Size.Height / MainWindow.ClientSize.Height);
+                double multiplier = (Image.Size.Height / size.Height);
                 Width = Image.Size.Width / multiplier;
                 Height = Image.Size.Height / multiplier;
             }
-            else if (MainWindow.ClientSize.Height > Image.Size.Height)
+            else if (size.Height > Image.Size.Height)
             {
-                double multiplier = (MainWindow.ClientSize.Height / Image.Size.Height);
+                double multiplier = (size.Height / Image.Size.Height);
                 Width = Image.Size.Width * multiplier;
                 Height = Image.Size.Height * multiplier;
             }
@@ -154,7 +151,7 @@ namespace PixelizerUI.ViewModels
             {
                 Debug.WriteLine("Could create image!");
 
-                MainWindow.Manager.Show(new Notification("Error", $"Path: {value} is not a valid image", NotificationType.Error));
+                _notificationManager.Show(new Notification("Error", $"Path: {value} is not a valid image", NotificationType.Error));
             }
         }
 
@@ -163,7 +160,7 @@ namespace PixelizerUI.ViewModels
         {
             if (string.IsNullOrWhiteSpace(OutputPath) || string.IsNullOrWhiteSpace(InputPath))
             {
-                MainWindow.Manager.Show(new Notification("Cannot pixelize", "Input or Output path are not valid", NotificationType.Error));
+                _notificationManager.Show(new Notification("Cannot pixelize", "Input or Output path are not valid", NotificationType.Error));
                 return;
             }
 
@@ -173,21 +170,29 @@ namespace PixelizerUI.ViewModels
 
             if (!result.IsSuccesul)
             {
-                MainWindow.Manager.Show(new Notification("Error!", "Image pixelization failed!", NotificationType.Error));
+                _notificationManager.Show(new Notification("Error!", "Image pixelization failed!", NotificationType.Error));
                 return;
             }
 
-            MainWindow.Manager.Show(new Notification("Image Pixelized!", "Image was pixelized with succes!", NotificationType.Success));
+            _notificationManager.Show(new Notification("Image Pixelized!", "Image was pixelized with succes!", NotificationType.Success));
 
             Image = result.UnscaledResult;
             WasPixelized = true;
+            _lastResult = result;
 
-            _ = Task.Run(() => result.Result.Save(OutputPath));
+            if (PixelizeSettings.AutoSave)
+            {
+                _ = Task.Run(() => result.Result.Save(OutputPath));
+            }
         }
 
         partial void OnIsComparingChanged(bool value)
         {
-            if (!value)
+            if (value)
+            {
+                WidthSliderValue = (int)Width / 2;
+            }
+            else
             {
                 WidthSliderValue = 0;
             }
@@ -197,8 +202,8 @@ namespace PixelizerUI.ViewModels
         {
             try
             {
-                var algorithm = new Pixelizer(Factor);
-                return await algorithm.PixelizeAsync(InputImage);
+                Pixelizer algorithm = new(Factor);
+                return await algorithm.PixelizeAsync(InputImage, PixelizeSettings.Strategy);
             }
             catch (Exception)
             {
@@ -215,6 +220,7 @@ namespace PixelizerUI.ViewModels
             Image = null;
             Factor = 5;
             WasPixelized = false;
+            _lastResult = null;
         }
 
         [RelayCommand]
@@ -243,6 +249,37 @@ namespace PixelizerUI.ViewModels
                     Resize();
                 }
             }
+        }
+
+        [RelayCommand]
+        private async Task Save()
+        {
+            if (WasPixelized is false)
+            {
+                _notificationManager.Show(new Notification("Cannot save", "No pixelized image was created!", NotificationType.Error));
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(OutputPath))
+            {
+                await ChooseOutput();
+            }
+
+            _lastResult.Result.Save(OutputPath);
+        }
+
+        [RelayCommand]
+        private async Task SaveAs()
+        {
+            if (WasPixelized is false)
+            {
+                _notificationManager.Show(new Notification("Cannot save", "No pixelized image was created!", NotificationType.Error));
+                return;
+            }
+
+            await ChooseOutput();
+
+            _lastResult.Result.Save(OutputPath);
         }
     }
 }

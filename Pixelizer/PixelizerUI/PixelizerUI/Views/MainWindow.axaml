@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
 		xmlns:ui="using:FluentAvalonia.UI.Controls"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
         x:Class="PixelizerUI.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="PixelizerUI"
@@ -14,12 +14,15 @@
 		ExtendClientAreaToDecorationsHint="True">
 
 	<Design.DataContext>
-		<vm:MainWindowViewModel/>
+		<vm:MainWindowViewModel></vm:MainWindowViewModel>
 	</Design.DataContext>
 
 	<Window.Styles>
 		<Style Selector="Window[WindowState=Maximized]">
 			<Setter Property="Padding" Value="8"></Setter>
+		</Style>
+		<Style Selector="Panel.comparator">
+			<Setter Property="Cursor" Value="SizeWestEast"></Setter>
 		</Style>
 	</Window.Styles>
 
@@ -34,7 +37,7 @@
 					MaterialOpacity="0.65" />
 			</ExperimentalAcrylicBorder.Material>
 		</ExperimentalAcrylicBorder>
-		
+
 		<!--Main Content-->
 		<SplitView IsPaneOpen="True" OpenPaneLength="275" DisplayMode="Inline" PaneBackground="#2f2f2f">
 			<SplitView.Pane>
@@ -55,6 +58,17 @@
 									<avalonia:MaterialIcon Kind="Output"></avalonia:MaterialIcon>
 								</MenuItem.Icon>
 							</MenuItem>
+							<Separator/>
+							<MenuItem Header="Save" Command="{Binding SaveCommand}">
+								<MenuItem.Icon>
+									<avalonia:MaterialIcon Kind="ContentSave"></avalonia:MaterialIcon>
+								</MenuItem.Icon>
+							</MenuItem>
+							<MenuItem Header="Save as" Command="{Binding SaveAsCommand}">
+								<MenuItem.Icon>
+									<avalonia:MaterialIcon Kind="ContentSaveAll"></avalonia:MaterialIcon>
+								</MenuItem.Icon>
+							</MenuItem>
 						</MenuItem>
 						<MenuItem Header="Edit">
 							<MenuItem Header="Copy Output Image">
@@ -69,71 +83,115 @@
 								</MenuItem.Icon>
 							</MenuItem>
 						</MenuItem>
-						<MenuItem Header="Settings">
+						<MenuItem Header="App Settings">
 						</MenuItem>
 					</Menu>
 
-					<!--Options Panel-->
-					<StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Spacing="10" Margin="25, 0">
+					<ScrollViewer>
+						<!--Options Panel-->
+						<StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Spacing="10" Margin="25, 0">
 
-						<!--Input Path-->
-						<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
-							<TextBlock HorizontalAlignment="Left">Input Path:</TextBlock>
-							<StackPanel Orientation="Horizontal" Spacing="5">
-								<TextBox Text="{Binding InputPath}" Watermark="Input file path" HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="180"></TextBox>
-								<Button Command="{Binding OpenDialogCommand}" HorizontalAlignment="Center" Height="35" Width="35">
-									<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
-								</Button>
+							<!--Input Path-->
+							<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
+								<TextBlock HorizontalAlignment="Left">Input Path:</TextBlock>
+								<StackPanel Orientation="Horizontal" Spacing="5">
+									<TextBox Text="{Binding InputPath}" Watermark="Input file path" HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="180"></TextBox>
+									<Button Command="{Binding OpenDialogCommand}" HorizontalAlignment="Center" Height="35" Width="35">
+										<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
+									</Button>
+								</StackPanel>
 							</StackPanel>
-						</StackPanel>
 
-						<!--Output Path-->
-						<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
-							<TextBlock HorizontalAlignment="Left">Output Path:</TextBlock>
-							<StackPanel Orientation="Horizontal" Spacing="5">
-								<TextBox Text="{Binding OutputPath}" Watermark="Output path" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="180"/>
-								<Button Command="{Binding ChooseOutputCommand}" HorizontalAlignment="Center" Height="35" Width="35">
-									<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
-								</Button>
+							<!--Output Path-->
+							<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="5">
+								<TextBlock HorizontalAlignment="Left">Output Path:</TextBlock>
+								<StackPanel Orientation="Horizontal" Spacing="5">
+									<TextBox Text="{Binding OutputPath}" Watermark="Output path" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="180"/>
+									<Button Command="{Binding ChooseOutputCommand}" HorizontalAlignment="Center" Height="35" Width="35">
+										<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
+									</Button>
+								</StackPanel>
 							</StackPanel>
-						</StackPanel>
 
-						<!--Pixel Factor-->
-						<StackPanel>
-							<TextBlock>Pixelize Factor:</TextBlock>
-							<StackPanel Orientation="Horizontal" Spacing="5">
-								<Slider Minimum="1" Maximum="50" Value="{Binding Factor}" Width="100"></Slider>
-								<NumericUpDown Value="{Binding Factor}" Height="20" Width="110" VerticalContentAlignment="Center"
-											   HorizontalContentAlignment="Center"
-											   Minimum="1" Maximum="50" AllowSpin="True"
+							<!--Pixel Factor-->
+							<StackPanel>
+								<TextBlock>Pixelize Factor:</TextBlock>
+								<StackPanel Orientation="Horizontal" Spacing="5">
+									<Slider Minimum="1" Maximum="50" Value="{Binding Factor}" Width="100"></Slider>
+									<NumericUpDown Value="{Binding Factor}" Height="20" Width="110" VerticalContentAlignment="Center"
+												   HorizontalContentAlignment="Center"
+												   Minimum="1" Maximum="50" AllowSpin="True"
 										   >
-								</NumericUpDown>
+									</NumericUpDown>
+								</StackPanel>
 							</StackPanel>
+
+							<!--Pixelize Command-->
+							<Button Command="{Binding PixelizeCommand}" HorizontalAlignment="Stretch" MinWidth="140">
+								<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+									<avalonia:MaterialIcon Kind="DeathStarVariant"></avalonia:MaterialIcon>
+									<TextBlock>Pixelize</TextBlock>
+								</StackPanel>
+							</Button>
+
+							<!--Comparing Images Options-->
+							<ToggleSwitch HorizontalAlignment="Center" IsEnabled="{Binding WasPixelized}" OnContent="Comparing" OffContent="Compare" IsChecked="{Binding IsComparing}"/>
+
+							<Slider Name="WidthSlider" Value="{Binding WidthSliderValue}" Minimum="0" Maximum="{Binding Width}" IsEnabled="{Binding IsComparing}" IsVisible="{Binding PixelizeSettings.ShowComparatorSlider}"></Slider>
+
+							<Expander HorizontalAlignment="Stretch" DataContext="{Binding PixelizeSettings}">
+								<Expander.Header>
+									<StackPanel Orientation="Horizontal" Spacing="5">
+										<avalonia:MaterialIcon Kind="Settings"></avalonia:MaterialIcon>
+										<TextBlock>Additional Settings</TextBlock>
+									</StackPanel>
+								</Expander.Header>
+								<Expander.Styles>
+									<Style Selector=":checked /template/ Border#ToggleButtonBackground">
+										<Setter Property="Background" Value="#292929"></Setter>
+										<!--<Setter Property="BorderThickness" Value="0 0 0 1"></Setter>-->
+									</Style>
+									<Style Selector=":unchecked /template/ Border#ToggleButtonBackground">
+										<Setter Property="Background" Value="#292929"></Setter>
+										<!--<Setter Property="BorderThickness" Value="0"></Setter>-->
+									</Style>
+								</Expander.Styles>
+								<StackPanel Spacing="5">
+									<CheckBox IsChecked="{Binding KeepResolution}" HorizontalAlignment="Left" Margin="1">Save image full size</CheckBox>
+									<CheckBox IsChecked="{Binding ShowComparatorSlider}" HorizontalAlignment="Left" Margin="1">Show comparator slider</CheckBox>
+									<CheckBox IsChecked="{Binding AutoSave}" HorizontalAlignment="Left" Margin="1">Auto Save</CheckBox>
+									<DockPanel>
+										<Button DockPanel.Dock="Right" Margin="5 0 0 0" VerticalAlignment="Stretch" Background="Transparent" CornerRadius="50" >
+											<avalonia:MaterialIcon Kind="QuestionMarkCircle"></avalonia:MaterialIcon>
+										</Button>
+										<ComboBox DockPanel.Dock="Left" SelectedItem="{Binding Strategy}" Items="{Binding Strategies}" HorizontalAlignment="Stretch"></ComboBox>
+									</DockPanel>
+								</StackPanel>
+							</Expander>
 						</StackPanel>
-
-						<!--Pixelize Command-->
-						<Button Command="{Binding PixelizeCommand}" HorizontalAlignment="Center" MinWidth="140">
-							<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
-								<avalonia:MaterialIcon Kind="DeathStarVariant"></avalonia:MaterialIcon>
-								<TextBlock>Pixelize</TextBlock>
-							</StackPanel>
-						</Button>
-
-						<!--Comparing Images Options-->
-						<ToggleSwitch HorizontalAlignment="Center" IsEnabled="{Binding WasPixelized}" OnContent="Comparing" OffContent="Compare" IsChecked="{Binding IsComparing}"/>
-
-						<Slider Name="WidthSlider" Value="{Binding WidthSliderValue}" Minimum="0" Maximum="{Binding Width}" IsEnabled="{Binding IsComparing}"></Slider>
-					</StackPanel>
+					</ScrollViewer>
 				</DockPanel>
 			</SplitView.Pane>
 
 			<!--Images Panel-->
 			<Panel>
-				<Panel IsHitTestVisible="False">
-					<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Left"/>
-					<Viewbox Stretch="UniformToFill" Width="{Binding WidthSliderValue}" HorizontalAlignment="Left">
-						<Image Source="{Binding InputImage}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
-					</Viewbox>
+				<Panel>
+					<Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+					<StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+						<Viewbox Stretch="UniformToFill" Width="{Binding WidthSliderValue}" HorizontalAlignment="Left" IsHitTestVisible="False">
+							<Image Source="{Binding InputImage}" Width="{Binding Width}" Height="{Binding Height}" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+						</Viewbox>
+						<!--Image Splitter-->
+						<Panel x:Name="ComparatorControl" IsVisible="{Binding IsComparing}" Classes="comparator" Margin="-9 0 0 0">
+							<Rectangle VerticalAlignment="Stretch" Width="4" IsHitTestVisible="True" Fill="#151515"></Rectangle>
+							<Ellipse Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="Gray"/>
+							<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="3">
+								<Ellipse Width="2" Height="2" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="White"/>
+								<Ellipse Width="2" Height="2" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="White"/>
+								<Ellipse Width="2" Height="2" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="White"/>
+							</StackPanel>
+						</Panel>
+					</StackPanel>
 				</Panel>
 			</Panel>
 		</SplitView>

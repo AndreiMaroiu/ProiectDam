@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using PixelizerUI.Services;
 using PixelizerUI.ViewModels;
 using PixelizerUI.Views;
 
@@ -17,12 +18,12 @@ namespace PixelizerUI
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow
-                {
-                    DataContext = new MainWindowViewModel(),
-                };
+                MainWindow mainWindow = new();
+                MainWindowViewModel viewModel = new(mainWindow.StorageProvider, mainWindow.Manager, new ClientSizeService(mainWindow));
 
-                (desktop.MainWindow.DataContext as MainWindowViewModel).MainWindow = desktop.MainWindow as MainWindow;
+                mainWindow.DataContext = viewModel;
+
+                desktop.MainWindow = mainWindow;
             }
 
             base.OnFrameworkInitializationCompleted();
