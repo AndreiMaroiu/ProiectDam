@@ -1,10 +1,9 @@
 using Core;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace UI
 {
+
     [CreateAssetMenu(fileName = "New Map Icons", menuName = "Scriptables/MapIcons")]
     public class MapIcons : ScriptableObject
     {
@@ -13,6 +12,7 @@ namespace UI
         [SerializeField] private Sprite _healing;
         [SerializeField] private Sprite _chest;
         [SerializeField] private Sprite _merchant;
+        [SerializeField] private Sprite _boss;
 
 
         public Sprite GetIcon(RoomType type) => type switch
@@ -25,6 +25,7 @@ namespace UI
             RoomType.Chest => _chest,
             RoomType.Wall => null,
             RoomType.Merchant => _merchant,
+            RoomType.Boss => _boss,
             _ => null,
         };
     }

@@ -1,5 +1,6 @@
 using Core;
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Gameplay.Generation
@@ -7,6 +8,8 @@ namespace Gameplay.Generation
     [CreateAssetMenu(fileName = "New Tile Settings", menuName = "Scriptables/Settings/Tile Settings")]
     public class TileSettings : ScriptableObject
     {
+        private static readonly TileType[] _tileTypes = Enum.GetValues(typeof(TileType)).Cast<TileType>().ToArray();
+
         [SerializeField] private TileData[] _none;
         [SerializeField] private TileData[] _wall;
         [SerializeField] private TileData[] _enemy;
@@ -19,6 +22,7 @@ namespace Gameplay.Generation
         [SerializeField] private TileData[] _dynamicObstacles;
         [SerializeField] private TileData[] _portal;
         [SerializeField] private TileData[] _merchant;
+        [SerializeField] private TileData[] _shrine;
 
         private RoomType _currentRoomType;
         private Func<int, TileData, int> _tileChanceGetter;
@@ -36,10 +40,34 @@ namespace Gameplay.Generation
             if (list != null && list.Length > 0)
             {
                 WeightedRandom<TileData> random = new(list, _tileChanceGetter);
-                return random.Take()?.Prefab;
+                var result = random.Take();
+
+                if (result != null)
+                {
+                    result.SetAsSpawned();
+                    return result.Prefab;
+                }
             }
 
             return null;
+        }
+
+        public void ResetTiles()
+        {
+            foreach (var type in _tileTypes)
+            {
+                TileData[] list = GetList(type);
+
+                if (list is null)
+                {
+                    continue;
+                }
+
+                foreach (var item in list)
+                {
+                    item.Reset();
+                }
+            }
         }
 
         public GameObject GetTileFromName(TileType type, string name)
@@ -76,6 +104,7 @@ namespace Gameplay.Generation
             TileType.Portal => _portal,
             TileType.Merchant => _merchant,
             TileType.DynamicObstacle => _dynamicObstacles,
+            TileType.Shrine => _shrine,
             _ => null,
         };
 

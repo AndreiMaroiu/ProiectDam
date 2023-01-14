@@ -94,6 +94,8 @@ namespace Gameplay.Generation
 
             _traverser.TraverseUnique(room =>
             {
+                _data.Reset();
+
                 RoomBehaviour behaviour = _traverser[room.Pos];
                 LayersSaveData saveData = _levelSaver.SaveData.Rooms[room.Pos];
                 spawner.SaveData = saveData;

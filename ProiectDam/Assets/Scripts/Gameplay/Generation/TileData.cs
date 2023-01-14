@@ -12,11 +12,18 @@ namespace Gameplay.Generation
         [SerializeField] private GameObject _prefab;
         [SerializeField] private RoomType _flags = (RoomType)DefaultFlags;
         [SerializeField] private int _spawnChance = DefaultSpawnChance;
+        [SerializeField] private bool _onlyOnce;
+
+        private bool _spawned;
 
         public GameObject Prefab => _prefab;
         public RoomType Flags => _flags;
-        public int SpawnChance => _spawnChance;
+        public int SpawnChance => (_onlyOnce && _spawned) ? 0 : _spawnChance;
 
-        public void SetPrefab(GameObject prefab) => _prefab = prefab;
+        public bool OnlyOnce => _onlyOnce;
+
+        public void SetAsSpawned() => _spawned = true;
+
+        public void Reset() => _spawned = false;
     }
 }

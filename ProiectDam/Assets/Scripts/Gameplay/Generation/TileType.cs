@@ -1,5 +1,3 @@
-using System;
-
 namespace Gameplay.Generation
 {
     public enum TileType
@@ -17,6 +15,7 @@ namespace Gameplay.Generation
         Player,
         Merchant,
         DynamicObstacle,
+        Shrine,
     }
 
     public static class TileTypeExtension
@@ -50,6 +49,7 @@ namespace Gameplay.Generation
             TileType.DynamicObstacle => false,
             TileType.PickUp => false,
             TileType.Chest => false,
+            TileType.Shrine => false,
             _ => true,
         };
     }

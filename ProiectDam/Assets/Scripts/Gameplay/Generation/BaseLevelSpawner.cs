@@ -89,6 +89,7 @@ namespace Gameplay.Generation
 
             _traverser.TraverseUnique(room =>
             {
+                _data.Reset();
                 RoomBehaviour behaviour = _traverser[room.Pos];
                 spawner.SpawnStatic(behaviour);
                 spawner.SpawnDynamic(behaviour);

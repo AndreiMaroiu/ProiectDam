@@ -19,3 +19,4 @@ MonoBehaviour:
   _chest: {fileID: 4383219170463900452, guid: 4b1d28d19eafa6242aa6a9c76218fca1, type: 3}
   _merchant: {fileID: -2867462654027373793, guid: 4b1d28d19eafa6242aa6a9c76218fca1,
     type: 3}
+  _boss: {fileID: 1660957820977104790, guid: 4b1d28d19eafa6242aa6a9c76218fca1, type: 3}

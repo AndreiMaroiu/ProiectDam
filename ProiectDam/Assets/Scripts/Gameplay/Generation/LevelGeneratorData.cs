@@ -31,5 +31,12 @@ namespace Gameplay.Generation
         public float CellSize => _cellSize;
         public int CellCount => _cellCount;
         public RoomBehaviourEvent RoomBehaviourEvent => _roomBehaviourEvent;
+
+        public void Reset()
+        {
+            _fireTiles.ResetTiles();
+            _grassTiles.ResetTiles();
+            _dungeonTiles.ResetTiles();
+        }
     }
 }

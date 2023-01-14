@@ -17,130 +17,161 @@ MonoBehaviour:
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 3081682985837833722, guid: 6d7aac4c179d2ae41ae9c85f164ed01f,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 9184607472508151026, guid: e213df611dd5e1347bd67d8975e6e4bb,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 3611809195945154350, guid: 0d5370a3e4ddd5848b0d8faaa5f0108c,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 1287894562436013569, guid: 600c2e8e5485a3c4397ca5c41193d55f,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 3446854836180677957, guid: b2e41d37a8b8fb64088a341c5bbaa330,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 4112923179041079319, guid: d3977f4b8cb5fa84284686bc75f3d8c8,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _wall:
   - _prefab: {fileID: 874052987338099123, guid: afb3f81336b2bc74a9faaf1ee27e6e90,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _enemy:
   - _prefab: {fileID: 707960728017774799, guid: c20b8acf8d9018343a64fbc00895fcce,
       type: 3}
     _flags: 127
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 7094814026472970816, guid: 1300ce7baa8956e4892f9e249a7b84ad,
       type: 3}
     _flags: 127
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 8628810412978345560, guid: 234b191ed7de2904e9f4c0cb7540d068,
       type: 3}
     _flags: 127
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 4000387639615082020, guid: 54b6c2feea0d04d46827cb9c8ea156e8,
       type: 3}
     _flags: 127
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 5961820620640631712, guid: 99f1bde8579134647a9d3b69aafbd64c,
       type: 3}
     _flags: 128
     _spawnChance: 1
+    _onlyOnce: 0
   _door:
   - _prefab: {fileID: 1610797193751527803, guid: 44d13e7040070884198d2fc299f5feb3,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _chest:
   - _prefab: {fileID: 5103085370490182207, guid: 6fda3b807af98694b81380c37b3ee07f,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _heal:
   - _prefab: {fileID: 1337655539291230482, guid: dbff91d7cf19bc34daf9256a9637d2df,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _trap:
   - _prefab: {fileID: 6182598759413703565, guid: 26f2cc17671c1fa45a7ec6e3bc0eabf5,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _pickUp:
   - _prefab: {fileID: 5244361343789919635, guid: b9f9962775564384793ea37e74690334,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 2725781087358859865, guid: b1865ca7b4c56be409a438ff5f95f0b8,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _obstacle:
   - _prefab: {fileID: 8508842280716529376, guid: e281897db57b91643ac32d45fe9f7383,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 2130141364183092600, guid: 26c3a9edfab13944ab271281234bcdee,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 5538041083089430321, guid: 80a9e6d76ef25fe419ae4641b1eca4f5,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 6393301109130023456, guid: ac01f5a8f43b92244a8a8deb8a253fcd,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 8498262135166885985, guid: d76e8cd6490a48142a3353b0bd360423,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 1767931643493762754, guid: 1141b06695b41ca4cb3b8cbf526ffb80,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 2725840095575944006, guid: 473812a4b11442046ac367b3afce9525,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _dynamicObstacles:
   - _prefab: {fileID: 7492388303378191110, guid: 7bfd5331433e49b4394ee9557fded5bf,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   - _prefab: {fileID: 1665517871435703881, guid: 4baed7a1a01c2664480dc1ee7c057efe,
       type: 3}
     _flags: 64
-    _spawnChance: 1
+    _spawnChance: 10
+    _onlyOnce: 1
   _portal:
   - _prefab: {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _merchant:
   - _prefab: {fileID: 7068375410405565471, guid: 68f6faeda2b864d4ca6b0cabb52c4a99,
       type: 3}
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
+  _shrine: []
