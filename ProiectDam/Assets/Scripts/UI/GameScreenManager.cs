@@ -17,6 +17,7 @@ namespace UI
         [SerializeField] private Button _meleeButton;
         [SerializeField] private Button _middleButton;
         [SerializeField] private Text _middleButtonText;
+        [SerializeField] private Image _interactionIcon;
         [Header("Events")]
         [SerializeField] private LayerEvent _layersEvent;
         [SerializeField] private BoolEvent _previewActive;
@@ -62,7 +63,7 @@ namespace UI
             {
                 Button = _middleButton,
                 Text = _middleButtonText,
-                Icon = null, // TODO:
+                Icon = _interactionIcon,
             };
         }
 

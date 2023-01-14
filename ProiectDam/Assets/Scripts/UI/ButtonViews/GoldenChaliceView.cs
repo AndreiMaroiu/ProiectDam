@@ -29,6 +29,7 @@ namespace UI.ButtonViews
 
             button.Button.interactable = goldenChaliceModel.CurrentScore >= goldenChaliceModel.MinScore;
             button.Text.text = $"Sacrifice {goldenChaliceModel.MinScore.ToString()}";
+            button.Icon.gameObject.SetActive(false);
         }
     }
 }

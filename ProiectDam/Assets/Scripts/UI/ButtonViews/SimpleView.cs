@@ -10,6 +10,7 @@ namespace UI.ButtonViews
 
             button.Button.onClick.AddListener(simple.Action);
             button.Text.text = simple.ButtonText;
+            button.Icon.gameObject.SetActive(false);
         }
     }
 }
