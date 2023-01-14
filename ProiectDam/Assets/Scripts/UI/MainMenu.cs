@@ -20,7 +20,7 @@ namespace UI
         [SerializeField] private AllSavesHandler _allSavesHandler;
         [SerializeField] private PanelStack _panelStack;
 
-        private void Awake()
+        private void Start()
         {
             _mainCanvas.SetActive(true);
 
