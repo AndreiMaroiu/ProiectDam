@@ -81,7 +81,7 @@ namespace Gameplay.DataSaving
                 Rooms = SaveRooms(),
             };
 
-            string savePath = _handler.SaveFile is null or "" ? _allSaves.GetSaveFilePath(0) : _handler.SaveFile;
+            string savePath = _handler.SaveFile;
 
             _allSaves.TrySaveData(SaveData, savePath);
 
@@ -90,7 +90,7 @@ namespace Gameplay.DataSaving
 
         public void SetUpForNewScene()
         {
-            _handler.SetForNewScene();
+            _handler.SetForNewScene(_handler.SaveFile);
         }
 
         public void SaveOnlySeed()

@@ -8,10 +8,23 @@ namespace Gameplay.Enemies
 {
     public class BossEnemy : SimpleEnemy
     {
+        public enum BossPhase
+        {
+            One,
+            Two
+        }
+
         [SerializeField] private TileObject _keyPrefab;
+
+        public event System.Action<BossPhase> OnPhaseChange;
 
         public override IEnumerator OnEnemyTurn(PlayerController player)
         {
+            if (CanHit is false)
+            {
+                yield break;
+            }
+
             if ((LayerPosition.Position - player.LayerPosition.Position).sqrMagnitude == 1)
             {
                 player.TakeDamage(_data.Damage, this);
@@ -33,23 +46,20 @@ namespace Gameplay.Enemies
         {
             base.OnDamage(dealer);
 
-            if (dealer is not PlayerController player || Health <= 0)
+            if (Health <= 0)
             {
                 return;
             }
 
-            Vector2Int direction = LayerPosition.Position - player.LayerPosition.Position;
+            Teleport();
 
-            if (!CanMoveToTile(LayerPosition.GetTile(direction)))
+            if (Health <= MaxHealth / 2)
             {
-                return;
+                CanHit = false;
+                Debug.Log("Phase 2");
+                OnPhaseChange?.Invoke(BossPhase.Two);
+                // wait for all enemies to get killed
             }
-
-            Vector3 movePos = transform.position + Utils.GetVector3FromMatrixPos(direction, CellSize);
-            transform.position = movePos;
-            LayerPosition.TileType = TileType.None;
-            LayerPosition.Move(direction);
-            LayerPosition.TileType = TileType.Enemy;
         }
 
         public override void OnDeathFinished()
@@ -60,6 +70,40 @@ namespace Gameplay.Enemies
             tile.transform.position = transform.position;
             tile.LayerPosition = new(LayerPosition);
             tile.LayerPosition.TileType = TileType.PickUp;
+        }
+
+        private void Teleport()
+        {
+            int x;
+            int y;
+
+            Vector2Int target;
+
+            do
+            {
+                x = Random.Range(2, 5) * (int)Mathf.Pow(-1, Random.Range(0, 2));
+                y = Random.Range(2, 5) * (int)Mathf.Pow(-1, Random.Range(0, 2));
+                target = LayerPosition.Position + new Vector2Int(x, y);
+            } while (IsInBounds(target) is false || LayerPosition.Layer[target.x, target.y] is not TileType.None);
+
+            Vector2Int direction = new(x, y);
+
+            Vector3 movePos = transform.position + Utils.GetVector3FromMatrixPos(direction, CellSize);
+            transform.position = movePos;
+            LayerPosition.TileType = TileType.None;
+            LayerPosition.Move(direction);
+            LayerPosition.TileType = TileType.Enemy;
+        }
+
+        private bool IsInBounds(Vector2Int target)
+        {
+            return target.x >= 0 && target.x < LayerPosition.Layer.GetLength(0) &&
+                    target.y >= 0 && target.y < LayerPosition.Layer.GetLength(0);
+        }
+
+        internal void AdvancePhase()
+        {
+            CanHit = true;
         }
     }
 }

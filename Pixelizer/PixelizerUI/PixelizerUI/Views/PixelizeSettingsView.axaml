@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:PixelizerUI.ViewModels"
+			 xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="300"
+             x:Class="PixelizerUI.Views.PixelizeSettingsView">
+	<Design.DataContext>
+		<vm:PixelizeSettingsViewModel></vm:PixelizeSettingsViewModel>
+	</Design.DataContext>
+
+	<Expander HorizontalAlignment="Stretch">
+		<Expander.Header>
+			<StackPanel Orientation="Horizontal" Spacing="5">
+				<avalonia:MaterialIcon Kind="Settings"></avalonia:MaterialIcon>
+				<TextBlock>Additional Settings</TextBlock>
+			</StackPanel>
+		</Expander.Header>
+		<Expander.Styles>
+			<Style Selector=":checked /template/ Border#ToggleButtonBackground">
+				<Setter Property="Background" Value="#292929"></Setter>
+				<!--<Setter Property="BorderThickness" Value="0 0 0 1"></Setter>-->
+			</Style>
+			<Style Selector=":unchecked /template/ Border#ToggleButtonBackground">
+				<Setter Property="Background" Value="#292929"></Setter>
+				<!--<Setter Property="BorderThickness" Value="0"></Setter>-->
+			</Style>
+		</Expander.Styles>
+		<StackPanel Spacing="5">
+			<CheckBox IsChecked="{Binding KeepResolution}" HorizontalAlignment="Left" Margin="1">Save image full size</CheckBox>
+			<CheckBox IsChecked="{Binding ShowComparatorSlider}" HorizontalAlignment="Left" Margin="1">Show comparator slider</CheckBox>
+			<CheckBox IsChecked="{Binding AutoSave}" HorizontalAlignment="Left" Margin="1">Auto Save</CheckBox>
+			<DockPanel>
+				<Button DockPanel.Dock="Right" Command="{Binding ShowInfoCommand}" Margin="5 0 0 0" VerticalAlignment="Stretch" Background="Transparent" CornerRadius="50" >
+					<avalonia:MaterialIcon Kind="QuestionMarkCircle"></avalonia:MaterialIcon>
+				</Button>
+				<ComboBox DockPanel.Dock="Left" SelectedItem="{Binding Strategy}" Items="{Binding Strategies}" HorizontalAlignment="Stretch"></ComboBox>
+			</DockPanel>
+
+			<Button HorizontalAlignment="Stretch" Command="{Binding ResetCommand}">
+				<StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Center">
+					<avalonia:MaterialIcon Kind="Autorenew"></avalonia:MaterialIcon>
+					<TextBlock>Reset</TextBlock>
+				</StackPanel>
+			</Button>
+		</StackPanel>
+	</Expander>
+</UserControl>

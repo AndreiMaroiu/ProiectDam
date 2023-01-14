@@ -11,8 +11,7 @@ namespace Gameplay
         public bool CanMove { get; private set; } = true;
         public bool IsMoving { get; private set; } = false;
         public float MoveTime { get; private set; }
-
-        protected float CellSize => _cellSize;
+        public float CellSize => _cellSize;
 
         protected TileType _lastType;
 

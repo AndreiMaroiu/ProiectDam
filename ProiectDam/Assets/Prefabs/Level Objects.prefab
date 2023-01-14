@@ -1261,6 +1261,7 @@ MonoBehaviour:
   _saveButton: {fileID: 2689027634150063151}
   _modalColor: {r: 0.09317646, g: 0.29678434, b: 0.44, a: 0}
   _saveEvent: {fileID: 0}
+  _panelStack: {fileID: 11400000, guid: 14993307227dc1741a2f875385a4c865, type: 2}
 --- !u!114 &4109379794917434221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1302,6 +1303,7 @@ MonoBehaviour:
   _itemPrefab: {fileID: 5649704324467287962, guid: 5a8d5aeb790fe294fb35e8c8cf594d8c,
     type: 3}
   _moneyText: {fileID: 4109379794289856749}
+  _panelStack: {fileID: 11400000, guid: 14993307227dc1741a2f875385a4c865, type: 2}
 --- !u!1 &4109379794972407290
 GameObject:
   m_ObjectHideFlags: 0
@@ -2244,7 +2246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mapCanvas: {fileID: 4109379795215766979}
   _mainCanvas: {fileID: 4109379794250716660}
-  _previewActive: {fileID: 11400000, guid: 0a850cb0818136d4188c5b364870105d, type: 2}
+  _panelStack: {fileID: 11400000, guid: 14993307227dc1741a2f875385a4c865, type: 2}
 --- !u!1 &4109379795460403320
 GameObject:
   m_ObjectHideFlags: 0

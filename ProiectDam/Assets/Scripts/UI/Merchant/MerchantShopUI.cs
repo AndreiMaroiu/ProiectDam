@@ -4,6 +4,7 @@ using ModalWindows;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 namespace UI.Merchant
 {
@@ -17,13 +18,12 @@ namespace UI.Merchant
         [SerializeField] private GameObject _panel;
         [SerializeField] private ItemDescriptionUI _itemPrefab;
         [SerializeField] private Text _moneyText;
-        private float _lastTimeScale;
+        [SerializeField] private PanelStack _panelStack;
 
         private void Start()
         {
             _itemsEvent.OnItemShow += OnItemShow;
-            _lastTimeScale = Time.timeScale;
-            ClosePanel();
+            _mainCanvas.SetActive(false);
         }
 
         private void OnDestroy()
@@ -33,9 +33,7 @@ namespace UI.Merchant
 
         private void OnItemShow(IEnumerable<ItemDescription> descriptions)
         {
-            _lastTimeScale = Time.timeScale;
-            Time.timeScale = 0;
-            ShowPanel();
+            _panelStack.OpenDialog(_mainCanvas);
             ClearPanel();
 
             foreach (ItemDescription item in descriptions)
@@ -71,7 +69,7 @@ namespace UI.Merchant
                 Header = "Item bought!",
                 Image = item.Image,
                 Content = item.Name,
-            }, _lastTimeScale);
+            });
 
             ClosePanel();
 
@@ -89,14 +87,7 @@ namespace UI.Merchant
 
         public void ClosePanel()
         {
-            Debug.Log($"timescale: {_lastTimeScale}");
-            Time.timeScale = _lastTimeScale;
-            _mainCanvas.SetActive(false);
-        }
-
-        private void ShowPanel()
-        {
-            _mainCanvas.SetActive(true);
+            _panelStack.ClosePanel();
         }
     }
 }

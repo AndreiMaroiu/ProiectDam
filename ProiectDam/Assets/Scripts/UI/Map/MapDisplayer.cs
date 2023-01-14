@@ -1,5 +1,5 @@
-using Core.Events;
 using UnityEngine;
+using Utilities;
 
 namespace UI.Map
 {
@@ -8,12 +8,8 @@ namespace UI.Map
         [Header("Canvas")]
         [SerializeField] private GameObject _mapCanvas;
         [SerializeField] private GameObject _mainCanvas;
-        [Header("Events")]
-        [SerializeField] private BoolEvent _previewActive;
-
-        public float LastTimeScale { get; set; }
-
-        public const float StoppedScale = 0.0f;
+        [Header("Utils")]
+        [SerializeField] private PanelStack _panelStack;
 
         private void Start()
         {
@@ -22,16 +18,13 @@ namespace UI.Map
 
         public void OnMapClick()
         {
-            LastTimeScale = Time.timeScale;
-            Time.timeScale = StoppedScale;
-            _mapCanvas.SetActive(true);
+            _panelStack.OpenDialog(_mapCanvas);
             _mainCanvas.SetActive(false);
         }
 
         public void OnCloseClick()
         {
-            Time.timeScale = LastTimeScale;
-            _mapCanvas.SetActive(false);
+            _panelStack.ClosePanel();
             _mainCanvas.SetActive(true);
         }
     }

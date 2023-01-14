@@ -9,8 +9,6 @@ namespace UI
 {
     public class PauseManager : MonoBehaviour
     {
-        private const float PausedScale = 0.0f;
-
         [SerializeField] private GameObject _pauseCanvas;
         [SerializeField] private GameObject _howToCanvas;
         [SerializeField] private GameObject _optionsCanvas;
@@ -19,8 +17,7 @@ namespace UI
         [SerializeField] private Color _modalColor;
         [Tooltip("Leave empty if no saving is needed")]
         [SerializeField] private SaveEvent _saveEvent;
-
-        private float _lastTimeScale;
+        [SerializeField] private PanelStack _panelStack;
 
         void Awake()
         {
@@ -32,39 +29,32 @@ namespace UI
 
         public void OnPauseClick()
         {
-            _lastTimeScale = Time.timeScale;
-            Time.timeScale = PausedScale;
-            _pauseCanvas.SetActive(true);
+            _panelStack.OpenPanel(_pauseCanvas, Time.timeScale);
         }
 
         public void OnResumeClick()
         {
-            Time.timeScale = _lastTimeScale;
-            _pauseCanvas.SetActive(false);
+            _panelStack.ClosePanel();
         }
 
         public void OnOptionsClick()
         {
-            _optionsCanvas.SetActive(true);
-            _pauseCanvas.SetActive(false);
+            _panelStack.OpenPanel(_optionsCanvas);
         }
 
         public void OnHowToClick()
         {
-            _howToCanvas.SetActive(true);
-            _pauseCanvas.SetActive(false);
+            _panelStack.OpenPanel(_howToCanvas);
         }
 
         public void OnBackClick()
         {
-            _howToCanvas.SetActive(false);
-            _optionsCanvas.SetActive(false);
-            _pauseCanvas.SetActive(true);
+            _panelStack.ClosePanel();
         }
 
         public void OnRestartClick()
         {
-            ModalWindows.ModalWindow.Show(new ModalWindows.ModalWindowData()
+            ModalWindow.Show(new ModalWindowData()
             {
                 Header = "Are you sure you want to restart level?",
                 OkText = "Restart",

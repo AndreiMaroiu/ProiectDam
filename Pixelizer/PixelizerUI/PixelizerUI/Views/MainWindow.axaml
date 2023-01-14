@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
 		xmlns:ui="using:FluentAvalonia.UI.Controls"
+		xmlns:local="using:PixelizerUI.Views"
         mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
         x:Class="PixelizerUI.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
@@ -18,9 +19,6 @@
 	</Design.DataContext>
 
 	<Window.Styles>
-		<Style Selector="Window[WindowState=Maximized]">
-			<Setter Property="Padding" Value="8"></Setter>
-		</Style>
 		<Style Selector="Panel.comparator">
 			<Setter Property="Cursor" Value="SizeWestEast"></Setter>
 		</Style>
@@ -83,7 +81,7 @@
 								</MenuItem.Icon>
 							</MenuItem>
 						</MenuItem>
-						<MenuItem Header="App Settings">
+						<MenuItem Header="App Settings" Command="{Binding ShowDialogCommand}">
 						</MenuItem>
 					</Menu>
 
@@ -100,6 +98,13 @@
 										<avalonia:MaterialIcon Kind="File"></avalonia:MaterialIcon>
 									</Button>
 								</StackPanel>
+							</StackPanel>
+
+							<StackPanel Orientation="Horizontal" Spacing="5">
+								<TextBlock>Width:</TextBlock>
+								<TextBlock Text="{Binding Image.PixelSize.Width}"></TextBlock>
+								<TextBlock>Height:</TextBlock>
+								<TextBlock Text="{Binding Image.PixelSize.Height}"></TextBlock>
 							</StackPanel>
 
 							<!--Output Path-->
@@ -139,35 +144,7 @@
 
 							<Slider Name="WidthSlider" Value="{Binding WidthSliderValue}" Minimum="0" Maximum="{Binding Width}" IsEnabled="{Binding IsComparing}" IsVisible="{Binding PixelizeSettings.ShowComparatorSlider}"></Slider>
 
-							<Expander HorizontalAlignment="Stretch" DataContext="{Binding PixelizeSettings}">
-								<Expander.Header>
-									<StackPanel Orientation="Horizontal" Spacing="5">
-										<avalonia:MaterialIcon Kind="Settings"></avalonia:MaterialIcon>
-										<TextBlock>Additional Settings</TextBlock>
-									</StackPanel>
-								</Expander.Header>
-								<Expander.Styles>
-									<Style Selector=":checked /template/ Border#ToggleButtonBackground">
-										<Setter Property="Background" Value="#292929"></Setter>
-										<!--<Setter Property="BorderThickness" Value="0 0 0 1"></Setter>-->
-									</Style>
-									<Style Selector=":unchecked /template/ Border#ToggleButtonBackground">
-										<Setter Property="Background" Value="#292929"></Setter>
-										<!--<Setter Property="BorderThickness" Value="0"></Setter>-->
-									</Style>
-								</Expander.Styles>
-								<StackPanel Spacing="5">
-									<CheckBox IsChecked="{Binding KeepResolution}" HorizontalAlignment="Left" Margin="1">Save image full size</CheckBox>
-									<CheckBox IsChecked="{Binding ShowComparatorSlider}" HorizontalAlignment="Left" Margin="1">Show comparator slider</CheckBox>
-									<CheckBox IsChecked="{Binding AutoSave}" HorizontalAlignment="Left" Margin="1">Auto Save</CheckBox>
-									<DockPanel>
-										<Button DockPanel.Dock="Right" Margin="5 0 0 0" VerticalAlignment="Stretch" Background="Transparent" CornerRadius="50" >
-											<avalonia:MaterialIcon Kind="QuestionMarkCircle"></avalonia:MaterialIcon>
-										</Button>
-										<ComboBox DockPanel.Dock="Left" SelectedItem="{Binding Strategy}" Items="{Binding Strategies}" HorizontalAlignment="Stretch"></ComboBox>
-									</DockPanel>
-								</StackPanel>
-							</Expander>
+							<local:PixelizeSettingsView HorizontalAlignment="Stretch" DataContext="{Binding PixelizeSettings}"/>
 						</StackPanel>
 					</ScrollViewer>
 				</DockPanel>

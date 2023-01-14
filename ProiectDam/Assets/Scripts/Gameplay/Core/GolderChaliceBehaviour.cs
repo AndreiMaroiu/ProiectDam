@@ -1,4 +1,6 @@
 using Core.Events;
+using Core.Items;
+using Core.Mappers;
 using Core.Values;
 using Gameplay.PickUps;
 using UnityEngine;
@@ -15,14 +17,22 @@ namespace Gameplay
 
         private void Start()
         {
-            _helper.Set(OnSacrifice, "Sacrifice: 20", important: true);
+            _helper.OnInteractionEnter += () =>
+            {
+                _helper.Set(new GolderChaliceModel()
+                {
+                    Action = OnSacrifice,
+                    MinScore = 20,
+                    CurrentScore = _playerScore.Value
+                });
+            };
         }
 
-        private void OnSacrifice()
+        private ItemDescription OnSacrifice()
         {
             if (_helper.Controller.IsNull() || _playerScore < _scoreTarget)
             {
-                return;
+                return null;
             }
 
             _playerScore.Value -= _scoreTarget;
@@ -31,12 +41,14 @@ namespace Gameplay
             AbstractPickUp pickup = PickUpFactory.Instance.GetPickUp(data.handler.Type, Random.Range(data.range.start, data.range.end + 1));
 
             pickup.OnInteract(_helper.Controller);
+
+            return data.handler;
         }
 
         [System.Serializable]
         private struct PickUpData
         {
-            public PickUpHandler handler;
+            public Item handler;
             public Range<int> range;
             public int weight;
         }

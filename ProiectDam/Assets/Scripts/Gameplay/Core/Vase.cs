@@ -13,8 +13,6 @@ namespace Gameplay
 
         public string ObjectName { get; set; }
 
-        public override int Priority => 2;
-
         public ObjectSaveData SaveData => new VaseSaveData()
         {
             ObjectName = this.ObjectName,
@@ -53,6 +51,8 @@ namespace Gameplay
         private void Start()
         {
             InitHealth(StartHealth);
+
+            _priority = 2;
         }
 
         public void LoadFromSave(ObjectSaveData data)

@@ -37,6 +37,9 @@ namespace PixelizerUI.Models
 
             uint count = 0;
 
+            endRow = Math.Min(endRow, (uint)_size.Height);
+            endColumn = Math.Min(endColumn, (uint)_size.Width);
+
             for (uint i = startRow; i < endRow; i++)
             {
                 for (uint j = startColumn; j < endColumn; j++)
@@ -75,6 +78,9 @@ namespace PixelizerUI.Models
 
         public NativeColor MostCommonColor(uint startRow, uint endRow, uint startColumn, uint endColumn)
         {
+            endRow = Math.Min(endRow, (uint)_size.Height);
+            endColumn = Math.Min(endColumn, (uint)_size.Width);
+
             Dictionary<int, uint> mostCommon = new();
 
             for (uint i = startRow; i < endRow; i++)

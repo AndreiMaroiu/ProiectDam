@@ -10,5 +10,8 @@
         <FluentTheme Mode="Dark"/>
 		<StyleInclude Source="avares://Material.Icons.Avalonia/App.xaml" />
 		<StyleInclude Source="avares://FluentAvalonia.UI.Windowing/Styles/FAWindowingStyles.axaml" />
+		<Style Selector="Window[WindowState=Maximized]">
+			<Setter Property="Padding" Value="8"></Setter>
+		</Style>
     </Application.Styles>
 </Application>

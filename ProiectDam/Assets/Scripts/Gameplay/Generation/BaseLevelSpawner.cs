@@ -1,6 +1,4 @@
 using Core;
-using Core.Values;
-using Gameplay.Events;
 using Gameplay.Player;
 using UnityEngine;
 using Utilities;
@@ -87,7 +85,7 @@ namespace Gameplay.Generation
         /// </summary>
         protected void SpawnLayers()
         {
-            LayersSpawner spawner = new LayersSpawner(_data.CellSize, _data.GrassTiles, _data.FireTiles, _data.DungeonTiles);
+            LayersSpawner spawner = new(_data.CellSize, _data.GrassTiles, _data.FireTiles, _data.DungeonTiles);
 
             _traverser.TraverseUnique(room =>
             {

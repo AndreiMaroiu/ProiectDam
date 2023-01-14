@@ -37,19 +37,23 @@ MonoBehaviour:
   _enemy:
   - _prefab: {fileID: 3405772353389896854, guid: 0ede92900d66e7c41be952af4f9d4b94,
       type: 3}
-    _flags: -1
+    _flags: 127
     _spawnChance: 1
   - _prefab: {fileID: 4506473171506505353, guid: 02532e903a7169d4bb23219d1fdba964,
       type: 3}
-    _flags: -1
+    _flags: 127
     _spawnChance: 1
   - _prefab: {fileID: 3315774591173551085, guid: b26e1de7566101947af2f7d9852bcff6,
       type: 3}
-    _flags: -1
+    _flags: 127
     _spawnChance: 1
   - _prefab: {fileID: 1500245301518716129, guid: 9eb1d5169aca0924fbbaec1b483e245c,
       type: 3}
-    _flags: -1
+    _flags: 127
+    _spawnChance: 1
+  - _prefab: {fileID: 5961820620640631712, guid: 99f1bde8579134647a9d3b69aafbd64c,
+      type: 3}
+    _flags: 128
     _spawnChance: 1
   _door:
   - _prefab: {fileID: 1610797193751527803, guid: 44d13e7040070884198d2fc299f5feb3,

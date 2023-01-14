@@ -32,7 +32,7 @@ namespace Gameplay.DataSaving
             SaveState();
         }
 
-        public override void SetForNewScene()
+        public override void SetForNewScene(string saveFile)
         {
             int seed = GenerateRandomSeed();
             Debug.Log("Generated seed: " + seed.ToString());

@@ -29,7 +29,13 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0-preview1" />
 		<PackageReference Include="FluentAvalonia.UI.Windowing" Version="2.0.0-preview4" />
 		<PackageReference Include="Material.Icons.Avalonia" Version="1.2.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
 		<PackageReference Include="XamlNameReferenceGenerator" Version="1.5.1" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Views\PixelizeSettingsView.axaml.cs">
+	    <DependentUpon>PixelizeSettingsView.axaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 	<!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 	  <Exec Command="if not exist $(ProjectDir)$(OutDir)python-exe mkdir $(ProjectDir)$(OutDir)python-exe" />

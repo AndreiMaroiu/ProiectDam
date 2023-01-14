@@ -19,7 +19,7 @@ namespace Core.DataSaving
         /// <summary>
         /// mark level saver to not load data for a level
         /// </summary>
-        public abstract void SetForNewScene();
+        public abstract void SetForNewScene(string saveFile);
 
         /// <summary>
         /// Set seed if you want to generate level random from seed, but not fully load all save data

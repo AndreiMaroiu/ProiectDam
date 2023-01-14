@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -2083756617904472782}
   - component: {fileID: 9188057751684523292}
   - component: {fileID: 6107526397619760313}
+  - component: {fileID: 947789005139537808}
   m_Layer: 7
   m_Name: Ancient Golem
   m_TagString: Untagged
@@ -275,3 +276,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &947789005139537808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5961820620640631712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b1344c63309de74d9644225be137412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bossBehaviour: {fileID: 9106858073663739158}
+  _tiles: {fileID: 11400000, guid: aeb116db2e15bd343975658e25a57c02, type: 2}
+  _enemyCountRange:
+    start: 2
+    end: 4

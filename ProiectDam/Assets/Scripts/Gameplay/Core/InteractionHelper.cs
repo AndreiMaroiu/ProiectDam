@@ -1,4 +1,5 @@
 using Core.Events;
+using Core.Mappers;
 using Gameplay.Player;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,12 +15,14 @@ namespace Gameplay
         public bool IsInteracting { get; private set; }
         public PlayerController Controller { get; private set; }
         public UnityAction OnClick { get; set; }
-        public ButtonEvent.ButtonInfo ButtonInfo { get; set; }
+        public IButtonModel ButtonInfo { get; set; }
 
-        public void Set(UnityAction onClick, string buttonText, bool important = false)
+        public event UnityAction OnInteractionEnter;
+
+        public void Set(IButtonModel model)
         {
-            OnClick = onClick;
-            ButtonInfo = new(buttonText, onClick, important);
+            //OnClick = model.Action; // todo: update
+            ButtonInfo = model;
         }
 
         public bool CanClick
@@ -40,6 +43,7 @@ namespace Gameplay
         {
             IsInteracting = true;
             Controller = controller;
+            OnInteractionEnter?.Invoke();
 
             if (CanClick)
             {

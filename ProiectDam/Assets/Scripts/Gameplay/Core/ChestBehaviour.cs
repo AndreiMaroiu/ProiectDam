@@ -2,6 +2,7 @@ using UnityEngine;
 using Core.Values;
 using Gameplay.DataSaving;
 using Core.Events;
+using Core.Mappers;
 
 namespace Gameplay
 {
@@ -53,7 +54,7 @@ namespace Gameplay
         private void Start()
         {
             _renderer = GetComponentInChildren<SpriteRenderer>();
-            _helper.Set(OnClick, "Open chest");
+            _helper.Set(new SimpleButtonModel("Open Chest", OnClick));
             _helper.CanClick = true;
         }
     }

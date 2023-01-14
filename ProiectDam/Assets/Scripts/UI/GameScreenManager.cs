@@ -1,6 +1,8 @@
 using Core.Events;
 using Core.Events.Binding;
+using Core.Mappers;
 using System.Collections.Generic;
+using UI.ButtonViews;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,7 +28,8 @@ namespace UI
         [SerializeField] private Text _previewText;
         [SerializeField] private Text _previewLabel;
 
-        private List<ButtonEvent.ButtonInfo> _buttonInfos;
+        private List<IButtonModel> _buttonInfos;
+        private ButtonMapper _buttonMapper;
 
         public float LastTimeScale { get; set; }
 
@@ -51,33 +54,26 @@ namespace UI
             OnLayersCountChanged();
 
             _buttonInfos = new();
+            _buttonMapper = new();
+            _buttonMapper.Map(typeof(SimpleButtonModel), new SimpleView());
+            _buttonMapper.Map(typeof(GolderChaliceModel), new GoldenChaliceView());
+            _buttonMapper.TargetButton = new()
+            {
+                Button = _middleButton,
+                Text = _middleButtonText,
+                Icon = null, // TODO:
+            };
         }
 
-        private void OnShowButton(ButtonEvent.ButtonInfo info)
+        private void OnShowButton(IButtonModel info)
         {
-            if (info.Important)
-            {
-                _middleButton.onClick.AddListener(() =>
-                {
-                    ModalWindows.ModalWindow.ShowDialog(new ModalWindows.ModalWindowData()
-                    {
-                        Header = "Are you sure you want to continue?",
-                        OkAction = info.Action
-                    });
-                });
-            }
-            else
-            {
-                _middleButton.onClick.AddListener(info.Action);
-            }
-
-            _middleButtonText.text = info.Name;
-            _middleButton.gameObject.SetActive(true);
-
+            _buttonMapper.Setup(info);
             _buttonInfos.Add(info);
+
+            _middleButton.gameObject.SetActive(true);
         }
 
-        private void OnCloseButton(ButtonEvent.ButtonInfo info)
+        private void OnCloseButton(IButtonModel info)
         {
             _middleButton.onClick.RemoveAllListeners();
             _buttonInfos.Remove(info);
@@ -89,10 +85,8 @@ namespace UI
             else
             {
                 var peek = _buttonInfos[0];
-                //Debug.Assert(peek != info);
 
-                _middleButton.onClick.AddListener(peek.Action);
-                _middleButtonText.text = peek.Name;
+                _buttonMapper.Setup(peek);
             }
         }
 

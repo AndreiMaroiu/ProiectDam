@@ -1024,7 +1024,7 @@ MonoBehaviour:
   _data: {fileID: 11400000, guid: 52208f7b814957641819b465369edcb1, type: 2}
   _enemiesRange: {x: 1, y: 2}
   _player: {fileID: 1335463323}
-  _rooms: 0200000080000000
+  _rooms: 0200000040000000
 --- !u!4 &1453600472
 Transform:
   m_ObjectHideFlags: 0

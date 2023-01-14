@@ -69,8 +69,10 @@ namespace Gameplay.Generation
 
             foreach (var layer in layers)
             {
+                List<Vector2Int> positions = GetPositions(layer.Tiles);
+
                 GenerateBorder(layer.Tiles);
-                SetType(layer.Tiles, TileType.Enemy);
+                SpawnTiles(layer.Tiles, positions, 1, TileType.Enemy);
                 SpawnTiles(layer.Tiles, GetPositions(layer.Tiles), Random.Range(3, 6), TileType.Obstacle);
             }
 
@@ -193,13 +195,18 @@ namespace Gameplay.Generation
 
         private List<Vector2Int> GetPositions(TileType[,] layer)
         {
-            List<Vector2Int> list = new List<Vector2Int>();
+            List<Vector2Int> list = new();
             int size = layer.GetLength(0) - 2;
 
             for (int i = 2; i < size; i++)
             {
                 for (int j = 2; j < size; j++)
                 {
+                    if (layer[i, j] is not TileType.None)
+                    {
+                        continue;
+                    }
+
                     list.Add(new Vector2Int(i, j));
                 }
             }

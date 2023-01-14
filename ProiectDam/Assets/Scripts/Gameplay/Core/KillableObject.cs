@@ -5,7 +5,9 @@ namespace Gameplay
 {
     public abstract class KillableObject : TileObject
     {
-        public virtual int Priority { get; } = 1;
+        protected int _priority = 1;
+
+        public int Priority => CanHit ? _priority : int.MaxValue;
         public virtual int Health { get; set; }
         public virtual int MaxHealth { get; set; }
         public bool IsDead => Health <= 0;

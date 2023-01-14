@@ -39,6 +39,9 @@ namespace ModalWindows
         [SerializeField] private Text _okText;
         [SerializeField] private Text _alternativeText;
 
+        [Header("Utils")]
+        [SerializeField] private PanelStack _panelStack;
+
         private UnityAction _closeAction = null;
         private UnityAction _okAction = null;
         private UnityAction _alternativeAction = null;
@@ -53,36 +56,32 @@ namespace ModalWindows
                 return;
             }
 
-            _window.gameObject.SetActive(false);
-
-            if (_lastTimeScale.HasValue)
-            {
-                Time.timeScale = _lastTimeScale.Value;
-            }
+            _panelStack.ClosePanel();
         }
 
         public void OnClose()
         {
-            _closeAction?.Invoke();
             TryClose();
+            _closeAction?.Invoke();
         }
 
         public void OnOk()
         {
-            _okAction?.Invoke();
             TryClose();
+            _okAction?.Invoke();
         }
 
         public void OnAlternative()
         {
-            _alternativeAction?.Invoke();
             TryClose();
+            _alternativeAction?.Invoke();
         }
 
         private void SetWindow(IModalWindowData data, float? lastTimeScale = null)
         {
-            _lastTimeScale = lastTimeScale;
-            _window.gameObject.SetActive(true);
+            //_lastTimeScale = lastTimeScale;
+            //_window.gameObject.SetActive(true);
+            _panelStack.OpenPanel(_window.gameObject, lastTimeScale);
 
             _headerArea.SetActive(!string.IsNullOrEmpty(data.Header));
             _headerText.text = data.Header;

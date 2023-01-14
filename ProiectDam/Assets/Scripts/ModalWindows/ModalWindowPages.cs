@@ -36,7 +36,7 @@ namespace ModalWindows
         public string Footer => Current?.Footer;
         public string OkText => (_currentIndex > 0) ? "Previous" : null;
         public string AlternativeText => null;
-        public string CloseText => (_currentIndex == _lastIndex) ? "Close" : "Next";
+        public string CloseText => (_currentIndex >= _lastIndex) ? "Close" : "Next";
         public UnityAction OkAction { get; }
         public UnityAction CloseAction { get; }
         public UnityAction AlternativeAction => null;
@@ -60,10 +60,15 @@ namespace ModalWindows
 
         private void UpdateModal()
         {
-            if (_currentIndex > _lastIndex)
+            if (_currentIndex == _lastIndex)
             {
-                Current = null;
+                Current = _pages[_lastIndex];
                 CanClose = true;
+            }
+            else if (_currentIndex > _lastIndex)
+            {
+                _currentIndex = _lastIndex;
+                return;
             }
             else
             {

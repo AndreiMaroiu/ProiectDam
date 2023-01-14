@@ -3,6 +3,7 @@
     public enum PixelizeStrategy
     {
         Average,
-        MostCommon
+        MostCommon,
+        BayerDither
     }
 }

@@ -51,7 +51,7 @@ public struct WeightedRandom<T>
 #endif
 
         int sum = 0;
-        int target = Random.Range(0, _totalWeight + 1);
+        int target = Random.Range(1, _totalWeight + 1);
         int resultIndex;
 
         for (resultIndex = 0; resultIndex < _elems.Length; resultIndex++)

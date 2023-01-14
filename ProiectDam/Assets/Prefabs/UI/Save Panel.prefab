@@ -30,6 +30,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5386849675011094140}
   - {fileID: 5386849675376466443}
@@ -119,8 +120,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _summary: {fileID: 5386849675862776385}
-  _saverManager: {fileID: 0}
+  _allSaves: {fileID: 11400000, guid: bba1a9d637df1ef43b2d9fba5c696b33, type: 2}
   _saveNumber: 0
+  _buttonText: {fileID: 5859237854819061906}
+  _isSaving: 0
 --- !u!1 &5386849675011094141
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,6 +152,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5386849674737116556}
   m_RootOrder: 0
@@ -228,6 +232,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5386849674737116556}
   m_RootOrder: 1
@@ -303,6 +308,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5386849675862776390}
   - {fileID: 3933630899265938001}
@@ -376,6 +382,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5386849675719941115}
   m_RootOrder: 0
@@ -617,3 +624,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5386849675227553285}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5859237854819061906 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1986614050894565015, guid: 2bd1ee62fa27ea343bd499b6bbd8d191,
+    type: 3}
+  m_PrefabInstance: {fileID: 5386849675227553285}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -18,28 +18,9 @@ namespace UI
         [SerializeField] private Animator _transition;
         [SerializeField] private LevelSaverHandler _saverHandler;
         [SerializeField] private AllSavesHandler _allSavesHandler;
+        [SerializeField] private PanelStack _panelStack;
 
         private void Awake()
-        {
-            OnMenuClick();
-        }
-
-        public void OnOptionsClick()
-        {
-            _optionsCanvas.SetActive(true);
-            _mainCanvas.SetActive(false);
-        }
-
-        public void OnCreditsClick()
-        {
-            _creditsCanvas.SetActive(true);
-            _mainCanvas.SetActive(false);
-        }
-
-        /// <summary>
-        /// Close all other panels and activates main panel
-        /// </summary>
-        public void OnMenuClick()
         {
             _mainCanvas.SetActive(true);
 
@@ -48,12 +29,37 @@ namespace UI
             _creditsCanvas.SetActive(false);
             _statsCanvas.SetActive(false);
             _savesCanvas.SetActive(false);
+
+            _panelStack.OpenPanel(_mainCanvas);
+        }
+
+        public void OnOptionsClick()
+        {
+            //_optionsCanvas.SetActive(true);
+            //_mainCanvas.SetActive(false);
+
+            _panelStack.OpenPanel(_optionsCanvas);
+        }
+
+        public void OnCreditsClick()
+        {
+            //_creditsCanvas.SetActive(true);
+            //_mainCanvas.SetActive(false);
+
+            _panelStack.OpenPanel(_creditsCanvas);
+        }
+
+        /// <summary>
+        /// Close all other panels and activates main panel
+        /// </summary>
+        public void OnMenuClick()
+        {
+            _panelStack.ClosePanel();
         }
 
         public void OnHowToClick()
         {
-            _howToCanvas.SetActive(true);
-            _mainCanvas.SetActive(false);
+            _panelStack.OpenPanel(_howToCanvas);
         }
 
         public void OnStartClick()
@@ -65,7 +71,7 @@ namespace UI
             if (PlayerPrefs.GetInt(firstTimeKey, defaultValue: 0) == 1)
             {
                 Loader.TargetScene = Scenes.MainScene;
-                _saverHandler.SetForNewScene();
+                _saverHandler.SetForNewScene(_allSavesHandler.GetSaveFilePath(0));
             }
             else
             {
@@ -76,8 +82,10 @@ namespace UI
 
         public void OnStatsClick()
         {
-            _mainCanvas.SetActive(false);
-            _statsCanvas.SetActive(true);
+            //_mainCanvas.SetActive(false);
+            //_statsCanvas.SetActive(true);
+
+            _panelStack.OpenPanel(_statsCanvas);
         }
 
         public void OnTutorialClick()
@@ -92,9 +100,11 @@ namespace UI
         /// </summary>
         public void OnLoadSavesClick()
         {
-            _mainCanvas.SetActive(false);
+            //_mainCanvas.SetActive(false);
 
-            _savesCanvas.SetActive(true);
+            //_savesCanvas.SetActive(true);
+
+            _panelStack.OpenPanel(_savesCanvas);
         }
 
         /// <summary>
@@ -107,15 +117,17 @@ namespace UI
 
             if (!File.Exists(saveFile))
             {
-                ModalWindows.ModalWindow.ShowMessage("No saves found!");
-                return;
+                File.Create(saveFile);
+                _saverHandler.SetForNewScene(saveFile);
+            }
+            else
+            {
+                _saverHandler.Load(saveFile);
             }
 
             _transition.SetTrigger("Start");
             StartCoroutine(Scenes.LoadAsync(Scenes.LoadingMenu));
-            Loader.TargetScene = Scenes.MainScene;
-
-            _saverHandler.Load(saveFile);
+            Loader.TargetScene = Scenes.MainScene;           
         }
 
         public void OnQuitClick()

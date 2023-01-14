@@ -11,14 +11,11 @@ namespace ModalWindows
 
         public static void ShowDialog(IModalWindowData data)
         {
-            float timeScale = Time.timeScale;
-            Time.timeScale = 0;
-            SetDebug(data, timeScale);
+            SetDebug(data, Time.timeScale);
         }
 
         public static void ShowDialog(IModalWindowData data, float timeScale)
         {
-            Time.timeScale = 0;
             SetDebug(data, timeScale);
         }
 
@@ -33,13 +30,12 @@ namespace ModalWindows
         public static void ShowPages(params ModalWindowPageData[] pages)
         {
             SetDebug(new ModalWindowPages(pages, Time.timeScale), Time.timeScale);
-            Time.timeScale = 0;
         }
 
         private static void SetDebug(IModalWindowData data, float? lastTimeScale = null)
         {
 #if UNITY_EDITOR
-            if (!ReferenceEquals(Instance, null))
+            if (Instance is not null)
             {
                 Instance.SetWindow(data, lastTimeScale);
             }

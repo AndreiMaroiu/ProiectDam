@@ -19,7 +19,7 @@ namespace PixelizerUI
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 MainWindow mainWindow = new();
-                MainWindowViewModel viewModel = new(mainWindow.StorageProvider, mainWindow.Manager, new ClientSizeService(mainWindow));
+                MainWindowViewModel viewModel = new(mainWindow.StorageProvider, mainWindow.Manager, new ClientSizeService(mainWindow), new DialogService(mainWindow));
 
                 mainWindow.DataContext = viewModel;
 

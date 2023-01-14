@@ -17,6 +17,13 @@ namespace PixelizerUI.ViewModels
 {
     public partial class MainWindowViewModel : ObservableObject
     {
+        private static readonly List<string> _patterns = new(capacity: 3)
+        {
+            "*.png",
+            "*.jpg",
+            "*.jpeg"
+        };
+
         [ObservableProperty] private string _inputPath;
         [ObservableProperty] private string _outputPath;
         [ObservableProperty] private Bitmap _image;
@@ -31,23 +38,28 @@ namespace PixelizerUI.ViewModels
         private readonly IStorageProvider _storageProvider;
         private readonly INotificationManager _notificationManager;
         private readonly ClientSizeService _clientSizeService;
+        private readonly DialogService _dialogService;
 
         private PixelizeResult _lastResult;
 
-        public PixelizeSettingsViewModel PixelizeSettings { get; } = new();
+        public PixelizeSettingsViewModel PixelizeSettings { get; }
 
         public MainWindowViewModel()
         {
-
+            PixelizeSettings = new();
         }
 
-        public MainWindowViewModel(IStorageProvider storageProvider, INotificationManager notificationManager, ClientSizeService clientSizeService) : this()
+        public MainWindowViewModel(IStorageProvider storageProvider, INotificationManager notificationManager, 
+            ClientSizeService clientSizeService, DialogService dialogService) : this()
         {
             clientSizeService.OnSizeChanged += _ => Resize();
 
             _storageProvider = storageProvider;
             _notificationManager = notificationManager;
             _clientSizeService = clientSizeService;
+            _dialogService = dialogService;
+
+            PixelizeSettings = new(dialogService);
 
             Reset();
         }
@@ -63,11 +75,7 @@ namespace PixelizerUI.ViewModels
                 {
                     new FilePickerFileType("photos")
                     {
-                        Patterns = new List<string>()
-                        {
-                            "*.png",
-                            "*.jpg"
-                        },
+                        Patterns = _patterns,
                     }
                 },
             });
@@ -92,11 +100,7 @@ namespace PixelizerUI.ViewModels
                 {
                     new FilePickerFileType("photos")
                     {
-                        Patterns = new List<string>()
-                        {
-                            "*.png",
-                            "*.jpg",
-                        }
+                        Patterns = _patterns
                     }
                 }
             });
@@ -158,9 +162,9 @@ namespace PixelizerUI.ViewModels
         [RelayCommand]
         public async Task Pixelize()
         {
-            if (string.IsNullOrWhiteSpace(OutputPath) || string.IsNullOrWhiteSpace(InputPath))
+            if ( string.IsNullOrWhiteSpace(InputPath))
             {
-                _notificationManager.Show(new Notification("Cannot pixelize", "Input or Output path are not valid", NotificationType.Error));
+                _notificationManager.Show(new Notification("Cannot pixelize", "Input path is not valid", NotificationType.Error));
                 return;
             }
 
@@ -182,7 +186,7 @@ namespace PixelizerUI.ViewModels
 
             if (PixelizeSettings.AutoSave)
             {
-                _ = Task.Run(() => result.Result.Save(OutputPath));
+                _ = SaveLastResult();
             }
         }
 
@@ -279,7 +283,40 @@ namespace PixelizerUI.ViewModels
 
             await ChooseOutput();
 
-            _lastResult.Result.Save(OutputPath);
+            await SaveLastResult();
+        }
+
+        [RelayCommand]
+        private async Task ShowDialog()
+        {
+            await _dialogService.ShowDialogAsync<StrategiesInfoViewModel>("Simple Dialog");
+        }
+
+        private Task SaveLastResult()
+        {
+            if (OutputPath is null or "")
+            {
+                return Task.CompletedTask;
+            }
+
+            return Task.Run(() =>
+            {
+                try
+                {
+                    if (PixelizeSettings.KeepResolution)
+                    {
+                        _lastResult.UnscaledResult.Save(OutputPath);
+                    }
+                    else
+                    {
+                        _lastResult.Result.Save(OutputPath);
+                    }
+                }
+                catch (Exception e)
+                {
+                    _notificationManager.Show(new Notification("Error", e.Message, NotificationType.Error));
+                }
+            });
         }
     }
 }

@@ -80,4 +80,45 @@ public class RandomTests
             Assert.IsTrue(data.Flags == RoomType.Start);
         }
     }
+
+    [Test]
+    public void WeightedRandomTestSameWeight()
+    {
+        TileData[] elems =
+        {
+            new()
+            {
+                Weight = 1,
+                Flags = RoomType.Start
+            },
+            new()
+            {
+                Weight = 1,
+                Flags = RoomType.Start
+            },
+            new()
+            {
+                Weight = 1,
+                Flags = RoomType.Merchant
+            },
+        };
+
+        WeightedRandom<TileData> weightedRandom = new(elems, GetTileChance);
+
+        for (int i = 0; i < 1000; i++)
+        {
+            TileData data = weightedRandom.Take();
+            Assert.IsTrue(data.Flags is RoomType.Merchant);
+        }
+
+        static int GetTileChance(int i, TileData elem)
+        {
+            if (elem.Flags.FastHasFlag(RoomType.Merchant))
+            {
+                return elem.Weight;
+            }
+
+            return 0;
+        }
+    }
 }

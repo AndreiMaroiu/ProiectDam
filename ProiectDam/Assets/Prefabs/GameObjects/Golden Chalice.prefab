@@ -120,14 +120,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pickUps:
-  - handler:
-      _type: MaxHealthEnergyBoost
+  - handler: {fileID: 11400000, guid: 33211e49c89e23542b0fe499adf7a613, type: 2}
     range:
       start: 2
       end: 3
     weight: 1
-  - handler:
-      _type: CoinPickUp
+  - handler: {fileID: 11400000, guid: 80567dd6c9ff40a489c90daeb74b1238, type: 2}
     range:
       start: 15
       end: 20

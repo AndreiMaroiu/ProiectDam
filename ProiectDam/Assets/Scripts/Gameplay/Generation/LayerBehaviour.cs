@@ -10,7 +10,7 @@ namespace Gameplay.Generation
     {
         private DoorBehaviour[] _doors;
 
-        public List<BaseEnemy> Enemies { get; } = new List<BaseEnemy>();
+        public List<BaseEnemy> Enemies { get; } = new();
         public event Action OnAllEnemiesKilled;
 
         public bool HasDoors => _doors is not null || _doors.Length > 0;
@@ -59,6 +59,12 @@ namespace Gameplay.Generation
             _doors = GetComponentsInChildren<DoorBehaviour>();
 
             UpdateDoors(isLocked: false); // doors are open by default
+        }
+
+        public void AddEnemy(BaseEnemy enemy)
+        {
+            Enemies.Add(enemy);
+            enemy.OnDeathEvent += OnEnemyDeath;
         }
     }
 }

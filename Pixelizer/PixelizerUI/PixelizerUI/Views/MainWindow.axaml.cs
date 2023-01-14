@@ -10,6 +10,7 @@ namespace PixelizerUI.Views
 
         private bool _wasPressed;
         private Point? _lastPosition;
+        private double _comparatorPos;
 
         public MainWindow()
         {
@@ -41,7 +42,8 @@ namespace PixelizerUI.Views
             }
 
             Point position = e.GetPosition(this);
-            WidthSlider.Value += position.X - _lastPosition.Value.X;
+            _comparatorPos += position.X - _lastPosition.Value.X;
+            WidthSlider.Value = _comparatorPos;
             _lastPosition = position;
 
             e.Handled = true;
@@ -51,6 +53,7 @@ namespace PixelizerUI.Views
         {
             _wasPressed = true;
             _lastPosition = e.GetPosition(this);
+            _comparatorPos = WidthSlider.Value;
             e.Handled = true;
         }
     }

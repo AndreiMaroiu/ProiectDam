@@ -1,9 +1,10 @@
+using Core;
 using System;
 using UnityEngine;
 
 namespace Gameplay.Generation
 {
-    public sealed class LayerPosition : IEquatable<LayerPosition>
+    public sealed class LayerPosition : IEquatable<LayerPosition>, ICloneable<LayerPosition>
     {
         private TileType[,] _layer;
 
@@ -76,5 +77,7 @@ namespace Gameplay.Generation
         {
             return this == other;
         }
+
+        public LayerPosition Clone() => new(this);
     }
 }

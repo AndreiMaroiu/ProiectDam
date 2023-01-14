@@ -1,5 +1,6 @@
 using Core.Events;
 using Core.Items;
+using Core.Mappers;
 using Gameplay.PickUps;
 using Gameplay.Player;
 using GameStatistics;
@@ -27,7 +28,7 @@ namespace Gameplay.Merchant
         private bool _isOpen = false;
         private PersistentHandler<MerchantData> _saveData;
 
-        private ButtonEvent.ButtonInfo _buttonInfo;
+        private IButtonModel _buttonInfo;
 
         #region IInteractable
 
@@ -77,7 +78,7 @@ namespace Gameplay.Merchant
             _itemsEvent.OnItemBought += OnBuy;
             _itemsToShow = GenerateRandomItemList();
             _saveData = StatisticsManager.Instance.LoadShared<MerchantData>();
-            _buttonInfo = new("Buy", OnClick);
+            _buttonInfo = new SimpleButtonModel("Buy", OnClick);
         }
 
         private void OnDestroy()
