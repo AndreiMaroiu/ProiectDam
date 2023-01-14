@@ -35,18 +35,10 @@ namespace Gameplay.PickUps
 
         private void UseItem()
         {
-            // TODO: refactor
             float audioLength = PlaySound();
-            //SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+            enabled = false;
 
-            //if (renderer.IsNotNull())
-            //{
-            //    renderer.enabled = false;
-            //}
-
-            this.enabled = false;
-
-            Destroy(this.gameObject, audioLength);
+            Destroy(gameObject, audioLength); // destroy the gameobject after the sound finish playing, otherwise there will no sound
         }
 
         /// <summary>
@@ -55,7 +47,6 @@ namespace Gameplay.PickUps
         /// <returns>the length of the sound clip</returns>
         private float PlaySound()
         {
-            // TODO: refactor
             if (!_audio || !_item.Sound)
             {
                 return 0;

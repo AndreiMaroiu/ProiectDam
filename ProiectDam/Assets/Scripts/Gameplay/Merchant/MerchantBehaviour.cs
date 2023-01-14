@@ -78,7 +78,7 @@ namespace Gameplay.Merchant
             _itemsEvent.OnItemBought += OnBuy;
             _itemsToShow = GenerateRandomItemList();
             _saveData = StatisticsManager.Instance.LoadShared<MerchantData>();
-            _buttonInfo = new SimpleButtonModel("Buy", OnClick);
+            _buttonInfo = new SimpleButtonModel("Buy", OnClick, gameObject);
         }
 
         private void OnDestroy()

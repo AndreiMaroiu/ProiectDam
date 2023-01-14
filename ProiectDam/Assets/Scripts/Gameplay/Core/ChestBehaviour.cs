@@ -41,8 +41,7 @@ namespace Gameplay
 
             _renderer.sprite = _openedChestImage;
 
-            // todo: better spawn position
-            Vector3 direction = (transform.position - _helper.Controller.transform.position);
+            Vector3 direction = (transform.position - _helper.Controller.transform.position); // no need to normalize
             direction.z = 0;
 
             Vector3 where = transform.position + direction;
@@ -54,7 +53,7 @@ namespace Gameplay
         private void Start()
         {
             _renderer = GetComponentInChildren<SpriteRenderer>();
-            _helper.Set(new SimpleButtonModel("Open Chest", OnClick));
+            _helper.Set(new SimpleButtonModel("Open Chest", OnClick, gameObject));
             _helper.CanClick = true;
         }
     }

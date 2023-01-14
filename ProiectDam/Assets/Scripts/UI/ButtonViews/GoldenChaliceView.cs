@@ -20,7 +20,7 @@ namespace UI.ButtonViews
                         Core.Items.ItemDescription item = goldenChaliceModel.Action();
                         ModalWindow.ShowDialog(new ModalWindowData()
                         {
-                            Header = $"You got {item.Name}!", // TODO: update based on item brought
+                            Header = $"You got {item.Name}!",
                             Image = item.Image,
                         });
                     },

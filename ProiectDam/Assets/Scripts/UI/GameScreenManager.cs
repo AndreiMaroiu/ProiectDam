@@ -43,6 +43,7 @@ namespace UI
             Bind(_layerSlider.onValueChanged, OnSliderChanged);
             Bind(_buttonEvent.OnShowBindable, OnShowButton);
             Bind(_buttonEvent.OnCloseBindable, OnCloseButton);
+            Bind(_buttonEvent.OnPressBindable, OnObjectPressed);
 
             _layerSlider.gameObject.SetActive(false);
             _previewButton.gameObject.SetActive(false);
@@ -63,6 +64,19 @@ namespace UI
                 Text = _middleButtonText,
                 Icon = null, // TODO:
             };
+        }
+
+        private void OnObjectPressed(GameObject sender)
+        {
+            foreach (var model in _buttonInfos)
+            {
+                if (model.Owner == sender)
+                {
+                    OnShowButton(model);
+                    _middleButton.onClick.Invoke();
+                    break;
+                }
+            }
         }
 
         private void OnShowButton(IButtonModel info)

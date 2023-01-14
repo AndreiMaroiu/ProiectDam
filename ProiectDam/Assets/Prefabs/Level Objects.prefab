@@ -1988,6 +1988,7 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 64
+  _event: {fileID: 11400000, guid: 705363b5c6906064ab5829e50adbb9a8, type: 2}
 --- !u!1 &4109379795348081631
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ namespace Core.Events
     {
         private readonly BindableEvent<IButtonModel> _showEvent = new();
         private readonly BindableEvent<IButtonModel> _closeEvent = new();
+        private readonly BindableEvent<GameObject> _pressEvent = new();
 
         public event Action<IButtonModel> OnShow
         {
@@ -23,11 +24,20 @@ namespace Core.Events
             remove => _closeEvent.OnValueChanged -= value;
         }
 
+        public event Action<GameObject> OnPress
+        {
+            add => _pressEvent.OnValueChanged += value;
+            remove => _pressEvent.OnValueChanged -= value;
+        }
+
         public void Show(IButtonModel info) => _showEvent.Invoke(info);
 
         public void Close(IButtonModel info) => _closeEvent.Invoke(info);
 
+        public void Press(GameObject sender) => _pressEvent.Invoke(sender);
+
         public IBindable<IButtonModel> OnShowBindable => _showEvent;
         public IBindable<IButtonModel> OnCloseBindable => _closeEvent;
+        public IBindable<GameObject> OnPressBindable => _pressEvent;
     }
 }

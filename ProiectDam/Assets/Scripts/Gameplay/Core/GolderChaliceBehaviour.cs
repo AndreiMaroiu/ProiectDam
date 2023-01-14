@@ -23,7 +23,8 @@ namespace Gameplay
                 {
                     Action = OnSacrifice,
                     MinScore = 20,
-                    CurrentScore = _playerScore.Value
+                    CurrentScore = _playerScore.Value,
+                    Owner = gameObject
                 });
             };
         }

@@ -1,3 +1,4 @@
+using Core.Events;
 using UnityEngine;
 using Utilities;
 
@@ -6,6 +7,7 @@ namespace Gameplay
     public class PressebleManager : MonoBehaviour
     {
         [SerializeField] private LayerMask _layer;
+        [SerializeField] private ButtonEvent _event;
 
         private Camera _camera;
 
@@ -40,7 +42,7 @@ namespace Gameplay
 
                 if (pressableObject.IsNotNull())
                 {
-                    pressableObject.OnClick();
+                    _event.Press(hit.collider.gameObject);
                 }
             }
         }
