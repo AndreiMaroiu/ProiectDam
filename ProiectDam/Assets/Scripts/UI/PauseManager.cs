@@ -29,7 +29,7 @@ namespace UI
 
         public void OnPauseClick()
         {
-            _panelStack.OpenPanel(_pauseCanvas, Time.timeScale);
+            _panelStack.OpenDialog(_pauseCanvas);
         }
 
         public void OnResumeClick()
@@ -103,7 +103,7 @@ namespace UI
                 };
             }
 
-            ModalWindow.Show(data);
+            ModalWindow.ShowDialog(data);
         }
 
         private void LoadMainMenu()

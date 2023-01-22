@@ -30,22 +30,20 @@ namespace UI
             _statsCanvas.SetActive(false);
             _savesCanvas.SetActive(false);
 
-            _panelStack.OpenPanel(_mainCanvas);
+            _panelStack.OpenPanel(_mainCanvas, new PanelOptions()
+            {
+                PanelType = PanelType.Normal,
+                CanClose = type => type is PanelType.Normal
+            });
         }
 
         public void OnOptionsClick()
         {
-            //_optionsCanvas.SetActive(true);
-            //_mainCanvas.SetActive(false);
-
             _panelStack.OpenPanel(_optionsCanvas);
         }
 
         public void OnCreditsClick()
         {
-            //_creditsCanvas.SetActive(true);
-            //_mainCanvas.SetActive(false);
-
             _panelStack.OpenPanel(_creditsCanvas);
         }
 
@@ -100,10 +98,6 @@ namespace UI
         /// </summary>
         public void OnLoadSavesClick()
         {
-            //_mainCanvas.SetActive(false);
-
-            //_savesCanvas.SetActive(true);
-
             _panelStack.OpenPanel(_savesCanvas);
         }
 

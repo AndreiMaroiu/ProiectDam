@@ -46,7 +46,6 @@ namespace ModalWindows
         private UnityAction _okAction = null;
         private UnityAction _alternativeAction = null;
 
-        private float? _lastTimeScale = null;
         private bool _canClose = true;
 
         private void TryClose()
@@ -79,9 +78,7 @@ namespace ModalWindows
 
         private void SetWindow(IModalWindowData data, float? lastTimeScale = null)
         {
-            //_lastTimeScale = lastTimeScale;
-            //_window.gameObject.SetActive(true);
-            _panelStack.OpenPanel(_window.gameObject, lastTimeScale);
+            _panelStack.OpenPanel(_window.gameObject, new PanelOptions() { PanelType = PanelType.Modal }, lastTimeScale);
 
             _headerArea.SetActive(!string.IsNullOrEmpty(data.Header));
             _headerText.text = data.Header;

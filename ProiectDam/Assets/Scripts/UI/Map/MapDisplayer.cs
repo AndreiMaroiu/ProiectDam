@@ -18,14 +18,16 @@ namespace UI.Map
 
         public void OnMapClick()
         {
-            _panelStack.OpenDialog(_mapCanvas);
+            _panelStack.OpenDialog(_mapCanvas, new PanelOptions()
+            {
+                OnClose = () => _mainCanvas.SetActive(true)
+            });
             _mainCanvas.SetActive(false);
         }
 
         public void OnCloseClick()
         {
             _panelStack.ClosePanel();
-            _mainCanvas.SetActive(true);
         }
     }
 }

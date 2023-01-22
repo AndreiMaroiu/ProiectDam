@@ -11,10 +11,13 @@ namespace Gameplay.Enemies
         public enum BossPhase
         {
             One,
-            Two
+            Two,
+            Three,
         }
 
         [SerializeField] private TileObject _keyPrefab;
+
+        private BossPhase _phase = BossPhase.One;
 
         public event System.Action<BossPhase> OnPhaseChange;
 
@@ -53,10 +56,10 @@ namespace Gameplay.Enemies
 
             Teleport();
 
-            if (Health <= MaxHealth / 2)
+            if (_phase is BossPhase.One && Health <= MaxHealth / 2)
             {
                 CanHit = false;
-                Debug.Log("Phase 2");
+                _phase = BossPhase.Two;
                 OnPhaseChange?.Invoke(BossPhase.Two);
                 // wait for all enemies to get killed
             }
@@ -104,6 +107,7 @@ namespace Gameplay.Enemies
         internal void AdvancePhase()
         {
             CanHit = true;
+            _phase = BossPhase.Three;
         }
     }
 }

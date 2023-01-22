@@ -1,27 +1,48 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Utilities
 {
+    public enum PanelType
+    {
+        Normal,
+        Modal
+    }
+
+    public class PanelOptions
+    {
+        public PanelType PanelType { get; set; }
+        public Func<PanelType, bool> CanClose { get; set; } = type => true;
+        public Action OnClose { get; set; }
+    }
+
     [CreateAssetMenu(fileName = "New Panel Stack", menuName = "Scriptables/Panel Stack")]
     public class PanelStack : ScriptableObject
     {
-        private readonly Stack<GameObject> _panels = new();
+        private static readonly PanelOptions _default = new();
+
+        private readonly Stack<(GameObject panel, PanelOptions options)> _panels = new();
         private float? _lastTimeScale;
+
+        public bool CanClose => _panels.Count > 0;
+
+        public int PanelsCount => _panels.Count;
 
         public void ClosePanel()
         {
-            if (_panels.Count is 0)
+            if (CanClose is false)
             {
-                return;
+                return;  
             }
 
-            GameObject panel = _panels.Pop();
+            var (panel, options) = _panels.Pop();
             panel.SetActive(false);
+            options.OnClose?.Invoke();
 
             if (_panels.Count > 0)
             {
-                GameObject peek = _panels.Peek();
+                var (peek, _) = _panels.Peek();
                 peek.SetActive(true);
             }
 
@@ -32,20 +53,22 @@ namespace Utilities
             }
         }
 
-        public void OpenPanel(GameObject panel, float? timeScale = null)
+        public void OpenPanel(GameObject panel, PanelOptions options = null, float? timeScale = null)
         {
-            if (_panels.Count > 0 && panel == _panels.Peek())
+            options ??= _default;
+
+            if (_panels.Count > 0 && panel == _panels.Peek().panel)
             {
                 return;
             }
 
             if (_panels.Count > 0)
             {
-                GameObject lastPanel = _panels.Peek();
-                lastPanel.SetActive(false);
+                var (lastPanel, peekOptions) = _panels.Peek();
+                lastPanel.SetActive(!peekOptions.CanClose(options.PanelType));
             }
 
-            _panels.Push(panel);
+            _panels.Push((panel, options is null ? _default : options));
             panel.SetActive(true);
 
             if (_lastTimeScale is null && timeScale is not null)
@@ -55,7 +78,8 @@ namespace Utilities
             }
         }
 
-        public void OpenDialog(GameObject panel) => OpenPanel(panel, Time.timeScale);
+        public void OpenDialog(GameObject panel, PanelOptions options = null) 
+            => OpenPanel(panel, options is null ? _default : options, Time.timeScale);
 
         public void OnEnable()
         {
