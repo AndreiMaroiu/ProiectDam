@@ -2,13 +2,14 @@ using UnityEngine;
 
 namespace Utilities
 {
-    [RequireComponent(typeof(Camera)), ExecuteInEditMode]
+    [RequireComponent(typeof(Camera))]
     public class CameraViewportHandler : MonoBehaviour
     {
         public enum Constraint { Width, Height }
 
         [SerializeField] private Color _wireColor = Color.white;
-        [SerializeField] private float _unitsSize = 1; // size of your scene in unity units
+        [Tooltip("size of your scene in unity units")]
+        [SerializeField] private float _unitsSize = 1;
         [SerializeField] private Constraint _constraint = Constraint.Width;
         [SerializeField] private bool _executeInUpdate;
 
@@ -45,19 +46,21 @@ namespace Utilities
 
         void OnDrawGizmos()
         {
+            var camera = GetComponent<Camera>();
+
             Gizmos.color = _wireColor;
             Matrix4x4 temp = Gizmos.matrix;
             Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
 
-            if (_camera.orthographic)
+            if (camera.orthographic)
             {
-                float spread = _camera.farClipPlane - _camera.nearClipPlane;
-                float center = (_camera.farClipPlane + _camera.nearClipPlane) * 0.5f;
-                Gizmos.DrawWireCube(new Vector3(0, 0, center), new Vector3(_camera.orthographicSize * 2 * _camera.aspect, _camera.orthographicSize * 2, spread));
+                float spread = camera.farClipPlane - camera.nearClipPlane;
+                float center = (camera.farClipPlane + camera.nearClipPlane) * 0.5f;
+                Gizmos.DrawWireCube(new Vector3(0, 0, center), new Vector3(camera.orthographicSize * 2 * camera.aspect, camera.orthographicSize * 2, spread));
             }
             else
             {
-                Gizmos.DrawFrustum(Vector3.zero, _camera.fieldOfView, _camera.farClipPlane, _camera.nearClipPlane, _camera.aspect);
+                Gizmos.DrawFrustum(Vector3.zero, camera.fieldOfView, camera.farClipPlane, camera.nearClipPlane, camera.aspect);
             }
 
             Gizmos.matrix = temp;

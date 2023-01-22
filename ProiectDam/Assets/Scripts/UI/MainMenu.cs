@@ -47,9 +47,6 @@ namespace UI
             _panelStack.OpenPanel(_creditsCanvas);
         }
 
-        /// <summary>
-        /// Close all other panels and activates main panel
-        /// </summary>
         public void OnMenuClick()
         {
             _panelStack.ClosePanel();
@@ -80,9 +77,6 @@ namespace UI
 
         public void OnStatsClick()
         {
-            //_mainCanvas.SetActive(false);
-            //_statsCanvas.SetActive(true);
-
             _panelStack.OpenPanel(_statsCanvas);
         }
 
@@ -111,7 +105,6 @@ namespace UI
 
             if (!File.Exists(saveFile))
             {
-                File.Create(saveFile);
                 _saverHandler.SetForNewScene(saveFile);
             }
             else

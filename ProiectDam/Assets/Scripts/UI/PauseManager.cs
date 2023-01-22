@@ -29,7 +29,10 @@ namespace UI
 
         public void OnPauseClick()
         {
-            _panelStack.OpenDialog(_pauseCanvas);
+            _panelStack.OpenDialog(_pauseCanvas, new PanelOptions()
+            {
+                CanClose = type => type is PanelType.Normal
+            });
         }
 
         public void OnResumeClick()

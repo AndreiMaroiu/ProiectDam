@@ -83,6 +83,11 @@ namespace Gameplay.DataSaving
 
             string savePath = _handler.SaveFile;
 
+            if (string.IsNullOrWhiteSpace(savePath)) 
+            {
+                savePath = _allSaves.GetSaveFilePath(0);
+            }
+
             _allSaves.TrySaveData(SaveData, savePath);
 
             Debug.Log("Save path: " + savePath);
@@ -98,7 +103,7 @@ namespace Gameplay.DataSaving
             _handler.SetSeed(_levelSpawner.Seed);
         }
 
-        public bool ShouldLoad => _handler.ShouldLoad;
+        public bool ShouldLoad => _handler.ShouldLoad && SaveData is not null;
 
         public int Seed
         {

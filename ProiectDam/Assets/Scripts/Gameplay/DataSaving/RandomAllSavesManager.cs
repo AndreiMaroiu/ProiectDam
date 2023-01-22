@@ -9,7 +9,7 @@ namespace Gameplay.DataSaving
     [CreateAssetMenu(fileName = "New All Saves Handler", menuName = "Scriptables/All Saves Handler")]
     public sealed class RandomAllSavesManager : AllSavesHandler
     {
-        private static readonly string[] _relativePaths = new[] { "/Save1.dat", "Save2.dat", "Save3.dat" };
+        private static readonly string[] _relativePaths = new[] { "/Save1.dat", "/Save2.dat", "/Save3.dat" };
 
         private string[] _savePaths;
         private LevelSaveData[] _saves;
@@ -68,10 +68,7 @@ namespace Gameplay.DataSaving
 
         private void Init()
         {
-            if (_savePaths is null)
-            {
-                _savePaths = GenerateAbsolutePaths(_relativePaths);
-            }
+            _savePaths ??= GenerateAbsolutePaths(_relativePaths);
 
             _saves = new LevelSaveData[_relativePaths.Length];
             _summaries = new SaveSummary[_relativePaths.Length];
