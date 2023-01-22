@@ -41,13 +41,21 @@ namespace UI.Map
 
         private void OnRoomChanged(Room room = null)
         {
+            room ??= _currentRoom;
+
             if (_currentRect.IsNotNull())
             {
                 _currentRect.GetComponent<Image>().color = Color.gray;
             }
 
-            RoomUIBehaviour behaviour = _traverser[_currentRoom.Value.Pos];
+            RoomUIBehaviour behaviour = _traverser[room.Pos];
             behaviour.SetActive(Color.white);
+
+            foreach (var item in room.Neighbours)
+            {
+                RoomUIBehaviour neighbour = _traverser[item.Pos];
+                neighbour.SetActive(Color.black);
+            }
 
             _currentRect = behaviour;
 
@@ -107,6 +115,15 @@ namespace UI.Map
                 clone.Set(_icons.GetIcon(room.Type));
 
                 _traverser[room.Pos] = clone;
+            });
+
+            // setting the preview room
+            _traverser.TraverseUnique(room =>
+            {
+                if (room.Discovered)
+                {
+                    OnRoomChanged(room);
+                }
             });
 
             RectTransform door = GenerateDoor();

@@ -23,17 +23,20 @@ namespace Gameplay.DataSaving
 
         private void Init()
         {
-            if (_handler.ShouldLoad)
+            lock (this)
             {
-                var data = _allSaves.GetSave(_handler.SaveFile);
+                if (_handler.ShouldLoad)
+                {
+                    var data = _allSaves.GetSave(_handler.SaveFile);
 
-                if (data is not null)
-                {
-                    SaveData = data;
-                }
-                else
-                {
-                    Debug.LogError("Could not read file: " + _handler.SaveFile);
+                    if (data is not null)
+                    {
+                        SaveData = data;
+                    }
+                    else
+                    {
+                        Debug.LogError("Could not read file: " + _handler.SaveFile);
+                    }
                 }
             }
         }

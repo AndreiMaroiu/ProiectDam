@@ -7,9 +7,9 @@ namespace Gameplay.DataSaving
     [CreateAssetMenu(fileName = "New Level Saver", menuName = "Scriptables/Level Saver")]
     public sealed class RandomLevelSaverData : LevelSaverHandler
     {
-        [SerializeField] private bool _shouldLoad;
-        [SerializeField] private int _seed;
-        [SerializeField] private string _saveFile;
+        private static bool _shouldLoad;
+        private static int _seed;
+        private static string _saveFile;
 
         #region Level Saver Handler
 

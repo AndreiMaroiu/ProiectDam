@@ -30,6 +30,8 @@ namespace UI
             _statsCanvas.SetActive(false);
             _savesCanvas.SetActive(false);
 
+            _panelStack.Clear();
+
             _panelStack.OpenPanel(_mainCanvas, new PanelOptions()
             {
                 PanelType = PanelType.Normal,

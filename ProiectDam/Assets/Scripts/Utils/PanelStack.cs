@@ -87,5 +87,10 @@ namespace Utilities
             _panels.Clear();
             Debug.Log("panel stack cleared");
         }
+
+        public void Clear()
+        {
+            OnEnable();
+        }
     }
 }
