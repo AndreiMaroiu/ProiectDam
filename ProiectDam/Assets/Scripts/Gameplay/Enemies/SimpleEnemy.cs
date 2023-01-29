@@ -100,10 +100,11 @@ namespace Gameplay.Enemies
                 Health = enemyData.Health;
                 _renderer.flipX = enemyData.IsFlipped;
                 _lastType = enemyData.LastTile;
+                CanHit = enemyData.CanHit;
             }
         }
 
-        private SimpleEnemySaveData CreateSaveData()
+        protected SimpleEnemySaveData CreateSaveData()
         {
             LoadSpriteRenderer();
 
@@ -113,6 +114,7 @@ namespace Gameplay.Enemies
                 Health = this.Health,
                 IsFlipped = _renderer.flipX,
                 LastTile = _lastType,
+                CanHit = CanHit,
             };
         }
 

@@ -1,3 +1,4 @@
+using Gameplay.DataSaving;
 using Gameplay.Generation;
 using Gameplay.Player;
 using System.Collections;
@@ -109,5 +110,36 @@ namespace Gameplay.Enemies
             CanHit = true;
             _phase = BossPhase.Three;
         }
+
+        #region Data Saving
+
+        protected override void LoadFromSave(ObjectSaveData data)
+        {
+            base.LoadFromSave(data);
+
+            if (data is BossEnemySaveData bossData)
+            {
+                _phase = bossData.Phase;
+            }
+        }
+
+        public override ObjectSaveData SaveData => CreateBossSaveData();
+
+        private BossEnemySaveData CreateBossSaveData()
+        {
+            var data = CreateSaveData();
+
+            return new BossEnemySaveData()
+            {
+                CanHit = data.CanHit,
+                Health = data.Health,
+                IsFlipped = data.IsFlipped,
+                LastTile = data.LastTile,
+                ObjectName = data.ObjectName,
+                Phase = _phase,
+            };
+        }
+
+        #endregion
     }
 }

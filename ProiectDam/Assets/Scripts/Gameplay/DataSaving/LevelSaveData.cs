@@ -6,7 +6,9 @@ namespace Gameplay.DataSaving
     public sealed class LevelSaveData
     {
         public int Seed { get; set; }
-        
+        public int RunsCount { get; set; }
+        public float DifficultyMultiplier { get; set; }
+
         public Vector2IntPos CurrentRoom { get; set; }
         public PlayerSaveData PlayerData { get; set; }
         public TurnManagerSaveData TurnManagerData { get; set; }

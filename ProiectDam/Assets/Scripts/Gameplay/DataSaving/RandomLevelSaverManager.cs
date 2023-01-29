@@ -1,5 +1,6 @@
 using Core.DataSaving;
 using Core.Events;
+using Core.Values;
 using Gameplay.Generation;
 using Gameplay.Managers;
 using Gameplay.Player;
@@ -17,6 +18,7 @@ namespace Gameplay.DataSaving
         [SerializeField] private RoomEvent _roomEvent;
         [SerializeField] private TurnManager _turnManager;
         [SerializeField] private SaveEvent _saveEvent;
+        [SerializeField] private FloatValue _difficultyMultiplier;
 
         private bool _loaded;
         private LevelSaveData _saveData;
@@ -73,7 +75,7 @@ namespace Gameplay.DataSaving
             }
         }
 
-        public void Save() // todo: add string file
+        public void Save()
         {
             SaveData = new()
             {
@@ -82,6 +84,8 @@ namespace Gameplay.DataSaving
                 TurnManagerData = _turnManager.SaveData,
                 PlayerData = _player.SaveData,
                 Rooms = SaveRooms(),
+                RunsCount = 1, // TODO: update the runs count
+                DifficultyMultiplier = _difficultyMultiplier,
             };
 
             string savePath = _handler.SaveFile;
