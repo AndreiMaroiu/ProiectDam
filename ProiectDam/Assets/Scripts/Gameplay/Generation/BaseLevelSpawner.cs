@@ -8,7 +8,6 @@ namespace Gameplay.Generation
     public abstract class BaseLevelSpawner : MonoBehaviour
     {
         [SerializeField] protected LevelGeneratorData _data;
-        [SerializeField] protected Vector2Int _enemiesRange;
         [SerializeField] protected PlayerController _player;
 
         protected RoomTraverser<RoomBehaviour> _traverser;
@@ -67,7 +66,7 @@ namespace Gameplay.Generation
         /// </summary>
         protected void GenereteLayers()
         {
-            LayersGenerator generator = new LayersGenerator(_data.CellCount, _enemiesRange);
+            LayersGenerator generator = new(_data.CellCount, _data.EnemiesRange);
 
             _traverser.Traverse(room =>
             {

@@ -17,3 +17,4 @@ MonoBehaviour:
   _moveTime: 0.3
   _cellSizeValue: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
   _globalDeathEvent: {fileID: 11400000, guid: 3a69f05b5ff99064eac93dd2ec9d5272, type: 2}
+  _difficulty: {fileID: 11400000, guid: 96affaeca00ace240bbf47c7ab093b91, type: 2}

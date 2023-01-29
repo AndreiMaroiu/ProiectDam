@@ -1,6 +1,5 @@
 using Core.Values;
 using Gameplay.Events;
-using Gameplay.Generation;
 using UnityEngine;
 
 namespace Gameplay.Generation
@@ -19,6 +18,8 @@ namespace Gameplay.Generation
         [Header("Settings")]
         [SerializeField] private FloatValue _cellSize;
         [SerializeField] private int _cellCount;
+        [SerializeField] private IntRange _enemiesRange;
+        [SerializeField] private FloatValue _difficultyMultiplier;
         [Header("Events")]
         [SerializeField] private RoomBehaviourEvent _roomBehaviourEvent;
 
@@ -31,6 +32,8 @@ namespace Gameplay.Generation
         public float CellSize => _cellSize;
         public int CellCount => _cellCount;
         public RoomBehaviourEvent RoomBehaviourEvent => _roomBehaviourEvent;
+        public IntRange EnemiesRange => _enemiesRange * _difficultyMultiplier;
+        public float DifficultyMultiplier => _difficultyMultiplier;
 
         public void Reset()
         {

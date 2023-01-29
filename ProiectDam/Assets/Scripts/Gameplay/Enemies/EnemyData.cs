@@ -12,9 +12,10 @@ namespace Gameplay
         [SerializeField] private float _moveTime;
         [SerializeField] private FloatValue _cellSizeValue;
         [SerializeField] private GameEvent _globalDeathEvent;
+        [SerializeField] private FloatValue _difficulty;
 
-        public int Damage => _damage;
-        public int StartHealth => _startHealth;
+        public int Damage => (int)Mathf.Round(_damage * _difficulty);
+        public int StartHealth => (int)Mathf.Round(_startHealth * _difficulty);
         public float MoveTime => _moveTime;
         public FloatValue CellSizeValue => _cellSizeValue;
         public GameEvent GlobalDeathEvent => _globalDeathEvent;

@@ -630,6 +630,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4109379794486121718, guid: 0df48db316dcf8d4db933b0b7329c4d6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 28.869751
+      objectReference: {fileID: 0}
     - target: {fileID: 4109379795122538382, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
       propertyPath: _spawner
@@ -869,7 +874,7 @@ PrefabInstance:
     - target: {fileID: 7161502621323392761, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 520
+      value: 620
       objectReference: {fileID: 0}
     - target: {fileID: 7161502621323392761, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
@@ -1062,9 +1067,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 52208f7b814957641819b465369edcb1, type: 2}
-  _enemiesRange: {x: 1, y: 2}
   _player: {fileID: 1335463323}
-  _rooms: 0200000040000000
+  _rooms: 0200000080000000
 --- !u!4 &1453600472
 Transform:
   m_ObjectHideFlags: 0

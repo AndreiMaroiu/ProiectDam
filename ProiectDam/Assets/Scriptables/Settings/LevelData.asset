@@ -20,5 +20,10 @@ MonoBehaviour:
   _grassTiles: {fileID: 11400000, guid: aeb116db2e15bd343975658e25a57c02, type: 2}
   _cellSize: {fileID: 11400000, guid: d78e52d754be148499a75f794416fbcf, type: 2}
   _cellCount: 9
+  _enemiesRange:
+    start: 3
+    end: 5
+  _difficultyMultiplier: {fileID: 11400000, guid: 96affaeca00ace240bbf47c7ab093b91,
+    type: 2}
   _roomBehaviourEvent: {fileID: 11400000, guid: c546f3029682b1f46a1a1d15a38817fc,
     type: 2}

@@ -38,7 +38,7 @@ namespace Gameplay.Enemies
             Vector2Int direction = -Utils.GetMatrixPos(GetMoveDirection(player));
             yield return TryMove(direction);
 
-            if ((LayerPosition.Position - player.LayerPosition.Position).sqrMagnitude > 0 && Random.Range(0, 100) < 50)
+            if ((LayerPosition.Position - player.LayerPosition.Position).sqrMagnitude > 1 && Random.Range(0, 100) < 50)
             {
                 direction = -Utils.GetMatrixPos(GetMoveDirection(player));
                 yield return TryMove(direction);

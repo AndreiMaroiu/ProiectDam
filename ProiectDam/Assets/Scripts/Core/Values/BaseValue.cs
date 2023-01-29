@@ -6,7 +6,11 @@ namespace Core.Values
     {
         [SerializeField] private T _value;
 
-        public T Value => _value;
+        public T Value
+        {
+            get => _value;
+            set => _value = value;
+        }
 
         public static implicit operator T (BaseValue<T> value)
             => value._value;
