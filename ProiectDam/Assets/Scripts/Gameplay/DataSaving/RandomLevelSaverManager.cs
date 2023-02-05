@@ -1,3 +1,4 @@
+using Core;
 using Core.DataSaving;
 using Core.Events;
 using Core.Values;
@@ -5,6 +6,7 @@ using Gameplay.Generation;
 using Gameplay.Managers;
 using Gameplay.Player;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Gameplay.DataSaving
@@ -29,7 +31,8 @@ namespace Gameplay.DataSaving
             {
                 if (_handler.ShouldLoad)
                 {
-                    var data = _allSaves.GetSave(_handler.SaveFile);
+                    string fullPath = _handler.SaveFile.SaveDataPath;
+                    LevelSaveData data = _allSaves.GetSave(fullPath);
 
                     if (data is not null)
                     {
@@ -37,7 +40,7 @@ namespace Gameplay.DataSaving
                     }
                     else
                     {
-                        Debug.LogError("Could not read file: " + _handler.SaveFile);
+                        Debug.LogError("Could not read file: " + fullPath);
                     }
                 }
             }
@@ -88,14 +91,21 @@ namespace Gameplay.DataSaving
                 DifficultyMultiplier = _difficultyMultiplier,
             };
 
-            string savePath = _handler.SaveFile;
+            SavePath savePath = _handler.SaveFile;
 
-            if (string.IsNullOrWhiteSpace(savePath)) 
+            if (savePath.IsNullOrEmpty()) 
             {
                 savePath = _allSaves.GetSaveFilePath(0);
             }
 
-            _allSaves.TrySaveData(SaveData, savePath);
+            _allSaves.TrySaveData(SaveData, savePath.SaveDataPath);
+            _allSaves.TrySaveData(new SaveSummary()
+            {
+                Energy = SaveData.PlayerData.Energy.start,
+                Health = SaveData.PlayerData.Health.start,
+                Money = SaveData.PlayerData.Coins,
+                RoomsDiscovered = SaveData.Rooms.Count(x => x.Value.IsDiscovered)
+            }, savePath.SummaryPath);
 
             Debug.Log("Save path: " + savePath);
         }

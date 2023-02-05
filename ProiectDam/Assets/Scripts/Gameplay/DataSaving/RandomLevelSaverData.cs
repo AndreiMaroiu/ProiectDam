@@ -9,23 +9,23 @@ namespace Gameplay.DataSaving
     {
         private static bool _shouldLoad;
         private static int _seed;
-        private static string _saveFile;
+        private static SavePath _saveFile;
 
         #region Level Saver Handler
 
         public override bool ShouldLoad => _shouldLoad;
 
-        public override string SaveFile => _saveFile;
+        public override SavePath SaveFile => _saveFile;
 
         public override int Seed => _seed;
 
-        public override void Load(string saveFile)
+        public override void Load(SavePath saveFile)
         {
             _shouldLoad = true;
             _saveFile = saveFile;
         }
 
-        public override void SetForNewScene(string saveFile)
+        public override void SetForNewScene(SavePath saveFile)
         {
             _saveFile = saveFile;
             int seed = GenerateRandomSeed();

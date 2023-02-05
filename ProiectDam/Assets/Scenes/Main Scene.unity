@@ -159,6 +159,8 @@ MonoBehaviour:
   _roomEvent: {fileID: 11400000, guid: d1d78b254926b314d84ce8c10c8375c0, type: 2}
   _turnManager: {fileID: 904153693}
   _saveEvent: {fileID: 11400000, guid: d6396cf79818c944da5bc2602f4cad03, type: 2}
+  _difficultyMultiplier: {fileID: 11400000, guid: 96affaeca00ace240bbf47c7ab093b91,
+    type: 2}
 --- !u!4 &40433178
 Transform:
   m_ObjectHideFlags: 0
@@ -204,10 +206,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 52208f7b814957641819b465369edcb1, type: 2}
-  _enemiesRange: {x: 3, y: 5}
   _player: {fileID: 136520281}
   _maxtrixSize: {fileID: 11400000, guid: de5403f92b6c2f247b2b795445f8d8f3, type: 2}
-  _maxRoomCount: 20
+  _maxRoomCount: 15
   _maxRoomNeighbours: 2
   _layerEvent: {fileID: 11400000, guid: 7bddafb6a683dae4a96e712e19d2fcb6, type: 2}
   _levelSaver: {fileID: 40433177}
@@ -948,7 +949,7 @@ PrefabInstance:
     - target: {fileID: 7161502621323392761, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 940
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7161502621323392761, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
@@ -1028,7 +1029,7 @@ PrefabInstance:
     - target: {fileID: 7855007954112815129, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 32
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7855007954112815129, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}

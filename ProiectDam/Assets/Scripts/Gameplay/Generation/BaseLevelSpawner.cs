@@ -25,14 +25,14 @@ namespace Gameplay.Generation
         /// <param name="room">room data</param>
         /// <param name="where">world position where to spawn the room</param>
         /// <returns>the gameobject of the room</returns>
-        protected GameObject SpawnRoom(Room room, Vector3 where)
+        protected GameObject SpawnRoom(Room room, Vector3 where, Transform parent)
         {
             Vector2Int pos = room.Pos;
 
             if (_traverser[pos].IsNull())
             {
-                RoomBehaviour result = Instantiate(_data.Room, where, Quaternion.identity);
-
+                RoomBehaviour result = Instantiate(_data.Room, parent);
+                result.transform.position = where;
                 _traverser[room.Pos] = result;
 
                 return result.gameObject;
@@ -46,6 +46,8 @@ namespace Gameplay.Generation
         /// </summary>
         protected void SpawnRoomAssets()
         {
+            GameObject root = new("Root");
+
             _traverser.Traverse(room =>
             {
                 Vector3 where = Vector3.zero;
@@ -56,7 +58,7 @@ namespace Gameplay.Generation
                     where = _traverser[room.LastRoom.Pos].transform.position + direction;
                 }
 
-                room.GameObject = SpawnRoom(room, where);
+                room.GameObject = SpawnRoom(room, where, root.transform);
             });
         }
 

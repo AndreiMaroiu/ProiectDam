@@ -48,6 +48,11 @@ namespace Gameplay.Merchant
             _animator.SetTrigger("Open");
 
             _buttonEvent.Show(_buttonInfo);
+
+            if (_saveData.Data.FriendshipLevel is FriendshipLevel.NeverMet)
+            {
+                _saveData.Data.Increment();
+            }
         }
 
         public void OnPlayerLeave(PlayerController controller)
@@ -57,7 +62,7 @@ namespace Gameplay.Merchant
                 return;
             }
 
-            StartCoroutine(ShowDialog("Bye!", 1.0f));
+            StartCoroutine(ShowDialog(_dialogs.GetRandomCloseDialog(), 1.0f));
 
             _animator.SetTrigger("Hide");
             _player = null;

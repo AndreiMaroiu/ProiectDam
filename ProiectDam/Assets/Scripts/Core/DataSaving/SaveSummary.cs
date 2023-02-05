@@ -1,5 +1,6 @@
 namespace Core
 {
+    [System.Serializable]
     public class SaveSummary
     {
         public int Health { get; set; }

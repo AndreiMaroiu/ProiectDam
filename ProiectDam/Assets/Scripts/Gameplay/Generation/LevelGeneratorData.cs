@@ -33,7 +33,11 @@ namespace Gameplay.Generation
         public int CellCount => _cellCount;
         public RoomBehaviourEvent RoomBehaviourEvent => _roomBehaviourEvent;
         public IntRange EnemiesRange => _enemiesRange * _difficultyMultiplier;
-        public float DifficultyMultiplier => _difficultyMultiplier;
+        public float DifficultyMultiplier
+        {
+            get => _difficultyMultiplier;
+            set => _difficultyMultiplier.Value = value;
+        }
 
         public void Reset()
         {

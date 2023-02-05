@@ -19,8 +19,18 @@ MonoBehaviour:
   - Sup?
   _friend:
   - Hello friend!
+  - Hi!
+  - Hello!
   _goodFriend:
   - I really missed you!
+  - Hi!
+  - Hello!
   _bestFriends:
   - Hello my friend!
   - You know, some I think you are my best friend!
+  - Hello there!
+  _closeDialog:
+  - Bye!
+  - Good Bye!
+  - Good Luck!
+  - See you next time!

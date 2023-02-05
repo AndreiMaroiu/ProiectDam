@@ -416,7 +416,7 @@ PrefabInstance:
     - target: {fileID: 1986614050894565015, guid: 2bd1ee62fa27ea343bd499b6bbd8d191,
         type: 3}
       propertyPath: m_Text
-      value: Overwrite
+      value: Delete
       objectReference: {fileID: 0}
     - target: {fileID: 1986614050894565015, guid: 2bd1ee62fa27ea343bd499b6bbd8d191,
         type: 3}
@@ -467,7 +467,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -5216363368025996689, guid: 4087917fa30d55a428607dd260d2f251,
+      objectReference: {fileID: -1099396636000734626, guid: 2a01691a87fedbe4aa6de6f1c0c0f3d4,
         type: 3}
     - target: {fileID: 8959629206462069844, guid: 2bd1ee62fa27ea343bd499b6bbd8d191,
         type: 3}
@@ -592,7 +592,7 @@ PrefabInstance:
     - target: {fileID: 8959629206462069847, guid: 2bd1ee62fa27ea343bd499b6bbd8d191,
         type: 3}
       propertyPath: m_Name
-      value: Overwrite Button
+      value: Delete Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2bd1ee62fa27ea343bd499b6bbd8d191, type: 3}

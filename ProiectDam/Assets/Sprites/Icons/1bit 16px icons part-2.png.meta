@@ -9302,7 +9302,7 @@ TextureImporter:
         serializedVersion: 2
         x: 32
         y: 80
-        width: 16
+        width: 40
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -9313,27 +9313,6 @@ TextureImporter:
       bones: []
       spriteID: 39e8b8427c368adc0800000000000000
       internalID: -3627539792884167021
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 1bit 16px icons part-2_359
-      rect:
-        serializedVersion: 2
-        x: 56
-        y: 80
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b5821cabc7af50870800000000000000
-      internalID: 8648594073051015259
       vertices: []
       indices: 
       edges: []
@@ -9533,7 +9512,7 @@ TextureImporter:
         serializedVersion: 2
         x: 296
         y: 80
-        width: 16
+        width: 31
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -9544,27 +9523,6 @@ TextureImporter:
       bones: []
       spriteID: b9fdb891f055b0c70800000000000000
       internalID: 8938331408788348827
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 1bit 16px icons part-2_370
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 80
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 95be43af52a13acb0800000000000000
-      internalID: -4854007222961378471
       vertices: []
       indices: 
       edges: []

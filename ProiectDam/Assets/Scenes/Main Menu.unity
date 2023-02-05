@@ -1627,6 +1627,7 @@ MonoBehaviour:
   _creditsCanvas: {fileID: 1080290152666517709}
   _statsCanvas: {fileID: 2094045854}
   _savesCanvas: {fileID: 226881501}
+  _savesPanel: {fileID: 346506939}
   _transition: {fileID: 801044320}
   _saverHandler: {fileID: 11400000, guid: 412537028d3cbf44fbc7d53c95864586, type: 2}
   _allSavesHandler: {fileID: 11400000, guid: bba1a9d637df1ef43b2d9fba5c696b33, type: 2}
@@ -2465,6 +2466,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8167572549615657817, guid: 1ee6b5fb6e047dc43829b5f4ab2817aa,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 440890524}
+    - target: {fileID: 8167572549615657817, guid: 1ee6b5fb6e047dc43829b5f4ab2817aa,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteSave
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ee6b5fb6e047dc43829b5f4ab2817aa, type: 3}
@@ -6040,6 +6051,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8167572549615657817, guid: 1ee6b5fb6e047dc43829b5f4ab2817aa,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 440890524}
+    - target: {fileID: 8167572549615657817, guid: 1ee6b5fb6e047dc43829b5f4ab2817aa,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteSave
+      objectReference: {fileID: 0}
+    - target: {fileID: 8167572549615657817, guid: 1ee6b5fb6e047dc43829b5f4ab2817aa,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ee6b5fb6e047dc43829b5f4ab2817aa, type: 3}
 --- !u!224 &1453335904 stripped
@@ -6876,6 +6902,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8167572549615657817, guid: 1ee6b5fb6e047dc43829b5f4ab2817aa,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 440890524}
+    - target: {fileID: 8167572549615657817, guid: 1ee6b5fb6e047dc43829b5f4ab2817aa,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteSave
+      objectReference: {fileID: 0}
+    - target: {fileID: 8167572549615657817, guid: 1ee6b5fb6e047dc43829b5f4ab2817aa,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ee6b5fb6e047dc43829b5f4ab2817aa, type: 3}

@@ -1,53 +1,34 @@
 using Core;
 using Core.DataSaving;
-using System.Linq;
+using System.IO;
 using UnityEngine;
-using Utilities;
+using BinaryReader = Utilities.BinaryReader;
 
 namespace Gameplay.DataSaving
 {
     [CreateAssetMenu(fileName = "New All Saves Handler", menuName = "Scriptables/All Saves Handler")]
     public sealed class RandomAllSavesManager : AllSavesHandler
     {
-        private static readonly string[] _relativePaths = new[] { "/Save1.dat", "/Save2.dat", "/Save3.dat" };
+        private static readonly string[] _relativePaths = new[] { "/Save1", "/Save2", "/Save3" };
 
-        private string[] _savePaths;
-        private LevelSaveData[] _saves;
-        private SaveSummary[] _summaries;
-
-        private bool _loaded;
-
-        private void OnEnable()
+        public override SaveSummary GetSummary(int i)
         {
-            _savePaths = GenerateAbsolutePaths(_relativePaths);
-        }
-
-        public override SaveSummary[] Summaries
-        {
-            get
+            if (BinaryReader.TryRead<SaveSummary>(GetSaveFilePath(i).SummaryPath, out var saveData))
             {
-                if (!_loaded || _summaries is null)
-                {
-                    Init();
-                }
-
-                return _summaries;
-            }
-        }
-
-        public override string GetSaveFilePath(int i)
-        {
-            if (!_loaded)
-            {
-                Init();
+                return saveData;
             }
 
-            return _savePaths[i];
+            return null;
+        }
+
+        public override SavePath GetSaveFilePath(int i)
+        {
+            return Application.persistentDataPath + _relativePaths[i];
         }
 
         public LevelSaveData GetSave(string path)
         {
-            if (IsSaveValid(path) && BinaryReader.TryRead<LevelSaveData>(path, out var result))
+            if (BinaryReader.TryRead<LevelSaveData>(path, out var result))
             {
                 return result;
             }
@@ -57,64 +38,33 @@ namespace Gameplay.DataSaving
 
         public override bool TrySaveData(object saveData, string path)
         {
-            if (saveData is LevelSaveData levelSaveData && IsSaveValid(path))
+            if (saveData is LevelSaveData levelSaveData)
             {
                 BinaryReader.Write(path, levelSaveData);
+                return true;
+            }
+
+            if (saveData is SaveSummary summary)
+            {
+                BinaryReader.Write(path, summary);
                 return true;
             }
 
             return false;
         }
 
-        private void Init()
+        public override void DeleteSave(int i)
         {
-            _savePaths ??= GenerateAbsolutePaths(_relativePaths);
+            SavePath save = GetSaveFilePath(i);
 
-            _saves = new LevelSaveData[_relativePaths.Length];
-            _summaries = new SaveSummary[_relativePaths.Length];
-
-            for (int i = 0; i < _relativePaths.Length; i++)
-            {
-                if (BinaryReader.TryRead<LevelSaveData>(_savePaths[i], out var saveData))
-                {
-                    _saves[i] = saveData;
-
-                    _summaries[i] = new()
-                    {
-                        Energy = saveData.PlayerData.Energy.X,
-                        Health = saveData.PlayerData.Health.X,
-                        Money = saveData.PlayerData.Coins,
-                        RoomsDiscovered = saveData.Rooms.Count(pair => pair.Value.IsDiscovered),
-                    };
-                }
-            }
-
-            _loaded = true;
+            File.Delete(save.SaveDataPath);
+            File.Delete(save.SummaryPath);
         }
 
-        private bool IsSaveValid(string path)
+        public override bool SaveFilesExist(int i)
         {
-            foreach (var savePath in _savePaths)
-            {
-                if (savePath == path)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private static string[] GenerateAbsolutePaths(string[] relativePaths)
-        {
-            string[] result = new string[relativePaths.Length];
-
-            for (int i = 0; i < result.Length; i++)
-            {
-                result[i] = Application.persistentDataPath + relativePaths[i];
-            }
-
-            return result;
+            SavePath save = GetSaveFilePath(i);
+            return save.Exists();
         }
     }
 }

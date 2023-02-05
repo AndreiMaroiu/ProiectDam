@@ -12,6 +12,8 @@ namespace Gameplay.Generation
             Room start = new TutorialLevelGenerator().Generate(_rooms);
             _traverser = new RoomTraverser<RoomBehaviour>(start);
 
+            _data.DifficultyMultiplier = 1;
+
             SpawnRoomAssets();
             GenereteLayers();
             SetDoorPositions();

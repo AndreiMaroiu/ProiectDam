@@ -11,9 +11,9 @@ namespace UI
         [SerializeField] private AllSavesHandler _allSaves;
         [SerializeField] private int _saveNumber;
 
-        private void Start()
+        public void Start()
         {
-            SaveSummary save = _allSaves.Summaries[_saveNumber];
+            SaveSummary save = _allSaves.GetSummary(_saveNumber);
 
             if (save is not null)
             {

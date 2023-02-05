@@ -3,6 +3,7 @@ using Core.Events;
 using Core.Values;
 using Gameplay.DataSaving;
 using UnityEngine;
+using Utilities;
 
 namespace Gameplay.Generation
 {
@@ -28,6 +29,7 @@ namespace Gameplay.Generation
         public override void Spawn()
         {
             SetSeed();
+            SetDifficulty();
 
             GenerateDungeon();
             GenerateRoomTypes();
@@ -42,6 +44,12 @@ namespace Gameplay.Generation
             SetCurrentRoom();
 
             Random.InitState((int)System.DateTimeOffset.Now.ToUnixTimeMilliseconds());
+        }
+
+        private void SetDifficulty()
+        {
+            _data.DifficultyMultiplier = _levelSaver.ShouldLoad ? 1 + (0.5f * (_levelSaver.SaveData.RunsCount - 1)) : 1;
+            Debug.Log("Difficulty: " + _data.DifficultyMultiplier);
         }
 
         private void SetCurrentRoom()
@@ -69,7 +77,7 @@ namespace Gameplay.Generation
         /// </summary>
         private void GenerateDungeon()
         {
-            _generator = new DungeonGenerator(_maxRoomNeighbours, _maxRoomCount, _maxtrixSize);
+            _generator = new DungeonGenerator(_maxRoomNeighbours, (_maxRoomCount * _data.DifficultyMultiplier).RoundToInt(), _maxtrixSize);
             Room start = _generator.GenerateDungeon();
             _traverser = new RoomTraverser<RoomBehaviour>(start);
         }
@@ -90,7 +98,7 @@ namespace Gameplay.Generation
 
         private void SpawnLayersFromSave()
         {
-            LayersSpawner spawner = new LayersSpawner(_data.CellSize, _data.GrassTiles, _data.FireTiles, _data.DungeonTiles);
+            LayersSpawner spawner = new(_data.CellSize, _data.GrassTiles, _data.FireTiles, _data.DungeonTiles);
 
             _traverser.TraverseUnique(room =>
             {

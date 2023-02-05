@@ -8,11 +8,17 @@ namespace Core.Values
         public int start;
         public int end;
 
+        public IntRange(int start, int end)
+        {
+            this.start = start;
+            this.end = end;
+        }
+
         public static IntRange operator *(IntRange range, float scalar)
             => new()
             {
-                start = (int)Mathf.Round(range.start * scalar),
-                end = (int)Mathf.Round(range.end * scalar),
+                start = (range.start * scalar).RoundToInt(),
+                end = (range.end * scalar).RoundToInt(),
             };
 
         public static implicit operator Vector2Int(IntRange range)

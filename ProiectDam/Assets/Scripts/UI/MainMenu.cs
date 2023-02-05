@@ -1,5 +1,5 @@
 using Core.DataSaving;
-using System.IO;
+using ModalWindows;
 using UnityEngine;
 using Utilities;
 
@@ -14,6 +14,7 @@ namespace UI
         [SerializeField] private GameObject _creditsCanvas;
         [SerializeField] private GameObject _statsCanvas;
         [SerializeField] private GameObject _savesCanvas;
+        [SerializeField] private GameObject _savesPanel;
         [Header("Utilities")]
         [SerializeField] private Animator _transition;
         [SerializeField] private LevelSaverHandler _saverHandler;
@@ -103,20 +104,34 @@ namespace UI
         /// <param name="saveNumber">Number of the save file</param>
         public void OnLoadLevelClick(int saveNumber)
         {
-            string saveFile = _allSavesHandler.GetSaveFilePath(saveNumber);
+            SavePath saveFile = _allSavesHandler.GetSaveFilePath(saveNumber);
 
-            if (!File.Exists(saveFile))
-            {
-                _saverHandler.SetForNewScene(saveFile);
-            }
-            else
-            {
-                _saverHandler.Load(saveFile);
-            }
+            _saverHandler.Load(saveFile);
 
             _transition.SetTrigger("Start");
             StartCoroutine(Scenes.LoadAsync(Scenes.LoadingMenu));
-            Loader.TargetScene = Scenes.MainScene;           
+            Loader.TargetScene = Scenes.MainScene;
+        }
+
+        public void DeleteSave(int saveNumber)
+        {
+            int uiSaveNumber = saveNumber + 1;
+
+            ModalWindow.Show(new ModalWindowData()
+            {
+                Header = $"Are you sure want to delete Save {uiSaveNumber.ToString()}",
+                Content = "There is no way to undo this action",
+                OkAction = () =>
+                {
+                    _allSavesHandler.DeleteSave(saveNumber);
+                    ModalWindow.ShowMessage($"Save {uiSaveNumber.ToString()} deleted!");
+
+                    foreach (var panel in _savesPanel.GetComponentsInChildren<SavePanel>())
+                    {
+                        panel.Start(); // refresh panel
+                    }
+                }
+            });
         }
 
         public void OnQuitClick()

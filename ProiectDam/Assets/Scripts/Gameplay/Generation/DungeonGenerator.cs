@@ -68,9 +68,9 @@ namespace Gameplay.Generation
 
             for (int i = 0; i < 360; i += 90)
             {
-                Vector2 temp = Utils.GetDirectionRounded(i);
-                int x = (int)(temp.x + currentRoom.Pos.x);
-                int y = (int)(temp.y + currentRoom.Pos.y);
+                Vector2Int temp = Utils.GetDirectionRounded(i);
+                int x = temp.x + currentRoom.Pos.x;
+                int y = temp.y + currentRoom.Pos.y;
 
                 if (_matrix[x, y] != RoomType.Empty)
                 {
@@ -113,13 +113,18 @@ namespace Gameplay.Generation
 
             for (int i = 0; i < neighbourCount; i++)
             {
-                _numberOfRooms += TryAddToDirection(currentRoom, _picker.Take() + currentRoom.Direction);
+                TryAddToDirection(currentRoom, _picker.Take() + currentRoom.Direction);
             }
         }
 
         private void CreateRoom(Room currentRoom)
         {
-            _matrix[(int)currentRoom.Pos.x, (int)currentRoom.Pos.y] = currentRoom.Type;
+            if (_matrix[currentRoom.Pos.x, currentRoom.Pos.y] is RoomType.Empty)
+            {
+                _numberOfRooms++;
+            }
+
+            _matrix[currentRoom.Pos.x, currentRoom.Pos.y] = currentRoom.Type;
             CreateNeighbours(currentRoom);
         }
 
@@ -127,10 +132,10 @@ namespace Gameplay.Generation
         {
             Reset();
 
+            Queue<Room> queue = new();
             int middle = _matrix.GetLength(0) / 2;
-            Vector2Int startPosition = new Vector2Int(middle, middle);
+            Vector2Int startPosition = new(middle, middle);
             _start = new Room(startPosition, null, RoomType.Start, Random.Range(0, 4) * 90);
-            Queue<Room> queue = new Queue<Room>();
 
             queue.Enqueue(_start);
             _numberOfRooms = 0;
@@ -151,7 +156,7 @@ namespace Gameplay.Generation
 
         public void CalculateDistances()
         {
-            RoomTraverser<int> traverser = new RoomTraverser<int>(_start);
+            RoomTraverser<int> traverser = new(_start);
 
             traverser.Traverse(room =>
             {
@@ -172,8 +177,8 @@ namespace Gameplay.Generation
 
         public Dictionary<Vector2Int, List<Room>> CalculateDuplicates()
         {
-            Dictionary<Vector2Int, List<Room>> dict = new Dictionary<Vector2Int, List<Room>>();
-            RoomTraverser<int> traverser = new RoomTraverser<int>(_start);
+            Dictionary<Vector2Int, List<Room>> dict = new();
+            RoomTraverser<int> traverser = new(_start);
 
             traverser.Traverse(room =>
             {

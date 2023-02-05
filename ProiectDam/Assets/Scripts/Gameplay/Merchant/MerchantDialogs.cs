@@ -10,11 +10,17 @@ namespace Gameplay.Merchant
         [SerializeField] private string[] _friend;
         [SerializeField] private string[] _goodFriend;
         [SerializeField] private string[] _bestFriends;
+        [SerializeField] private string[] _closeDialog;
 
         public string GetRandomDialog(FriendshipLevel friendshipLevel)
         {
             string[] lines = GetDialogLines(friendshipLevel);
             return lines is not null ? lines[Random.Range(0, lines.Length)] : null;
+        }
+
+        public string GetRandomCloseDialog()
+        {
+            return _closeDialog[Random.Range(0, _closeDialog.Length)];
         }
 
         private string[] GetDialogLines(FriendshipLevel friendshipLevel) => friendshipLevel switch

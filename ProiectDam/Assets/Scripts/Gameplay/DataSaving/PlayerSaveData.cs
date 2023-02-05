@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Core.Values;
+using System.Collections.Generic;
 
 namespace Gameplay.DataSaving
 {
@@ -9,9 +10,9 @@ namespace Gameplay.DataSaving
         public LayerPositionData LayerPos { get; set; }
         public bool IsFliped { get; set; }
 
-        public Vector2IntPos Health { get; set; }
-        public Vector2IntPos Energy { get; set; }
-        public Vector2IntPos Bullets { get; set; }
+        public IntRange Health { get; set; }
+        public IntRange Energy { get; set; }
+        public IntRange Bullets { get; set; }
         public int Coins { get; set; }
         public int Score { get; set; }
         public List<PersistentPickUpSaveData> PersistentPickUps { get; set; }

@@ -514,9 +514,9 @@ namespace Gameplay.Player
 
         public void LoadFromSave(PlayerSaveData saveData)
         {
-            _energyEvent.Set(saveData.Energy.X, saveData.Energy.Y);
-            _healthEvent.Set(saveData.Health.X, saveData.Health.Y);
-            _bulletsEvent.Set(saveData.Bullets.X, saveData.Bullets.Y);
+            _energyEvent.Set(saveData.Energy.start, saveData.Energy.end);
+            _healthEvent.Set(saveData.Health.start, saveData.Health.end);
+            _bulletsEvent.Set(saveData.Bullets.start, saveData.Bullets.end);
 
             _money.Value = saveData.Coins;
             _playerScore.Value = saveData.Score;

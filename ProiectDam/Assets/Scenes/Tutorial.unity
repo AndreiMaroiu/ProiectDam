@@ -204,7 +204,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 52208f7b814957641819b465369edcb1, type: 2}
-  _enemiesRange: {x: 1, y: 2}
   _player: {fileID: 1984207197}
   _rooms: 02000000010000000100000004000000
 --- !u!4 &877199706
@@ -1024,7 +1023,7 @@ PrefabInstance:
     - target: {fileID: 7161502621323392761, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 940
+      value: 620
       objectReference: {fileID: 0}
     - target: {fileID: 7161502621323392761, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
