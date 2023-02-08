@@ -34,7 +34,7 @@ namespace Gameplay
 
                 if (value is false)
                 {
-                    _buttonEvent.Close(ButtonInfo);
+                    _buttonEvent.Close(ButtonInfo.Owner); // TODO: refactor
                 }
             }
         }
@@ -57,7 +57,7 @@ namespace Gameplay
 
             if (CanClick)
             {
-                _buttonEvent.Close(ButtonInfo);
+                _buttonEvent.Close(ButtonInfo.Owner);
             }
         }
     }

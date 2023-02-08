@@ -15,22 +15,15 @@ namespace UI
         [SerializeField] private Button _previewButton;
         [SerializeField] private Button _weaponButton;
         [SerializeField] private Button _meleeButton;
-        [SerializeField] private Button _middleButton;
-        [SerializeField] private Text _middleButtonText;
-        [SerializeField] private Image _interactionIcon;
         [Header("Events")]
         [SerializeField] private LayerEvent _layersEvent;
         [SerializeField] private BoolEvent _previewActive;
         [SerializeField] private BoolEvent _playerTurn;
         [SerializeField] private GameEvent _meleeEvent;
         [SerializeField] private GameEvent _shootEvent;
-        [SerializeField] private ButtonEvent _buttonEvent;
         [Header("Texts")]
         [SerializeField] private Text _previewText;
         [SerializeField] private Text _previewLabel;
-
-        private List<IButtonModel> _buttonInfos;
-        private ButtonMapper _buttonMapper;
 
         public float LastTimeScale { get; set; }
 
@@ -42,67 +35,14 @@ namespace UI
             Bind(_layersEvent.CurrentLayer, OnCurrentLayerChanged);
             Bind(_previewActive, OnPreviewChanged);
             Bind(_layerSlider.onValueChanged, OnSliderChanged);
-            Bind(_buttonEvent.OnShowBindable, OnShowButton);
-            Bind(_buttonEvent.OnCloseBindable, OnCloseButton);
-            Bind(_buttonEvent.OnPressBindable, OnObjectPressed);
 
             _layerSlider.gameObject.SetActive(false);
             _previewButton.gameObject.SetActive(false);
             _previewLabel.gameObject.SetActive(false);
-            _middleButton.gameObject.SetActive(false);
 
             LastTimeScale = Time.timeScale;
 
             OnLayersCountChanged();
-
-            _buttonInfos = new();
-            _buttonMapper = new();
-            _buttonMapper.Map(typeof(SimpleButtonModel), new SimpleView());
-            _buttonMapper.Map(typeof(GolderChaliceModel), new GoldenChaliceView());
-            _buttonMapper.TargetButton = new()
-            {
-                Button = _middleButton,
-                Text = _middleButtonText,
-                Icon = _interactionIcon,
-            };
-        }
-
-        private void OnObjectPressed(GameObject sender)
-        {
-            foreach (var model in _buttonInfos)
-            {
-                if (model.Owner == sender)
-                {
-                    OnShowButton(model);
-                    _middleButton.onClick.Invoke();
-                    break;
-                }
-            }
-        }
-
-        private void OnShowButton(IButtonModel info)
-        {
-            _buttonMapper.Setup(info);
-            _buttonInfos.Add(info);
-
-            _middleButton.gameObject.SetActive(true);
-        }
-
-        private void OnCloseButton(IButtonModel info)
-        {
-            _middleButton.onClick.RemoveAllListeners();
-            _buttonInfos.Remove(info);
-
-            if (_buttonInfos.Count == 0)
-            {
-                _middleButton.gameObject.SetActive(false);
-            }
-            else
-            {
-                var peek = _buttonInfos[0];
-
-                _buttonMapper.Setup(peek);
-            }
         }
 
         private void OnLayersCountChanged(int newValue = 0)

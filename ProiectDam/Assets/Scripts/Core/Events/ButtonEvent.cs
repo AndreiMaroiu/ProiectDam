@@ -9,7 +9,7 @@ namespace Core.Events
     public sealed class ButtonEvent : ScriptableObject
     {
         private readonly BindableEvent<IButtonModel> _showEvent = new();
-        private readonly BindableEvent<IButtonModel> _closeEvent = new();
+        private readonly BindableEvent<GameObject> _closeEvent = new();
         private readonly BindableEvent<GameObject> _pressEvent = new();
 
         public event Action<IButtonModel> OnShow
@@ -18,7 +18,7 @@ namespace Core.Events
             remove => _showEvent.OnValueChanged -= value;
         }
 
-        public event Action<IButtonModel> OnClose
+        public event Action<GameObject> OnClose
         {
             add => _closeEvent.OnValueChanged += value;
             remove => _closeEvent.OnValueChanged -= value;
@@ -32,12 +32,12 @@ namespace Core.Events
 
         public void Show(IButtonModel info) => _showEvent.Invoke(info);
 
-        public void Close(IButtonModel info) => _closeEvent.Invoke(info);
+        public void Close(GameObject sender) => _closeEvent.Invoke(sender);
 
         public void Press(GameObject sender) => _pressEvent.Invoke(sender);
 
         public IBindable<IButtonModel> OnShowBindable => _showEvent;
-        public IBindable<IButtonModel> OnCloseBindable => _closeEvent;
+        public IBindable<GameObject> OnCloseBindable => _closeEvent;
         public IBindable<GameObject> OnPressBindable => _pressEvent;
     }
 }

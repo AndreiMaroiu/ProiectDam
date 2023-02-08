@@ -68,7 +68,7 @@ namespace Gameplay.Merchant
             _player = null;
             _isOpen = false;
 
-            _buttonEvent.Close(_buttonInfo);
+            _buttonEvent.Close(gameObject);
         }
 
         #endregion
