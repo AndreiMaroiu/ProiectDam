@@ -1,8 +1,7 @@
 using Core;
 using Core.DataSaving;
-using System.IO;
 using UnityEngine;
-using BinaryReader = Utilities.BinaryReader;
+using Utilities;
 
 namespace Gameplay.DataSaving
 {
@@ -57,8 +56,7 @@ namespace Gameplay.DataSaving
         {
             SavePath save = GetSaveFilePath(i);
 
-            File.Delete(save.SaveDataPath);
-            File.Delete(save.SummaryPath);
+            save.Delete();
         }
 
         public override bool SaveFilesExist(int i)

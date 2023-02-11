@@ -12,7 +12,9 @@ namespace Gameplay.Hub
 
         private void Start()
         {
-            
+            Debug.Log("camera start");
+            transform.position = new(_target.Value.transform.position.x, _target.Value.transform.position.y, transform.position.z);
+            // _target.Value.transform.position with { z = transform.position.z}; TODO: change for C# 10
         }
 
         private void LateUpdate()

@@ -7,6 +7,9 @@ using Core.Mappers;
 using Utilities;
 using UnityEngine.SceneManagement;
 using System;
+using Core.DataSaving;
+using Core;
+using Core.Services;
 
 namespace Gameplay.Hub
 {
@@ -14,6 +17,7 @@ namespace Gameplay.Hub
     {
         [SerializeField] private HubPoint _point;
         [SerializeField] private ButtonEvent _buttonEvent;
+        [SerializeField] private LevelSaverHandler _saveHandler;
 
         // Start is called before the first frame update
         void Start()
@@ -33,6 +37,7 @@ namespace Gameplay.Hub
             {
                 Loader.TargetScene = Scenes.MainScene;
                 SceneManager.LoadScene(Scenes.LoadingMenu);
+                _saveHandler.SetForNewScene(StaticServices.Get<SaveService>().SavePath);
             }, this.gameObject));
         }
     }

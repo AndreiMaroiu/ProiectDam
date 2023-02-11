@@ -1628,6 +1628,7 @@ MonoBehaviour:
   _statsCanvas: {fileID: 2094045854}
   _savesCanvas: {fileID: 226881501}
   _savesPanel: {fileID: 346506939}
+  _continueButton: {fileID: 6119152170583169196}
   _transition: {fileID: 801044320}
   _saverHandler: {fileID: 11400000, guid: 412537028d3cbf44fbc7d53c95864586, type: 2}
   _allSavesHandler: {fileID: 11400000, guid: bba1a9d637df1ef43b2d9fba5c696b33, type: 2}
@@ -9295,7 +9296,7 @@ PrefabInstance:
     - target: {fileID: 1986614050894565015, guid: 2bd1ee62fa27ea343bd499b6bbd8d191,
         type: 3}
       propertyPath: m_Text
-      value: Start Game
+      value: Continue
       objectReference: {fileID: 0}
     - target: {fileID: 2393862271519867862, guid: 2bd1ee62fa27ea343bd499b6bbd8d191,
         type: 3}
@@ -9415,10 +9416,22 @@ PrefabInstance:
     - target: {fileID: 8959629206462069847, guid: 2bd1ee62fa27ea343bd499b6bbd8d191,
         type: 3}
       propertyPath: m_Name
-      value: StartBtn
+      value: ContinueBtn
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2bd1ee62fa27ea343bd499b6bbd8d191, type: 3}
+--- !u!114 &6119152170583169196 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8959629206462069845, guid: 2bd1ee62fa27ea343bd499b6bbd8d191,
+    type: 3}
+  m_PrefabInstance: {fileID: 6119152170583169195}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &6168813337354388192
 CanvasRenderer:
   m_ObjectHideFlags: 0

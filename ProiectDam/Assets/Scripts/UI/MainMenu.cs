@@ -1,12 +1,18 @@
+using Core;
 using Core.DataSaving;
+using Core.Services;
 using ModalWindows;
+using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 using Utilities;
 
 namespace UI
 {
     public class MainMenu : MonoBehaviour
     {
+        private const string _savePath = "SavePath";
+
         [Header("Canvases")]
         [SerializeField] private GameObject _mainCanvas;
         [SerializeField] private GameObject _howToCanvas;
@@ -15,6 +21,8 @@ namespace UI
         [SerializeField] private GameObject _statsCanvas;
         [SerializeField] private GameObject _savesCanvas;
         [SerializeField] private GameObject _savesPanel;
+        [Header("UI elements")]
+        [SerializeField] private Button _continueButton;
         [Header("Utilities")]
         [SerializeField] private Animator _transition;
         [SerializeField] private LevelSaverHandler _saverHandler;
@@ -38,6 +46,8 @@ namespace UI
                 PanelType = PanelType.Normal,
                 CanClose = type => type is PanelType.Normal
             });
+
+            _continueButton.interactable = PlayerPrefs.HasKey(_savePath);
         }
 
         public void OnOptionsClick()
@@ -66,10 +76,13 @@ namespace UI
             _transition.SetTrigger("Start");
             StartCoroutine(Scenes.LoadAsync(Scenes.LoadingMenu));
 
-            if (PlayerPrefs.GetInt(firstTimeKey, defaultValue: 0) == 1)
+            if (PlayerPrefs.GetInt(firstTimeKey, defaultValue: 0) == 1) // is not first time
             {
-                Loader.TargetScene = Scenes.MainScene;
-                _saverHandler.SetForNewScene(_allSavesHandler.GetSaveFilePath(0));
+                SavePath path = _allSavesHandler.GetSaveFilePath(PlayerPrefs.GetInt(_savePath));
+                StaticServices.Get<SaveService>().SavePath = path;
+
+                Loader.TargetScene = File.Exists(path.RunPath) ? Scenes.MainScene : Scenes.Hub;
+                _saverHandler.Load(path);
             }
             else
             {
@@ -105,12 +118,12 @@ namespace UI
         public void OnLoadLevelClick(int saveNumber)
         {
             SavePath saveFile = _allSavesHandler.GetSaveFilePath(saveNumber);
-
-            _saverHandler.Load(saveFile);
+            StaticServices.Get<SaveService>().SavePath = saveFile;
+            PlayerPrefs.SetInt(_savePath, saveNumber);
 
             _transition.SetTrigger("Start");
             StartCoroutine(Scenes.LoadAsync(Scenes.LoadingMenu));
-            Loader.TargetScene = Scenes.MainScene;
+            Loader.TargetScene = Scenes.Hub;
         }
 
         public void DeleteSave(int saveNumber)

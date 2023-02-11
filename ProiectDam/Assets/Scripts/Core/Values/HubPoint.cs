@@ -31,7 +31,7 @@ namespace Core.Values
 
             foreach (var item in _neighbours)
             {
-                Vector3 direction = transform.position - item.transform.position;
+                Vector3 direction = item.transform.position - transform.position;
                 direction = direction.normalized;
 
                 Vector2Int key;
@@ -64,6 +64,16 @@ namespace Core.Values
         public HubPoint GetPointInDirection(Vector2Int direction)
         {
             return _direction[direction];
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(transform.position, 0.5f);
+
+            foreach (var item in _neighbours)
+            {
+                Gizmos.DrawLine(transform.position, item.transform.position);
+            }
         }
     }
 }

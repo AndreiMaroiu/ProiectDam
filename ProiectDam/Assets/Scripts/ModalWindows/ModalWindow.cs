@@ -119,7 +119,7 @@ namespace ModalWindows
             }
 
             Instance = this;
-            gameObject.SetActive(false);
+            _window.gameObject.SetActive(false);
 
             if (_dontDestroyOnLoad)
             {

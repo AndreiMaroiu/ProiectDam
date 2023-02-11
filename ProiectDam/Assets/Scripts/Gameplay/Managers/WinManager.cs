@@ -1,6 +1,8 @@
+using Core.DataSaving;
 using Core.Events;
 using GameStatistics;
 using ModalWindows;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utilities;
@@ -12,8 +14,7 @@ namespace Gameplay.Managers
         [SerializeField] private GameEvent _winEvent;
         [SerializeField] private IntEvent _scoreEvent;
         [SerializeField] private GameEvent _loseEvent;
-
-        private bool _eventTriggered;
+        [SerializeField] private LevelSaverHandler _levelSaverHandler;
 
         private void Start()
         {
@@ -21,15 +22,8 @@ namespace Gameplay.Managers
             _loseEvent.OnEvent += OnPlayerDeath;
         }
 
-        private void OnLose()
-        {
-
-        }
-
         private void OnPlayerDeath(object sender)
         {
-            _eventTriggered = true;
-
             using PersistentHandler<Statistics> stats = StatisticsManager.Instance.LoadStats();
 
             stats.Data.AddLoss();
@@ -38,18 +32,17 @@ namespace Gameplay.Managers
             {
                 Header = "You Died!",
                 Content = "Score: " + _scoreEvent.Value.ToString(),
-                CloseText = "Main Menu",
-                CloseAction = () => SceneManager.LoadScene(Scenes.MainMenu),
+                CloseText = "Go to hub",
+                CloseAction = () => SceneManager.LoadScene(Scenes.Hub),
                 OkText = "Play Again",
                 OkAction = () => SceneManager.LoadScene(Scenes.MainScene)
             });
+
+            OnEvent();
         }
 
         private void OnWin(object sender)
         {
-            _eventTriggered = true;
-
-            float timeScale = Time.timeScale;
             string footer = null;
 
             using PersistentHandler<Statistics> stats = StatisticsManager.Instance.LoadStats();
@@ -68,23 +61,24 @@ namespace Gameplay.Managers
                 Footer = footer,
                 OkText = "Play again",
                 OkAction = () => SceneManager.LoadScene(Scenes.MainScene),
-                CloseText = "Main Menu",
-                CloseAction = () => SceneManager.LoadScene(Scenes.MainMenu),
+                CloseText = "Go to Hub",
+                CloseAction = () => SceneManager.LoadScene(Scenes.Hub),
             });
+
+            OnEvent();
+        }
+
+        private void OnEvent()
+        {
+            string path = _levelSaverHandler.SaveFile.RunPath;
+
+            File.Delete(path);
         }
 
         private void OnDestroy()
         {
             _winEvent.OnEvent -= OnWin;
             _loseEvent.OnEvent -= OnPlayerDeath;
-
-            // if player leave level without winning or losing save data
-            if (!_eventTriggered)
-            {
-                using var stats = StatisticsManager.Instance.LoadStats();
-
-                stats.Data.TotalRuns += 1;
-            }
         }
     }
 }

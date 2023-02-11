@@ -31,7 +31,7 @@ namespace Gameplay.DataSaving
             {
                 if (_handler.ShouldLoad)
                 {
-                    string fullPath = _handler.SaveFile.SaveDataPath;
+                    string fullPath = _handler.SaveFile.RunPath;
                     LevelSaveData data = _allSaves.GetSave(fullPath);
 
                     if (data is not null)
@@ -98,7 +98,7 @@ namespace Gameplay.DataSaving
                 savePath = _allSaves.GetSaveFilePath(0);
             }
 
-            _allSaves.TrySaveData(SaveData, savePath.SaveDataPath);
+            _allSaves.TrySaveData(SaveData, savePath.RunPath);
             _allSaves.TrySaveData(new SaveSummary()
             {
                 Energy = SaveData.PlayerData.Energy.start,

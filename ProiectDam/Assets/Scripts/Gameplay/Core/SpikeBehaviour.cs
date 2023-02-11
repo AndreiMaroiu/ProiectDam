@@ -18,6 +18,7 @@ namespace Gameplay
 
         private SpriteRenderer _renderer;
         private Sprite _original;
+        private bool _canHit;
 
         private void Start()
         {
@@ -30,8 +31,18 @@ namespace Gameplay
             StartCoroutine(WaitAfterEnable());
         }
 
+        private void OnDisable()
+        {
+            _canHit = false;
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (_canHit is false)
+            {
+                return;
+            }
+
             KillableObject killableObject = collision.gameObject.GetComponent<KillableObject>();
 
             if (killableObject.IsNotNull())
@@ -69,6 +80,7 @@ namespace Gameplay
         private IEnumerator WaitAfterEnable()
         {
             yield return new WaitForSeconds(0.5f);
+            _canHit = true;
         }
 
         private IEnumerator WaitToStopMovingAndHit(MovingObject moving)

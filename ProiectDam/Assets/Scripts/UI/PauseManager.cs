@@ -111,7 +111,9 @@ namespace UI
 
         private void LoadMainMenu()
         {
-            Time.timeScale = 1;
+            Time.timeScale = 1; // TODO: maybe remove
+
+            _panelStack.Clear();
             _transition.SetTrigger("Start");
 
             SceneManager.LoadScene(Scenes.MainMenu);

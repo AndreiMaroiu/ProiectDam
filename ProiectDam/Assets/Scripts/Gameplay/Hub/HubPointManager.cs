@@ -13,11 +13,14 @@ namespace Gameplay.Hub
 
         private readonly SwipeDetector _swipeDetector = new();
 
-        private void Start()
+        private void Awake()
         {
             _hubPoint.Value = _startPoint;
             _swipeDetector.OnSwipe += OnSwipe;
+        }
 
+        private void Start()
+        {
             _hubPoint.Value.Activate(true);
         }
 
@@ -34,36 +37,6 @@ namespace Gameplay.Hub
         void Update()
         {
             _swipeDetector.CkeckForSwipes();
-
-            var direction = GetMoveDirection();
-            if (direction != Vector2Int.zero)
-            {
-                OnSwipe(-direction);
-            }
-        }
-
-        private Vector2Int GetMoveDirection()
-        {
-            Vector2Int dir = Vector2Int.zero;
-
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                dir.x = -1;
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                dir.x = 1;
-            }
-            else if (Input.GetKeyDown(KeyCode.W))
-            {
-                dir.y = 1;
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                dir.y = -1;
-            }
-
-            return dir;
         }
 
         private void OnDestroy()

@@ -22,6 +22,15 @@ namespace Utilities
                 return;
             }
 
+#if UNITY_EDITOR || !PLATFORM_ANDROID
+            Vector2Int direction = GetMoveDirection();
+
+            if (direction != Vector2Int.zero)
+            {
+                OnSwipe?.Invoke(direction);
+            }
+#endif
+
             foreach (Touch touch in Input.touches)
             {
                 switch (touch.phase)
@@ -39,6 +48,30 @@ namespace Utilities
                         break;
                 }
             }
+        }
+
+        private Vector2Int GetMoveDirection()
+        {
+            Vector2Int dir = Vector2Int.zero;
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                dir.x = -1;
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                dir.x = 1;
+            }
+            else if (Input.GetKeyDown(KeyCode.W))
+            {
+                dir.y = 1;
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                dir.y = -1;
+            }
+
+            return dir;
         }
 
         void CheckSwipe()

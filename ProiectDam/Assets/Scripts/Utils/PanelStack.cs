@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Utilities
@@ -22,8 +23,7 @@ namespace Utilities
     {
         private static readonly PanelOptions _default = new();
 
-        private readonly Stack<(GameObject panel, PanelOptions options)> _panels = new();
-        private float? _lastTimeScale;
+        private readonly Stack<(GameObject panel, PanelOptions options, float? timeScale)> _panels = new();
 
         public bool CanClose => _panels.Count > 0;
 
@@ -36,20 +36,24 @@ namespace Utilities
                 return;  
             }
 
-            var (panel, options) = _panels.Pop();
+            var (panel, options, timeScale) = _panels.Pop();
             panel.SetActive(false);
             options.OnClose?.Invoke();
 
-            if (_panels.Count > 0)
+            if (timeScale.HasValue)
             {
-                var (peek, _) = _panels.Peek();
-                peek.SetActive(true);
+                Time.timeScale = timeScale.Value;
             }
 
-            if (_panels.Count is 0 && _lastTimeScale.HasValue)
+            if (_panels.Count > 0)
             {
-                Time.timeScale = _lastTimeScale.Value;
-                _lastTimeScale = null;
+                var (peek, _, _) = _panels.Peek();
+                peek.SetActive(true);
+
+                if (timeScale.HasValue)
+                {
+                    Time.timeScale = timeScale.Value;
+                }
             }
         }
 
@@ -64,16 +68,15 @@ namespace Utilities
 
             if (_panels.Count > 0)
             {
-                var (lastPanel, peekOptions) = _panels.Peek();
+                var (lastPanel, peekOptions, _) = _panels.Peek();
                 lastPanel.SetActive(!peekOptions.CanClose(options.PanelType));
             }
 
-            _panels.Push((panel, options is null ? _default : options));
+            _panels.Push((panel, options is null ? _default : options, timeScale));
             panel.SetActive(true);
 
-            if (_lastTimeScale is null && timeScale is not null)
+            if (timeScale is not null)
             {
-                _lastTimeScale = timeScale;
                 Time.timeScale = 0;
             }
         }
@@ -83,13 +86,17 @@ namespace Utilities
 
         public void OnEnable()
         {
-            _lastTimeScale = null;
             _panels.Clear();
             Debug.Log("panel stack cleared");
         }
 
         public void Clear()
         {
+            while (CanClose)
+            {
+                ClosePanel();
+            }
+
             OnEnable();
         }
     }
