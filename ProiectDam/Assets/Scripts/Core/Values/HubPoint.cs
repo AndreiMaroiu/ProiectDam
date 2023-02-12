@@ -11,17 +11,23 @@ namespace Core.Values
 
         private Dictionary<Vector2Int, HubPoint> _direction;
 
-        public event Action OnEnter; // TODO: maybe removed this
-        public event Action OnLeave;
         public void Activate(bool isActive)
         {
+            IHubPointListener[] listeners = GetComponentsInChildren<IHubPointListener>();
+
             if (isActive)
             {
-                OnEnter?.Invoke();
+                foreach (var item in listeners)
+                {
+                    item.OnEnter();
+                }
             }
             else
             {
-                OnLeave?.Invoke();
+                foreach (var item in listeners)
+                {
+                    item.OnExit();
+                }
             }
         }
 
@@ -75,5 +81,11 @@ namespace Core.Values
                 Gizmos.DrawLine(transform.position, item.transform.position);
             }
         }
+    }
+
+    public interface IHubPointListener
+    {
+        void OnEnter();
+        void OnExit();
     }
 }

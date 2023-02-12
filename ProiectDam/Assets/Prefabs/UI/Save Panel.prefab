@@ -612,7 +612,7 @@ PrefabInstance:
     - target: {fileID: 1986614050894565015, guid: 2bd1ee62fa27ea343bd499b6bbd8d191,
         type: 3}
       propertyPath: m_Text
-      value: Load save
+      value: Load
       objectReference: {fileID: 0}
     - target: {fileID: 1986614050894565015, guid: 2bd1ee62fa27ea343bd499b6bbd8d191,
         type: 3}
