@@ -26,6 +26,13 @@ namespace Core
 
             return (T)service;
         }
+
+        public static void Set<T>(T service) where T : class => Instance._services[typeof(T)] = service;
+
+        public static bool IsPresent<T>() => Instance._services.ContainsKey(typeof(T));
+
+        public static bool Delete<T>() => Instance._services.Remove(typeof(T));
+
         public static void Clear()
         {
             Instance._services.Clear();
