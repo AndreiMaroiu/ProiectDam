@@ -1,3 +1,4 @@
+using Core;
 using Core.Events;
 using Core.Values;
 using Gameplay.DataSaving;
@@ -179,6 +180,12 @@ namespace Gameplay.Player
             _energyEvent.OnValueChanged += OnEnergyChanged;
 
             SetMove(_moveTime, _cellSizeValue.Value, TileType.Player);
+
+            foreach (var pickup in StaticServices.Get<HubSaveData>().SingleTimePickUps)
+            {
+                var instance = PickUpFactory.Instance.GetPickUp(pickup.Name, pickup.Boost);
+                instance.OnInteract(this);
+            }
         }
 
         private void OnDestroy()

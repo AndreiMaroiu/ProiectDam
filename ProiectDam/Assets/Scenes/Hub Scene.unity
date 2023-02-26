@@ -2583,7 +2583,7 @@ MonoBehaviour:
   _interactionButton: {fileID: 11400000, guid: 705363b5c6906064ab5829e50adbb9a8, type: 2}
   _hubCoins: {fileID: 11400000, guid: d3cf752484875b84aad5bb2cdd50d237, type: 2}
   _requiredCoins: 1
-  _hubItemEvent: {fileID: 0}
+  _hubItemEvent: {fileID: 11400000, guid: 645f8037fd1b83d41a6a7fca3a47586f, type: 2}
   _items:
   - {fileID: 11400000, guid: 33211e49c89e23542b0fe499adf7a613, type: 2}
 --- !u!114 &800114446
@@ -2599,7 +2599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _descriptionEvent: {fileID: 11400000, guid: 2db1b49c458bc60439b8a6f57974dd28, type: 2}
-  _description: Toss some coins for some pick ups
+  _description: Toss some coins for a random pick up
 --- !u!1 &866950107
 GameObject:
   m_ObjectHideFlags: 0
@@ -2701,6 +2701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hubPointDescriptionEvent: {fileID: 11400000, guid: 2db1b49c458bc60439b8a6f57974dd28,
     type: 2}
+  _button: {fileID: 2113273175}
 --- !u!4 &872853163 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1360264394729772852, guid: 4fad9c4de6b725a43bb1200ed9479c08,
@@ -3892,6 +3893,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1284722237}
   - component: {fileID: 1284722238}
+  - component: {fileID: 1284722239}
   m_Layer: 0
   m_Name: HubPortal
   m_TagString: Untagged
@@ -3929,6 +3931,20 @@ MonoBehaviour:
   _point: {fileID: 876458412}
   _buttonEvent: {fileID: 11400000, guid: 705363b5c6906064ab5829e50adbb9a8, type: 2}
   _saveHandler: {fileID: 11400000, guid: 412537028d3cbf44fbc7d53c95864586, type: 2}
+--- !u!114 &1284722239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284722236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be136c6eb0381b4f9066369f8c2366e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _descriptionEvent: {fileID: 11400000, guid: 2db1b49c458bc60439b8a6f57974dd28, type: 2}
+  _description: Select and play a mission
 --- !u!1 &1305196026
 GameObject:
   m_ObjectHideFlags: 0
@@ -5483,7 +5499,7 @@ PrefabInstance:
     - target: {fileID: 4710153761591464379, guid: c9792292877bded4b982db135e87164c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 540
       objectReference: {fileID: 0}
     - target: {fileID: 4710153761591464379, guid: c9792292877bded4b982db135e87164c,
         type: 3}
@@ -5603,7 +5619,7 @@ PrefabInstance:
     - target: {fileID: 4710153763157516673, guid: c9792292877bded4b982db135e87164c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 342.78564
       objectReference: {fileID: 0}
     - target: {fileID: 4710153763157516673, guid: c9792292877bded4b982db135e87164c,
         type: 3}
@@ -5923,19 +5939,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2113273176}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 866950113}
-        m_TargetAssemblyTypeName: UI.Hub.HubPointDescriptionManager, UI
-        m_MethodName: OnClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2113273176
 MonoBehaviour:
   m_ObjectHideFlags: 0

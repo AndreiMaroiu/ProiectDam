@@ -12,7 +12,7 @@ namespace Gameplay.DataSaving
 
         public override SaveSummary GetSummary(int i)
         {
-            if (BinaryReader.TryRead<SaveSummary>(GetSaveFilePath(i).SummaryPath, out var saveData))
+            if (DataReader.TryRead<SaveSummary>(GetSaveFilePath(i).SummaryPath, out var saveData))
             {
                 return saveData;
             }
@@ -27,7 +27,7 @@ namespace Gameplay.DataSaving
 
         public LevelSaveData GetSave(string path)
         {
-            if (BinaryReader.TryRead<LevelSaveData>(path, out var result))
+            if (DataReader.TryRead<LevelSaveData>(path, out var result))
             {
                 return result;
             }
@@ -39,13 +39,13 @@ namespace Gameplay.DataSaving
         {
             if (saveData is LevelSaveData levelSaveData)
             {
-                BinaryReader.Write(path, levelSaveData);
+                DataReader.Write(path, levelSaveData);
                 return true;
             }
 
             if (saveData is SaveSummary summary)
             {
-                BinaryReader.Write(path, summary);
+                DataReader.Write(path, summary);
                 return true;
             }
 

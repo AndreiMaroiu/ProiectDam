@@ -18,7 +18,7 @@ namespace Gameplay.Hub
 
     }
 
-    [CreateAssetMenu(fileName = "Hub Item Event", menuName = "Scriptables/Event/Hub Item Event")]
+    [CreateAssetMenu(fileName = "Hub Item Event", menuName = "Scriptables/Hub/Item Event")]
     public class HubItemEvent : BaseEvent<HubEventInfo>
     {
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Gameplay.DataSaving
 {
@@ -7,5 +8,6 @@ namespace Gameplay.DataSaving
     {
         public int Coins { get; set; }
 
+        public List<PersistentPickUpSaveData> SingleTimePickUps { get; set; } = new();
     }
 }

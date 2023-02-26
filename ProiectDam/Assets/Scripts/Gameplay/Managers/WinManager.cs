@@ -1,7 +1,5 @@
-using Core;
 using Core.DataSaving;
 using Core.Events;
-using Gameplay.Services;
 using GameStatistics;
 using ModalWindows;
 using System.IO;
@@ -15,16 +13,14 @@ namespace Gameplay.Managers
     {
         [SerializeField] private GameEvent _winEvent;
         [SerializeField] private IntEvent _scoreEvent;
-        [SerializeField] private IntEvent _coinsEvent;
         [SerializeField] private GameEvent _loseEvent;
+        [SerializeField] private SaveEvent _saveEvent;
         [SerializeField] private LevelSaverHandler _levelSaverHandler;
 
         private void Start()
         {
             _winEvent.OnEvent += OnWin;
             _loseEvent.OnEvent += OnPlayerDeath;
-
-            StaticServices.Delete<RunDataService>();
         }
 
         private void OnPlayerDeath(object sender)
@@ -44,12 +40,6 @@ namespace Gameplay.Managers
             });
 
             OnEvent();
-
-            StaticServices.Set(new RunDataService()
-            {
-                Coins = _coinsEvent,
-                RunState = RunState.Won
-            });
         }
 
         private void OnWin(object sender)
@@ -58,6 +48,8 @@ namespace Gameplay.Managers
 
             using PersistentHandler<Statistics> stats = StatisticsManager.Instance.LoadStats();
             stats.Data.AddWin();
+
+            _saveEvent.Invoke(SaveType.UpdateHubInfo);
 
             if (_scoreEvent > stats.Data.Highscore)
             {
@@ -90,16 +82,6 @@ namespace Gameplay.Managers
         {
             _winEvent.OnEvent -= OnWin;
             _loseEvent.OnEvent -= OnPlayerDeath;
-
-            if (StaticServices.IsPresent<RunDataService>())
-            {
-                StaticServices.Set(new RunDataService()
-                {
-                    RunState = RunState.Canceled,
-                });
-
-                // TODO: clear single time pick ups if player leaving to main hub
-            }
         }
     }
 }

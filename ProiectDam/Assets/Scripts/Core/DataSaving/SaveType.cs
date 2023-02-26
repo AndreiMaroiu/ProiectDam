@@ -5,6 +5,7 @@
         None,
         Save,
         SaveSeed,
-        DontSave
+        DontSave,
+        UpdateHubInfo
     }
 }

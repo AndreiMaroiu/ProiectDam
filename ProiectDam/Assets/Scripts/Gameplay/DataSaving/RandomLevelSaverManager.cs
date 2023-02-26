@@ -8,6 +8,7 @@ using Gameplay.Player;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Utilities;
 
 namespace Gameplay.DataSaving
 {
@@ -73,8 +74,21 @@ namespace Gameplay.DataSaving
                 case SaveType.DontSave:
                     SetUpForNewScene();
                     break;
+                case SaveType.UpdateHubInfo:
+                    UpdateHubInfo();
+                    break;
                 default:
                     break;
+            }
+        }
+
+        private void UpdateHubInfo()
+        {
+            if (DataReader.TryRead<HubSaveData>(_handler.SaveFile.SaveDataPath, out var data))
+            {
+                data.Coins += _player.Money;
+
+                DataReader.Write(_handler.SaveFile.SaveDataPath, data);
             }
         }
 
@@ -93,7 +107,7 @@ namespace Gameplay.DataSaving
 
             SavePath savePath = _handler.SaveFile;
 
-            if (savePath.IsNullOrEmpty()) 
+            if (savePath.IsNullOrEmpty())
             {
                 savePath = _allSaves.GetSaveFilePath(0);
             }

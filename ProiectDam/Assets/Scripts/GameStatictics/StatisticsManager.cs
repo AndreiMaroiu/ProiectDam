@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using BinaryReader = Utilities.BinaryReader;
+using DataReader = Utilities.DataReader;
 
 namespace GameStatistics
 {
@@ -55,12 +55,12 @@ namespace GameStatistics
 
         internal void Save<T>(T data, string path)
         {
-            BinaryReader.Write(path, data);
+            DataReader.Write(path, data);
         }
 
         internal PersistentHandler<T> LoadHandler<T>(string path) where T : new()
         {
-            BinaryReader.TryRead(path, out T result);
+            DataReader.TryRead(path, out T result);
             return new(result, path);
         }
 

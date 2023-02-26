@@ -89,6 +89,18 @@ namespace ModalWindows
             _contentImage.SetNativeSize();
             _contentArea.SetActive(!string.IsNullOrEmpty(data.Content) || data.Image != null);
 
+            RectTransform imageTransform = _contentImage.GetComponent<RectTransform>();
+
+            if (imageTransform.rect.width < 100 && imageTransform.rect.height < 100)
+            {
+                Rect rect = imageTransform.rect;
+
+                rect.width *= 100 / rect.height;
+                rect.height *= 100 / rect.height;
+
+                imageTransform.sizeDelta = new Vector2(rect.width, rect.height);
+            }
+
             _footerArea.SetActive(!string.IsNullOrEmpty(data.Footer));
             _footerText.text = data.Footer;
 
