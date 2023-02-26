@@ -15,9 +15,9 @@ namespace UI
         [SerializeField] private Text _middleButtonText;
         [SerializeField] private Image _interactionIcon;
         [SerializeField] private ButtonEvent _buttonEvent;
+        [SerializeField] private ButtonMapper _buttonMapper;
 
         private List<IButtonModel> _buttonInfos;
-        private ButtonMapper _buttonMapper;
 
         private void Start()
         {
@@ -26,9 +26,6 @@ namespace UI
             Bind(_buttonEvent.OnPressBindable, OnObjectPressed);
 
             _buttonInfos = new();
-            _buttonMapper = new();
-            _buttonMapper.Map(typeof(SimpleButtonModel), new SimpleView());
-            _buttonMapper.Map(typeof(GolderChaliceModel), new GoldenChaliceView());
             _buttonMapper.TargetButton = new()
             {
                 Button = _middleButton,

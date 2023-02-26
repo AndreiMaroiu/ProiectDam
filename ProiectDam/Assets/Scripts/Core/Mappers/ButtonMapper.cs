@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.Mappers
 {
-    public class ButtonMapper
+    public abstract class ButtonMapper : ScriptableObject
     {
         private readonly Dictionary<Type, IButtonView> _views = new();
 
         public ButtonData TargetButton { get; set; }
 
-        public void Map(Type type, IButtonView view)
+        protected void Map(Type type, IButtonView view)
         {
             _views.Add(type, view);
         }
