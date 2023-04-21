@@ -13,114 +13,215 @@ MonoBehaviour:
   m_Name: FireTiles
   m_EditorClassIdentifier: 
   _none:
-  - _prefab: {fileID: 1466878652918677954, guid: 070cd4bcfffb20540b35a4aa09994452,
-      type: 3}
+  - _prefab:
+      m_AssetGUID: 070cd4bcfffb20540b35a4aa09994452
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
-  - _prefab: {fileID: 4197119846752616082, guid: ac45e130c4e2a934898974e62d84ec0d,
-      type: 3}
+    _onlyOnce: 0
+  - _prefab:
+      m_AssetGUID: ac45e130c4e2a934898974e62d84ec0d
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
-  - _prefab: {fileID: 2795611793146036396, guid: f68136961f6a0b34a9586732d1200989,
-      type: 3}
+    _onlyOnce: 0
+  - _prefab:
+      m_AssetGUID: f68136961f6a0b34a9586732d1200989
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
-  - _prefab: {fileID: 5960718015070195858, guid: a1376ddf17635dc47a5b96d8eb56b513,
-      type: 3}
+    _onlyOnce: 0
+  - _prefab:
+      m_AssetGUID: a1376ddf17635dc47a5b96d8eb56b513
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _wall:
-  - _prefab: {fileID: 7603886771782275034, guid: 10f09fdba4d93224e93df4cf3cb6b6a9,
-      type: 3}
+  - _prefab:
+      m_AssetGUID: 10f09fdba4d93224e93df4cf3cb6b6a9
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _enemy:
-  - _prefab: {fileID: 3405772353389896854, guid: 0ede92900d66e7c41be952af4f9d4b94,
-      type: 3}
+  - _prefab:
+      m_AssetGUID: 0ede92900d66e7c41be952af4f9d4b94
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: 127
     _spawnChance: 1
-  - _prefab: {fileID: 4506473171506505353, guid: 02532e903a7169d4bb23219d1fdba964,
-      type: 3}
+    _onlyOnce: 0
+  - _prefab:
+      m_AssetGUID: 02532e903a7169d4bb23219d1fdba964
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: 127
     _spawnChance: 1
-  - _prefab: {fileID: 3315774591173551085, guid: b26e1de7566101947af2f7d9852bcff6,
-      type: 3}
+    _onlyOnce: 0
+  - _prefab:
+      m_AssetGUID: b26e1de7566101947af2f7d9852bcff6
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: 127
     _spawnChance: 1
-  - _prefab: {fileID: 1500245301518716129, guid: 9eb1d5169aca0924fbbaec1b483e245c,
-      type: 3}
+    _onlyOnce: 0
+  - _prefab:
+      m_AssetGUID: 9eb1d5169aca0924fbbaec1b483e245c
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: 127
     _spawnChance: 1
-  - _prefab: {fileID: 5961820620640631712, guid: 99f1bde8579134647a9d3b69aafbd64c,
-      type: 3}
+    _onlyOnce: 0
+  - _prefab:
+      m_AssetGUID: 99f1bde8579134647a9d3b69aafbd64c
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: 128
     _spawnChance: 1
+    _onlyOnce: 0
   _door:
-  - _prefab: {fileID: 1610797193751527803, guid: 44d13e7040070884198d2fc299f5feb3,
-      type: 3}
+  - _prefab:
+      m_AssetGUID: 44d13e7040070884198d2fc299f5feb3
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _chest:
-  - _prefab: {fileID: 5103085370490182207, guid: 6fda3b807af98694b81380c37b3ee07f,
-      type: 3}
+  - _prefab:
+      m_AssetGUID: 6fda3b807af98694b81380c37b3ee07f
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _heal:
-  - _prefab: {fileID: 1337655539291230482, guid: dbff91d7cf19bc34daf9256a9637d2df,
-      type: 3}
+  - _prefab:
+      m_AssetGUID: dbff91d7cf19bc34daf9256a9637d2df
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _trap:
-  - _prefab: {fileID: 6182598759413703565, guid: 26f2cc17671c1fa45a7ec6e3bc0eabf5,
-      type: 3}
+  - _prefab:
+      m_AssetGUID: 26f2cc17671c1fa45a7ec6e3bc0eabf5
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _pickUp:
-  - _prefab: {fileID: 2725781087358859865, guid: b1865ca7b4c56be409a438ff5f95f0b8,
-      type: 3}
+  - _prefab:
+      m_AssetGUID: b9f9962775564384793ea37e74690334
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
-  - _prefab: {fileID: 5244361343789919635, guid: b9f9962775564384793ea37e74690334,
-      type: 3}
+    _onlyOnce: 0
+  - _prefab:
+      m_AssetGUID: b1865ca7b4c56be409a438ff5f95f0b8
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _obstacle:
-  - _prefab: {fileID: 2955135658419645162, guid: 5cb34e07445a2da43b9fadbcd53a7436,
-      type: 3}
+  - _prefab:
+      m_AssetGUID: 5cb34e07445a2da43b9fadbcd53a7436
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
-  - _prefab: {fileID: 7164206830066975854, guid: 9121cb8c870b29c438bcd95decb83214,
-      type: 3}
+    _onlyOnce: 0
+  - _prefab:
+      m_AssetGUID: 9121cb8c870b29c438bcd95decb83214
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
-  - _prefab: {fileID: 8258725449374077283, guid: 985a758ed9d7f3347be84f75944b46b6,
-      type: 3}
+    _onlyOnce: 0
+  - _prefab:
+      m_AssetGUID: 985a758ed9d7f3347be84f75944b46b6
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
-  - _prefab: {fileID: 7073643945006248555, guid: 32dfc8426b7ecf245a07cf2f8cb39bba,
-      type: 3}
+    _onlyOnce: 0
+  - _prefab:
+      m_AssetGUID: 32dfc8426b7ecf245a07cf2f8cb39bba
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
-  - _prefab: {fileID: 2473727910534505370, guid: 09b4f44ad9cae624e89c5e36814caed0,
-      type: 3}
+    _onlyOnce: 0
+  - _prefab:
+      m_AssetGUID: 09b4f44ad9cae624e89c5e36814caed0
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
-  - _prefab: {fileID: 5986671675407286285, guid: 3f384930b6031af44a06653afc6173da,
-      type: 3}
+    _onlyOnce: 0
+  - _prefab:
+      m_AssetGUID: 3f384930b6031af44a06653afc6173da
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _dynamicObstacles:
-  - _prefab: {fileID: 6624150824593996783, guid: b4abda3122fe462409bfbd7afafe2517,
-      type: 3}
+  - _prefab:
+      m_AssetGUID: b4abda3122fe462409bfbd7afafe2517
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _portal:
-  - _prefab: {fileID: 620743683348985988, guid: d0661737ebc80e64a87b3f53e18df055,
-      type: 3}
+  - _prefab:
+      m_AssetGUID: d0661737ebc80e64a87b3f53e18df055
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
   _merchant:
-  - _prefab: {fileID: 7068375410405565471, guid: 68f6faeda2b864d4ca6b0cabb52c4a99,
-      type: 3}
+  - _prefab:
+      m_AssetGUID: 68f6faeda2b864d4ca6b0cabb52c4a99
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     _flags: -1
     _spawnChance: 1
+    _onlyOnce: 0
+  _shrine: []

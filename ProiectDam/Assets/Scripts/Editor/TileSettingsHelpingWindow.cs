@@ -1,6 +1,4 @@
-﻿#if UNITY_EDITOR
-
-using Gameplay.Generation;
+﻿using Gameplay.Generation;
 using UnityEditor;
 using UnityEngine;
 
@@ -24,6 +22,7 @@ namespace EditorScripts
         private int _tileDataOption;
         private Vector2 _scrollPos;
         private bool _forceExpand;
+        private bool _replace;
 
         private void Init(Object target)
         {
@@ -38,6 +37,7 @@ namespace EditorScripts
             _optionsIndex = EditorGUILayout.Popup("Action", _optionsIndex, _options);
             _selectedIndex = EditorGUILayout.Popup("Tile Type", _selectedIndex, TileSettingsSerializationInfo.Instance.DisplayNames);
             _forceExpand = EditorGUILayout.Toggle("Force expand", _forceExpand);
+            _replace = EditorGUILayout.Toggle("Replace", _replace);
             _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos);
 
             if (target is null)
@@ -139,6 +139,11 @@ namespace EditorScripts
 
         private void HandleDragPerformed(SerializedObject target, SerializedProperty prop)
         {
+            if (DragAndDrop.objectReferences.Length <= 1)
+            {
+                return;
+            }
+
             if (!IsDragDataPrefabs(DragAndDrop.objectReferences))
             {
                 return;
@@ -146,9 +151,9 @@ namespace EditorScripts
 
             DragAndDrop.AcceptDrag();
 
-            int startIndex = prop.arraySize; // start from the last element
             int dragIndex = 0;
-            prop.arraySize += DragAndDrop.objectReferences.Length;
+            int startIndex = _replace ? 0 : prop.arraySize; // start from the last element if should not replace
+            prop.arraySize = _replace ? DragAndDrop.objectReferences.Length : prop.arraySize + DragAndDrop.objectReferences.Length;
 
             for (int i = startIndex; i < prop.arraySize; i++)
             {
@@ -157,7 +162,9 @@ namespace EditorScripts
                 SerializedProperty flags = current.FindPropertyRelative("_flags");
                 SerializedProperty chance = current.FindPropertyRelative("_spawnChance");
 
-                prefab.objectReferenceValue = DragAndDrop.objectReferences[dragIndex++];
+                string assetGUID = AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(DragAndDrop.objectReferences[dragIndex++]));
+                SerializedProperty trueAssetRef = prefab.FindPropertyRelative("m_AssetGUID");
+                trueAssetRef.stringValue = assetGUID;
                 flags.enumValueFlag = TileData.DefaultFlags;
                 chance.intValue = TileData.DefaultSpawnChance;
             }
@@ -188,6 +195,3 @@ namespace EditorScripts
         }
     }
 }
-
-
-#endif

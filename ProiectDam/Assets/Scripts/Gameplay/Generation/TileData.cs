@@ -1,22 +1,25 @@
 using Core;
+using System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Gameplay.Generation
 {
-    [System.Serializable]
+    [Serializable]
     public class TileData
     {
         public const int DefaultFlags = ~0;
         public const int DefaultSpawnChance = 1;
 
-        [SerializeField] private GameObject _prefab;
+        [SerializeField] private AssetReferenceGameObject _prefab;
         [SerializeField] private RoomType _flags = (RoomType)DefaultFlags;
         [SerializeField] private int _spawnChance = DefaultSpawnChance;
         [SerializeField] private bool _onlyOnce;
 
+        private Optional<GameObject> _gameObject = new();
         private bool _spawned;
 
-        public GameObject Prefab => _prefab;
+        public GameObject Prefab => GetOrLoadPrefab();
         public RoomType Flags => _flags;
         public int SpawnChance => (_onlyOnce && _spawned) ? 0 : _spawnChance;
 
@@ -25,5 +28,23 @@ namespace Gameplay.Generation
         public void SetAsSpawned() => _spawned = true;
 
         public void Reset() => _spawned = false;
+
+        private GameObject GetOrLoadPrefab()
+        {
+            if (_gameObject.HasValue)
+            {
+                return _gameObject.Value;
+            }
+
+            if (_prefab == null)
+            {
+                return null;
+            }
+
+            var handle = _prefab.LoadAssetAsync<GameObject>();
+            _gameObject.Value = handle.WaitForCompletion();
+
+            return _gameObject.Value;
+        }
     }
 }

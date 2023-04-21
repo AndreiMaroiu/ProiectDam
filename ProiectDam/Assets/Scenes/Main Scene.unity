@@ -356,6 +356,8 @@ MonoBehaviour:
   _winEvent: {fileID: 11400000, guid: ffcb45c4c8e69e343b5a88c7b2fcf87f, type: 2}
   _scoreEvent: {fileID: 11400000, guid: 9aecf744fcf296c449c7077303118a78, type: 2}
   _loseEvent: {fileID: 11400000, guid: 9d8a5883be5e2394abb1e7e1ec2f447b, type: 2}
+  _saveEvent: {fileID: 0}
+  _levelSaverHandler: {fileID: 0}
 --- !u!4 &1115900499
 Transform:
   m_ObjectHideFlags: 0
@@ -949,7 +951,7 @@ PrefabInstance:
     - target: {fileID: 7161502621323392761, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 940
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7161502621323392761, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
@@ -1029,7 +1031,7 @@ PrefabInstance:
     - target: {fileID: 7855007954112815129, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 32
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7855007954112815129, guid: 0df48db316dcf8d4db933b0b7329c4d6,
         type: 3}
