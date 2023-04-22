@@ -31,8 +31,9 @@ namespace Utilities
             }
 #endif
 
-            foreach (Touch touch in Input.touches)
+            for (int i = 0; i < Input.touchCount; i++)
             {
+                Touch touch = Input.GetTouch(i);
                 switch (touch.phase)
                 {
                     case TouchPhase.Began:

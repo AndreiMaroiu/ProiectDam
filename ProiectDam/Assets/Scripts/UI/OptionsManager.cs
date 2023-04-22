@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using Utilities;
+using static UnityEngine.GraphicsBuffer;
 
 namespace UI
 {
@@ -21,6 +23,8 @@ namespace UI
         [SerializeField] private Slider _musicSlider;
         [Header("Toggles")]
         [SerializeField] private Toggle _vibrationToggle;
+        [Header("Dropdown")]
+        [SerializeField] private Dropdown _refreshRateDropdown;
         [Header("Mixer")]
         [SerializeField] private AudioMixer _volumes;
         [Header("Version")]
@@ -47,6 +51,10 @@ namespace UI
             _vibrationToggle.isOn = VibrationManager.Instance.CanVibrate;
 
             _version.text = "Version: " + Application.version;
+
+            _refreshRateDropdown.options = CreateOptions();
+            _refreshRateDropdown.onValueChanged.AddListener(OnRefreshRateChanged);
+            _refreshRateDropdown.value = _refreshRateDropdown.options.Count - 1;
         }
 
         private void OnDestroy()
@@ -55,6 +63,7 @@ namespace UI
             _fxSlider.onValueChanged.RemoveListener(OnFxChanged);
             _musicSlider.onValueChanged.RemoveListener(OnMusicChanged);
             _vibrationToggle.onValueChanged.RemoveListener(OnVibrationChanged);
+            _refreshRateDropdown.onValueChanged.RemoveListener(OnRefreshRateChanged);
         }
 
         private void OnMasterChanged(float value) => SetVolumeValue(Master, value);
@@ -79,6 +88,26 @@ namespace UI
                 return MuteVolume;
             }
             return value;
+        }
+
+        private void OnRefreshRateChanged(int index)
+        {
+            Application.targetFrameRate = (index + 1) * 30;
+        }
+
+        private static List<Dropdown.OptionData> CreateOptions()
+        {
+            List<Dropdown.OptionData> options = new();
+            Resolution resolution = Screen.currentResolution;
+            int i = 30;
+
+            do
+            {
+                options.Add(new Dropdown.OptionData($"{i.ToString()} Hz"));
+                i += 30;
+            } while (i <= resolution.refreshRate);
+
+            return options;
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Gameplay.Generation
                 return _gameObject.Value;
             }
 
-            if (_prefab == null)
+            if (_prefab is null)
             {
                 return null;
             }
