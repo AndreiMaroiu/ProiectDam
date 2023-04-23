@@ -6,31 +6,26 @@ using UnityEngine;
 
 namespace Core.Quests
 {
-    [CreateAssetMenu(fileName = "NewKillEnemiesQuest", menuName = "Scriptables/KillEnemiesQuest")]
     public class KillEnemiesQuest : Quest
     {
-        [SerializeField] private GameEvent _enemyKilledEvent;
-
-        public override event Action<int> OnProgressChanged;
-
-        public override void InitQuest()
+        public KillEnemiesQuest(int target, int value) : base(target, value)
         {
-            
+                
         }
 
-        public void OnEnable()
+        public override void Clean(QuestEvents events)
         {
-            Debug.Log("quest enable");
+            events.GlobalDeathEvent.OnEvent += GlobalDeathEvent_OnEvent;
         }
 
-        public void Awake()
+        private void GlobalDeathEvent_OnEvent(object sender)
         {
-            Debug.Log("quest awake");
+            Progress.Value += 1;
         }
 
-        public void OnDestroy()
+        public override void InitQuest(QuestEvents events)
         {
-            Debug.Log("quest destroy");
+            events.GlobalDeathEvent.OnEvent += GlobalDeathEvent_OnEvent;
         }
     }
 }

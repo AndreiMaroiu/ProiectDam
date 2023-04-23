@@ -19,12 +19,6 @@ namespace Gameplay
 
         public event UnityAction OnInteractionEnter;
 
-        public void Set(IButtonModel model)
-        {
-            //OnClick = model.Action; // todo: update
-            ButtonInfo = model;
-        }
-
         public bool CanClick
         {
             get => _canClick;
@@ -34,7 +28,7 @@ namespace Gameplay
 
                 if (value is false)
                 {
-                    _buttonEvent.Close(ButtonInfo.Owner); // TODO: refactor
+                    _buttonEvent.Close(ButtonInfo.Owner);
                 }
             }
         }

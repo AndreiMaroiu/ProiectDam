@@ -53,7 +53,7 @@ namespace Gameplay
         private void Start()
         {
             _renderer = GetComponentInChildren<SpriteRenderer>();
-            _helper.Set(new SimpleButtonModel("Open Chest", OnClick, gameObject));
+            _helper.ButtonInfo = new SimpleButtonModel("Open Chest", OnClick, gameObject);
             _helper.CanClick = true;
         }
     }

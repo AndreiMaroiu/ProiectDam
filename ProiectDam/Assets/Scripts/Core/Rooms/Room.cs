@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using Core.Values;
+using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 using UnityEngine;
 
 namespace Core
 {
+    [Serializable]
     public sealed class Room
     {
-        private readonly Vector2Int _pos;
+        private readonly Vector2IntPos _pos;
         private readonly int _direction;
         private readonly Room _lastRoom;
         private readonly List<Room> _neighbours;
@@ -13,9 +18,9 @@ namespace Core
         public RoomType Type { get; set; }
         public bool Discovered { get; set; }
         public int Direction => _direction;
-        public Vector2Int Pos => _pos;
+        public Vector2IntPos Pos => _pos;
 
-        public Room(Vector2Int pos, Room lastRoom, RoomType type = RoomType.Empty, int direction = 0)
+        public Room(Vector2IntPos pos, Room lastRoom, RoomType type = RoomType.Empty, int direction = 0)
         {
             Type = type;
             _pos = pos;
@@ -25,7 +30,7 @@ namespace Core
             _neighbours = new List<Room>();
         }
 
-        public Room(Vector2Int pos, Room lastRoom, int direction)
+        public Room(Vector2IntPos pos, Room lastRoom, int direction)
         {
             _direction = direction;
             _pos = pos;
@@ -34,6 +39,9 @@ namespace Core
             _neighbours = new List<Room>();
         }
 
+       
+        [field: NonSerialized]
+        [property: XmlIgnore, JsonIgnore]
         public GameObject GameObject { get; set; }
 
         public List<Room> Neighbours => _neighbours;
@@ -43,8 +51,12 @@ namespace Core
         public void AddNeighbour(Room neighbour)
             => _neighbours.Add(neighbour);
 
-        public void AddNeighbour(Vector2Int offset, int angle, RoomType type = RoomType.Empty)
-            => _neighbours.Add(new Room(offset, this, type, angle));
+        public Room AddNeighbour(Vector2IntPos offset, int angle, RoomType type = RoomType.Empty)
+        {
+            var room = new Room(offset, this, type, angle);
+            _neighbours.Add(room);
+            return room;
+        }
 
         public List<Room>.Enumerator GetEnumerator()
             => _neighbours.GetEnumerator();

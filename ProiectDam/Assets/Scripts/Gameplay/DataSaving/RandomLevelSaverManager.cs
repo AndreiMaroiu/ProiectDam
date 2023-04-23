@@ -44,6 +44,8 @@ namespace Gameplay.DataSaving
                         Debug.LogError("Could not read file: " + fullPath);
                     }
                 }
+
+                Debug.Log(_handler.ShouldLoad ? "Should Load" : "Should Generate");
             }
         }
 
@@ -84,12 +86,7 @@ namespace Gameplay.DataSaving
 
         private void UpdateHubInfo()
         {
-            if (DataReader.TryRead<HubSaveData>(_handler.SaveFile.SaveDataPath, out var data))
-            {
-                data.Coins += _player.Money;
-
-                DataReader.Write(_handler.SaveFile.SaveDataPath, data);
-            }
+            _ = DataReader.ReadAndSave<HubSaveData>(_handler.SaveFile.SaveDataPath, data => data.Coins += _player.Money);
         }
 
         public void Save()
@@ -164,7 +161,7 @@ namespace Gameplay.DataSaving
         {
             Dictionary<Vector2IntPos, LayersSaveData> rooms = new();
 
-            _levelSpawner.Traverser.Traverse(room =>
+            _levelSpawner.Traverser.TraverseUnique(room =>
             {
                 RoomBehaviour roomBehaviour = _levelSpawner.Traverser[room.Pos];
                 LayersSaveData saveData = GenerateRoomSaveData(roomBehaviour);

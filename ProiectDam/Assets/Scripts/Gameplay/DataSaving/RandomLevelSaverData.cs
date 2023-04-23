@@ -8,7 +8,7 @@ namespace Gameplay.DataSaving
     public sealed class RandomLevelSaverData : LevelSaverHandler
     {
         private static bool _shouldLoad;
-        private static int _seed;
+        private static int _seed = GenerateRandomSeed();
         private static SavePath _saveFile;
 
         #region Level Saver Handler

@@ -92,12 +92,15 @@ namespace Utilities
 
         public void Clear()
         {
+            OnEnable();
+        }
+
+        public void CloseAll()
+        {
             while (CanClose)
             {
                 ClosePanel();
             }
-
-            OnEnable();
         }
     }
 }

@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Core;
+using Core.Values;
+using System.Collections.Generic;
 using UnityEngine;
-using Core;
 using Utilities;
 
 namespace Gameplay.Generation
 {
     internal class DungeonGenerator
     {
-        public struct RoomDistance
+        public readonly struct RoomDistance
         {
-            public Room room;
-            public int distance;
+            public readonly Room room;
+            public readonly int distance;
 
             public RoomDistance(Room room, int distance)
                 => (this.room, this.distance) = (room, distance);
@@ -22,8 +23,8 @@ namespace Gameplay.Generation
         private readonly List<RoomDistance> _distances;
         private readonly WeightedRandom<int> _weightedRandom;
         private readonly RandomPicker<int> _picker;
+        private readonly Dictionary<Vector2IntPos, Room> _rooms;
 
-        private int _numberOfRooms = 0;
         private Room _start;
 
         public DungeonGenerator(int maxRoomNeighbours, int maxRoomCount, int matrixSize)
@@ -33,12 +34,13 @@ namespace Gameplay.Generation
             _matrix = new RoomType[matrixSize, matrixSize];
 
             _distances = new List<RoomDistance>();
-            _weightedRandom = new WeightedRandom<int>(new int[] { 1, 2, 3 }, new int[] { 60, 30, 10 });
+            _weightedRandom = new WeightedRandom<int>(new int[] { 1, 2, 3 }, new int[] { 40, 30, 30 });
             _picker = new RandomPicker<int>(new int[] { 0, 90, 270 }); // se considera mereu ca o camera vine din stanga
+            _rooms = new();
         }
 
         public RoomType[,] Matrix => _matrix;
-        public int NumberOfRooms => _numberOfRooms;
+        public int NumberOfRooms => _rooms.Count;
         public List<RoomDistance> Distances => _distances;
 
         private void ClearMatrix()
@@ -69,8 +71,8 @@ namespace Gameplay.Generation
             for (int i = 0; i < 360; i += 90)
             {
                 Vector2Int temp = Utils.GetDirectionRounded(i);
-                int x = temp.x + currentRoom.Pos.x;
-                int y = temp.y + currentRoom.Pos.y;
+                int x = temp.x + currentRoom.Pos.X;
+                int y = temp.y + currentRoom.Pos.Y;
 
                 if (_matrix[x, y] != RoomType.Empty)
                 {
@@ -81,33 +83,39 @@ namespace Gameplay.Generation
             return numberOfNeighbours;
         }
 
-        private byte TryAddToDirection(Room currentRoom, int dir)
+        private void TryAddToDirection(Room currentRoom, int dir)
         {
-            Vector2Int neighbour = Utils.GetDirectionRounded(dir);
-            int x = currentRoom.Pos.x + neighbour.x;
-            int y = currentRoom.Pos.y + neighbour.y;
+            Vector2IntPos neighbour = Utils.GetDirectionRounded(dir);
+            int x = currentRoom.Pos.X + neighbour.X;
+            int y = currentRoom.Pos.Y + neighbour.Y;
 
-            if (_matrix[x, y] != RoomType.Empty)
+            if (_matrix[x, y] == RoomType.Wall)
             {
-                return 0;
+                return;
             }
 
             int numberOfNeighbours = GetNeighboursCount(currentRoom);
 
             if (numberOfNeighbours <= _maxRoomNeighbours)
             {
-                currentRoom.AddNeighbour(currentRoom.Pos + neighbour, dir, RoomType.Normal);
-                return 1;
+                Vector2IntPos neighbourPos = currentRoom.Pos + neighbour;
+                if (_rooms.TryGetValue(neighbourPos, out var oldNeighbour))
+                {
+                    currentRoom.AddNeighbour(oldNeighbour);
+                    oldNeighbour.AddNeighbour(currentRoom);
+                }
+                else
+                {
+                    _rooms[neighbourPos] = currentRoom.AddNeighbour(neighbourPos, dir, RoomType.Normal);
+                }
             }
-
-            return 0;
         }
 
         private void CreateNeighbours(Room currentRoom)
         {
             _picker.Reset();
 
-            int remainingRooms = _maxRoomCount - _numberOfRooms;
+            int remainingRooms = _maxRoomCount - _rooms.Count;
             int neighbourCount = _weightedRandom.Take();
             neighbourCount = Mathf.Clamp(neighbourCount, 0, remainingRooms);
 
@@ -119,12 +127,7 @@ namespace Gameplay.Generation
 
         private void CreateRoom(Room currentRoom)
         {
-            if (_matrix[currentRoom.Pos.x, currentRoom.Pos.y] is RoomType.Empty)
-            {
-                _numberOfRooms++;
-            }
-
-            _matrix[currentRoom.Pos.x, currentRoom.Pos.y] = currentRoom.Type;
+            _matrix[currentRoom.Pos.X, currentRoom.Pos.Y] = currentRoom.Type;
             CreateNeighbours(currentRoom);
         }
 
@@ -133,23 +136,39 @@ namespace Gameplay.Generation
             Reset();
 
             Queue<Room> queue = new();
+            HashSet<Room> visited = new();
             int middle = _matrix.GetLength(0) / 2;
             Vector2Int startPosition = new(middle, middle);
             _start = new Room(startPosition, null, RoomType.Start, Random.Range(0, 4) * 90);
+            _rooms[startPosition] = _start;
 
             queue.Enqueue(_start);
-            _numberOfRooms = 0;
+            int steps = 0;
 
-            while (queue.Count > 0)
+            while (queue.Count > 0 && steps < 10000)
             {
+                steps++;
                 Room top = queue.Dequeue();
+
+                if (!visited.Contains(top))
+                {
+                    visited.Add(top);
+                }
+
                 CreateRoom(top);
 
                 foreach (Room room in top)
                 {
-                    queue.Enqueue(room);
+                    if (!visited.Contains(room))
+                    {
+                        queue.Enqueue(room);
+                    }
                 }
             }
+
+#if UNITY_EDITOR
+            CheckForDuplicates();
+#endif
 
             return _start;
         }
@@ -158,7 +177,7 @@ namespace Gameplay.Generation
         {
             RoomTraverser<int> traverser = new(_start);
 
-            traverser.Traverse(room =>
+            traverser.TraverseUnique(room =>
             {
                 if (room.LastRoom is null)
                 {
@@ -175,30 +194,61 @@ namespace Gameplay.Generation
             _distances.Sort((first, second) => first.distance - second.distance);
         }
 
-        public Dictionary<Vector2Int, List<Room>> CalculateDuplicates()
+        private Dictionary<Vector2Int, List<Room>> CalculateDuplicates()
         {
             Dictionary<Vector2Int, List<Room>> dict = new();
-            RoomTraverser<int> traverser = new(_start);
+            Queue<Room> queue = new();
+            HashSet<Room> wasTraversed = new();
 
-            traverser.Traverse(room =>
+            queue.Enqueue(_start);
+
+            while (queue.Count > 0)
             {
-                if (!dict.ContainsKey(room.Pos))
+                Room room = queue.Dequeue();
+
+                if (!wasTraversed.Contains(room))
                 {
-                    dict.Add(room.Pos, new List<Room>());
+                    if (!dict.ContainsKey(room.Pos))
+                    {
+                        dict.Add(room.Pos, new List<Room>());
+                    }
+
+                    dict[room.Pos].Add(room);
+                    wasTraversed.Add(room);
                 }
 
-                dict[room.Pos].Add(room);
-            });
+                foreach (Room neighbour in room)
+                {
+                    if (!wasTraversed.Contains(neighbour))
+                    {
+                        queue.Enqueue(neighbour);
+                    }
+                }
+            }
 
             return dict;
+        }
+
+        private void CheckForDuplicates()
+        {
+            var duplicates = CalculateDuplicates();
+            Debug.Log("Checking for duplicates");
+
+            foreach (var (_, list) in duplicates)
+            {
+                if (list.Count > 1)
+                {
+                    Debug.LogError("Duplicate found!");
+                }
+            }
         }
 
         private void Reset()
         {
             ClearMatrix();
-            _numberOfRooms = 0;
             _picker.Reset();
             _distances.Clear();
+            _rooms.Clear();
         }
     }
 }

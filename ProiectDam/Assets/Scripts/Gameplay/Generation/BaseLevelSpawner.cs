@@ -1,5 +1,8 @@
 using Core;
+using Core.Values;
 using Gameplay.Player;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
 
@@ -31,7 +34,7 @@ namespace Gameplay.Generation
 
             if (_traverser[pos].IsNull())
             {
-                RoomBehaviour result = Instantiate(_data.Room, parent);
+                RoomBehaviour result = Instantiate(_data.RoomPrefab, parent);
                 result.transform.position = where;
                 _traverser[room.Pos] = result;
 
@@ -48,29 +51,24 @@ namespace Gameplay.Generation
         {
             GameObject root = new("Root");
 
-            _traverser.Traverse(room =>
+            _traverser.TraverseUnique(room =>
             {
-                Vector3 where = Vector3.zero;
+                var pos = Utils.GetVector3FromMatrixPos(room.Pos) - Utils.GetVector3FromMatrixPos(_traverser.GetStartRoom().Pos);
+                Vector3 worldPos = new(pos.x, pos.y);
+                worldPos *= _data.Distance;
 
-                if (room.LastRoom != null)
-                {
-                    Vector3 direction = Utils.GetWorldDirection(room.Direction) * _data.Distance;
-                    where = _traverser[room.LastRoom.Pos].transform.position + direction;
-                }
-
-                room.GameObject = SpawnRoom(room, where, root.transform);
+                room.GameObject = SpawnRoom(room, worldPos, root.transform);
             });
         }
-
 
         /// <summary>
         /// For each room in dungeon, based on it's RoomType, generate room layers (tiles for each dimension)
         /// </summary>
-        protected void GenereteLayers()
+        protected void GenerateLayers()
         {
             LayersGenerator generator = new(_data.CellCount, _data.EnemiesRange);
 
-            _traverser.Traverse(room =>
+            _traverser.TraverseUnique(room =>
             {
                 RoomBehaviour behaviour = _traverser[room.Pos];
 
@@ -90,7 +88,7 @@ namespace Gameplay.Generation
 
             _traverser.TraverseUnique(room =>
             {
-                _data.Reset();
+                _data.Reset(); // needed to reset each tile "spawned" state, used for unique tile functionality
                 RoomBehaviour behaviour = _traverser[room.Pos];
                 spawner.SpawnStatic(behaviour);
                 spawner.SpawnDynamic(behaviour);
@@ -102,18 +100,16 @@ namespace Gameplay.Generation
         /// </summary>
         protected void SetDoorPositions()
         {
-            _traverser.Traverse(room =>
+            _traverser.TraverseUnique(room =>
             {
-                if (room.LastRoom is null)
+                foreach (var neighbour in room.Neighbours)
                 {
-                    return;
+                    RoomBehaviour current = _traverser[room.Pos];
+                    RoomBehaviour previous = _traverser[neighbour.Pos];
+
+                    SetDoorPosition(neighbour.Pos - room.Pos, current.Layers.Middle, TileType.Door);
+                    SetDoorPosition(room.Pos - neighbour.Pos, previous.Layers.Middle, TileType.Door);
                 }
-
-                RoomBehaviour current = _traverser[room.Pos];
-                RoomBehaviour previous = _traverser[room.LastRoom.Pos];
-
-                SetDoorPosition(room.LastRoom.Pos - room.Pos, current.Layers.Middle, TileType.Door);
-                SetDoorPosition(room.Pos - room.LastRoom.Pos, previous.Layers.Middle, TileType.Door);
             });
         }
 
@@ -143,21 +139,18 @@ namespace Gameplay.Generation
         /// </summary>
         protected void SpawnDoors()
         {
-            _traverser.Traverse(room =>
+            HashSet<Vector2Tuple> connections = new();
+
+            _traverser.TraverseNeighboursUnique((neighbour, room) =>
             {
-                if (room.LastRoom is null)
-                {
-                    return;
-                }
-
                 RoomBehaviour currentRoom = _traverser[room.Pos];
-                RoomBehaviour previousRoom = _traverser[room.LastRoom.Pos];
+                RoomBehaviour previousRoom = _traverser[neighbour.Pos];
 
-                DoorBehaviour currentDoor = Instantiate(_data.Door, currentRoom.GetTransform(currentRoom.Layers.MiddleLayerIndex));
-                DoorBehaviour previousDoor = Instantiate(_data.Door, previousRoom.GetTransform(previousRoom.Layers.MiddleLayerIndex));
+                DoorBehaviour currentDoor = Instantiate(_data.DoorPrefab, currentRoom.GetTransform(currentRoom.Layers.MiddleLayerIndex));
+                DoorBehaviour previousDoor = Instantiate(_data.DoorPrefab, previousRoom.GetTransform(previousRoom.Layers.MiddleLayerIndex));
 
-                SetDoor(currentDoor, previousDoor, room.LastRoom.Pos - room.Pos, currentRoom);
-                SetDoor(previousDoor, currentDoor, room.Pos - room.LastRoom.Pos, previousRoom);
+                SetDoor(currentDoor, previousDoor, neighbour.Pos - room.Pos, currentRoom);
+                SetDoor(previousDoor, currentDoor, room.Pos - neighbour.Pos, previousRoom);
             });
         }
 
@@ -194,7 +187,7 @@ namespace Gameplay.Generation
         protected void GenerateAndSpawnLevel()
         {
             SpawnRoomAssets();
-            GenereteLayers();
+            GenerateLayers();
             SetDoorPositions();
             SpawnLayers();
             SpawnDoors();

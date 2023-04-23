@@ -25,6 +25,7 @@ namespace UI
             _howToCanvas.SetActive(false);
             _optionsCanvas.SetActive(false);
             _saveButton.SetActive(_saveEvent != null);
+            _panelStack.Clear();
         }
 
         public void OnPauseClick()

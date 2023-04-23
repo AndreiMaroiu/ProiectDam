@@ -237,7 +237,7 @@ namespace Gameplay.Generation
         private GameObject GenerateFromSave(TileType tileType, BiomeType biomeType, int x, int y)
         {
             LayerSaveData layer = SaveData.GetFromBiome(biomeType);
-            Vector2IntPos key = new Vector2IntPos(x, y);
+            Vector2IntPos key = new(x, y);
 
             if (layer.DynamicObjects.ContainsKey(key))
             {
@@ -254,7 +254,7 @@ namespace Gameplay.Generation
             if (tile is IDataSavingTile loadingObject)
             {
                 LayerSaveData layer = SaveData.GetFromBiome(biomeType);
-                Vector2IntPos key = new Vector2IntPos(x, y);
+                Vector2IntPos key = new(x, y);
 
                 if (!layer.DynamicObjects.ContainsKey(key))
                 {

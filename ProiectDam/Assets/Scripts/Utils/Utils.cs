@@ -18,8 +18,7 @@ namespace Utilities
 
         public static Vector3 GetWorldDirection(float angle)
         {
-            angle -= 90;
-            return GetDirection(angle);
+            return GetDirection(angle - 90);
         }
 
         public static Vector3 GetVector3FromMatrixPos(int i, int j, float cellSize = 1.0f)
@@ -28,6 +27,16 @@ namespace Utilities
         }
 
         public static Vector3 GetVector3FromMatrixPos(Vector2Int pos, float cellSize = 1.0f)
+        {
+            return GetVector3FromMatrixPos(pos.x, pos.y, cellSize);
+        }
+
+        public static Vector2 GetVector2FromMatrixPos(int i, int j, float cellSize = 1.0f)
+        {
+            return new Vector2(cellSize * j, cellSize * -i);
+        }
+
+        public static Vector2 GetVector2FromMatrixPos(Vector2Int pos, float cellSize = 1.0f)
         {
             return GetVector3FromMatrixPos(pos.x, pos.y, cellSize);
         }

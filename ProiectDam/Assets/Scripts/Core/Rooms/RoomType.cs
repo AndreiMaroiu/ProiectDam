@@ -3,6 +3,7 @@ using static Core.RoomType;
 namespace Core
 {
     [System.Flags]
+    [System.Serializable]
     public enum RoomType
     {
         Empty = 0,

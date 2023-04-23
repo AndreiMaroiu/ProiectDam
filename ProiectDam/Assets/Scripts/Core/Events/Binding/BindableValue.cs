@@ -9,6 +9,16 @@ namespace Core.Events.Binding
     {
         [SerializeField] private T _value;
 
+        public BindableValue()
+        {
+            
+        }
+
+        public BindableValue(T value)
+        {
+            _value = value;
+        }
+
         public T Value
         {
             get => _value;

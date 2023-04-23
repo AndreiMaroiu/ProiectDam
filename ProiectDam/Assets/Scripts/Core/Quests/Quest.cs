@@ -1,31 +1,27 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Core.Events.Binding;
 
 namespace Core.Quests
 {
-    public abstract class Quest : ScriptableObject
+    public abstract class Quest
     {
-        [SerializeField] protected int _target;
+        public Quest(int target, int progress = 0)
+        {
+            _target = target;
+            Progress = new(progress);
+        }
 
-        public abstract event Action<int> OnProgressChanged;
+        protected int _target;
 
-        public bool Completed => _target == Progress;
+        public bool Completed => _target <= Progress;
 
-        public virtual int Progress { get; protected set; }
+        public BindableValue<int> Progress { get; set; }
+
 
         /// <summary>
         /// Init quest data, called on start
         /// </summary>
-        public virtual void InitQuest()
-        {
+        public abstract void InitQuest(QuestEvents events);
 
-        }
-
-        public virtual void Clean()
-        {
-
-        }
+        public abstract void Clean(QuestEvents events);
     }
 }

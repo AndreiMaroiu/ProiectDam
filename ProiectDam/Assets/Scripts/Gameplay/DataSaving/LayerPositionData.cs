@@ -1,4 +1,6 @@
-﻿namespace Gameplay.DataSaving
+﻿using Core.Values;
+
+namespace Gameplay.DataSaving
 {
     [System.Serializable]
     public struct LayerPositionData

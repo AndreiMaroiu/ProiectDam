@@ -1,9 +1,9 @@
 using Core;
 using Core.Events;
+using Core.Values;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
-using Core.Values;
 
 namespace UI.Map
 {
@@ -68,25 +68,25 @@ namespace UI.Map
             Room room = _currentRoom.Value;
             float size = (_cellDistance + _cellSize);
 
-            if (room.Pos.x > _width.x)
+            if (room.Pos.X > _width.x)
             {
                 _mapRect.sizeDelta += new Vector2(0, size);
-                _width.x = room.Pos.x;
+                _width.x = room.Pos.X;
             }
-            else if (room.Pos.x < _width.y)
+            else if (room.Pos.X < _width.y)
             {
                 _mapRect.sizeDelta += new Vector2(0, size);
-                _width.y = room.Pos.x;
+                _width.y = room.Pos.X;
             }
-            else if (room.Pos.y > _height.x)
+            else if (room.Pos.Y > _height.x)
             {
                 _mapRect.sizeDelta += new Vector2(size, 0);
-                _height.x = room.Pos.x;
+                _height.x = room.Pos.X;
             }
-            else if (room.Pos.y < _height.y)
+            else if (room.Pos.Y < _height.y)
             {
                 _mapRect.sizeDelta += new Vector2(size, 0);
-                _height.y = room.Pos.x;
+                _height.y = room.Pos.X;
             }
         }
 
@@ -101,12 +101,8 @@ namespace UI.Map
             // generating rooms
             _traverser.TraverseUnique(room =>
             {
-                Vector2 pos = Vector2.zero;
-
-                if (room.LastRoom != null)
-                {
-                    pos = _traverser[room.LastRoom.Pos].Rect.anchoredPosition + (Vector2)Utils.GetWorldDirection(room.Direction) * _cellDistance;
-                }
+                Vector2 temp = Utils.GetVector2FromMatrixPos(room.Pos - _traverser.GetStartRoom().Pos);
+                Vector2 pos = temp * _cellDistance;
 
                 RoomUIBehaviour clone = Instantiate(_roomPrefab, _map.transform);
 
@@ -129,18 +125,13 @@ namespace UI.Map
             RectTransform door = GenerateDoor();
 
             // generating doors
-            _traverser.Traverse(room =>
+            _traverser.TraverseUnique(room =>
             {
-                if (room.LastRoom is null)
+                foreach (var neighbour in room)
                 {
-                    return;
+                    RectTransform currentClone = Instantiate(door, _traverser[room.Pos].transform);
+                    currentClone.anchoredPosition = Utils.GetVector2FromMatrixPos(neighbour.Pos - room.Pos) * _cellSize / 2;
                 }
-
-                RectTransform prevClone = Instantiate(door, _traverser[room.LastRoom.Pos].transform);
-                prevClone.anchoredPosition = Utils.GetWorldDirection(room.Direction) * _cellSize / 2;
-
-                RectTransform currentClone = Instantiate(door, _traverser[room.Pos].transform);
-                currentClone.anchoredPosition = Utils.GetWorldDirection(room.Direction + 180) * _cellSize / 2;
             });
 
             OnRoomChanged();

@@ -3,7 +3,6 @@ using Core.Events;
 using Core.Values;
 using Gameplay.DataSaving;
 using UnityEngine;
-using Utilities;
 
 namespace Gameplay.Generation
 {
@@ -35,7 +34,7 @@ namespace Gameplay.Generation
             GenerateRoomTypes();
 
             SpawnRoomAssets();
-            GenereteLayers();
+            GenerateLayers();
             SetDoorPositions();
             SpawnOrLoadLayers();
             SpawnDoors();
@@ -78,8 +77,12 @@ namespace Gameplay.Generation
         private void GenerateDungeon()
         {
             _generator = new DungeonGenerator(_maxRoomNeighbours, (_maxRoomCount * _data.DifficultyMultiplier).RoundToInt(), _maxtrixSize);
-            Room start = _generator.GenerateDungeon();
-            _traverser = new RoomTraverser<RoomBehaviour>(start);
+
+            do
+            {
+                Room start = _generator.GenerateDungeon();
+                _traverser = new RoomTraverser<RoomBehaviour>(start);
+            } while (Mathf.Abs(_generator.NumberOfRooms - _maxRoomCount) > 3);
         }
 
         private void SpawnOrLoadLayers()
@@ -123,10 +126,7 @@ namespace Gameplay.Generation
         private void GenerateRoomTypes()
         {
             _generator.CalculateDistances();
-            var duplicates = _generator.CalculateDuplicates();
             var distances = _generator.Distances;
-            Validate(distances[^1].room.Pos, RoomType.End);
-            Validate(distances[^1].room.LastRoom.Pos, RoomType.Boss);
 
             distances[0].room.Type = RoomType.Start;
 
@@ -135,14 +135,6 @@ namespace Gameplay.Generation
             ChooseRoomRandom(RoomType.Healing);
             ChooseRoomRandom(RoomType.Chest);
             ChooseRoomRandom(RoomType.Merchant);
-
-            void Validate(Vector2Int pos, RoomType type)
-            {
-                foreach (Room room in duplicates[pos])
-                {
-                    room.Type = type;
-                }
-            }
 
             void ChooseRoomRandom(RoomType type)
             {
@@ -159,9 +151,8 @@ namespace Gameplay.Generation
                 {
                     int distance = Random.Range(halfCount, countMinus);
                     room = distances[distance].room;
+                    halfCount /= 2;
                 } while (room.Type != RoomType.Normal);
-
-                Validate(room.Pos, type);
 
                 ++totalUniqueRoomsCount;
             }

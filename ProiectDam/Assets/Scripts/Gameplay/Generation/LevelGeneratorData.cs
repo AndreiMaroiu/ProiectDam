@@ -24,8 +24,8 @@ namespace Gameplay.Generation
         [SerializeField] private RoomBehaviourEvent _roomBehaviourEvent;
 
         public float Distance => _distance;
-        public RoomBehaviour Room => _room;
-        public DoorBehaviour Door => _door;
+        public RoomBehaviour RoomPrefab => _room;
+        public DoorBehaviour DoorPrefab => _door;
         public TileSettings DungeonTiles => _dungeonTiles;
         public TileSettings FireTiles => _fireTiles;
         public TileSettings GrassTiles => _grassTiles;

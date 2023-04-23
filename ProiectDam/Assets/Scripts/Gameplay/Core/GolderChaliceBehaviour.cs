@@ -19,13 +19,13 @@ namespace Gameplay
         {
             _helper.OnInteractionEnter += () =>
             {
-                _helper.Set(new GolderChaliceModel()
+                _helper.ButtonInfo = new GolderChaliceModel()
                 {
                     Action = OnSacrifice,
                     MinScore = 20,
                     CurrentScore = _playerScore.Value,
                     Owner = gameObject
-                });
+                };
             };
         }
 

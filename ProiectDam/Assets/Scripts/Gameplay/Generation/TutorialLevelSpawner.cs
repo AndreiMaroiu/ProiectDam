@@ -15,7 +15,7 @@ namespace Gameplay.Generation
             _data.DifficultyMultiplier = 1;
 
             SpawnRoomAssets();
-            GenereteLayers();
+            GenerateLayers();
             SetDoorPositions();
             SpawnLayers();
             SpawnDoors();

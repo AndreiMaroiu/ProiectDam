@@ -9,19 +9,20 @@ namespace EditorScripts.Events
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            SerializedProperty value = property.FindPropertyRelative("_value");
+
+            if (value is null)
+            {
+                return;
+            }
+
             EditorGUI.BeginProperty(position, label, property);
             position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
 
             var indent = EditorGUI.indentLevel;
             EditorGUI.indentLevel = 0;
-
-
-            SerializedProperty value = property.FindPropertyRelative("_value");
-
             EditorGUI.PropertyField(position, value, GUIContent.none);
-
             EditorGUI.indentLevel = indent;
-
             EditorGUI.EndProperty();
         }
     }

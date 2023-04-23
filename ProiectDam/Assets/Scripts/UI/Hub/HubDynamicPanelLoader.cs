@@ -25,8 +25,6 @@ namespace UI
             {
                 if (_isAsync)
                 {
-                    // TODO: do async show
-
                     _ = ShowAsync();
                 }
                 else

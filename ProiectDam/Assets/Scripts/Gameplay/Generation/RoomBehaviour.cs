@@ -8,8 +8,6 @@ namespace Gameplay.Generation
     /// </summary>
     public sealed class RoomBehaviour : MonoBehaviour
     {
-        [SerializeField] private int _a;
-
         private LayerBehaviour[] _layersObjects;
 
         private Room _room;

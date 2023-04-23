@@ -181,7 +181,7 @@ namespace Gameplay.Player
 
             SetMove(_moveTime, _cellSizeValue.Value, TileType.Player);
 
-            foreach (var pickup in StaticServices.Get<HubSaveData>().SingleTimePickUps)
+            foreach (var pickup in StaticServices.Get<HubSaveData>().SingleTimePickUps) // TODO: update with another service
             {
                 var instance = PickUpFactory.Instance.GetPickUp(pickup.Name, pickup.Boost);
                 instance.OnInteract(this);
@@ -198,20 +198,6 @@ namespace Gameplay.Player
         private void Update()
         {
             _swipeDetector.CkeckForSwipes();
-
-            if (Time.timeScale == 0.0f)
-            {
-                return;
-            }
-
-            if (_playerTurn && CanMove)
-            {
-                Vector2Int dir = GetMoveDirection();
-                if (dir.sqrMagnitude > Vector3.kEpsilon)
-                {
-                    StartCoroutine(TryMove(dir));
-                }
-            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -386,30 +372,6 @@ namespace Gameplay.Player
             {
                 StartCoroutine(TryMove(dir));
             }
-        }
-
-        private Vector2Int GetMoveDirection()
-        {
-            Vector2Int dir = Vector2Int.zero;
-
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                dir.x = -1;
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                dir.x = 1;
-            }
-            else if (Input.GetKeyDown(KeyCode.W))
-            {
-                dir.y = 1;
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                dir.y = -1;
-            }
-
-            return dir;
         }
 
         private void AnimatePlayer()
