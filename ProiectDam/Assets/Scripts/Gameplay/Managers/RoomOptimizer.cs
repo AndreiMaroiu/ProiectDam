@@ -15,7 +15,7 @@ namespace Gameplay.Managers
         private void Start()
         {
             Room start = _roomEvent.Value.Room;
-            RoomTraverser<Room> traverser = new RoomTraverser<Room>(start);
+            RoomTraverser<Room> traverser = new(start);
 
             traverser.TraverseUnique(room =>
             {

@@ -19,13 +19,12 @@ namespace UI
         [SerializeField] private SaveEvent _saveEvent;
         [SerializeField] private PanelStack _panelStack;
 
-        void Awake()
+        private void Awake()
         {
             _pauseCanvas.SetActive(false);
             _howToCanvas.SetActive(false);
             _optionsCanvas.SetActive(false);
             _saveButton.SetActive(_saveEvent != null);
-            _panelStack.Clear();
         }
 
         public void OnPauseClick()
@@ -114,8 +113,10 @@ namespace UI
         {
             Time.timeScale = 1; // TODO: maybe remove
 
-            _panelStack.Clear();
-            _transition.SetTrigger("Start");
+            if (_transition != null)
+            {
+                _transition.SetTrigger("Start");
+            }
 
             SceneManager.LoadScene(Scenes.MainMenu);
         }

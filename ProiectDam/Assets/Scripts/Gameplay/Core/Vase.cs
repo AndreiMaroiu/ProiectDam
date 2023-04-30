@@ -11,11 +11,11 @@ namespace Gameplay
         [SerializeField] private TileObject _coinPickUp;
         [SerializeField] private int _coinsSpawnChance;
 
-        public string ObjectName { get; set; }
+        public System.Guid ObjectId { get; set; }
 
         public ObjectSaveData SaveData => new VaseSaveData()
         {
-            ObjectName = this.ObjectName,
+            ObjectId = ObjectId,
         };
 
         protected override void OnDamage(MonoBehaviour dealer)

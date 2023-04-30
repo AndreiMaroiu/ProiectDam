@@ -17,11 +17,11 @@ namespace Gameplay.Player
 
         private static readonly Vector2[] Directions = { Vector2.right, Vector2.up, Vector2.left, Vector2.down };
         private static readonly Vector2[] ReversedDirections = { Vector2.left, Vector2.up, Vector2.right, Vector2.down };
-        private const string WALK_ANIMATION = "Walk";
-        private const string MELEE_ANIMATION = "Melee";
-        private const string SHOOT_ANIMATION = "Shoot";
-        private const string HIT_ANIMATION = "Hit";
-        private const string DEATH_ANIMATION = "Death";
+        private static readonly int WALK_ANIMATION  = Animator.StringToHash("Walk");
+        private static readonly int MELEE_ANIMATION = Animator.StringToHash("Melee");
+        private static readonly int SHOOT_ANIMATION = Animator.StringToHash("Shoot");
+        private static readonly int HIT_ANIMATION   = Animator.StringToHash("Hit");
+        private static readonly int DEATH_ANIMATION = Animator.StringToHash("Death");
 
         #endregion
 
@@ -462,7 +462,7 @@ namespace Gameplay.Player
                 _energyEvent.Value -= _stats.EnergyPerMove;
             }
 
-            _onMoveStared?.Invoke(this);
+            _onMoveStared.Invoke(this);
 
             AnimatePlayer();
         }
@@ -472,7 +472,7 @@ namespace Gameplay.Player
             _direction = Vector2.zero;
             _soundhandler.Stop();
             _playerTurn.Value = false;
-            _onMoveEnded?.Invoke(this);
+            _onMoveEnded.Invoke(this);
 
             AnimatePlayer();
         }

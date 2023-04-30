@@ -21,11 +21,11 @@ public struct RandomPicker<T>
         _max = _elems.Length;
     }
 
-    public int MaxSize => _elems.Length;
+    public readonly int MaxSize => _elems.Length;
 
     public void Reset() => _max = _elems.Length;
 
-    public bool CanTake => _max > 0;
+    public readonly bool CanTake => _max > 0;
 
     public T Take()
     {
@@ -36,7 +36,7 @@ public struct RandomPicker<T>
         return _elems[_max];
     }
 
-    private void Swap(int index)
+    private readonly void Swap(int index)
     {
         T copy = _elems[index];
         _elems[index] = _elems[_max];

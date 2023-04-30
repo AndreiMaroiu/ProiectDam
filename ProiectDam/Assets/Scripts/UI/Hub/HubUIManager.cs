@@ -16,8 +16,6 @@ namespace UI
             _mainPanel.SetActive(false);
             _pausePanel.SetActive(false);
 
-            _panelStack.Clear();
-
             _panelStack.OpenPanel(_mainPanel);
         }
 

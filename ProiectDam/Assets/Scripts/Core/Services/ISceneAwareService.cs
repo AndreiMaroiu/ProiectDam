@@ -1,4 +1,5 @@
-﻿using UnityEngine.SceneManagement;
+﻿using System;
+using UnityEngine.SceneManagement;
 
 namespace Core.Services
 {
@@ -6,5 +7,8 @@ namespace Core.Services
     {
         void OnSceneLoaded(Scene scene);
         void OnSceneUnloaded(Scene scene);
+
+        // should be triggered on loaded
+        event Action ServiceLoaded;
     }
 }

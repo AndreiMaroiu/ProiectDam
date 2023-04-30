@@ -1,7 +1,7 @@
 using System;
 using Random = UnityEngine.Random;
 
-public struct WeightedRandom<T>
+public readonly struct WeightedRandom<T>
 {
     private readonly int[] _weights;
     private readonly T[] _elems;
@@ -36,12 +36,12 @@ public struct WeightedRandom<T>
         }
     }
 
-    private int SimpleWeightGetter(int i, T elem)
+    private readonly int SimpleWeightGetter(int i, T elem)
     {
         return _weights[i];
     }
 
-    public T Take()
+    public readonly T Take()
     {
 #if UNITY_EDITOR || DEBUG
         if (_totalWeight == 0)

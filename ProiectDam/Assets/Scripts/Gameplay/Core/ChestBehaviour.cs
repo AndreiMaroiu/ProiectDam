@@ -16,11 +16,11 @@ namespace Gameplay
 
         private SpriteRenderer _renderer;
 
-        public string ObjectName { get; set; }
+        public System.Guid ObjectId { get; set; }
 
         public ObjectSaveData SaveData => new ChestSaveData()
         {
-            ObjectName = ObjectName,
+            ObjectId = ObjectId,
             WasOpened = !_helper.CanClick
         };
 

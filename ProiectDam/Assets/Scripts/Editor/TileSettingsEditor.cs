@@ -1,5 +1,3 @@
-#if UNITY_EDITOR
-
 using Gameplay;
 using Gameplay.Generation;
 using UnityEditor;
@@ -21,5 +19,3 @@ namespace EditorScripts
         }
     }
 }
-
-#endif

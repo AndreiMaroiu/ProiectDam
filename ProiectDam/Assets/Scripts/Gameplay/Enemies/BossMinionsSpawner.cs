@@ -25,7 +25,7 @@ namespace Gameplay.Enemies
                 LayerBehaviour layerBehaviour = _bossBehaviour.GetComponentInParent<LayerBehaviour>();
                 for (int i = 0; i < enemyCount; i++)
                 {
-                    GameObject tile = _tiles.GetTile(TileType.Enemy, Core.RoomType.Normal);
+                    GameObject tile = _tiles.GetTile(TileType.Enemy, Core.RoomType.Normal).Prefab;
                     GameObject clone = Instantiate(tile, transform.parent);
                     BaseEnemy enemy = clone.GetComponent<BaseEnemy>();
 

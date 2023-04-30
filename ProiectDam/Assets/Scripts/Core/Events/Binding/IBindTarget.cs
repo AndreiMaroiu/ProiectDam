@@ -9,4 +9,9 @@
     {
         public void OnValueChange(T newValue);
     }
+
+    public interface IBindTargetAction : IBindTarget
+    {
+        public void OnValueChanged();
+    }
 }

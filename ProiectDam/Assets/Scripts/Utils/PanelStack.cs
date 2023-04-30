@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Utilities
 {
@@ -33,7 +33,7 @@ namespace Utilities
         {
             if (CanClose is false)
             {
-                return;  
+                return;
             }
 
             var (panel, options, timeScale) = _panels.Pop();
@@ -81,13 +81,15 @@ namespace Utilities
             }
         }
 
-        public void OpenDialog(GameObject panel, PanelOptions options = null) 
+        public void OpenDialog(GameObject panel, PanelOptions options = null)
             => OpenPanel(panel, options is null ? _default : options, Time.timeScale);
 
         public void OnEnable()
         {
             _panels.Clear();
             Debug.Log("panel stack cleared");
+
+            SceneManager.sceneUnloaded += SceneChanged;
         }
 
         public void Clear()
@@ -101,6 +103,16 @@ namespace Utilities
             {
                 ClosePanel();
             }
+        }
+
+        private void OnDisable()
+        {
+            SceneManager.sceneUnloaded -= SceneChanged;
+        }
+
+        private void SceneChanged(Scene arg0)
+        {
+            Clear();
         }
     }
 }

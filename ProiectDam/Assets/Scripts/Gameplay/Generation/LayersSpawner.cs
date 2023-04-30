@@ -16,7 +16,7 @@ namespace Gameplay.Generation
         }
 
         // delegates
-        private delegate GameObject TileGeneration(TileType tileType, BiomeType biomeType, int x, int y);
+        private delegate TileData TileGeneration(TileType tileType, BiomeType biomeType, int x, int y);
         private delegate void AfterTileSpawnedAction(TileObject tile, BiomeType biomeType, int x, int y);
 
         // private fields
@@ -166,16 +166,16 @@ namespace Gameplay.Generation
 
         #region Helpers
 
-        private GameObject SpawnTile(int i, int j, Transform where, BiomeType biome, TileType type)
+        private (GameObject, TileData)? SpawnTile(int i, int j, Transform where, BiomeType biome, TileType type)
         {
             Vector3 pos = Utils.GetVector3FromMatrixPos(i, j, _cellSize) - _offset;
-            GameObject tile = _generationStrategy(type, biome, i, j);
+            TileData tile = _generationStrategy(type, biome, i, j);
 
-            if (tile.IsNotNull())
+            if (tile is not null)
             {
-                GameObject spawnedTile = GameObject.Instantiate(tile, where);
+                GameObject spawnedTile = GameObject.Instantiate(tile.Prefab, where);
                 spawnedTile.transform.localPosition = pos;
-                return spawnedTile;
+                return (spawnedTile, tile);
             }
 
             return null;
@@ -183,12 +183,14 @@ namespace Gameplay.Generation
 
         private void SpawnTile(int i, int j, Transform where, BiomeType biome, TileType tyle, TileType[,] layer)
         {
-            GameObject spawnedObject = SpawnTile(i, j, where, biome, tyle);
+            var temp = SpawnTile(i, j, where, biome, tyle);
 
-            if (spawnedObject.IsNull())
+            if (temp is null)
             {
                 return;
             }
+
+            var (spawnedObject, tileData) = temp.Value;
 
             TileObject tile = spawnedObject.GetComponent<TileObject>();
 
@@ -201,7 +203,7 @@ namespace Gameplay.Generation
 
             if (tile is IDataSavingTile data)
             {
-                data.ObjectName = tile.name.Replace("(Clone)", ""); // remove the clone from name after instantiate
+                data.ObjectId = tileData.TileGuid; // remove the clone from name after instantiate
             }
 
             _afterTileSpawnedAction?.Invoke(tile, biome, i, j);
@@ -229,20 +231,20 @@ namespace Gameplay.Generation
             _offset = Utils.GetVector3FromMatrixPos(middlePos, middlePos, _cellSize);
         }
 
-        private GameObject RandomGeneration(TileType tileType, BiomeType biomeType, int x, int y)
+        private TileData RandomGeneration(TileType tileType, BiomeType biomeType, int x, int y)
         {
             return GetSettings(biomeType).GetTile(tileType, _currentRoomType);
         }
 
-        private GameObject GenerateFromSave(TileType tileType, BiomeType biomeType, int x, int y)
+        private TileData GenerateFromSave(TileType tileType, BiomeType biomeType, int x, int y)
         {
             LayerSaveData layer = SaveData.GetFromBiome(biomeType);
             Vector2IntPos key = new(x, y);
 
             if (layer.DynamicObjects.ContainsKey(key))
             {
-                string name = layer.DynamicObjects[key].ObjectName;
-                return GetSettings(biomeType).GetTileFromName(tileType, name);
+                Guid objectId = layer.DynamicObjects[key].ObjectId;
+                return GetSettings(biomeType).GetTileFromName(tileType,objectId);
             }
 
             Debug.LogWarning("null tile!");

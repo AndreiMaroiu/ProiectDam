@@ -8,10 +8,10 @@ namespace Gameplay.Enemies
 {
     public class SimpleEnemy : BaseEnemy
     {
-        private const string WALK_ANIMATION = "Walk";
-        private const string MELEE_ANIMATION = "Melee";
-        private const string DEATH_ANIMATION = "Death";
-        private const string HIT_ANIMATION = "Hit";
+        private static readonly int WALK_ANIMATION  = Animator.StringToHash("Walk");
+        private static readonly int MELEE_ANIMATION = Animator.StringToHash("Melee");
+        private static readonly int DEATH_ANIMATION = Animator.StringToHash("Death");
+        private static readonly int HIT_ANIMATION   = Animator.StringToHash("Hit");
 
         private EnemySoundHandler _soundhandler;
         private Animator _animator;
@@ -110,7 +110,7 @@ namespace Gameplay.Enemies
 
             return new SimpleEnemySaveData()
             {
-                ObjectName = this.ObjectName,
+                ObjectId = this.ObjectId,
                 Health = this.Health,
                 IsFlipped = _renderer.flipX,
                 LastTile = _lastType,

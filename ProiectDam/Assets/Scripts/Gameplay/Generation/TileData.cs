@@ -18,6 +18,7 @@ namespace Gameplay.Generation
 
         private Optional<GameObject> _gameObject = new();
         private bool _spawned;
+        private Guid? _loadedGuid = null;
 
         public GameObject Prefab => GetOrLoadPrefab();
         public RoomType Flags => _flags;
@@ -28,6 +29,7 @@ namespace Gameplay.Generation
         public void SetAsSpawned() => _spawned = true;
 
         public void Reset() => _spawned = false;
+        public Guid TileGuid => _loadedGuid ??= Guid.Parse(_prefab.AssetGUID);
 
         private GameObject GetOrLoadPrefab()
         {

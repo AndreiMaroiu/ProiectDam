@@ -1,8 +1,10 @@
-﻿namespace Gameplay.DataSaving
+﻿using System;
+
+namespace Gameplay.DataSaving
 {
     [System.Serializable]
     public abstract class ObjectSaveData
     {
-        public string ObjectName { get; set; }
+        public Guid ObjectId { get; set; }
     }
 }

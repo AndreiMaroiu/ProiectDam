@@ -135,7 +135,7 @@ namespace Gameplay.Enemies
                 Health = data.Health,
                 IsFlipped = data.IsFlipped,
                 LastTile = data.LastTile,
-                ObjectName = data.ObjectName,
+                ObjectId = data.ObjectId,
                 Phase = _phase,
             };
         }

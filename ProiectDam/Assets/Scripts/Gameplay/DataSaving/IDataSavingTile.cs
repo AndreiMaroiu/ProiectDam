@@ -1,7 +1,9 @@
-﻿namespace Gameplay.DataSaving
+﻿using System;
+
+namespace Gameplay.DataSaving
 {
     public interface IDataSavingTile : IDataSavingObject<ObjectSaveData>
     {
-        public string ObjectName { get; set; }
+        public Guid ObjectId { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace Gameplay.Generation
             _tileChanceGetter = GetTileChance; // get rid of heap allocation
         }
 
-        public GameObject GetTile(TileType type, RoomType roomType)
+        public TileData GetTile(TileType type, RoomType roomType)
         {
             _currentRoomType = roomType;
             TileData[] list = GetList(type);
@@ -45,7 +45,7 @@ namespace Gameplay.Generation
                 if (result != null)
                 {
                     result.SetAsSpawned();
-                    return result.Prefab;
+                    return result;
                 }
             }
 
@@ -70,7 +70,7 @@ namespace Gameplay.Generation
             }
         }
 
-        public GameObject GetTileFromName(TileType type, string name)
+        public TileData GetTileFromName(TileType type, Guid name)
         {
             TileData[] list = GetList(type);
 
@@ -81,9 +81,9 @@ namespace Gameplay.Generation
 
             foreach (var item in list)
             {
-                if (item.Prefab.name == name)
+                if (item.TileGuid == name)
                 {
-                    return item.Prefab;
+                    return item;
                 }
             }
 

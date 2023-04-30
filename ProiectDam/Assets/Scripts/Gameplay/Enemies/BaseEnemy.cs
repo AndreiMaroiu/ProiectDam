@@ -100,11 +100,11 @@ namespace Gameplay.Enemies
 
         #region IDataSavingObject
 
-        string IDataSavingTile.ObjectName { get; set; }
+        Guid IDataSavingTile.ObjectId { get; set; }
 
         public abstract ObjectSaveData SaveData { get; }
 
-        protected string ObjectName => ((IDataSavingTile)this).ObjectName;
+        protected Guid ObjectId => ((IDataSavingTile)this).ObjectId;
 
         void IDataSavingObject<ObjectSaveData>.LoadFromSave(ObjectSaveData data)
         {

@@ -12,11 +12,11 @@ namespace Gameplay.PickUps
 
         private AudioSource _audio;
 
-        string IDataSavingTile.ObjectName { get; set; }
+        System.Guid IDataSavingTile.ObjectId { get; set; }
 
         ObjectSaveData IDataSavingObject<ObjectSaveData>.SaveData => new PickUpSaveData()
         {
-            ObjectName = ((IDataSavingTile)this).ObjectName
+            ObjectId = ((IDataSavingTile)this).ObjectId
         };
 
         private void Start()

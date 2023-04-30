@@ -8489,6 +8489,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1866746104273923264, guid: f317ccc4db9a0c74b8b6b0136a874752,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866746104273923264, guid: f317ccc4db9a0c74b8b6b0136a874752,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866746104273923264, guid: f317ccc4db9a0c74b8b6b0136a874752,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866746104273923264, guid: f317ccc4db9a0c74b8b6b0136a874752,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2095884530924761974, guid: f317ccc4db9a0c74b8b6b0136a874752,
         type: 3}
       propertyPath: _vibrationToggle
