@@ -6,6 +6,7 @@ using Gameplay.Generation;
 using Gameplay.Player;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Gameplay.Managers
@@ -76,12 +77,14 @@ namespace Gameplay.Managers
             }
 
             List<BaseEnemy> enemies = _currentBehaviour.Value.ActiveLayerBehaviour.Enemies;
-
+            HashSet<Vector2Int> availablePositions = new();
             for (int i = 0; i < enemies.Count; i++)
             {
                 BaseEnemy enemy = enemies[i];
-                yield return enemy.OnEnemyTurn(_player);
+                StartCoroutine(enemy.OnEnemyTurn(_player, availablePositions));
             }
+
+            yield return new WaitWhile(() => enemies.Any(x => x.IsMoving));
 
             _playerTurn.Value = true;
         }

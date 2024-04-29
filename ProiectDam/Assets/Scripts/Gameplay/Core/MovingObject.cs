@@ -1,4 +1,5 @@
 using Gameplay.Generation;
+using PlasticPipe.PlasticProtocol.Messages;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -8,6 +9,8 @@ namespace Gameplay
 {
     public abstract class MovingObject : KillableObject
     {
+        public event Action<MovingObject> OnMoveStopped;
+
         public bool CanMove { get; private set; } = true;
         public bool IsMoving { get; private set; } = false;
         public float MoveTime { get; private set; }
@@ -76,6 +79,7 @@ namespace Gameplay
 
             StopMoving();
             OnStopMoving();
+            OnMoveStopped?.Invoke(this);
         }
 
         protected Vector3 PositionInDirection(Vector2Int direction)

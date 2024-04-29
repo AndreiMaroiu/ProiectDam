@@ -22,7 +22,7 @@ namespace Gameplay.Enemies
 
         public event System.Action<BossPhase> OnPhaseChange;
 
-        public override IEnumerator OnEnemyTurn(PlayerController player)
+        public override IEnumerator OnEnemyTurn(PlayerController player, System.Collections.Generic.HashSet<Vector2Int> availablePositions)
         {
             if (CanHit is false)
             {
@@ -36,12 +36,12 @@ namespace Gameplay.Enemies
                 yield break;
             }
 
-            Vector2Int direction = -Utils.GetMatrixPos(GetMoveDirection(player));
+            Vector2Int direction = -Utils.GetMatrixPos(GetMoveDirection(player, availablePositions));
             yield return TryMove(direction);
 
             if ((LayerPosition.Position - player.LayerPosition.Position).sqrMagnitude > 1 && Random.Range(0, 100) < 50)
             {
-                direction = -Utils.GetMatrixPos(GetMoveDirection(player));
+                direction = -Utils.GetMatrixPos(GetMoveDirection(player, availablePositions));
                 yield return TryMove(direction);
             }
         }

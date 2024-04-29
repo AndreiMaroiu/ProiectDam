@@ -3,6 +3,7 @@ using Gameplay.Generation;
 using Gameplay.Player;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
 
@@ -21,7 +22,7 @@ namespace Gameplay.Enemies
 
         public abstract void OnAttack(PlayerController player);
 
-        public virtual IEnumerator OnEnemyTurn(PlayerController player)
+        public virtual IEnumerator OnEnemyTurn(PlayerController player, HashSet<Vector2Int> availablePositions)
         {
             if ((LayerPosition.Position - player.LayerPosition.Position).sqrMagnitude == 1)
             {
@@ -30,11 +31,11 @@ namespace Gameplay.Enemies
                 yield break;
             }
 
-            Vector2Int direction = -Utils.GetMatrixPos(GetMoveDirection(player));
+            Vector2Int direction = -Utils.GetMatrixPos(GetMoveDirection(player, availablePositions));
             yield return TryMove(direction);
         }
 
-        protected Vector2Int GetMoveDirection(PlayerController player)
+        protected Vector2Int GetMoveDirection(PlayerController player, HashSet<Vector2Int> availablePositions)
         {
             TileType[,] layer = LayerPosition.Layer;
 
@@ -49,7 +50,7 @@ namespace Gameplay.Enemies
 
                 Vector2Int pos = direction + LayerPosition.Position;
 
-                if (!layer[pos.x, pos.y].CanMove() || _lastPosition.HasValue && _lastPosition.Value == pos)
+                if (availablePositions.Contains(pos) || !layer[pos.x, pos.y].CanMove() || _lastPosition.HasValue && _lastPosition.Value == pos)
                 {
                     continue;
                 }
@@ -63,7 +64,7 @@ namespace Gameplay.Enemies
             }
 
             _lastPosition = LayerPosition.Position;
-
+            availablePositions.Add(result);
             return result;
         }
 
